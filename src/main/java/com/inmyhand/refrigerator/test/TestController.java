@@ -30,7 +30,7 @@ public class TestController {
 	public ResponseEntity<?> indexBoard(){
 		
 		Map<String, Object> setDate = new HashMap();
-		
+		// 테스트
 		
 		
 		Map<String, String> map = new HashMap();
