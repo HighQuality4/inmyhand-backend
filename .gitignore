@@ -42,6 +42,7 @@ out/
 *.properties
 *.yaml
 *.yml
+yaml/
 
 ### folder ###
 libs/
