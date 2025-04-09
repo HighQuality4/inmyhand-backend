@@ -163,7 +163,7 @@ public class ReceiptExtraction {
 
         if (startIdx >= 0 && endIdx != -1 && endIdx > startIdx) {
             String extractedJson = trimmedResponse.substring(startIdx, endIdx + 1);
-            log.warn("Extracted JSON = {}", extractedJson);
+//            log.warn("Extracted JSON = {}", extractedJson);
             return extractedJson;
         }
 
