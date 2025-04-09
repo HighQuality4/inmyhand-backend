@@ -91,7 +91,7 @@ public class ReceiptExtraction {
                 receiptList.addAll(receiptDTOS);
             }
         }
-        
+
         return receiptList;
     }
 
