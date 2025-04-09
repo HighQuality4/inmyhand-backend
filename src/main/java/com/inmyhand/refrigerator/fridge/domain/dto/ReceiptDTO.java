@@ -34,6 +34,7 @@ public class ReceiptDTO {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         return "ReceiptDTO{" +
                 "product='" + product + '\'' +
+                ",category='" + category + '\'' +
                 ", quantity=" + quantity +
                 ", purchaseDate=" + (purchaseDate != null ? sdf.format(purchaseDate) : "null") +
                 ", expirationDate=" + (expirationDate != null ? sdf.format(expirationDate) : "null") +
