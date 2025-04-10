@@ -66,9 +66,11 @@ public class sardTest {
 //        System.out.println("MultipartFile name: " + multipartFile.getName());
 //        System.out.println("MultipartFile original filename: " + multipartFile.getOriginalFilename());
 //        List<ReceiptDTO> receiptDTOS = receiptExtraction.extractReceiptData(multipartFile);
-       receiptExtraction.extractReceiptData(lists).forEach(receipt -> {
-           System.out.println("receipt = " + receipt);
-       });
+
+        System.out.println("receiptExtraction.extractReceiptData(lists) = " + receiptExtraction.extractReceiptData(lists));
+//       receiptExtraction.extractReceiptData(lists).forEach(receipt -> {
+//           System.out.println("receipt = " + receipt);
+//       });
 
 //        System.out.println("receiptDTO = " + receiptDTOS.toString());
     }
