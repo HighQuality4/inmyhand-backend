@@ -37,7 +37,7 @@ public class ReceiptExtraction {
     private final ObjectMapper objectMapper;
 
     @Value("${gemini.receipt.prompt}")
-    private String prompt;
+    private String ocrPrompt;
 
 
     /**
@@ -45,13 +45,13 @@ public class ReceiptExtraction {
      * @return
      * @throws IOException
      */
-    public List<ReceiptDTO> extractReceiptData(List<MultipartFile> files) {
+    public String extractReceiptData(List<MultipartFile> files) {
 
         if (files == null || files.isEmpty()) {
-            return List.of();
+            return "";
         }
 
-        List<ReceiptDTO> receiptList = new ArrayList<>();
+        StringBuilder receiptData = new StringBuilder();
 
         for (MultipartFile file : files) {
             if (file.isEmpty()) {
@@ -63,15 +63,14 @@ public class ReceiptExtraction {
             // AI 요청 메시지 생성
             try {
                 userMessage = new UserMessage(
-                        prompt,
+                        ocrPrompt,
                         List.of(new Media(
                                 MimeTypeUtils.parseMimeType(Objects.requireNonNull(file.getContentType())),
                                 new InputStreamResource(file.getInputStream())
                         ))
                 );
             } catch (IOException e) {
-                log.error("AI 요청 메시지 오류");
-                log.error(e.getMessage());
+                log.error("AI 요청 메시지 오류 = {}", e.getMessage());
             }
             // userMessage 이 null 일 시 아래 로직은 건너뜀
             if(userMessage == null) {
@@ -83,16 +82,23 @@ public class ReceiptExtraction {
             String jsonResponse = response.getResult().getOutput().getText();
 
             // AI 응답에서 실제 JSON 부분만 추출
-            String cleanedJson = extractJsonFromResponse(jsonResponse);
+            receiptData.append(extractJsonFromResponse(jsonResponse));
 
-            List<ReceiptDTO> receiptDTOS = jsonToReceipt(cleanedJson);
+
+
+          /*
+          // 아래 초기 리스트는 밖으로 배치
+            List<ReceiptDTO> receiptList = new ArrayList<>();
+
+          List<ReceiptDTO> receiptDTOS = jsonToReceipt(cleanedJson);
 
             if (receiptDTOS != null && !receiptDTOS.isEmpty()) {
                 receiptList.addAll(receiptDTOS);
             }
+            */
         }
 
-        return receiptList;
+        return receiptData.toString();
     }
 
     /**
