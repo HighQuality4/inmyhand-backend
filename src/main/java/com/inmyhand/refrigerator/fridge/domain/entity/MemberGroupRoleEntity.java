@@ -25,7 +25,7 @@ public class MemberGroupRoleEntity {
     private Date startDate;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "fridge_members_id")
+    @JoinColumn(name = "fridge_member_id")
     @JsonIgnoreProperties("permissionGroupRoleList")
     private FridgeMemberEntity fridgeMemberEntity;
 
