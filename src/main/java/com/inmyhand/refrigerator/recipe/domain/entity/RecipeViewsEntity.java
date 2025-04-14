@@ -1,5 +1,6 @@
 package com.inmyhand.refrigerator.recipe.domain.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -43,6 +44,6 @@ public class RecipeViewsEntity {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "recipe_id", nullable = false)
-    @JsonIgnoreProperties("recipeViewsList")
+    @JsonIgnore
     private RecipeInfoEntity recipeInfoEntity;
 }

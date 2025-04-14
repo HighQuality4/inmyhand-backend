@@ -7,6 +7,7 @@ import com.inmyhand.refrigerator.recipe.domain.enums.CookingTimeEnum;
 import com.inmyhand.refrigerator.recipe.domain.enums.DifficultyEnum;
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.BatchSize;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.util.ArrayList;
@@ -19,7 +20,9 @@ import java.util.List;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@ToString(exclude = {"memberEntity", "parentRecipe", "childRecipes", "recipeStepsList", "recipeIngredientList", "recipeCommentList", "recipeLikesList", "recipeCategoryList", "recipeViewsList", "recipeNutrientAnalysisList", "filesList"})
+@ToString(exclude = {"memberEntity", "parentRecipe", "childRecipes", "recipeStepsList",
+        "recipeIngredientList", "recipeCommentList", "recipeLikesList", "recipeCategoryList",
+        "recipeViewsList", "recipeNutrientAnalysisList", "filesEntities"})
 public class RecipeInfoEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -68,7 +71,9 @@ public class RecipeInfoEntity {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "member_id")
-    @JsonIgnoreProperties("recipeInfoList")
+//    @JsonIgnoreProperties("recipeInfoList")
+    //TODO Member 활성화 시 N+1 문제 발생
+    @JsonIgnore
     private MemberEntity memberEntity;
 
     @ManyToOne(fetch = FetchType.LAZY)

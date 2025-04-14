@@ -28,7 +28,10 @@ import java.util.List;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@ToString(exclude = {"memeberAllergyList", "hateFoodList", "healthInterestList", "memberRoleList", "refreshTokenList", "subscriptionList", "paymentList", "fridgeMemberList", "recipeInfoList", "recipeCommentList", "recipeLikesList", "recipeViewsList", "recipeNutrientAnalysisList", "filesList"})
+@ToString(exclude = {"memeberAllergyList", "hateFoodList", "healthInterestList",
+        "memberRoleList", "refreshTokenList", "paymentList",
+        "fridgeMemberList", "recipeInfoList", "recipeCommentList", "recipeLikesList",
+        "recipeViewsList", "recipeNutrientAnalysisList", "filesList"})
 public class MemberEntity {
 
     @Id
@@ -37,7 +40,7 @@ public class MemberEntity {
     private Long id;
 
     @Column(name = "member_name", nullable = false, length = 100)
-    private String userName;
+    private String memberName;
 
     @Column(name = "email", nullable = false, unique = true, length = 100)
     private String email;

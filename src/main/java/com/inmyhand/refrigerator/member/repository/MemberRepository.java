@@ -11,8 +11,8 @@ import java.util.List;
 
 @Repository
 public interface MemberRepository extends JpaRepository<MemberEntity, Long> {
-//
-//    @Query("SELECT f.fileUrl FROM FileEntity f WHERE f.memberEntity.id = :memberId")
-//    String findFileUrlsByMemberId(@Param("memberId") Long memberId);
+
+    @Query("SELECT f.fileUrl FROM com.inmyhand.refrigerator.files.domain.entity.FilesEntity f WHERE f.memberEntity.id = :memberId")
+    String findFileUrlsByMemberId(@Param("memberId") Long memberId);
 
 }
