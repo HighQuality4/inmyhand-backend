@@ -28,7 +28,7 @@ public class MemberRoleEntity {
     private MemberRole userRole = MemberRole.freetier; // 기본값 지정
 //    private MemberRole userRole;
 
-    @Column(name = "member_role_date", columnDefinition = "date default current_date")
+    @Column(name = "member_role_date")
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date regdate;

@@ -29,7 +29,7 @@ public class RefreshTokenEntity {
     @Column(name = "expired_at")
     private Timestamp expiredAt;
 
-    @Column(name = "created_at", columnDefinition = "timestamp default current_timestamp")
+    @Column(name = "created_at")
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date regdate;

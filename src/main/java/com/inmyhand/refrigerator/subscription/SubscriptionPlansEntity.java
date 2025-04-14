@@ -36,7 +36,7 @@ public class SubscriptionPlansEntity {
     @Column(name = "interval_unit", nullable = false, length = 10)
     private String intervalUnit;
 
-    @Column(name = "created_at", columnDefinition = "timestamp default current_timestamp")
+    @Column(name = "created_at")
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date regdate;

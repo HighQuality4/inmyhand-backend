@@ -29,7 +29,7 @@ public class SubscriptionEntity {
     @Column(name = "status", length = 20)
     private String status;
 
-    @Column(name = "start_date", columnDefinition = "timestamp default current_timestamp")
+    @Column(name = "start_date")
     private Timestamp startDate;
 
     @Column(name = "next_pay_date")
@@ -38,7 +38,7 @@ public class SubscriptionEntity {
     @Column(name = "canceled_at")
     private Timestamp canceledAt;
 
-    @Column(name = "created_at", columnDefinition = "timestamp default current_timestamp")
+    @Column(name = "created_at")
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date regdate;

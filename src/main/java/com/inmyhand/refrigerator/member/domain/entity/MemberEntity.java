@@ -45,7 +45,7 @@ public class MemberEntity {
     @Column(name = "nickname", nullable = false, unique = true, length = 100)
     private String nickname;
 
-    @Column(name = "created_at", columnDefinition = "date default current_date")
+    @Column(name = "created_at")
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date regdate;
