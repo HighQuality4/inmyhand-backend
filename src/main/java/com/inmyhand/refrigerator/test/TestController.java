@@ -1,25 +1,21 @@
 package com.inmyhand.refrigerator.test;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import com.cleopatra.spring.CommonsMultipartFile;
-import com.inmyhand.refrigerator.fridge.domain.dto.ReceiptDTO;
-import com.inmyhand.refrigerator.fridge.service.ReceiptExtraction;
-import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.cleopatra.protocol.data.DataRequest;
+import com.inmyhand.refrigerator.fridge.service.ReceiptExtraction;
 import com.inmyhand.refrigerator.util.ConverterClassUtil;
 
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 @Controller

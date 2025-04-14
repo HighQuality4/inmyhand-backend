@@ -1,0 +1,59 @@
+package com.inmyhand.refrigerator.files.domain.entity;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.inmyhand.refrigerator.member.domain.entity.MemberEntity;
+import com.inmyhand.refrigerator.recipe.domain.entity.RecipeInfoEntity;
+import com.inmyhand.refrigerator.recipe.domain.entity.RecipeStepsEntity;
+import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import org.springframework.format.annotation.DateTimeFormat;
+
+import java.util.Date;
+
+@Entity
+@Table(name = "files")
+@Getter
+@NoArgsConstructor
+public class FilesEntity {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "file_id")
+    private Long id;
+
+    private String orgName;
+    private String sysName;
+
+    private String fileType;
+    private String fileStatus;
+    private String fileSize;
+    private String fileURL;
+
+    @JsonFormat(pattern = "yyyy-MM-dd")
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private Date createdAt;
+
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "recipe_id")
+    @JsonIgnoreProperties("filesEntities")
+    private RecipeInfoEntity recipeInfoEntity;
+
+
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "member_id")
+    @JsonIgnoreProperties("filesEntity")
+    private MemberEntity memberEntity;
+
+
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "step_id")
+    @JsonIgnoreProperties("filesEntity")
+    private RecipeStepsEntity recipeStepEntity;
+
+
+
+
+}
