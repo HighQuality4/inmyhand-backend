@@ -28,7 +28,10 @@ import java.util.List;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@ToString(exclude = {"memeberAllergyList", "hateFoodList", "healthInterestList", "memberRoleList", "refreshTokenList", "subscriptionList", "paymentList", "fridgeMemberList", "recipeInfoList", "recipeCommentList", "recipeLikesList", "recipeViewsList", "recipeNutrientAnalysisList", "filesList"})
+@ToString(exclude = {"memeberAllergyList", "hateFoodList", "healthInterestList",
+        "memberRoleList", "refreshTokenList", "paymentList",
+        "fridgeMemberList", "recipeInfoList", "recipeCommentList", "recipeLikesList",
+        "recipeViewsList", "recipeNutrientAnalysisList", "filesList"})
 public class MemberEntity {
 
     @Id
