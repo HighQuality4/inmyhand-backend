@@ -37,7 +37,7 @@ public class MemberEntity {
     private Long id;
 
     @Column(name = "member_name", nullable = false, length = 100)
-    private String userName;
+    private String memberName;
 
     @Column(name = "email", nullable = false, unique = true, length = 100)
     private String email;
