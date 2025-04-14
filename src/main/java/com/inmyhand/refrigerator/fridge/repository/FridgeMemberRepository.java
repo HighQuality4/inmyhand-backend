@@ -24,6 +24,6 @@ public interface FridgeMemberRepository extends JpaRepository<FridgeMemberEntity
 
     Optional<FridgeMemberEntity> findByFridgeEntity_IdAndMemberEntity_Id(Long fridgeId, Long memberId);
     Optional<FridgeMemberEntity> findByFridgeEntity_IdAndMemberEntity_Nickname(Long fridgeId, String nickname);
-    List<FridgeMemberEntity> findByFridgeEntity_MemberEntity_Id(Long memberId);
+    List<FridgeMemberEntity> findByMemberEntity_Id(Long memberId);
 
 }

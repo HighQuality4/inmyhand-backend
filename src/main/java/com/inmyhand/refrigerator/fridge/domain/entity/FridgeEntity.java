@@ -31,9 +31,6 @@ public class FridgeEntity {
     @JsonIgnoreProperties("fridgeEntity")
     private List<FridgeMemberEntity> fridgeMemberList = new ArrayList<>();
 
-    @ManyToOne
-    @JoinColumn(name = "member_id")
-    private MemberEntity memberEntity;
 
     @OneToMany(mappedBy = "fridgeEntity", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonIgnoreProperties("fridgeEntity")

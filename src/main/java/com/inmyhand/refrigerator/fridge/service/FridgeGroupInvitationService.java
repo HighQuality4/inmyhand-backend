@@ -122,7 +122,7 @@ public class FridgeGroupInvitationService {
 
     public List<FridgeWithRoleDTO> getFridgesWithRoleNamesByMember(Long memberId) {
         // 해당 멤버가 참여한 냉장고 조회
-        List<FridgeMemberEntity> fridgeMembers = fridgeMemberRepository.findByFridgeEntity_MemberEntity_Id(memberId);
+        List<FridgeMemberEntity> fridgeMembers = fridgeMemberRepository.findByMemberEntity_Id(memberId);
 
         List<FridgeWithRoleDTO> fridgeWithRoles = new ArrayList<>();
 
