@@ -2,10 +2,9 @@ package com.inmyhand.refrigerator.recipe.domain.entity;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.inmyhand.refrigerator.healthinfo.domain.HealthInterestCategoryEntity;
+import com.inmyhand.refrigerator.healthinfo.domain.entity.HealthInterestCategoryEntity;
 import jakarta.persistence.*;
 import lombok.*;
-import net.minidev.json.annotate.JsonIgnore;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.util.Date;
