@@ -1,8 +1,7 @@
 package com.inmyhand.refrigerator.recipe.domain.enums;
 
 public enum CategoryTypeEnum {
-    MEAL,
-    DESSERT,
-    SNACK,
-    BEVERAGE
+    종류별,
+    상황별,
+    방법별,
 }
