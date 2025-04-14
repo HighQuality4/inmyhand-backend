@@ -1,8 +1,8 @@
-package com.inmyhand.refrigerator.subscription;
+package com.inmyhand.refrigerator.subscription.domain.entity;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.inmyhand.refrigerator.payment.PaymentEntity;
+import com.inmyhand.refrigerator.payment.domain.entity.PaymentEntity;
 import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -18,7 +18,7 @@ import java.util.List;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@ToString(exclude = {"subscriptionPlansEntity", "usersEntity"})
+@ToString(exclude = {"subscriptionPlansEntity", "memberEntity"})
 public class SubscriptionEntity {
 
     @Id
