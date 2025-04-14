@@ -101,7 +101,7 @@ public class MemberEntity {
 
     @OneToMany(mappedBy = "memberEntity", cascade = {CascadeType.PERSIST,CascadeType.MERGE})
     @JsonIgnoreProperties("memberEntity")
-    private List<FridgeMemberEntity> fridgeUsersList = new ArrayList<>();
+    private List<FridgeMemberEntity> fridgeMemberList = new ArrayList<>();
 
     @OneToMany(mappedBy = "memberEntity", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonIgnoreProperties("memberEntity")
@@ -134,13 +134,13 @@ public class MemberEntity {
             return;
         }
 
-        if (this.fridgeUsersList == null) {
-            this.fridgeUsersList = new ArrayList<>();
+        if (this.fridgeMemberList == null) {
+            this.fridgeMemberList = new ArrayList<>();
         }
 
         // 중복 방지
-        if (!this.fridgeUsersList.contains(fridgeMember)) {
-            this.fridgeUsersList.add(fridgeMember);
+        if (!this.fridgeMemberList.contains(fridgeMember)) {
+            this.fridgeMemberList.add(fridgeMember);
 
             // 양방향 연관관계 설정
             if (fridgeMember.getMemberEntity() != this) {
@@ -155,11 +155,11 @@ public class MemberEntity {
      * @return 제거 성공 여부
      */
     public boolean removeFridgeMember(FridgeMemberEntity fridgeMember) {
-        if (fridgeMember == null || this.fridgeUsersList == null) {
+        if (fridgeMember == null || this.fridgeMemberList == null) {
             return false;
         }
 
-        boolean removed = this.fridgeUsersList.remove(fridgeMember);
+        boolean removed = this.fridgeMemberList.remove(fridgeMember);
 
         if (removed && fridgeMember.getMemberEntity() == this) {
             fridgeMember.setMemberEntity(null);
@@ -174,14 +174,14 @@ public class MemberEntity {
      * @return 제거 성공 여부
      */
     public boolean removeFridgeMemberById(Long fridgeMemberId) {
-        if (this.fridgeUsersList == null || fridgeMemberId == null) {
+        if (this.fridgeMemberList == null || fridgeMemberId == null) {
             return false;
         }
 
-        for (int i = 0; i < this.fridgeUsersList.size(); i++) {
-            FridgeMemberEntity fridgeMember = this.fridgeUsersList.get(i);
+        for (int i = 0; i < this.fridgeMemberList.size(); i++) {
+            FridgeMemberEntity fridgeMember = this.fridgeMemberList.get(i);
             if (fridgeMemberId.equals(fridgeMember.getId())) {
-                this.fridgeUsersList.remove(i);
+                this.fridgeMemberList.remove(i);
 
                 if (fridgeMember.getMemberEntity() == this) {
                     fridgeMember.setMemberEntity(null);
@@ -198,18 +198,18 @@ public class MemberEntity {
      * 모든 냉장고 멤버 연관관계 제거
      */
     public void clearAllFridgeMembers() {
-        if (this.fridgeUsersList == null) {
+        if (this.fridgeMemberList == null) {
             return;
         }
 
         // ConcurrentModificationException 방지를 위해 새 리스트로 복사
-        List<FridgeMemberEntity> membersToRemove = new ArrayList<>(this.fridgeUsersList);
+        List<FridgeMemberEntity> membersToRemove = new ArrayList<>(this.fridgeMemberList);
 
         for (FridgeMemberEntity fridgeMember : membersToRemove) {
             removeFridgeMember(fridgeMember);
         }
 
-        this.fridgeUsersList.clear();
+        this.fridgeMemberList.clear();
     }
 
     /**
@@ -218,13 +218,13 @@ public class MemberEntity {
      * @return 제거된 멤버십 수
      */
     public int removeFridgeMembersByFridgeId(Long fridgeId) {
-        if (this.fridgeUsersList == null || fridgeId == null) {
+        if (this.fridgeMemberList == null || fridgeId == null) {
             return 0;
         }
 
         List<FridgeMemberEntity> membersToRemove = new ArrayList<>();
 
-        for (FridgeMemberEntity fridgeMember : this.fridgeUsersList) {
+        for (FridgeMemberEntity fridgeMember : this.fridgeMemberList) {
             if (fridgeMember.getFridgeEntity() != null &&
                     fridgeId.equals(fridgeMember.getFridgeEntity().getId())) {
                 membersToRemove.add(fridgeMember);

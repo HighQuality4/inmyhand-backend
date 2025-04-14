@@ -1,6 +1,6 @@
 package com.inmyhand.refrigerator.fridge.service;
 
-import com.inmyhand.refrigerator.fridge.domain.dto.FridgeFoodDTO;
+import com.inmyhand.refrigerator.fridge.domain.dto.food.FridgeFoodDTO;
 import com.inmyhand.refrigerator.fridge.domain.entity.FoodCategoryEntity;
 import com.inmyhand.refrigerator.fridge.domain.entity.FridgeEntity;
 import com.inmyhand.refrigerator.fridge.domain.entity.FridgeFoodEntity;

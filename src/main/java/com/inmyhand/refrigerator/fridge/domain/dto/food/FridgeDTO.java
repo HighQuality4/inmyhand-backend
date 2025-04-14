@@ -1,4 +1,4 @@
-package com.inmyhand.refrigerator.fridge.domain.dto;
+package com.inmyhand.refrigerator.fridge.domain.dto.food;
 
 import lombok.*;
 

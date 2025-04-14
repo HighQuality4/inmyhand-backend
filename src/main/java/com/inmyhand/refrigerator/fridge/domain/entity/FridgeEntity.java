@@ -2,6 +2,7 @@ package com.inmyhand.refrigerator.fridge.domain.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.inmyhand.refrigerator.member.domain.entity.MemberEntity;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -14,7 +15,7 @@ import java.util.List;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@ToString(exclude = {"fridgeUserList", "fridgeFoodList"})
+@ToString(exclude = {"fridgeMemberList", "fridgeFoodList"})
 public class FridgeEntity {
 
     @Id
@@ -28,7 +29,11 @@ public class FridgeEntity {
 
     @OneToMany(mappedBy = "fridgeEntity", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonIgnoreProperties("fridgeEntity")
-    private List<FridgeMemberEntity> fridgeUserList = new ArrayList<>();
+    private List<FridgeMemberEntity> fridgeMemberList = new ArrayList<>();
+
+    @ManyToOne
+    @JoinColumn(name = "member_id")
+    private MemberEntity memberEntity;
 
     @OneToMany(mappedBy = "fridgeEntity", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonIgnoreProperties("fridgeEntity")
