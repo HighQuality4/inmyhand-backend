@@ -9,7 +9,7 @@ import java.util.Date;
 import java.util.List;
 
 @Entity
-@Table(name = "fridge_members")
+@Table(name = "fridge_member")
 @Getter
 @Setter
 @NoArgsConstructor
