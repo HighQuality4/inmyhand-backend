@@ -1,5 +1,6 @@
 package com.inmyhand.refrigerator.recipe.domain.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.inmyhand.refrigerator.files.domain.entity.FilesEntity;
 import jakarta.persistence.*;
@@ -27,9 +28,11 @@ public class RecipeStepsEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "recipe_id", nullable = false)
     @JsonIgnoreProperties("recipeIngredientList")
+//    @JsonBackReference
     private RecipeInfoEntity recipeInfoEntity;
 
     @OneToOne(mappedBy = "recipeStepEntity", cascade = CascadeType.ALL)
+    @JsonIgnoreProperties("recipeStepEntity")
     private FilesEntity filesEntity;
 
     /**

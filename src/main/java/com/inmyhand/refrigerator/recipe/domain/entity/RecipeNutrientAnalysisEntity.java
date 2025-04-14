@@ -1,6 +1,9 @@
 package com.inmyhand.refrigerator.recipe.domain.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -44,10 +47,13 @@ public class RecipeNutrientAnalysisEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "recipe_id", nullable = false)
     @JsonIgnoreProperties("recipeNutrientAnalysisList")
+//    @JsonBackReference
     private RecipeInfoEntity recipeInfoEntity;
 
     @OneToMany(mappedBy = "recipeNutrientAnalysisEntity",
                cascade = CascadeType.PERSIST)
-    @JsonIgnoreProperties("recipeNutrientAnalysisEntity")
+//    @JsonIgnoreProperties("recipeNutrientAnalysisEntity")
+    //TODO health_interest db에 데이터가 없어서 임시 제외
+    @JsonIgnore
     private List<AnalysisHealthInterestEntity> analysisHealthInterestList = new ArrayList<>();
 }
