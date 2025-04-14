@@ -1,4 +1,4 @@
-package com.inmyhand.refrigerator.healthinfo.domain;
+package com.inmyhand.refrigerator.healthinfo.domain.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.inmyhand.refrigerator.recipe.domain.entity.AnalysisHealthInterestEntity;
