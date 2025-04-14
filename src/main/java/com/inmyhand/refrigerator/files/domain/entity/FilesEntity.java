@@ -29,7 +29,7 @@ public class FilesEntity {
     private String fileType;
     private String fileStatus;
     private String fileSize;
-    private String fileURL;
+    private String fileUrl;
 
     @JsonFormat(pattern = "yyyy-MM-dd")
     @DateTimeFormat(pattern = "yyyy-MM-dd")
