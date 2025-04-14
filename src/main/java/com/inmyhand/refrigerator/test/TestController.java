@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.cleopatra.protocol.data.DataRequest;
-import com.inmyhand.refrigerator.fridge.service.ReceiptExtraction;
+import com.inmyhand.refrigerator.fridge.service.ocr.ReceiptExtraction;
 import com.inmyhand.refrigerator.util.ConverterClassUtil;
 
 import lombok.RequiredArgsConstructor;

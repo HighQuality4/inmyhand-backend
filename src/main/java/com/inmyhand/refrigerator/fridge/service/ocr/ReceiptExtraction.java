@@ -1,4 +1,4 @@
-package com.inmyhand.refrigerator.fridge.service;
+package com.inmyhand.refrigerator.fridge.service.ocr;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
@@ -20,7 +20,6 @@ import org.springframework.util.MimeTypeUtils;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.*;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
