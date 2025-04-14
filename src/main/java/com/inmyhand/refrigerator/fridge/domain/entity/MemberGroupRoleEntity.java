@@ -12,6 +12,7 @@ import java.util.Date;
 @Table(name = "member_group_role")
 @Getter
 @Setter
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString(exclude = {"fridgeMemberEntity", "groupRoleEntity"})

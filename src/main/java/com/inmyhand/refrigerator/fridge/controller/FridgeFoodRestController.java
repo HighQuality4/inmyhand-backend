@@ -1,6 +1,6 @@
 package com.inmyhand.refrigerator.fridge.controller;
 
-import com.inmyhand.refrigerator.fridge.domain.dto.FridgeFoodDTO;
+import com.inmyhand.refrigerator.fridge.domain.dto.food.FridgeFoodDTO;
 import com.inmyhand.refrigerator.fridge.service.FridgeFoodService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;

@@ -1,8 +1,7 @@
-package com.inmyhand.refrigerator.fridge.domain.dto;
+package com.inmyhand.refrigerator.fridge.domain.dto.food;
 
 import lombok.*;
 
-import java.sql.Timestamp;
 import java.util.Date;
 
 @Getter

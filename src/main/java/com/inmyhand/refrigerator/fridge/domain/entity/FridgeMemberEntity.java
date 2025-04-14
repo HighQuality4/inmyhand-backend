@@ -12,6 +12,7 @@ import java.util.List;
 @Table(name = "fridge_member")
 @Getter
 @Setter
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString(exclude = {"memberEntity", "fridgeEntity"})
@@ -28,12 +29,12 @@ public class FridgeMemberEntity {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "member_id")
-    @JsonIgnoreProperties("fridgeUsersList")
+    @JsonIgnoreProperties("fridgeMemberList")
     private MemberEntity memberEntity;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "fridge_id")
-    @JsonIgnoreProperties("fridgeUserList")
+    @JsonIgnoreProperties("fridgeMemberList")
     private FridgeEntity fridgeEntity;
 
     @OneToMany(mappedBy = "fridgeMemberEntity", cascade = CascadeType.ALL, orphanRemoval = true)
@@ -47,14 +48,14 @@ public class FridgeMemberEntity {
     public void setMember(MemberEntity member) {
         // 기존 멤버와의 연관관계 제거
         if (this.memberEntity != null && this.memberEntity != member) {
-            this.memberEntity.getFridgeUsersList().remove(this);
+            this.memberEntity.getFridgeMemberList().remove(this);
         }
 
         this.memberEntity = member;
 
         // 새 멤버와 양방향 연관관계 설정
-        if (member != null && !member.getFridgeUsersList().contains(this)) {
-            member.getFridgeUsersList().add(this);
+        if (member != null && !member.getFridgeMemberList().contains(this)) {
+            member.getFridgeMemberList().add(this);
         }
     }
 
@@ -65,14 +66,14 @@ public class FridgeMemberEntity {
     public void setFridge(FridgeEntity fridge) {
         // 기존 냉장고와의 연관관계 제거
         if (this.fridgeEntity != null && this.fridgeEntity != fridge) {
-            this.fridgeEntity.getFridgeUserList().remove(this);
+            this.fridgeEntity.getFridgeMemberList().remove(this);
         }
 
         this.fridgeEntity = fridge;
 
         // 새 냉장고와 양방향 연관관계 설정
-        if (fridge != null && !fridge.getFridgeUserList().contains(this)) {
-            fridge.getFridgeUserList().add(this);
+        if (fridge != null && !fridge.getFridgeMemberList().contains(this)) {
+            fridge.getFridgeMemberList().add(this);
         }
     }
 
@@ -81,12 +82,12 @@ public class FridgeMemberEntity {
      */
     public void removeAllRelationships() {
         if (this.memberEntity != null) {
-            this.memberEntity.getFridgeUsersList().remove(this);
+            this.memberEntity.getFridgeMemberList().remove(this);
             this.memberEntity = null;
         }
 
         if (this.fridgeEntity != null) {
-            this.fridgeEntity.getFridgeUserList().remove(this);
+            this.fridgeEntity.getFridgeMemberList().remove(this);
             this.fridgeEntity = null;
         }
     }
