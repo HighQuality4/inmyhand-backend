@@ -14,6 +14,7 @@ import java.util.Date;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
 @ToString(exclude = {"foodCategoryEntity", "fridgeEntity"})
 public class FridgeFoodEntity {
 
