@@ -13,7 +13,7 @@ import java.util.Date;
 @Builder
 public class MemeberDTO {
     private Long id;
-    private String userName;
+    private String memberName;
     private String email;
     private String nickname;
     private Date regdate;
