@@ -1,0 +1,6 @@
+{
+	"embeddedRoutes": [
+		{ "path": "/recipe", "app": "app/recipe/recipe_main" },
+  		{ "path": "/testtt", "app": "app/test/first-test" }
+	]
+}

@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:cl="http://tomatosystem.co.kr/cleopatra" xmlns:std="http://tomatosystem.co.kr/cleopatra/studio" std:sid="html-a037bf61" version="1.0.5481">
+  <head std:sid="head-59d14738">
+    <screen std:sid="screen-c0897238" id="default" name="default" width="1024px" height="768px"/>
+    <screen std:sid="screen-517423cb" id="tablet" name="tablet" width="500px" height="667px"/>
+    <screen std:sid="screen-d94d2b41" id="mobile" name="mobile" width="350px" height="525px"/>
+    <cl:model std:sid="model-c09f354e"/>
+    <cl:appspec/>
+  </head>
+  <body std:sid="body-32da53c6">
+    <cl:output std:sid="output-4197fe87" value="recipe">
+      <cl:xylayoutdata std:sid="xyl-data-6ac135dd" top="95px" left="159px" width="335px" height="159px" horizontalAnchor="LEFT" verticalAnchor="TOP"/>
+    </cl:output>
+    <cl:output std:sid="output-e5d1b9fb" value="recipe">
+      <cl:xylayoutdata std:sid="xyl-data-cd53836d" top="294px" left="159px" width="335px" height="159px" horizontalAnchor="LEFT" verticalAnchor="TOP"/>
+    </cl:output>
+    <cl:output std:sid="output-21949bf7" value="recipe">
+      <cl:xylayoutdata std:sid="xyl-data-9a59e857" top="95px" left="504px" width="335px" height="159px" horizontalAnchor="LEFT" verticalAnchor="TOP"/>
+    </cl:output>
+    <cl:xylayout std:sid="xylayout-e7740ef1"/>
+  </body>
+  <std:studiosetting>
+    <std:hruler/>
+    <std:vruler/>
+  </std:studiosetting>
+</html>
