@@ -40,10 +40,9 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'org.springframework.boot:spring-boot-starter-data-redis'
 	implementation 'org.springframework.ai:spring-ai-vertex-ai-gemini-spring-boot-starter'
-    implementation 'org.postgresql:postgresql:42.7.2'
     implementation 'org.json:json:20240303'
     compileOnly 'org.projectlombok:lombok'
-    runtimeOnly 'org.postgresql:postgresql'
+    implementation 'org.postgresql:postgresql'
     annotationProcessor 'org.projectlombok:lombok'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testImplementation 'org.springframework.security:spring-security-test'
@@ -68,7 +67,6 @@ dependencies {
 	runtimeOnly 'io.jsonwebtoken:jjwt-jackson:0.12.6'
 
 
-    implementation 'commons-io:commons-io:2.11.0' // 또는 적절한 버전 선택
 
 }
 

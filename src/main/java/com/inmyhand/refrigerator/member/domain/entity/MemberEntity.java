@@ -2,6 +2,7 @@ package com.inmyhand.refrigerator.member.domain.entity;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.inmyhand.refrigerator.files.domain.entity.FilesEntity;
 import com.inmyhand.refrigerator.fridge.domain.entity.FridgeMemberEntity;
@@ -103,6 +104,8 @@ public class MemberEntity {
     private List<PaymentEntity> paymentList = new ArrayList<>();
 
     @OneToMany(mappedBy = "memberEntity", cascade = {CascadeType.PERSIST,CascadeType.MERGE})
+//    @JsonIgnore
+    //TODO N+1 발생
     @JsonIgnoreProperties("memberEntity")
     private List<FridgeMemberEntity> fridgeMemberList = new ArrayList<>();
 
@@ -111,6 +114,7 @@ public class MemberEntity {
     private List<RecipeInfoEntity> recipeInfoList = new ArrayList<>();
 
     @OneToMany(mappedBy = "memberEntity", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+//    @JsonIgnore
     @JsonIgnoreProperties("memberEntity")
     private List<RecipeCommentEntity> recipeCommentList = new ArrayList<>();
 

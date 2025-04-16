@@ -7,7 +7,6 @@ import com.inmyhand.refrigerator.recipe.domain.enums.CookingTimeEnum;
 import com.inmyhand.refrigerator.recipe.domain.enums.DifficultyEnum;
 import jakarta.persistence.*;
 import lombok.*;
-import org.hibernate.annotations.BatchSize;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.util.ArrayList;
@@ -71,9 +70,8 @@ public class RecipeInfoEntity {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "member_id")
-//    @JsonIgnoreProperties("recipeInfoList")
-    //TODO Member 활성화 시 N+1 문제 발생
-    @JsonIgnore
+    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "nickname")
+    @JsonIdentityReference(alwaysAsId = true)
     private MemberEntity memberEntity;
 
     @ManyToOne(fetch = FetchType.LAZY)

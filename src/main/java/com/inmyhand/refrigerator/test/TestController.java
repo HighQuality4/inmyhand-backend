@@ -1,22 +1,23 @@
 package com.inmyhand.refrigerator.test;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
+import com.cleopatra.protocol.data.DataRequest;
+import com.inmyhand.refrigerator.fridge.service.ocr.ReceiptExtraction;
+import com.inmyhand.refrigerator.util.ConverterClassUtil;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.core.io.ClassPathResource;
+import org.springframework.core.io.Resource;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.cleopatra.protocol.data.DataRequest;
-import com.inmyhand.refrigerator.fridge.service.ocr.ReceiptExtraction;
-import com.inmyhand.refrigerator.util.ConverterClassUtil;
-
-import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 @Controller
 @Slf4j
@@ -30,6 +31,28 @@ public class TestController {
 		return "/app/test/first-test";
 	}
 
+	@GetMapping("/recipe")
+	public String recipe() {
+		return "/app/layout/layout";
+	}
+
+	@GetMapping("/testtt")
+	public String testtt() {
+		return "/app/layout/layout";
+	}
+
+	@PostMapping("/api/page-routes")
+	public ResponseEntity<Resource> getRouterJson() {
+		Resource resource = new ClassPathResource("view/data/router.json");
+
+		if (resource.exists()) {
+			return ResponseEntity.ok()
+					.contentType(MediaType.APPLICATION_JSON)
+					.body(resource);
+		}
+
+		return ResponseEntity.notFound().build();
+	}
 
 	@GetMapping("/test/datarequest")
 	@ResponseBody

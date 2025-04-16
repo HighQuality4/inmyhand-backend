@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:cl="http://tomatosystem.co.kr/cleopatra" xmlns:std="http://tomatosystem.co.kr/cleopatra/studio" std:sid="html-58764760" version="1.0.5481">
+  <head std:sid="head-9b428221">
+    <screen std:sid="screen-4751519d" id="default" name="default" width="1024px" height="768px" customHeight="600" customWidth="800" active="true"/>
+    <screen std:sid="screen-e553e7f9" id="tablet" name="tablet" width="500px" height="667px" customHeight="600" customWidth="800"/>
+    <screen std:sid="screen-a1a9b151" id="mobile" name="mobile" width="350px" height="525px" customHeight="600" customWidth="800"/>
+    <cl:model std:sid="model-1ddb9b7a">
+      <cl:dataset std:sid="d-set-f08f0fe2" id="embeddedRoutes">
+        <cl:datacolumnlist>
+          <cl:datacolumn std:sid="d-column-0216b84e" name="path"/>
+          <cl:datacolumn std:sid="d-column-1b4723ac" name="app"/>
+        </cl:datacolumnlist>
+      </cl:dataset>
+      <cl:submission std:sid="submission-0c125357" id="sms1" action="/api/page-routes" mediatype="application/json">
+        <cl:listener std:sid="listener-ed8579aa" name="receive" handler="onSms1Receive2"/>
+        <cl:listener std:sid="listener-0ed4a766" name="submit-success" handler="onSms1SubmitSuccess"/>
+        <cl:responsedata dataid="embeddedRoutes"/>
+      </cl:submission>
+    </cl:model>
+    <cl:appspec/>
+  </head>
+  <body std:sid="body-27e41fb4">
+    <cl:listener std:sid="listener-2c355fe8" name="load" handler="onBodyLoad"/>
+    <cl:udc std:sid="ud-control-fea31811" id="header" type="udc.header">
+      <cl:xylayoutdata std:sid="xyl-data-ca7780f6" top="0px" right="0px" left="0px" height="50px" horizontalAnchor="BOTH" verticalAnchor="TOP"/>
+    </cl:udc>
+    <cl:udc std:sid="ud-control-9b9ca4ab" type="udc.footer">
+      <cl:xylayoutdata std:sid="xyl-data-d130dd9a" right="0px" bottom="0px" left="0px" height="52px" horizontalAnchor="BOTH" verticalAnchor="BOTTOM"/>
+    </cl:udc>
+    <cl:embeddedapp std:sid="e-app-45f58e44" id="ea1">
+      <cl:listener std:sid="listener-a470ee30" name="load" handler="onEa1Load"/>
+      <cl:xylayoutdata std:sid="xyl-data-cd37c471" top="50px" right="0px" bottom="50px" left="0px" horizontalAnchor="BOTH" verticalAnchor="BOTH"/>
+    </cl:embeddedapp>
+    <cl:xylayout std:sid="xylayout-905c25e9"/>
+  </body>
+  <std:studiosetting>
+    <std:hruler/>
+    <std:vruler/>
+  </std:studiosetting>
+</html>

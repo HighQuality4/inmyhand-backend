@@ -3,6 +3,7 @@ package com.inmyhand.refrigerator.fridge.domain.dto.food;
 import lombok.*;
 
 import java.util.Date;
+import java.util.List;
 
 @Getter
 @Setter
@@ -18,4 +19,5 @@ public class FridgeFoodDTO {
     private Date saveDate;
     private Long foodCategoryId;
     private Long fridgeId;
+    private List<FridgeDTO> fridgeList;
 }
