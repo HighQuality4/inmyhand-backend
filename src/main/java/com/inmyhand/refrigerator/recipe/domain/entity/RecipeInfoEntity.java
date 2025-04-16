@@ -70,7 +70,7 @@ public class RecipeInfoEntity {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "member_id")
-    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
+    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "nickname")
     @JsonIdentityReference(alwaysAsId = true)
     private MemberEntity memberEntity;
 

@@ -28,7 +28,7 @@ public class FridgeGroupRoleService {
                 .orElseThrow(() -> new RuntimeException("해당 유저가 냉장고에 없습니다."));
 
         // 기존 역할 삭제 (단일 역할만 부여된다고 가정)
-        memberGroupRoleRepository.deleteAll(fridgeMember.getMemberGroupRoleEntities());
+        memberGroupRoleRepository.deleteAll(fridgeMember.getPermissionGroupRoleList());
 
         // 새 역할 가져오기
         GroupRoleEntity newRole = groupRoleRepository.findById(newRoleId)

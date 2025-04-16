@@ -1,6 +1,6 @@
 package com.inmyhand.refrigerator.fridge.domain.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.*;
 import com.inmyhand.refrigerator.member.domain.entity.MemberEntity;
 import jakarta.persistence.*;
 import lombok.*;
@@ -29,17 +29,21 @@ public class FridgeMemberEntity {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "member_id")
-    @JsonIgnoreProperties("fridgeMemberList")
+    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "nickname")
+    @JsonIdentityReference(alwaysAsId = true)
+
     private MemberEntity memberEntity;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "fridge_id")
-    @JsonIgnoreProperties("fridgeMemberList")
+    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
+    @JsonIdentityReference(alwaysAsId = true)
     private FridgeEntity fridgeEntity;
 
     @OneToMany(mappedBy = "fridgeMemberEntity", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonIgnoreProperties("fridgeMemberEntity")
-    private List<MemberGroupRoleEntity> memberGroupRoleEntities;
+    @JsonIgnore
+    private List<MemberGroupRoleEntity> permissionGroupRoleList;
 
     /**
      * 멤버 설정 메서드 (양방향 연관관계 처리)

@@ -83,7 +83,7 @@ public class FridgeGroupInvitationService {
         List<FridgeMemberEntity> members = fridgeMemberRepository.findByFridgeEntity_Id(fridgeId);
 
         return members.stream().map(fm -> {
-            String roleName = fm.getMemberGroupRoleEntities().stream()
+            String roleName = fm.getPermissionGroupRoleList().stream()
                     .findFirst() // 여러 역할이 있을 경우 하나만 선택
                     .map(role -> role.getGroupRoleEntity().getRoleName())
                     .orElse("member"); // 기본 역할명
@@ -105,7 +105,7 @@ public class FridgeGroupInvitationService {
                 .findByFridgeEntity_IdAndMemberEntity_Nickname(fridgeId, name)
                 .orElseThrow(() -> new RuntimeException("해당 이름의 유저가 존재하지 않습니다."));
 
-        String roleName = fridgeMember.getMemberGroupRoleEntities().stream()
+        String roleName = fridgeMember.getPermissionGroupRoleList().stream()
                 .findFirst()
                 .map(r -> r.getGroupRoleEntity().getRoleName())
                 .orElse("member");
