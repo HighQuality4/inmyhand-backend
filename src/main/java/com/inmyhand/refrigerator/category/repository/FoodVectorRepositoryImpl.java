@@ -2,6 +2,7 @@ package com.inmyhand.refrigerator.category.repository;
 
 import com.inmyhand.refrigerator.category.domain.dto.FoodVectorRequestDTO;
 import jakarta.persistence.EntityManager;
+import jakarta.persistence.NoResultException;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.postgresql.util.PGobject;
@@ -19,25 +20,31 @@ public class FoodVectorRepositoryImpl implements FoodVectorRepository {
     public Optional<FoodVectorRequestDTO> findMostSimilarCategoryByVector(String inputText, String vector) {
 
         String query = """
-        SELECT id, category_name, natural_text, embedding,
+        SELECT id, category_name, natural_text, embedding, expiration_info,
         (embedding <=> CAST(%s AS vector)) AS distance
         FROM food_vector
         ORDER BY embedding <=> CAST(%s AS vector)
         LIMIT 1
     """.formatted(vector, vector);
 
-        Object[] result = (Object[]) entityManager.createNativeQuery(query).getSingleResult();
+        try {
+            Object[] result = (Object[]) entityManager.createNativeQuery(query).getSingleResult();
 
-        PGobject embeddingObj = (PGobject) result[3];
-        String embeddingStr = embeddingObj.getValue();
-        Double distance = Double.parseDouble(result[4].toString());
+            PGobject embeddingObj = (PGobject) result[3]; // 이건 임베딩 값
+            String embeddingStr = embeddingObj.getValue();
+            System.out.println(embeddingStr);
+            // select문에서 선언한 컬럼 순서대로 나옴!!!!!
+            return Optional.of(FoodVectorRequestDTO.builder()
+                    .inputText(inputText)
+                    .categoryName((String) result[1])
+                    .naturalText((String) result[2])
+                    .expirationInfo(((Number) result[4]).intValue()) // PGObject -> Int로 변환
+                    .distance(Math.round(Double.parseDouble(result[5].toString()) * 10000.0) / 10000.0)
+                    .build());
 
-        return Optional.ofNullable(FoodVectorRequestDTO.builder()
-                .inputText(inputText)  // 사용자가 넣은 원래 텍스트
-                .categoryName((String) result[1])
-                .naturalText((String) result[2])
-                .distance(Math.round(Double.parseDouble(result[4].toString()) * 10000.0) / 10000.0)  // 소수 4자리로 반올림
-                .build());
+        } catch (NoResultException e) {
+            return Optional.empty();
+        }
     }
 
     @Override
@@ -45,14 +52,14 @@ public class FoodVectorRepositoryImpl implements FoodVectorRepository {
     public void insertFoodVector(String categoryName, String naturalText, int expirationInfo, String embeddingStr) {
         String sql = """
             INSERT INTO food_vector (category_name, natural_text, expiration_info, embedding)
-            VALUES (:categoryName, :naturalText, :expirationInfo, CAST(:embedding AS vector))
+            VALUES (:categoryName, :naturalText, :expirationInfo, CAST(:embeddingStr AS vector))
         """;
 
         jakarta.persistence.Query query = entityManager.createNativeQuery(sql)
                 .setParameter("categoryName", categoryName)
-                .setParameter("naturalText", categoryName)
+                .setParameter("naturalText", naturalText)
                 .setParameter("expirationInfo", expirationInfo)
-                .setParameter("embedding", embeddingStr);
+                .setParameter("embeddingStr", embeddingStr);
 
         query.executeUpdate();
     }

@@ -25,7 +25,6 @@ public class FridgeEntity {
 
     private String fridgeName;
 
-    private Boolean favoriteState;
 
     @OneToMany(mappedBy = "fridgeEntity", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonIgnoreProperties("fridgeEntity")

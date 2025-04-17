@@ -2,6 +2,8 @@ package com.inmyhand.refrigerator.healthinfo.domain.dto;
 
 import lombok.*;
 
+import java.util.List;
+
 @Getter
 @Setter
 @NoArgsConstructor
@@ -9,8 +11,7 @@ import lombok.*;
 @Builder
 public class HealthInfoDTO {
     private Long id;
-    private String allergy;
-    private String hateFood;
-    private String interestInfo;
-    private Long usersId;
+    private List<String> allergy;
+    private List<String> hateFood;
+    private List<String> interestInfo;
 }
