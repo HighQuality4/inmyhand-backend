@@ -27,6 +27,8 @@ public class FridgeMemberEntity {
 
     private Boolean state = true;
 
+    private Boolean favoriteState;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "member_id")
     @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "nickname")
