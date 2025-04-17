@@ -8,8 +8,7 @@ import com.inmyhand.refrigerator.member.domain.entity.MemberEntity;
 import com.inmyhand.refrigerator.recipe.domain.entity.RecipeInfoEntity;
 import com.inmyhand.refrigerator.recipe.domain.entity.RecipeStepsEntity;
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.util.Date;
@@ -17,7 +16,10 @@ import java.util.Date;
 @Entity
 @Table(name = "files")
 @Getter
+@Setter
 @NoArgsConstructor
+@Builder
+@AllArgsConstructor
 public class FilesEntity {
 
     @Id
