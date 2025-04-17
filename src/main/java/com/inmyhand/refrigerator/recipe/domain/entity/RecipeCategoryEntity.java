@@ -1,6 +1,7 @@
 package com.inmyhand.refrigerator.recipe.domain.entity;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.inmyhand.refrigerator.recipe.domain.enums.CategoryTypeEnum;
 import jakarta.persistence.*;
@@ -29,7 +30,7 @@ public class RecipeCategoryEntity {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "recipe_id", nullable = false)
-    @JsonIgnoreProperties("recipeCategoryList")
-//    @JsonBackReference
+//    @JsonIgnoreProperties("recipeCategoryList")
+    @JsonIgnore
     private RecipeInfoEntity recipeInfoEntity;
 }
