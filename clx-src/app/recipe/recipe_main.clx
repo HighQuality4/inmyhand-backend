@@ -1,25 +1,57 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:cl="http://tomatosystem.co.kr/cleopatra" xmlns:std="http://tomatosystem.co.kr/cleopatra/studio" std:sid="html-cef4f320" version="1.0.5481">
   <head std:sid="head-1bf9200e">
-    <screen std:sid="screen-00315057" id="default" name="default" width="1024px" height="768px" useCustomWidth="true" useCustomHeight="true" customHeight="1000" customWidth="600" active="true"/>
-    <screen std:sid="screen-d184c9ef" id="tablet" name="tablet" width="500px" height="667px"/>
-    <screen std:sid="screen-dfce70c5" id="mobile" name="mobile" width="350px" height="525px"/>
+    <std:metadata>
+      <std:property key="template-file" value="templates/contents_container.clx"/>
+    </std:metadata>
+    <screen std:sid="screen-23f2e4ce" id="default" name="default" width="1024px" height="768px" useCustomWidth="true" useCustomHeight="true" customHeight="2000" customWidth="600" active="true"/>
+    <screen std:sid="screen-959108c3" id="tablet" name="tablet" width="500px" height="667px"/>
+    <screen std:sid="screen-5e545b99" id="mobile" name="mobile" width="350px" height="525px"/>
     <cl:model std:sid="model-c2e79a6e"/>
     <cl:appspec/>
   </head>
   <body std:sid="body-c43e6d9f" style="background-color:#FFFFFF;" class="contents-container">
-    <cl:group std:sid="group-254b9b57">
-      <cl:formdata std:sid="f-data-9c3dc160" row="1" col="1"/>
-      <cl:responsivexylayout std:sid="r-xylayout-8ab5fe6f"/>
+    <cl:grid std:sid="grid-885f3848" id="grd1">
+      <cl:responsivexylayoutdata std:sid="rxyl-data-5ab0f347">
+        <cl:xylayoutdata std:sid="sxyl-data-0a0b7745" top="0px" right="0px" left="0px" height="1001px" horizontalAnchor="BOTH" verticalAnchor="TOP" screenid="default"/>
+      </cl:responsivexylayoutdata>
+      <cl:gridcolumn std:sid="g-column-39d8488b"/>
+      <cl:gridcolumn std:sid="g-column-bc900b59"/>
+      <cl:gridcolumn std:sid="g-column-0f961c3b"/>
+      <cl:gridcolumn std:sid="g-column-163c57f5"/>
+      <cl:gridcolumn std:sid="g-column-5f0fc7c0"/>
+      <cl:gridheader std:sid="gh-band-7daa9271">
+        <cl:gridrow std:sid="g-row-e8b63b03"/>
+        <cl:gridcell std:sid="gh-cell-e3f176a2" rowindex="0" colindex="0"/>
+        <cl:gridcell std:sid="gh-cell-12379ab9" rowindex="0" colindex="1"/>
+        <cl:gridcell std:sid="gh-cell-49714547" rowindex="0" colindex="2"/>
+        <cl:gridcell std:sid="gh-cell-f8f4461b" rowindex="0" colindex="3"/>
+        <cl:gridcell std:sid="gh-cell-d2948681" rowindex="0" colindex="4"/>
+      </cl:gridheader>
+      <cl:griddetail std:sid="gd-band-60433707">
+        <cl:gridrow std:sid="g-row-a1943aa9"/>
+        <cl:gridcell std:sid="gd-cell-6e2abad4" rowindex="0" colindex="0"/>
+        <cl:gridcell std:sid="gd-cell-dc546e3b" rowindex="0" colindex="1"/>
+        <cl:gridcell std:sid="gd-cell-29289f65" rowindex="0" colindex="2"/>
+        <cl:gridcell std:sid="gd-cell-d68019c0" rowindex="0" colindex="3"/>
+        <cl:gridcell std:sid="gd-cell-3abb6f43" rowindex="0" colindex="4"/>
+      </cl:griddetail>
+    </cl:grid>
+    <cl:output std:sid="output-38f60f7c" value="asdfasdfasdfasdfasdfsasdfasdfasdfasdfasdfsasdfasdfasdfasdfasdfsasdfasdfasdfasdfasdfsasdfasdfasdfasdfasdfsasdfasdfasdfasdfasdfsasdfasdfasdfasdfasdfs">
+      <cl:responsivexylayoutdata std:sid="rxyl-data-9fd478b1">
+        <cl:xylayoutdata std:sid="sxyl-data-20463ca2" top="1000px" right="0px" left="0px" height="36px" horizontalAnchor="BOTH" verticalAnchor="TOP" screenid="default"/>
+      </cl:responsivexylayoutdata>
+    </cl:output>
+    <cl:group std:sid="group-9c3da0e0">
+      <cl:responsivexylayoutdata std:sid="rxyl-data-3e4cba00">
+        <cl:xylayoutdata std:sid="sxyl-data-5ee7653b" top="1046px" right="0px" left="0px" height="200px" horizontalAnchor="BOTH" verticalAnchor="TOP" screenid="default"/>
+      </cl:responsivexylayoutdata>
+      <cl:output std:sid="output-7cf91fed" value="asdfasdfasdfasdfasdfsasdfasdfasdfasdfasdfsasdfasdfasdfasdfasdfsasdfasdfasdfasdfasdfsasdfasdfasdfasdfasdfsasdfasdfasdfasdfasdfsasdfasdfasdfasdfasdfs">
+        <cl:xylayoutdata std:sid="xyl-data-72a46b58" top="0px" right="0px" left="0px" height="36px" horizontalAnchor="BOTH" verticalAnchor="TOP"/>
+      </cl:output>
+      <cl:xylayout std:sid="xylayout-c0634ca2"/>
     </cl:group>
-    <cl:formlayout std:sid="f-layout-d43e1c8f" scrollable="false" hspace="0px" vspace="0px" top-margin="0px" right-margin="0px" bottom-margin="0px" left-margin="0px">
-      <cl:rows length="20" unit="PIXEL"/>
-      <cl:rows length="1" unit="FRACTION"/>
-      <cl:rows length="20" unit="PIXEL"/>
-      <cl:columns length="40" unit="PIXEL"/>
-      <cl:columns length="1" unit="FRACTION" shadetype="NONE" shadecolor="transparent"/>
-      <cl:columns length="40" unit="PIXEL"/>
-    </cl:formlayout>
+    <cl:responsivexylayout std:sid="r-xylayout-3e5555da"/>
   </body>
   <std:studiosetting>
     <std:hruler/>

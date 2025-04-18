@@ -34,25 +34,171 @@
 			});
 			
 			// Layout
-			var formLayout_1 = new cpr.controls.layouts.FormLayout();
-			formLayout_1.scrollable = false;
-			formLayout_1.horizontalSpacing = "0px";
-			formLayout_1.verticalSpacing = "0px";
-			formLayout_1.topMargin = "0px";
-			formLayout_1.rightMargin = "0px";
-			formLayout_1.bottomMargin = "0px";
-			formLayout_1.leftMargin = "0px";
-			formLayout_1.setColumns(["40px", "1fr", "40px"]);
-			formLayout_1.setRows(["20px", "1fr", "20px"]);
-			container.setLayout(formLayout_1);
+			var responsiveXYLayout_1 = new cpr.controls.layouts.ResponsiveXYLayout();
+			container.setLayout(responsiveXYLayout_1);
 			
 			// UI Configuration
+			var grid_1 = new cpr.controls.Grid("grd1");
+			grid_1.init({
+				"columns": [
+					{"width": "100px"},
+					{"width": "100px"},
+					{"width": "100px"},
+					{"width": "100px"},
+					{"width": "100px"}
+				],
+				"header": {
+					"rows": [{"height": "24px"}],
+					"cells": [
+						{
+							"constraint": {"rowIndex": 0, "colIndex": 0},
+							"configurator": function(cell){
+							}
+						},
+						{
+							"constraint": {"rowIndex": 0, "colIndex": 1},
+							"configurator": function(cell){
+							}
+						},
+						{
+							"constraint": {"rowIndex": 0, "colIndex": 2},
+							"configurator": function(cell){
+							}
+						},
+						{
+							"constraint": {"rowIndex": 0, "colIndex": 3},
+							"configurator": function(cell){
+							}
+						},
+						{
+							"constraint": {"rowIndex": 0, "colIndex": 4},
+							"configurator": function(cell){
+							}
+						}
+					]
+				},
+				"detail": {
+					"rows": [{"height": "24px"}],
+					"cells": [
+						{
+							"constraint": {"rowIndex": 0, "colIndex": 0},
+							"configurator": function(cell){
+							}
+						},
+						{
+							"constraint": {"rowIndex": 0, "colIndex": 1},
+							"configurator": function(cell){
+							}
+						},
+						{
+							"constraint": {"rowIndex": 0, "colIndex": 2},
+							"configurator": function(cell){
+							}
+						},
+						{
+							"constraint": {"rowIndex": 0, "colIndex": 3},
+							"configurator": function(cell){
+							}
+						},
+						{
+							"constraint": {"rowIndex": 0, "colIndex": 4},
+							"configurator": function(cell){
+							}
+						}
+					]
+				}
+			});
+			container.addChild(grid_1, {
+				positions: [
+					{
+						"media": "all and (min-width: 1024px)",
+						"top": "0px",
+						"right": "0px",
+						"left": "0px",
+						"height": "1001px"
+					}, 
+					{
+						"media": "all and (min-width: 500px) and (max-width: 1023.984px)",
+						"top": "0px",
+						"right": "0px",
+						"left": "0px",
+						"height": "1001px"
+					}, 
+					{
+						"media": "all and (max-width: 499.984px)",
+						"top": "0px",
+						"right": "0px",
+						"left": "0px",
+						"height": "1001px"
+					}
+				]
+			});
+			
+			var output_1 = new cpr.controls.Output();
+			output_1.value = "asdfasdfasdfasdfasdfsasdfasdfasdfasdfasdfsasdfasdfasdfasdfasdfsasdfasdfasdfasdfasdfsasdfasdfasdfasdfasdfsasdfasdfasdfasdfasdfsasdfasdfasdfasdfasdfs";
+			container.addChild(output_1, {
+				positions: [
+					{
+						"media": "all and (min-width: 1024px)",
+						"top": "1000px",
+						"right": "0px",
+						"left": "0px",
+						"height": "36px"
+					}, 
+					{
+						"media": "all and (min-width: 500px) and (max-width: 1023.984px)",
+						"top": "1000px",
+						"right": "0px",
+						"left": "0px",
+						"height": "36px"
+					}, 
+					{
+						"media": "all and (max-width: 499.984px)",
+						"top": "1000px",
+						"right": "0px",
+						"left": "0px",
+						"height": "36px"
+					}
+				]
+			});
+			
 			var group_1 = new cpr.controls.Container();
-			var responsiveXYLayout_1 = new cpr.controls.layouts.ResponsiveXYLayout();
-			group_1.setLayout(responsiveXYLayout_1);
+			var xYLayout_1 = new cpr.controls.layouts.XYLayout();
+			group_1.setLayout(xYLayout_1);
+			(function(container){
+				var output_2 = new cpr.controls.Output();
+				output_2.value = "asdfasdfasdfasdfasdfsasdfasdfasdfasdfasdfsasdfasdfasdfasdfasdfsasdfasdfasdfasdfasdfsasdfasdfasdfasdfasdfsasdfasdfasdfasdfasdfsasdfasdfasdfasdfasdfs";
+				container.addChild(output_2, {
+					"top": "0px",
+					"right": "0px",
+					"left": "0px",
+					"height": "36px"
+				});
+			})(group_1);
 			container.addChild(group_1, {
-				"colIndex": 1,
-				"rowIndex": 1
+				positions: [
+					{
+						"media": "all and (min-width: 1024px)",
+						"top": "1046px",
+						"right": "0px",
+						"left": "0px",
+						"height": "200px"
+					}, 
+					{
+						"media": "all and (min-width: 500px) and (max-width: 1023.984px)",
+						"top": "1046px",
+						"right": "0px",
+						"left": "0px",
+						"height": "200px"
+					}, 
+					{
+						"media": "all and (max-width: 499.984px)",
+						"top": "1046px",
+						"right": "0px",
+						"left": "0px",
+						"height": "200px"
+					}
+				]
 			});
 		}
 	});

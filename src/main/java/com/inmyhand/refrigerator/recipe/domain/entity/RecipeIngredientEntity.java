@@ -11,6 +11,7 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString(exclude = {"recipeInfoEntity"})
+@Builder
 public class RecipeIngredientEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -20,7 +21,7 @@ public class RecipeIngredientEntity {
     @Column(name = "ingredient_name", nullable = false)
     private String ingredientName;
 
-    @Column(name = "ingredient_group", nullable = false)
+    @Column(name = "ingredient_group")
     private String ingredientGroup;
 
     @Column(name = "ingredient_quantity", nullable = false)
@@ -34,7 +35,12 @@ public class RecipeIngredientEntity {
     @JsonIgnore
     private RecipeInfoEntity recipeInfoEntity;
 
-
+    public RecipeIngredientEntity(String ingredientName, Integer ingredientQuantity,  String ingredientUnit, RecipeInfoEntity recipeInfoEntity) {
+        this.ingredientName = ingredientName;
+        this.ingredientQuantity = ingredientQuantity;
+        this.ingredientUnit = ingredientUnit;
+        this.recipeInfoEntity = recipeInfoEntity;
+    }
 
     /**
      * 레시피 정보 엔티티와의 양방향 연관관계를 관리하는 편의 메서드

@@ -1,6 +1,7 @@
 package com.inmyhand.refrigerator.recipe.domain.entity;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.inmyhand.refrigerator.healthinfo.domain.entity.HealthInterestCategoryEntity;
 import jakarta.persistence.*;
@@ -37,11 +38,13 @@ public class AnalysisHealthInterestEntity {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "nutrient_analysis_id", nullable = false)
-    @JsonIgnoreProperties("analysisHealthInterestList")
+//    @JsonIgnoreProperties("analysisHealthInterestList")
+    @JsonIgnore
     private RecipeNutrientAnalysisEntity recipeNutrientAnalysisEntity;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "health_Interest_category_id")
-    @JsonIgnoreProperties("analysisHealthInterestList")
+//    @JsonIgnoreProperties("analysisHealthInterestList")
+    @JsonIgnore
     private HealthInterestCategoryEntity healthInterestCategoryEntity;
 }
