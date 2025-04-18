@@ -5,15 +5,17 @@ import com.inmyhand.refrigerator.category.EmbeddingUtil;
 import com.inmyhand.refrigerator.category.domain.dto.FoodVectorRequestDTO;
 import com.inmyhand.refrigerator.category.domain.dto.PromptResponseDTO;
 import com.inmyhand.refrigerator.category.repository.FoodVectorRepository;
+import com.inmyhand.refrigerator.fridge.domain.dto.ReceiptDTO;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
 
-import java.util.Arrays;
-import java.util.List;
-import java.util.Locale;
-import java.util.Optional;
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.*;
 import java.util.concurrent.CompletableFuture;
 import java.util.stream.Collectors;
 
@@ -28,10 +30,10 @@ public class AsyncService {
     private final AsyncInsertService asyncInsertService;
 
     @Async
-    public CompletableFuture<FoodVectorRequestDTO> fallbackForInput(String inputText, String dummy) {
+    public CompletableFuture<ReceiptDTO> fallbackForInput(ReceiptDTO receiptDTO, PromptResponseDTO catData) {
         try {
             // 1. 카테고리 + 유통기한 + 설명문 한 번에 추출
-            PromptResponseDTO catData = claudeUtil.getCombinedCategoryAndExplanation(inputText);
+            // PromptResponseDTO catData = claudeUtil.getCombinedCategoryAndExplanation(inputText);
 
             // 2. 임베딩 생성 (catData.naturalText 기준)
             Float[] embedding = embeddingUtil.getEmbedding(List.of(catData.getNaturalText())).get(0);
@@ -49,16 +51,28 @@ public class AsyncService {
                     embedding
             );
 
-            // 5. 결과 DTO 구성
-            FoodVectorRequestDTO result = FoodVectorRequestDTO.builder()
-                    .inputText(inputText)
-                    .categoryName(catData.getCategory())
-                    .expirationInfo(catData.getExpirationInfo())
-                    .naturalText(catData.getNaturalText())
-                    .distance(0.0)
-                    .build();
+            // 5. DTO에 결과 반영
+            receiptDTO.setCategory(catData.getCategory());
 
-            return CompletableFuture.completedFuture(result);
+            if (receiptDTO.getPurchaseDate() != null) {
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+
+                // 1. Date → LocalDate (구매일을 서울 자정 기준으로 변환)
+                LocalDate purchase = receiptDTO.getPurchaseDate().toInstant()
+                        .atZone(ZoneId.of("Asia/Seoul"))
+                        .toLocalDate();
+
+                // 2. 유통기한 일수 더하기
+                LocalDate expire = purchase.plusDays(catData.getExpirationInfo());
+
+                // 3. LocalDate → Date (서울 자정 기준으로 Date 변환)
+                Date expireDate = Date.from(expire.atStartOfDay(ZoneId.of("Asia/Seoul")).toInstant());
+
+                // 4. 저장
+                receiptDTO.setExpirationDate(expireDate);
+            }
+
+            return CompletableFuture.completedFuture(receiptDTO);
 
         } catch (Exception e) {
             log.warn("폴백 처리 실패: {}", e.getMessage());
@@ -67,8 +81,10 @@ public class AsyncService {
     }
 
     @Async
-    public CompletableFuture<FoodVectorRequestDTO> processInput(String inputText) {
+    public CompletableFuture<ReceiptDTO> processInput(ReceiptDTO receiptDTO) {
         try {
+            String inputText = receiptDTO.getProduct();
+
             // 1. 설명 생성 → 제거 (이제 Claude 한 번만 호출)
             // 2. Claude 통합 호출 결과
             PromptResponseDTO catData = claudeUtil.getCombinedCategoryAndExplanation(inputText);
@@ -85,10 +101,31 @@ public class AsyncService {
 
             // 5. fallback 판단
             if (optionalResult.isEmpty() || optionalResult.get().getDistance() > 0.28) {
-                return fallbackForInput(inputText, null); // dummy 자리
+                return fallbackForInput(receiptDTO, catData); // dummy 자리
             }
 
-            return CompletableFuture.completedFuture(optionalResult.get());
+            // 6. Claude 결과를 dto에 반영
+            receiptDTO.setCategory(catData.getCategory());
+
+            if (receiptDTO.getPurchaseDate() != null) {
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+
+                // 1. Date → LocalDate (구매일을 서울 자정 기준으로 변환)
+                LocalDate purchase = receiptDTO.getPurchaseDate().toInstant()
+                        .atZone(ZoneId.of("Asia/Seoul"))
+                        .toLocalDate();
+
+                // 2. 유통기한 일수 더하기
+                LocalDate expire = purchase.plusDays(catData.getExpirationInfo());
+
+                // 3. LocalDate → Date (서울 자정 기준으로 Date 변환)
+                Date expireDate = Date.from(expire.atStartOfDay(ZoneId.of("Asia/Seoul")).toInstant());
+
+                // 4. 저장
+                receiptDTO.setExpirationDate(expireDate);
+            }
+
+            return CompletableFuture.completedFuture(receiptDTO);
 
         } catch (Exception e) {
             log.warn("processInput 실패: {}", e.getMessage());
