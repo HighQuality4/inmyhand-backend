@@ -126,7 +126,7 @@ public class ReceiptExtraction {
      *
      * @param response
      * @return
-     * AI 응답에서 JSON 부분만 추출하는 도우미 메소드
+     *  JSON 부분만 추출하는 도우미 메소드
      */
     public String extractJsonFromResponse(String response) {
 
