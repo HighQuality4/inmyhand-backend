@@ -1658,6 +1658,10 @@ body.cl-has-modal {
 .contents-container > .cl-layout.cl-scrollbar::-webkit-scrollbar {
   display: none;
 }
+.contents-container > .cl-scrollbar {
+  padding: 20px 40px;
+  box-sizing: border-box !important;
+}
 .page-nav {
   text-align: center;
   color: #856C66;
