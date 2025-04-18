@@ -3,6 +3,7 @@ package com.inmyhand.refrigerator.category.service;
 import com.inmyhand.refrigerator.category.EmbeddingUtil;
 import com.inmyhand.refrigerator.category.domain.dto.FoodVectorRequestDTO;
 import com.inmyhand.refrigerator.category.repository.FoodVectorRepository;
+import com.inmyhand.refrigerator.fridge.domain.dto.ReceiptDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -31,9 +32,9 @@ public class FoodVectorService {
         foodVectorRepository.insertFoodVector(categoryName, naturalText, expirationInfo, embeddingStr);
     }
 
-    public List<FoodVectorRequestDTO> findSimilarCategories(List<String> inputTextList) {
+    public List<ReceiptDTO> findSimilarCategories(List<ReceiptDTO> receiptList) {
 
-        List<CompletableFuture<FoodVectorRequestDTO>> futures = inputTextList.stream()
+        List<CompletableFuture<ReceiptDTO>> futures = receiptList.stream()
                 .map(asyncService::processInput)
                 .toList();
 

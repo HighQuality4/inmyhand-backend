@@ -1655,15 +1655,16 @@ body.cl-has-modal {
   font-display: swap;
   src: url("fonts/KimjungchulMyungjo-Regular.ttf") format("truetype");
 }
-@font-face {
-  font-family: "KimjungchulMyungjo-Light";
-  font-style: normal;
-  font-display: swap;
-  src: url("fonts/KimjungchulMyungjo-Light.ttf") format("truetype");
+.contents-container > .cl-layout.cl-scrollbar::-webkit-scrollbar {
+  display: none;
 }
-@font-face {
-  font-family: "KimjungchulMyungjo-Bold";
-  font-weight: 600;
-  font-display: swap;
-  src: url("fonts/KimjungchulMyungjo-Bold.ttf") format("truetype");
+.contents-container > .cl-scrollbar {
+  padding: 20px 40px;
+  box-sizing: border-box !important;
+}
+.page-nav {
+  text-align: center;
+  color: #856C66;
+  font-weight: bold;
+  font-size: 10px;
 }

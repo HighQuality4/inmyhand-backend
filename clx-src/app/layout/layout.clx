@@ -4,6 +4,7 @@
     <screen std:sid="screen-4751519d" id="default" name="default" width="1024px" height="768px" customHeight="600" customWidth="800" active="true"/>
     <screen std:sid="screen-e553e7f9" id="tablet" name="tablet" width="500px" height="667px" customHeight="600" customWidth="800"/>
     <screen std:sid="screen-a1a9b151" id="mobile" name="mobile" width="350px" height="525px" customHeight="600" customWidth="800"/>
+    <link std:sid="link-c509b0ab" href="../../theme/custom/layout.part.less" rel="stylesheet" type="text/css"/>
     <cl:model std:sid="model-1ddb9b7a">
       <cl:dataset std:sid="d-set-f08f0fe2" id="embeddedRoutes">
         <cl:datacolumnlist>
@@ -19,22 +20,143 @@
     </cl:model>
     <cl:appspec/>
   </head>
-  <body std:sid="body-27e41fb4">
+  <body std:sid="body-27e41fb4" style="background-color:#F3F1F0;">
     <cl:listener std:sid="listener-2c355fe8" name="load" handler="onBodyLoad"/>
-    <cl:udc std:sid="ud-control-fea31811" id="header" type="udc.header">
-      <cl:xylayoutdata std:sid="xyl-data-ca7780f6" top="0px" right="0px" left="0px" height="50px" horizontalAnchor="BOTH" verticalAnchor="TOP"/>
-    </cl:udc>
-    <cl:udc std:sid="ud-control-9b9ca4ab" type="udc.footer">
-      <cl:xylayoutdata std:sid="xyl-data-d130dd9a" right="0px" bottom="0px" left="0px" height="52px" horizontalAnchor="BOTH" verticalAnchor="BOTTOM"/>
-    </cl:udc>
-    <cl:embeddedapp std:sid="e-app-45f58e44" id="ea1">
-      <cl:listener std:sid="listener-a470ee30" name="load" handler="onEa1Load"/>
-      <cl:xylayoutdata std:sid="xyl-data-cd37c471" top="50px" right="0px" bottom="50px" left="0px" horizontalAnchor="BOTH" verticalAnchor="BOTH"/>
-    </cl:embeddedapp>
-    <cl:xylayout std:sid="xylayout-905c25e9"/>
+    <cl:group std:sid="group-7f65d39e" id="layout-container" style="box-shadow:outset 0 4px 8px 0px auto;" class="layout-container">
+      <cl:xylayoutdata std:sid="xyl-data-322016e8" top="0px" bottom="0px" width="600px" horizontalAnchor="CENTER" verticalAnchor="BOTH"/>
+      <cl:group std:sid="group-749c8134" id="header" style="background-color:#FBF3EB;">
+        <cl:verticaldata std:sid="v-data-b8d25ef5" width="100%" height="73px" autosize="width"/>
+        <cl:output std:sid="output-970e83fe" style="color:#856C66; font-weight:bold; font-size:20px; font-family:Kim jung chul Myungjo Regular;" value="내손안의 냉장고">
+          <cl:formdata std:sid="f-data-0931ddfe" row="1" col="1" rowspan="1" colspan="1"/>
+        </cl:output>
+        <cl:group std:sid="group-331ea24d" id="recipeRegistration">
+          <cl:formdata std:sid="f-data-0252dad1" width="100" height="9" row="1" col="5" rowspan="1" colspan="1"/>
+          <cl:img std:sid="image-fe397534" src="../../theme/images/recipe_registration.svg">
+            <cl:formdata std:sid="f-data-54f2a24f" row="0" col="0"/>
+          </cl:img>
+          <cl:output std:sid="output-0a859d74" class="page-nav" value="레시피 등록">
+            <cl:formdata std:sid="f-data-c23f5367" row="2" col="0"/>
+          </cl:output>
+          <cl:formlayout std:sid="f-layout-487024c8" scrollable="false" hspace="0px" vspace="0px" top-margin="0px" right-margin="0px" bottom-margin="0px" left-margin="0px">
+            <cl:rows length="35" unit="PIXEL"/>
+            <cl:rows length="5" unit="PIXEL"/>
+            <cl:rows length="1" unit="FRACTION" autoSizing="true"/>
+            <cl:columns length="1" unit="FRACTION"/>
+          </cl:formlayout>
+        </cl:group>
+        <cl:group std:sid="group-e9d6147f" id="receiptPhoto">
+          <cl:formdata std:sid="f-data-22c6eb23" row="1" col="3" rowspan="1" colspan="1"/>
+          <cl:img std:sid="image-e615c79d" src="../../theme/images/receipt_photo.svg">
+            <cl:formdata std:sid="f-data-dd4bc157" row="0" col="0"/>
+          </cl:img>
+          <cl:output std:sid="output-4cd490c3" class="page-nav" value="영수증 촬영">
+            <cl:formdata std:sid="f-data-b94b5f64" row="2" col="0"/>
+          </cl:output>
+          <cl:formlayout std:sid="f-layout-65babd2b" scrollable="false" hspace="0px" vspace="0px" top-margin="0px" right-margin="0px" bottom-margin="0px" left-margin="0px">
+            <cl:rows length="35" unit="PIXEL"/>
+            <cl:rows length="5" unit="PIXEL"/>
+            <cl:rows length="1" unit="FRACTION" autoSizing="true"/>
+            <cl:columns length="1" unit="FRACTION"/>
+          </cl:formlayout>
+        </cl:group>
+        <cl:formlayout std:sid="f-layout-1ed27eb3" scrollable="false" hspace="0px" vspace="0px" top-margin="0px" right-margin="0px" bottom-margin="0px" left-margin="0px">
+          <cl:rows length="10" unit="PIXEL" shadetype="NONE" shadecolor="transparent"/>
+          <cl:rows length="1" unit="FRACTION" shadetype="NONE" shadecolor="transparent"/>
+          <cl:rows length="10" unit="PIXEL" shadetype="NONE" shadecolor="transparent"/>
+          <cl:columns length="40" unit="PIXEL"/>
+          <cl:columns length="1" unit="FRACTION"/>
+          <cl:columns length="1" unit="FRACTION"/>
+          <cl:columns length="48" unit="PIXEL" shadetype="NONE" shadecolor="transparent"/>
+          <cl:columns length="10" unit="PIXEL"/>
+          <cl:columns length="48" unit="PIXEL"/>
+          <cl:columns length="40" unit="PIXEL" shadetype="NONE" shadecolor="transparent"/>
+        </cl:formlayout>
+      </cl:group>
+      <cl:embeddedapp std:sid="e-app-45f58e44" id="ea1">
+        <cl:verticaldata std:sid="v-data-4b422163" width="100%" height="calc(100% - 143px)" autosize="none"/>
+      </cl:embeddedapp>
+      <cl:group std:sid="group-ac7cc0a8" id="footer" style="background-color:#FFFFFF;" class="page-nav">
+        <cl:verticaldata std:sid="v-data-2f8d8f61" width="600px" height="70px" autosize="width"/>
+        <cl:group std:sid="group-7d23e362">
+          <cl:formdata std:sid="f-data-202cd3d0" row="1" col="1"/>
+          <cl:output std:sid="output-fb5110e5" class="page-nav" value="홈">
+            <cl:formdata std:sid="f-data-d5133a57" row="1" col="0"/>
+          </cl:output>
+          <cl:img std:sid="image-a3b67c36" src="../../theme/images/home.svg">
+            <cl:formdata std:sid="f-data-072cf112" row="0" col="0"/>
+          </cl:img>
+          <cl:formlayout std:sid="f-layout-8903d60d" scrollable="false" hspace="0px" vspace="0px" top-margin="0px" right-margin="0px" bottom-margin="0px" left-margin="0px">
+            <cl:rows length="30" unit="PIXEL"/>
+            <cl:rows length="1" unit="FRACTION"/>
+            <cl:columns length="1" unit="FRACTION"/>
+          </cl:formlayout>
+        </cl:group>
+        <cl:group std:sid="group-fc6a12c1">
+          <cl:formdata std:sid="f-data-cbe8fefc" row="1" col="3"/>
+          <cl:output std:sid="output-16ca9855" class="page-nav" value="냉장고">
+            <cl:formdata std:sid="f-data-a67c9362" row="1" col="0"/>
+          </cl:output>
+          <cl:img std:sid="image-e1057535" src="../../theme/images/refrigerator.svg">
+            <cl:formdata std:sid="f-data-4a94daa7" row="0" col="0"/>
+          </cl:img>
+          <cl:formlayout std:sid="f-layout-5a550272" scrollable="false" hspace="0px" vspace="0px" top-margin="0px" right-margin="0px" bottom-margin="0px" left-margin="0px">
+            <cl:rows length="30" unit="PIXEL"/>
+            <cl:rows length="1" unit="FRACTION"/>
+            <cl:columns length="1" unit="FRACTION"/>
+          </cl:formlayout>
+        </cl:group>
+        <cl:group std:sid="group-b176307a">
+          <cl:formdata std:sid="f-data-c843dcc0" row="1" col="5"/>
+          <cl:output std:sid="output-bf9b9f5d" class="page-nav" value="레시피">
+            <cl:formdata std:sid="f-data-dde24b2b" row="1" col="0"/>
+          </cl:output>
+          <cl:img std:sid="image-e649c99f" src="../../theme/images/recipe.svg">
+            <cl:formdata std:sid="f-data-996c43c1" row="0" col="0"/>
+          </cl:img>
+          <cl:formlayout std:sid="f-layout-27f5feba" scrollable="false" hspace="0px" vspace="0px" top-margin="0px" right-margin="0px" bottom-margin="0px" left-margin="0px">
+            <cl:rows length="30" unit="PIXEL"/>
+            <cl:rows length="1" unit="FRACTION"/>
+            <cl:columns length="1" unit="FRACTION"/>
+          </cl:formlayout>
+        </cl:group>
+        <cl:group std:sid="group-50ac48b6">
+          <cl:formdata std:sid="f-data-3c4fcb69" row="1" col="7"/>
+          <cl:output std:sid="output-44a72287" class="page-nav" value="로그인">
+            <cl:formdata std:sid="f-data-4e99effe" row="1" col="0"/>
+          </cl:output>
+          <cl:img std:sid="image-652cf025" src="../../theme/images/user.svg">
+            <cl:formdata std:sid="f-data-5b72a7b6" row="0" col="0"/>
+          </cl:img>
+          <cl:formlayout std:sid="f-layout-00363438" scrollable="false" hspace="0px" vspace="0px" top-margin="0px" right-margin="0px" bottom-margin="0px" left-margin="0px">
+            <cl:rows length="30" unit="PIXEL"/>
+            <cl:rows length="1" unit="FRACTION"/>
+            <cl:columns length="1" unit="FRACTION"/>
+          </cl:formlayout>
+        </cl:group>
+        <cl:formlayout std:sid="f-layout-74818fd6" scrollable="false" hspace="0px" vspace="0px" top-margin="0px" right-margin="0px" bottom-margin="0px" left-margin="0px">
+          <cl:rows length="10" unit="PIXEL"/>
+          <cl:rows length="50" unit="PIXEL"/>
+          <cl:rows length="10" unit="PIXEL"/>
+          <cl:columns length="40" unit="PIXEL" shadetype="NONE" shadecolor="transparent"/>
+          <cl:columns length="40" unit="PIXEL"/>
+          <cl:columns length="1" unit="FRACTION"/>
+          <cl:columns length="40" unit="PIXEL" shadetype="NONE" shadecolor="transparent"/>
+          <cl:columns length="1" unit="FRACTION"/>
+          <cl:columns length="40" unit="PIXEL"/>
+          <cl:columns length="1" unit="FRACTION" shadetype="NONE" shadecolor="transparent"/>
+          <cl:columns length="40" unit="PIXEL"/>
+          <cl:columns length="40" unit="PIXEL"/>
+        </cl:formlayout>
+      </cl:group>
+      <cl:verticallayout std:sid="v-layout-2c35f75f" spacing="0"/>
+    </cl:group>
+    <cl:xylayout std:sid="xylayout-5473e704"/>
   </body>
   <std:studiosetting>
-    <std:hruler/>
+    <std:hruler>
+      <std:guide position="465"/>
+      <std:guide position="765"/>
+    </std:hruler>
     <std:vruler/>
   </std:studiosetting>
 </html>
