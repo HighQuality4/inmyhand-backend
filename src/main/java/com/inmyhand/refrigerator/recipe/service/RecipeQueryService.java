@@ -1,7 +1,7 @@
 package com.inmyhand.refrigerator.recipe.service;
 
 import com.inmyhand.refrigerator.recipe.domain.dto.RecipeDetailDTO;
-import com.inmyhand.refrigerator.recipe.domain.dto.RecipeSummaryDTO;
+import com.inmyhand.refrigerator.recipe.domain.dto2.RecipeSummaryDTO;
 
 import java.util.List;
 
