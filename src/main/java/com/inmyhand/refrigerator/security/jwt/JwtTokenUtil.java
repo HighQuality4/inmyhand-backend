@@ -1,6 +1,7 @@
 package com.inmyhand.refrigerator.security.jwt;
 
 
+import com.inmyhand.refrigerator.member.domain.entity.MemberEntity;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
@@ -11,6 +12,7 @@ import javax.crypto.SecretKey;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.UUID;
 
 @Component
 public class JwtTokenUtil {
@@ -19,18 +21,25 @@ public class JwtTokenUtil {
     private String secret = "ZHNhZmxrZGpzZmxrZGpzYWZsa2pkc2Zsa2RqZmxra2pkc2Zsa2pkc2Zsa2pzZGZsa3NkamZsa3NqZGZsa2oK";  // Base64로 인코딩된 시크릿 키
 
     //    @Value("${jwt.expiration}")
-    private long expiration = 86400000L;  // 24시간(ms 단위)
+    private final long access_expiration = 3600000L;  // 1시간(ms 단위)
+
+    private final long refresh_expiration = 604800000L; // 7일
 
     // 토큰 생성
-    public String generateToken(UserDetails userDetails) {
+    public String generateAccessToken(MemberEntity member) {
         Map<String, Object> claims = new HashMap<>();
         // 추가 클레임 설정 가능
-        return createToken(claims, userDetails.getUsername());
+        return createToken(claims, member.getEmail(), access_expiration);
     }
 
-    private String createToken(Map<String, Object> claims, String subject) {
+    public String generateRefreshToken(MemberEntity member) {
+        Map<String, Object> claims = new HashMap<>();
+        return createToken(claims, member.getEmail(), refresh_expiration);
+    }
+
+    private String createToken(Map<String, Object> claims, String subject, long expiration) {
         Date now = new Date();
-        Date expiryDate = new Date(now.getTime() + expiration);
+        Date expiryDate = new Date(now.getTime() + access_expiration);
 
         return Jwts.builder()
                 .claims(claims)  // setClaims() -> claims()로 변경
