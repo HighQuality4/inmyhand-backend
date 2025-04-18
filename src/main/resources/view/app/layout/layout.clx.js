@@ -19,7 +19,10 @@
 			 * @author gyrud
 			 ************************************************/
 
-			let pathName = "";
+			const embeddedRoutesTest = [
+			  { path: "/recipe", loadApp: "app/recipe/recipe_main" },
+			  { path: /^\/recipe\/(\d+)$/, loadApp: "app/recipe/recipe_detail" },
+			];
 
 			/*
 			 * 루트 컨테이너에서 load 이벤트 발생 시 호출.
@@ -29,20 +32,19 @@
 				const subList = app.lookup("sms1");
 				subList.send();
 				
-				pathName = window.location.pathname;
-			}
-
-			/*
-			 * 서브미션에서 submit-success 이벤트 발생 시 호출.
-			 * 통신이 성공하면 발생합니다.
-			 */
-			function onSms1SubmitSuccess(e){
-
-				var embeddedRoutes = app.lookup("embeddedRoutes");
-				var voRow = embeddedRoutes.findFirstRow("path == '" + pathName + "'");
+				const pathName = window.location.pathname;
 				
-				if (voRow != null) {
-					const vsAppId = voRow.getValue("app");
+				const match = embeddedRoutesTest.find(route => {
+				  if (typeof route.path === "string") {
+				    return route.path === pathName;
+				  } else if (route.path instanceof RegExp) {
+				    return route.path.test(pathName);
+				  }
+				  return false;
+				});
+				
+				if (match != null) {
+					const vsAppId = match.loadApp;
 					const vcEmb = app.lookup("ea1");
 					
 					cpr.core.App.load(vsAppId, function(loadedApp){ 
@@ -53,9 +55,32 @@
 					
 					app.getContainer().redraw();	
 				}
-				
-			   
-			};
+			}
+
+			/*
+			 * 서브미션에서 submit-success 이벤트 발생 시 호출.
+			 * 통신이 성공하면 발생합니다.
+			 */
+			//function onSms1SubmitSuccess(e){
+			//
+			//	var embeddedRoutes = app.lookup("embeddedRoutes");
+			//	var voRow = embeddedRoutes.findFirstRow("path == '" + pathName + "'");
+			//	
+			//	if (voRow != null) {
+			//		const vsAppId = voRow.getValue("app");
+			//		const vcEmb = app.lookup("ea1");
+			//		
+			//		cpr.core.App.load(vsAppId, function(loadedApp){ 
+			//			if(loadedApp){
+			//				vcEmb.app = loadedApp; 
+			//			} 
+			//		});
+			//		
+			//		app.getContainer().redraw();	
+			//	}
+			//	
+			//   
+			//};
 			// End - User Script
 			
 			// Header
@@ -98,7 +123,7 @@
 			var group_1 = new cpr.controls.Container("layout-container");
 			group_1.style.setClasses(["layout-container"]);
 			group_1.style.css({
-				"box-shadow" : "outset 0 4px 8px 0px auto"
+				"box-shadow" : "0 2px 6px rgba(0, 0, 0, 0.1)"
 			});
 			var verticalLayout_1 = new cpr.controls.layouts.VerticalLayout();
 			verticalLayout_1.spacing = 0;
