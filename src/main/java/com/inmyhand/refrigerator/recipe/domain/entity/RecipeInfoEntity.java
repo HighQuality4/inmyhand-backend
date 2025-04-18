@@ -22,6 +22,7 @@ import java.util.List;
 @ToString(exclude = {"memberEntity", "parentRecipe", "childRecipes", "recipeStepsList",
         "recipeIngredientList", "recipeCommentList", "recipeLikesList", "recipeCategoryList",
         "recipeViewsList", "recipeNutrientAnalysisList", "filesEntities"})
+@Builder
 public class RecipeInfoEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -49,7 +50,7 @@ public class RecipeInfoEntity {
     private Integer servings;
 
     @Column(name = "recipe_depth", nullable = false)
-    private Integer recipeDepth = 0; // 기본 값을 0으로 지정
+    private Integer recipeDepth = 1; // 기본 값을 1으로 지정
 
     @Column(name = "created_at", columnDefinition = "timestamp default now()")
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
@@ -192,8 +193,17 @@ public class RecipeInfoEntity {
             parentRecipe.getChildRecipes().add(this);
         }
     }
-    /*
 
+
+    public void addRecipeStep(RecipeStepsEntity step) {
+        if (this.recipeStepsList == null) {
+            this.recipeStepsList = new ArrayList<>();
+        }
+        this.recipeStepsList.add(step);
+        step.setRecipeInfoEntity(this);
+    }
+
+    /*
      // 부모 레시피와의 연관관계 제거
 
         // 예시 1: 자식 레시피 추가

@@ -13,8 +13,8 @@
 /* 내부에 아이템을 갖는 컨트롤의 Disabled된 경우, 각 아이템이 선택된 경우 배경 색상 */
 /* 모든 UIControl 공통 스타일 */
 .cl-control {
-  font: 14px "맑은 고딕", "Malgun Gothic", sans-serif;
-  color: #333;
+  font: 14px "김정철 명조 레귤러", "KimjungchulMyungjo-Regular", sans-serif;
+  color: #000000;
 }
 /* 오류 발생시 표시되는 메시지 스타일 */
 .cl-scrollbar.cl-touchdevice::-webkit-scrollbar {
@@ -44,9 +44,9 @@ body.cl-has-modal {
 }
 /* 넘버 에디터  */
 .cl-numbereditor {
-  font: 14px "맑은 고딕", "Malgun Gothic", sans-serif;
+  font: 14px "김정철 명조 레귤러", "KimjungchulMyungjo-Regular", sans-serif;
   border: 1px solid #bbb;
-  color: #333;
+  color: #000000;
   /* 넘버 에디터 텍스트 */
   /* 넘버 에디터 클리어 버튼*/
   /* 넘버 에디터 disabled 상태  */
@@ -81,8 +81,8 @@ body.cl-has-modal {
 }
 /* 데이트 인풋 */
 .cl-dateinput {
-  font: 14px "맑은 고딕", "Malgun Gothic", sans-serif;
-  color: #333;
+  font: 14px "김정철 명조 레귤러", "KimjungchulMyungjo-Regular", sans-serif;
+  color: #000000;
   border: 1px solid #bbb;
   text-align: left;
   /* 텍스트 */
@@ -219,10 +219,10 @@ body.cl-has-modal {
 /* 캘린더 disabled 상태 */
 /* 리스트 박스 */
 .cl-listbox {
-  font: 14px "맑은 고딕", "Malgun Gothic", sans-serif;
+  font: 14px "김정철 명조 레귤러", "KimjungchulMyungjo-Regular", sans-serif;
   background-color: #fff;
   border: 1px solid #bbb;
-  color: #333;
+  color: #000000;
   /* 리스트 박스내 아이템 목록 박스 */
 }
 .cl-listbox .cl-listbox-list {
@@ -268,8 +268,8 @@ body.cl-has-modal {
 }
 /* 링크드 리스트 박스 루트 */
 .cl-linkedlistbox {
-  font: 14px "맑은 고딕", "Malgun Gothic", sans-serif;
-  color: #333;
+  font: 14px "김정철 명조 레귤러", "KimjungchulMyungjo-Regular", sans-serif;
+  color: #000000;
   /* 리스트 박스 */
   /* 링크드리스트박스 disabled 상태 */
 }
@@ -331,7 +331,7 @@ body.cl-has-modal {
 }
 /* 메뉴 루트 */
 .cl-menu {
-  font: 14px "맑은 고딕", "Malgun Gothic", sans-serif;
+  font: 14px "김정철 명조 레귤러", "KimjungchulMyungjo-Regular", sans-serif;
   /* 메뉴 리스트 */
 }
 .cl-menu .cl-menu-list {
@@ -351,7 +351,7 @@ body.cl-has-modal {
   background-color: #ccc;
 }
 .cl-menu .cl-menu-list .cl-menu-item {
-  color: #333;
+  color: #000000;
   /* 메뉴 아이템 아이콘 */
   /* 메뉴 아이템 텍스트 */
   /* 메뉴 아이템 단축키 */
@@ -398,8 +398,8 @@ body.cl-has-modal {
 }
 /* 파일 업로드 루트 */
 .cl-fileupload {
-  font: 14px "맑은 고딕", "Malgun Gothic", sans-serif;
-  color: #333;
+  font: 14px "김정철 명조 레귤러", "KimjungchulMyungjo-Regular", sans-serif;
+  color: #000000;
   border: 1px solid #bbb;
   background-color: #fff;
   /* 파일 업로드 내 텍스트 */
@@ -452,8 +452,8 @@ body.cl-has-modal {
 }
 /* 버튼 */
 .cl-button {
-  font: 14px "맑은 고딕", "Malgun Gothic", sans-serif;
-  color: #333;
+  font: 14px "김정철 명조 레귤러", "KimjungchulMyungjo-Regular", sans-serif;
+  color: #000000;
   background-image: linear-gradient(#FCFEFF, #E0E1E2);
   border-radius: 4px;
   border: solid 1px #959697;
@@ -481,14 +481,14 @@ body.cl-has-modal {
 /* 아코디언 */
 .cl-accordion {
   border: 1px solid #bbb;
-  color: #333;
-  font: 14px "맑은 고딕", "Malgun Gothic", sans-serif;
+  color: #000000;
+  font: 14px "김정철 명조 레귤러", "KimjungchulMyungjo-Regular", sans-serif;
   /* 아코디언의 각 헤더 */
   /* 아코디언 컨텐츠를 감싸는 영역 */
   /* 아코디언 섹션 */
 }
 .cl-accordion .cl-accordion-header {
-  color: #333;
+  color: #000000;
   /* 아코디언 펼침 버튼 */
   /* 아코디언 헤더에 마우스가 호버되었을 떄의 스타일 */
   /* 아코디언 헤더 비활성화 상태 */
@@ -536,8 +536,8 @@ body.cl-has-modal {
 }
 /* 인풋 박스 루트 */
 .cl-inputbox {
-  font: 14px "맑은 고딕", "Malgun Gothic", sans-serif;
-  color: #333;
+  font: 14px "김정철 명조 레귤러", "KimjungchulMyungjo-Regular", sans-serif;
+  color: #000000;
   border: 1px solid #bbb;
   background-color: #fff;
   /* 인풋 박스 텍스트 */
@@ -559,8 +559,8 @@ body.cl-has-modal {
 }
 /* 서치 인풋 */
 .cl-searchinput {
-  font: 14px "맑은 고딕", "Malgun Gothic", sans-serif;
-  color: #333;
+  font: 14px "김정철 명조 레귤러", "KimjungchulMyungjo-Regular", sans-serif;
+  color: #000000;
   border: 1px solid #bbb;
   text-align: left;
   /* 서치 인풋 텍스트 */
@@ -632,8 +632,8 @@ body.cl-has-modal {
 }
 /* 아웃풋 */
 .cl-output {
-  font: 14px "맑은 고딕", "Malgun Gothic", sans-serif;
-  color: #333;
+  font: 14px "김정철 명조 레귤러", "KimjungchulMyungjo-Regular", sans-serif;
+  color: #000000;
 }
 .cl-output.cl-disabled {
   color: #666;
@@ -652,9 +652,9 @@ body.cl-has-modal {
 }
 /* 텍스트 에리어 */
 .cl-textarea {
-  font: 14px "맑은 고딕", "Malgun Gothic", sans-serif;
+  font: 14px "김정철 명조 레귤러", "KimjungchulMyungjo-Regular", sans-serif;
   border: 1px solid #bbb;
-  color: #333;
+  color: #000000;
   /* 텍스트 에리어 텍스트 */
   /* 텍스트 에리어 - 비활성화 */
   /* 텍스트 에리어 - 포커스 */
@@ -787,10 +787,10 @@ body.cl-has-modal {
 }
 /* 마스크 에디터 루트 */
 .cl-maskeditor {
-  font: 14px "맑은 고딕", "Malgun Gothic", sans-serif;
+  font: 14px "김정철 명조 레귤러", "KimjungchulMyungjo-Regular", sans-serif;
   border: 1px solid #bbb;
   background-color: #fff;
-  color: #333;
+  color: #000000;
   /* 마스크 에디터 텍스트 */
   /* 마스크 에디터 - 포커스 */
   /* 마스크 에디터 - disabled */
@@ -806,8 +806,8 @@ body.cl-has-modal {
 }
 /* 콤보 박스 스타일 */
 .cl-combobox {
-  font: 14px "맑은 고딕", "Malgun Gothic", sans-serif;
-  color: #333;
+  font: 14px "김정철 명조 레귤러", "KimjungchulMyungjo-Regular", sans-serif;
+  color: #000000;
   border: 1px solid #bbb;
   background-color: #fff;
   /* 선택된 아이템의 아이콘 */
@@ -829,9 +829,9 @@ body.cl-has-modal {
 }
 /* 콤보 박스의 리스트 스타일 */
 .cl-combobox-list {
-  font: 14px "맑은 고딕", "Malgun Gothic", sans-serif;
+  font: 14px "김정철 명조 레귤러", "KimjungchulMyungjo-Regular", sans-serif;
   border: 1px solid #1369C5;
-  color: #333;
+  color: #000000;
   /* 리스트의 쉐도우 */
   /* 콤보박스 위에 표시될때 상태 */
   /* 콤보박스 아래에 표시될때 상태 */
@@ -894,8 +894,8 @@ body.cl-has-modal {
 }
 /* 링크드 콤보 박스 루트 */
 .cl-linkedcombobox {
-  font: 14px "맑은 고딕", "Malgun Gothic", sans-serif;
-  color: #333;
+  font: 14px "김정철 명조 레귤러", "KimjungchulMyungjo-Regular", sans-serif;
+  color: #000000;
   /* 콤보 박스 */
   /* 콤보 박스 - 포커스 상태 */
   /* 콤보 박스 - disabled 상태 */
@@ -923,8 +923,8 @@ body.cl-has-modal {
 }
 /* 콤보 박스 리스트 박스 */
 .cl-linkedcombobox-list {
-  font: 14px "맑은 고딕", "Malgun Gothic", sans-serif;
-  color: #333;
+  font: 14px "김정철 명조 레귤러", "KimjungchulMyungjo-Regular", sans-serif;
+  color: #000000;
   border: 1px solid #1369C5;
   background-color: white;
   /* 리스트박스의 쉐도우 */
@@ -984,8 +984,8 @@ body.cl-has-modal {
 /* 트리 */
 .cl-tree {
   border: 1px solid #bbb;
-  font: 14px "맑은 고딕", "Malgun Gothic", sans-serif;
-  color: #333;
+  font: 14px "김정철 명조 레귤러", "KimjungchulMyungjo-Regular", sans-serif;
+  color: #000000;
   background-color: #fff;
   /* 트리 아이템 */
   /* 트리 - 포커스 */
@@ -1059,8 +1059,8 @@ body.cl-has-modal {
 }
 /* 그리드 */
 .cl-grid {
-  font: 14px "맑은 고딕", "Malgun Gothic", sans-serif;
-  color: #333;
+  font: 14px "김정철 명조 레귤러", "KimjungchulMyungjo-Regular", sans-serif;
+  color: #000000;
   border: solid 1px #bbb;
   min-height: 100px;
   /* 그리드 헤더 */
@@ -1260,9 +1260,9 @@ body.cl-has-modal {
 /* 트리 셀 - disabled */
 /* 내비게이션 바 */
 .cl-navigationbar {
-  font: 14px "맑은 고딕", "Malgun Gothic", sans-serif;
+  font: 14px "김정철 명조 레귤러", "KimjungchulMyungjo-Regular", sans-serif;
   border: solid 1px #bbb;
-  color: #333;
+  color: #000000;
   /* 스크롤 왼쪽 버튼 */
   /* 스크롤 오른쪽 버튼 */
   /* 상단 바 */
@@ -1327,7 +1327,7 @@ body.cl-has-modal {
 /* 내비게이션 바 드랍다운 메뉴 */
 .cl-navigationbar-list {
   border: solid 1px #bbb;
-  font: 14px "맑은 고딕", "Malgun Gothic", sans-serif;
+  font: 14px "김정철 명조 레귤러", "KimjungchulMyungjo-Regular", sans-serif;
   /* megamenu 타입의 카테고리 */
   /* submenu의 up스크롤 버튼*/
   /* submenu의 down스크롤 버튼*/
@@ -1346,7 +1346,7 @@ body.cl-has-modal {
   background-color: #ccc;
 }
 .cl-navigationbar-list .cl-navigationbar-listitem {
-  color: #333;
+  color: #000000;
   /* 내비게이션 바 드랍다운 메뉴 아이템 텍스트 */
   /* 내비게이션 드랍다운 메뉴 아이템 - 활성화 */
   /* 내비게이션 바 드랍다운 메뉴 아이템 - 비활성화 */
@@ -1389,8 +1389,8 @@ body.cl-has-modal {
 /* 탭 폴더 - disabled */
 /* 탭 폴더 */
 .cl-tabfolder {
-  color: #333;
-  font: 14px "맑은 고딕", "Malgun Gothic", sans-serif;
+  color: #000000;
+  font: 14px "김정철 명조 레귤러", "KimjungchulMyungjo-Regular", sans-serif;
   /* 헤더 */
   /* 탭폴더 바디 */
 }
@@ -1427,13 +1427,13 @@ body.cl-has-modal {
 }
 .cl-tabfolder .cl-tabfolder-body {
   background-color: white;
-  color: #333;
+  color: #000000;
   border: solid 1px #bbb;
 }
 /* 페이지 인덱서 */
 .cl-pageindexer {
-  font: 14px "맑은 고딕", "Malgun Gothic", sans-serif;
-  color: #333;
+  font: 14px "김정철 명조 레귤러", "KimjungchulMyungjo-Regular", sans-serif;
+  color: #000000;
   /* 페이지 인덱서 버튼 공통 */
   /* navigationType="text"으로 표현되는 페이지 정보 텍스트 */
   /* 페이지 인덱서 처음으로 버튼 */
@@ -1513,7 +1513,7 @@ body.cl-has-modal {
 }
 /* 알림 아이템 */
 .cl-notifier-item {
-  font: 14px "맑은 고딕", "Malgun Gothic", sans-serif;
+  font: 14px "김정철 명조 레귤러", "KimjungchulMyungjo-Regular", sans-serif;
   /* 알림 아이템 텍스트 */
   /* 알림 아이템 아이콘 */
   /* 알림 아이템 닫기 버튼 */
@@ -1550,8 +1550,8 @@ body.cl-has-modal {
 }
 /* 파일 인풋 루트 */
 .cl-fileinput {
-  font: 14px "맑은 고딕", "Malgun Gothic", sans-serif;
-  color: #333;
+  font: 14px "김정철 명조 레귤러", "KimjungchulMyungjo-Regular", sans-serif;
+  color: #000000;
   border: solid 1px #bbb;
   /* autoSize 설정시 표시되는 기본크기 */
   /* 파일 인풋 내 텍스트 */
@@ -1565,7 +1565,7 @@ body.cl-has-modal {
 .cl-fileinput.cl-disabled {
   border-color: #ddd;
   background-color: #ccc;
-  color: #333;
+  color: #000000;
 }
 /* 컬럼 음영 스타일 */
 /* 행 음영 스타일 */
@@ -1597,7 +1597,7 @@ body.cl-has-modal {
 /* 사이드 내비게이션 */
 .cl-sidenavigation {
   border: 1px solid #bbb;
-  color: #333;
+  color: #000000;
   /* 포커스 */
   /* 사이드 내비게이션 아이템 */
   /* 비활성화 */
@@ -1644,4 +1644,23 @@ body.cl-has-modal {
 .cl-linkedcombobox-combo:focus,
 .cl-grid-cell:focus {
   /* 웹 접근성 개선 목적으로 포커스 링을 표시하려면 아래 주석을 해제 하십시오. */
+}
+/* 커스텀 스타일시트 */
+/************************************************
+ * 김정철명조 - KimjungchulMyungjo
+ ************************************************/
+@font-face {
+  font-family: "KimjungchulMyungjo-Regular";
+  font-style: normal;
+  font-display: swap;
+  src: url("fonts/KimjungchulMyungjo-Regular.ttf") format("truetype");
+}
+.contents-container > .cl-layout.cl-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.page-nav {
+  text-align: center;
+  color: #856C66;
+  font-weight: bold;
+  font-size: 10px;
 }
