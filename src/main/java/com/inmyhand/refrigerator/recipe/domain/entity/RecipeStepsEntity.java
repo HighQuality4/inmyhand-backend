@@ -22,7 +22,7 @@ public class RecipeStepsEntity {
     @Column(name = "step_number", nullable = false)
     private Integer stepNumber;
 
-    @Column(name = "step_description", nullable = false)
+    @Column(name = "step_description")
     private String stepDescription;
 
     @ManyToOne(fetch = FetchType.LAZY)
