@@ -25,7 +25,7 @@ public class RecipeIngredientEntity {
     private String ingredientGroup;
 
     @Column(name = "ingredient_quantity", nullable = false)
-    private Integer ingredientQuantity;
+    private double ingredientQuantity;
 
     @Column(name = "ingredient_unit", nullable = false)
     private String ingredientUnit;
