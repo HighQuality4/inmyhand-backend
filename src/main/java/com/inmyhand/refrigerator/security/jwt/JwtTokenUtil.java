@@ -39,7 +39,7 @@ public class JwtTokenUtil {
 
     private String createToken(Map<String, Object> claims, String subject, long expiration) {
         Date now = new Date();
-        Date expiryDate = new Date(now.getTime() + access_expiration);
+        Date expiryDate = new Date(now.getTime() + expiration);
 
         return Jwts.builder()
                 .claims(claims)  // setClaims() -> claims()로 변경
