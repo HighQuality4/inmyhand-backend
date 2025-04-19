@@ -1,9 +1,7 @@
 package com.inmyhand.refrigerator.files.domain.entity;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.inmyhand.refrigerator.member.domain.entity.MemberEntity;
 import com.inmyhand.refrigerator.recipe.domain.entity.RecipeInfoEntity;
 import com.inmyhand.refrigerator.recipe.domain.entity.RecipeStepsEntity;
@@ -56,6 +54,11 @@ public class FilesEntity {
     @JoinColumn(name = "step_id")
     @JsonIgnore
     private RecipeStepsEntity recipeStepEntity;
+
+    @PrePersist
+    protected void onCreate() {
+        createdAt = new Date();
+    }
 
 
 

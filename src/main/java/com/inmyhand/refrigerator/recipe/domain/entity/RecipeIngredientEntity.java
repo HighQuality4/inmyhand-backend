@@ -25,7 +25,7 @@ public class RecipeIngredientEntity {
     private String ingredientGroup;
 
     @Column(name = "ingredient_quantity", nullable = false)
-    private Integer ingredientQuantity;
+    private double ingredientQuantity;
 
     @Column(name = "ingredient_unit", nullable = false)
     private String ingredientUnit;
@@ -35,7 +35,7 @@ public class RecipeIngredientEntity {
     @JsonIgnore
     private RecipeInfoEntity recipeInfoEntity;
 
-    public RecipeIngredientEntity(String ingredientName, Integer ingredientQuantity,  String ingredientUnit, RecipeInfoEntity recipeInfoEntity) {
+    public RecipeIngredientEntity(String ingredientName, double ingredientQuantity,  String ingredientUnit, RecipeInfoEntity recipeInfoEntity) {
         this.ingredientName = ingredientName;
         this.ingredientQuantity = ingredientQuantity;
         this.ingredientUnit = ingredientUnit;
