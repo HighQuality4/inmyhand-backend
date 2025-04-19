@@ -19,5 +19,4 @@ public class FridgeFoodDTO {
     private Date saveDate;
     private Long foodCategoryId;
     private Long fridgeId;
-    private List<FridgeDTO> fridgeList;
 }
