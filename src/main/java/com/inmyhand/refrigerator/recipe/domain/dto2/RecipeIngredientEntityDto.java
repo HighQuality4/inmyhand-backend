@@ -3,7 +3,7 @@ package com.inmyhand.refrigerator.recipe.domain.dto2;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 import lombok.Data;
-import lombok.Value;
+
 
 import java.io.Serializable;
 
