@@ -3,6 +3,7 @@ package com.inmyhand.refrigerator.fridge.controller;
 import com.inmyhand.refrigerator.fridge.domain.dto.food.FridgeDTO;
 import com.inmyhand.refrigerator.fridge.domain.dto.food.FridgeFoodDTO;
 import com.inmyhand.refrigerator.fridge.domain.dto.food.FridgeMainPageDTO;
+import com.inmyhand.refrigerator.fridge.domain.dto.food.FridgeWithRolesDTO;
 import com.inmyhand.refrigerator.fridge.service.FridgeFoodService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -26,9 +27,14 @@ public class FridgeFoodRestController {
         return ResponseEntity.ok(foodsInfo);
     }
 
+    // 유저의 참여중인 냉장고 리스트 + 권한정보
+    @GetMapping("/myFridgeList/{memberId}")
+    public ResponseEntity<List<FridgeWithRolesDTO>> getFridgeListWithRole(@PathVariable Long memberId) {
+        List<FridgeWithRolesDTO> fridgeListWithRoles = fridgeFoodService.svcGetFridgeListWithRoles(memberId);
+        return ResponseEntity.ok(fridgeListWithRoles);
+    }
 
-
-
+    // 식재료 정보 입력
     @PostMapping
     public ResponseEntity<Void> createFridgeFood(
             @PathVariable Long fridgeId,

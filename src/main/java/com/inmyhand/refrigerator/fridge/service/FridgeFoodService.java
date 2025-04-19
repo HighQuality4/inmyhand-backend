@@ -3,13 +3,12 @@ package com.inmyhand.refrigerator.fridge.service;
 import com.inmyhand.refrigerator.fridge.domain.dto.food.FridgeDTO;
 import com.inmyhand.refrigerator.fridge.domain.dto.food.FridgeFoodDTO;
 import com.inmyhand.refrigerator.fridge.domain.dto.food.FridgeMainPageDTO;
+import com.inmyhand.refrigerator.fridge.domain.dto.food.FridgeWithRolesDTO;
 import com.inmyhand.refrigerator.fridge.domain.entity.FoodCategoryEntity;
 import com.inmyhand.refrigerator.fridge.domain.entity.FridgeEntity;
 import com.inmyhand.refrigerator.fridge.domain.entity.FridgeFoodEntity;
-import com.inmyhand.refrigerator.fridge.repository.FoodCategoryRepository;
-import com.inmyhand.refrigerator.fridge.repository.FridgeFoodRepository;
-import com.inmyhand.refrigerator.fridge.repository.FridgeMemberRepository;
-import com.inmyhand.refrigerator.fridge.repository.FridgeRepository;
+import com.inmyhand.refrigerator.fridge.domain.entity.FridgeMemberEntity;
+import com.inmyhand.refrigerator.fridge.repository.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -25,6 +24,7 @@ public class FridgeFoodService {
     private final FridgeRepository fridgeRepository;
     private final FoodCategoryRepository foodCategoryRepository;
     private final FridgeMemberRepository fridgeMemberRepository;
+    private final MemberGroupRoleRepository memberGroupRoleRepository;
 
     // 냉장고 main 페이지 정보 출력
     public FridgeMainPageDTO svcGetFridgeMainPage(Long memberId) {
@@ -42,8 +42,24 @@ public class FridgeFoodService {
 
     // 냉장고 변경시 (rest) 다른 냉장고 정보 출력
 
-    // 내가 참여하고 있는 냉장고 리스트 정보 출력
 
+    // 내가 참여하고 있는 냉장고 리스트 정보 출력
+    public List<FridgeWithRolesDTO> svcGetFridgeListWithRoles(Long memberId) {
+        List<FridgeMemberEntity> fridgeMembers = fridgeMemberRepository.findByMemberEntity_Id(memberId);
+
+        return fridgeMembers.stream().map(fridgeMember -> {
+            List<String> roleNames = memberGroupRoleRepository.findAllByFridgeMemberEntity_Id(fridgeMember.getId())
+                    .stream()
+                    .map(memberGroupRole -> memberGroupRole.getGroupRoleEntity().getRoleName())
+                    .collect(Collectors.toList());
+
+            return FridgeWithRolesDTO.builder()
+                    .fridgeId(fridgeMember.getFridgeEntity().getId())
+                    .fridgeName(fridgeMember.getFridgeEntity().getFridgeName())
+                    .roleNames(roleNames)
+                    .build();
+        }).collect(Collectors.toList());
+    }
 
 
     public List<FridgeDTO> svcGetFavoriteFridgeDetail(Long memberId) {
