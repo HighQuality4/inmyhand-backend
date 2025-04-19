@@ -14,7 +14,7 @@ import java.util.List;
 @NoArgsConstructor
 public class FridgeMainPageDTO {
 
-    private Long mainFridgeId;                      // 메인 냉장고 ID
-    private List<FridgeDTO> favoriteFridgeList;     // 즐겨찾기한 냉장고 목록
+    private Long selectFridgeId;                      // 메인 냉장고 ID
+
     private List<FridgeFoodDTO> foodList;           // 메인 냉장고의 식재료 목록
 }

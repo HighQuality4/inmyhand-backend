@@ -28,16 +28,13 @@ public class FridgeFoodService {
 
     // 냉장고 main 페이지 정보 출력
     public FridgeMainPageDTO svcGetFridgeMainPage(Long memberId) {
-        // 1. 즐겨찾기 냉장고 리스트
-        List<FridgeDTO> favoriteFridges = svcGetFavoriteFridgeDetail(memberId);
-
-        // 2. 메인 냉장고 ID
+        // 1. 메인 냉장고 ID
         Long mainFridgeId = svcFindMainFridgeId(memberId);
 
-        // 3. 메인 냉장고 식재료
+        // 2. 메인 냉장고 식재료
         List<FridgeFoodDTO> foodList = svcGetAllFridgeFoods(mainFridgeId);
 
-        return new FridgeMainPageDTO(mainFridgeId, favoriteFridges, foodList);
+        return new FridgeMainPageDTO(mainFridgeId,foodList);
     }
 
     // 냉장고 변경시 (rest) 다른 냉장고 정보 출력
@@ -57,11 +54,20 @@ public class FridgeFoodService {
                     .fridgeId(fridgeMember.getFridgeEntity().getId())
                     .fridgeName(fridgeMember.getFridgeEntity().getFridgeName())
                     .roleNames(roleNames)
+                    .favoriteState(fridgeMember.getFavoriteState())
                     .build();
-        }).collect(Collectors.toList());
+        })
+        .sorted((a, b) -> {
+            // "리더"가 포함된 냉장고를 우선 정렬
+            boolean aIsLeader = a.getRoleNames().contains("leader");
+            boolean bIsLeader = b.getRoleNames().contains("leader");
+            return Boolean.compare(!aIsLeader, !bIsLeader);
+        })
+        .collect(Collectors.toList());
+
     }
 
-
+    // 1. 즐겨찾기 냉장고 리스트
     public List<FridgeDTO> svcGetFavoriteFridgeDetail(Long memberId) {
         return fridgeMemberRepository.findByMemberEntity_IdAndFavoriteStateTrue(memberId)
                 .stream()

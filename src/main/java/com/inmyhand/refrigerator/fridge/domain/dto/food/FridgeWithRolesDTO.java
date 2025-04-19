@@ -15,4 +15,5 @@ public class FridgeWithRolesDTO {
     private Long fridgeId;
     private String fridgeName;
     private List<String> roleNames;  // 역할 여러 개
+    private Boolean favoriteState;
 }
