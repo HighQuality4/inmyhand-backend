@@ -21,7 +21,7 @@ public class RecipeIngredientEntityDto implements Serializable {
     private String ingredientGroup;
 
     @Min(0)
-    private Integer ingredientQuantity;
+    private double ingredientQuantity;
 
     private String ingredientUnit;
 }
