@@ -8,5 +8,5 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface RefreshTokenRepository extends JpaRepository<RefreshTokenEntity, Long> {
 
-    RefreshTokenEntity findByMemberEntity(MemberEntity member);
+    RefreshTokenEntity findByMemberEntity(MemberEntity memberEntity);
 }
