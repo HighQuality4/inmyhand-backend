@@ -26,18 +26,17 @@ public class FridgeFoodService {
     private final FridgeMemberRepository fridgeMemberRepository;
     private final MemberGroupRoleRepository memberGroupRoleRepository;
 
-    // 냉장고 main 페이지 정보 출력
-    public FridgeMainPageDTO svcGetFridgeMainPage(Long memberId) {
+    // 냉장고 메인 페이지 로드 시 식재료 정보 출력
+    public List<FridgeFoodDTO> svcGetFridgeMainPage(Long memberId) {
         // 1. 메인 냉장고 ID
         Long mainFridgeId = svcFindMainFridgeId(memberId);
 
         // 2. 메인 냉장고 식재료
         List<FridgeFoodDTO> foodList = svcGetAllFridgeFoods(mainFridgeId);
 
-        return new FridgeMainPageDTO(mainFridgeId,foodList);
+        return foodList;
     }
 
-    // 냉장고 변경시 (rest) 다른 냉장고 정보 출력
 
 
     // 내가 참여하고 있는 냉장고 리스트 정보 출력
@@ -75,6 +74,7 @@ public class FridgeFoodService {
                 .collect(Collectors.toList());
     }
 
+    // 나의 냉장고 찾기
     public Long svcFindMainFridgeId(Long memberId) {
         return fridgeMemberRepository.findFirstByMemberEntity_IdAndFavoriteStateTrueOrderByJoinDateAsc(memberId)
                 .map(fridgeMember -> fridgeMember.getFridgeEntity().getId())
