@@ -35,7 +35,7 @@ public class RecipeIngredientEntity {
     @JsonIgnore
     private RecipeInfoEntity recipeInfoEntity;
 
-    public RecipeIngredientEntity(String ingredientName, Integer ingredientQuantity,  String ingredientUnit, RecipeInfoEntity recipeInfoEntity) {
+    public RecipeIngredientEntity(String ingredientName, double ingredientQuantity,  String ingredientUnit, RecipeInfoEntity recipeInfoEntity) {
         this.ingredientName = ingredientName;
         this.ingredientQuantity = ingredientQuantity;
         this.ingredientUnit = ingredientUnit;
