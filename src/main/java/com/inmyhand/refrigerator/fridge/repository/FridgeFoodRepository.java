@@ -10,4 +10,5 @@ import java.util.List;
 @Repository
 public interface FridgeFoodRepository extends JpaRepository<FridgeFoodEntity, Long> {
     List<FridgeFoodEntity> findByFridgeEntityId(Long fridgeId);
+
 }

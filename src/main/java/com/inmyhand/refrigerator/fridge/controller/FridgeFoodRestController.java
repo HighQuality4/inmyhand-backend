@@ -1,6 +1,8 @@
 package com.inmyhand.refrigerator.fridge.controller;
 
+import com.inmyhand.refrigerator.fridge.domain.dto.food.FridgeDTO;
 import com.inmyhand.refrigerator.fridge.domain.dto.food.FridgeFoodDTO;
+import com.inmyhand.refrigerator.fridge.domain.dto.food.FridgeMainPageDTO;
 import com.inmyhand.refrigerator.fridge.service.FridgeFoodService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -8,13 +10,23 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping("/api/fridge/{fridgeId}/food")
+@RequestMapping("/api/fridge")
 @RequiredArgsConstructor
 public class FridgeFoodRestController {
 
     private final FridgeFoodService fridgeFoodService;
+
+    // 메인 냉장고의 전체 식재료 리스트 조회
+    @GetMapping("/main/{memberId}/foods")
+    public ResponseEntity<FridgeMainPageDTO> getMainFridgeFoods(@PathVariable Long memberId) {
+        FridgeMainPageDTO foodsInfo = fridgeFoodService.svcGetFridgeMainPage(memberId);
+        return ResponseEntity.ok(foodsInfo);
+    }
+
+
 
 
     @PostMapping
