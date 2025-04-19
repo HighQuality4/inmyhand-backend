@@ -57,6 +57,11 @@ public class FilesEntity {
     @JsonIgnore
     private RecipeStepsEntity recipeStepEntity;
 
+    @PrePersist
+    protected void onCreate() {
+        createdAt = new Date();
+    }
+
 
 
 
