@@ -23,7 +23,7 @@ public class RefreshTokenEntity {
     @Column(name = "token_id")
     private Long id;
 
-    @Column(name = "token_value", unique = true, length = 100)
+    @Column(name = "token_value", unique = true, length = 1024)
     private String tokenValue;
 
     @Column(name = "expired_at")
