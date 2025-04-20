@@ -1,15 +1,19 @@
 package com.inmyhand.refrigerator.recipe.domain.dto;
 
 import lombok.AllArgsConstructor;
-import lombok.Getter;
+import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 
-@Getter
-@Setter
-@NoArgsConstructor
+import java.io.Serializable;
+
+/**
+ * DTO for {@link com.inmyhand.refrigerator.recipe.domain.entity.RecipeNutrientAnalysisEntity}
+ */
+@Data
 @AllArgsConstructor
-public class RecipeNutrientAnalysisDTO {
+@NoArgsConstructor
+public class RecipeNutrientAnalysisEntityDto implements Serializable {
+    private Long id;
     private String analysisResult;
     private int score;
     private int carbs;

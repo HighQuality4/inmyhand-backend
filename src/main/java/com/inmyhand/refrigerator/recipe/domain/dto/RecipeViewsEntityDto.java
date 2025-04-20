@@ -1,7 +1,6 @@
-package com.inmyhand.refrigerator.recipe.domain.dto2;
+package com.inmyhand.refrigerator.recipe.domain.dto;
 
 import lombok.Data;
-import lombok.Value;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -13,5 +12,4 @@ import java.util.Date;
 public class RecipeViewsEntityDto implements Serializable {
     private Long id;
     private Date viewedAt;
-
 }
