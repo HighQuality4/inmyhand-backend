@@ -1,12 +1,9 @@
 package com.inmyhand.refrigerator.recipe.mapper;
 
-import com.inmyhand.refrigerator.recipe.domain.dto.RecipeNutrientAnalysisDTO;
-import com.inmyhand.refrigerator.recipe.domain.dto2.RecipeDetailDTO;
-import com.inmyhand.refrigerator.recipe.domain.dto2.RecipeNutrientAnalysisEntityDto;
+import com.inmyhand.refrigerator.recipe.domain.dto.RecipeDetailDTO;
+import com.inmyhand.refrigerator.recipe.domain.dto.RecipeNutrientAnalysisEntityDto;
 import com.inmyhand.refrigerator.recipe.domain.entity.*;
 import com.inmyhand.refrigerator.files.domain.entity.FilesEntity;
-import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
@@ -43,7 +40,7 @@ public class RecipeDetailMapper {
         dto.setId(entity.getId());
         dto.setRecipeName(entity.getRecipeName());
         dto.setDifficulty(entity.getDifficulty());
-        dto.setCookingTime(entity.getCookingTime());
+        dto.setCookingTime(entity.getCookingTime().getLabel());
         dto.setCalories(entity.getCalories());
         dto.setSummary(entity.getSummary());
         dto.setServings(entity.getServings());
@@ -112,7 +109,7 @@ public class RecipeDetailMapper {
                 RecipeNutrientAnalysisEntityDto analysisEntityDto = analysisDtos.get(0);
                 
                 // RecipeNutrientAnalysisDTO 생성 및 값 설정
-                RecipeNutrientAnalysisDTO analysisDto = new RecipeNutrientAnalysisDTO();
+                RecipeNutrientAnalysisEntityDto analysisDto = new RecipeNutrientAnalysisEntityDto();
                 analysisDto.setAnalysisResult(analysisEntityDto.getAnalysisResult());
                 analysisDto.setScore(analysisEntityDto.getScore());
                 analysisDto.setCarbs(analysisEntityDto.getCarbs());
