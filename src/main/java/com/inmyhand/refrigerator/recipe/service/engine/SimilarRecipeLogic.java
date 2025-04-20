@@ -1,6 +1,6 @@
 package com.inmyhand.refrigerator.recipe.service.engine;
 
-import com.inmyhand.refrigerator.recipe.domain.dto2.SimilarRecipeDTO;
+import com.inmyhand.refrigerator.recipe.domain.dto.SimilarRecipeDTO;
 import kr.co.shineware.nlp.komoran.constant.DEFAULT_MODEL;
 import kr.co.shineware.nlp.komoran.core.Komoran;
 import kr.co.shineware.nlp.komoran.model.KomoranResult;
