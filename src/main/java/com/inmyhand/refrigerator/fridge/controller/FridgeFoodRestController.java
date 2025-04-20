@@ -73,7 +73,6 @@ public class FridgeFoodRestController {
     }
 
 
-
     // 유저의 참여중인 냉장고 리스트 + 권한정보
     @GetMapping("/myFridgeList/{memberId}")
     public ResponseEntity<List<FridgeWithRolesDTO>> getFridgeListWithRole(@PathVariable Long memberId) {

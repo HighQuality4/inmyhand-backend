@@ -27,3 +27,21 @@ function onButtonClick(e){
 function onBodyLoad2(e){
 	app.lookup("getFoodList").send();
 }
+
+
+
+function onBtnEnabledTrueClick( /* cpr.events.CMouseEvent */ e) {
+    var grd = app.lookup("sampleGrd");
+    var dsList = app.lookup("dsList");
+
+    var rowIdx = grd.getSelectedRowIndex();
+    dsList.setValue(rowIdx, "enabled", "true");
+}
+
+function onBtnEnabledFalseClick( /* cpr.events.CMouseEvent */ e) {
+    var grd = app.lookup("sampleGrd");
+    var dsList = app.lookup("dsList");
+
+    var rowIdx = grd.getSelectedRowIndex();
+    dsList.setValue(rowIdx, "enabled", "false");
+}
