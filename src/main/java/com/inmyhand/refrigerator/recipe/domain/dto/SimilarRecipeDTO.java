@@ -1,4 +1,4 @@
-package com.inmyhand.refrigerator.recipe.domain.dto2;
+package com.inmyhand.refrigerator.recipe.domain.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
