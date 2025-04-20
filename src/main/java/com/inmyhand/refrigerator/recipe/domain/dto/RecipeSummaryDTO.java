@@ -1,6 +1,5 @@
-package com.inmyhand.refrigerator.recipe.domain.dto2;
+package com.inmyhand.refrigerator.recipe.domain.dto;
 
-import com.inmyhand.refrigerator.recipe.domain.dto.RecipeCategoryDTO;
 import com.inmyhand.refrigerator.recipe.domain.enums.DifficultyEnum;
 import lombok.*;
 
@@ -8,8 +7,9 @@ import java.util.List;
 
 @Data
 public class RecipeSummaryDTO {
+    private Long id;
     private List<String> fileUrl;
-    private List<RecipeCategoryDTO> categories;
+    private List<RecipeCategoryEntityDto> categories;
     private String recipeName;
     private DifficultyEnum difficulty;
     private String cookingTime;

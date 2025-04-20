@@ -1,4 +1,4 @@
-package com.inmyhand.refrigerator.recipe.domain.dto2;
+package com.inmyhand.refrigerator.recipe.domain.dto;
 
 import com.inmyhand.refrigerator.recipe.domain.enums.CategoryTypeEnum;
 import jakarta.validation.constraints.NotBlank;

@@ -1,7 +1,7 @@
 package com.inmyhand.refrigerator.recipe.mapper;
 
-import com.inmyhand.refrigerator.recipe.domain.dto.RecipeCategoryDTO;
-import com.inmyhand.refrigerator.recipe.domain.dto2.RecipeSummaryDTO;
+import com.inmyhand.refrigerator.recipe.domain.dto.RecipeCategoryEntityDto;
+import com.inmyhand.refrigerator.recipe.domain.dto.RecipeSummaryDTO;
 import com.inmyhand.refrigerator.recipe.domain.entity.RecipeInfoEntity;
 import com.inmyhand.refrigerator.files.domain.entity.FilesEntity;
 import lombok.RequiredArgsConstructor;
@@ -33,9 +33,10 @@ public class RecipeSummaryMapper {
         RecipeSummaryDTO dto = new RecipeSummaryDTO();
         
         // 기본 레시피 정보 설정
+        dto.setId(entity.getId());
         dto.setRecipeName(entity.getRecipeName());
         dto.setDifficulty(entity.getDifficulty());
-        dto.setCookingTime(entity.getCookingTime() != null ? entity.getCookingTime().toString() : null);
+        dto.setCookingTime(entity.getCookingTime() != null ? entity.getCookingTime().getLabel() : null);
         dto.setCalories(entity.getCalories());
         
         // 닉네임 설정
@@ -60,11 +61,13 @@ public class RecipeSummaryMapper {
         if (entity.getRecipeCategoryList() != null) {
             // RecipeCategoryEntityDto -> RecipeCategoryDTO 변환이 필요할 수 있음
             // 여기서는 간단하게 매핑하는 방식으로 처리
-            List<RecipeCategoryDTO> categoryDTOs = entity.getRecipeCategoryList().stream()
+            List<RecipeCategoryEntityDto> categoryDTOs = entity.getRecipeCategoryList().stream()
                     .map(categoryEntity -> {
-                        RecipeCategoryDTO categoryDTO = new RecipeCategoryDTO();
-                        categoryDTO.setCategoryName(categoryEntity.getRecipeCategoryName());
-                        categoryDTO.setCategoryType(categoryEntity.getRecipeCategoryType());
+                        RecipeCategoryEntityDto categoryDTO = new RecipeCategoryEntityDto(
+                                categoryEntity.getId(),
+                                categoryEntity.getRecipeCategoryName(),
+                                categoryEntity.getRecipeCategoryType()
+                        );
                         return categoryDTO;
                     })
                     .collect(Collectors.toList());
