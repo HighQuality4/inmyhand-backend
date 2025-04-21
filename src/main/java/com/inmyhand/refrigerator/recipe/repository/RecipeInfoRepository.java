@@ -6,6 +6,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface RecipeInfoRepository extends JpaRepository<RecipeInfoEntity, Long> {
     // 모든 레시피 목록 조회 - 기본으로 최신 레시피가 제일 첫번째에 오도록 함
@@ -15,9 +16,13 @@ public interface RecipeInfoRepository extends JpaRepository<RecipeInfoEntity, Lo
     @Query("SELECT r FROM RecipeInfoEntity r LEFT JOIN r.recipeLikesList l GROUP BY r.id ORDER BY COUNT(l) DESC")
     List<RecipeInfoEntity> findTop5ByOrderByLikesCountDesc(Pageable pageable);
 
-    // 레시피 검색
-    List<RecipeInfoEntity> findByRecipeNameContaining(String keyword);
-
     // 내가 등록한 레시피 조회
     List<RecipeInfoEntity> findByMemberEntityId(Long memberEntityId);
+
+    // 레시피 이름 관련 모두 찾기
+    Optional<List<RecipeInfoEntity>> findByRecipeNameContaining(String keyword);
+
+    //레시피 이름으로 찾기
+    Optional<RecipeInfoEntity> findByRecipeName(String recipeName);
 }
+

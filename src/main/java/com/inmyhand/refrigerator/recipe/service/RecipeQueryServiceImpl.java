@@ -14,6 +14,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -152,7 +153,7 @@ public class RecipeQueryServiceImpl implements RecipeQueryService {
 
     // 레시피 검색
     public List<RecipeSummaryDTO> getSearchRecipeList(String keyword) {
-        List<RecipeInfoEntity> recipes = infoRepository.findByRecipeNameContaining(keyword);
+        List<RecipeInfoEntity> recipes = infoRepository.findByRecipeNameContaining(keyword).orElse(new ArrayList<>());
         return summaryMapper.toDtoList(recipes);
     }
 
