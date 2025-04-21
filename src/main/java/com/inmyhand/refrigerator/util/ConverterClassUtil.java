@@ -6,10 +6,12 @@ import com.cleopatra.protocol.data.DataRequest;
 import com.cleopatra.protocol.data.ParameterGroup;
 import com.cleopatra.protocol.data.RowState;
 import com.inmyhand.refrigerator.error.exception.ParamGroupIsNullException;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * DataRequest에서 DTO 객체로 변환하는 유틸리티 클래스
  */
+@Slf4j
 public class ConverterClassUtil {
 
     /**
@@ -23,6 +25,7 @@ public class ConverterClassUtil {
     public static <T> T getSingleClass(DataRequest dataRequest, String paramGroupId, Class<T> className) {
         ParameterGroup paramGroup = dataRequest.getParameterGroup(paramGroupId);
         if (paramGroup == null) {
+            log.error("[getSingleClass] paramGroupId 값이 없습니다.");
             throw new ParamGroupIsNullException("paramGroupId 값이 없습니다.");
         }
         return className.cast(paramGroup.getBeanData(className));
@@ -39,6 +42,7 @@ public class ConverterClassUtil {
     public static <T> List<T> getClassList(DataRequest dataRequest, String paramGroupId, Class<T> className) {
         ParameterGroup paramGroup = dataRequest.getParameterGroup(paramGroupId);
         if (paramGroup == null) {
+            log.error("[getClassList] paramGroupId 값이 없습니다.");
             throw new ParamGroupIsNullException("paramGroupId 값이 없습니다.");
         }
         return paramGroup.getAllBeanList(className);
@@ -57,6 +61,7 @@ public class ConverterClassUtil {
                                               Class<T> className, RowState rowState) {
         ParameterGroup paramGroup = dataRequest.getParameterGroup(paramGroupId);
         if (paramGroup == null) {
+            log.error("[getStatedClassList] paramGroupId 값이 없습니다.");
             throw new ParamGroupIsNullException("paramGroupId 값이 없습니다.");
         }
         return paramGroup.getStatedBeanList(rowState, className);
