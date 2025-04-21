@@ -5,7 +5,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.sql.Timestamp;
+
 import java.util.Date;
 
 @Entity
@@ -15,7 +15,7 @@ import java.util.Date;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-@ToString(exclude = {"foodCategoryEntity", "fridgeEntity"})
+@ToString(exclude = {"fridgeEntity"})
 public class FridgeFoodEntity {
 
     @Id
@@ -28,47 +28,14 @@ public class FridgeFoodEntity {
     private Date endDate;
     private Date chargeDate;
     private Date saveDate;
+    private String categoryName;
 
-    @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
-    @JoinColumn(name = "food_category_id")
-    @JsonIgnoreProperties
-    private FoodCategoryEntity foodCategoryEntity;
 
     @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinColumn(name = "fridge_id")
     @JsonIgnoreProperties("fridgeFoodList")
     private FridgeEntity fridgeEntity;
 
-
-    /**
-     * 음식 카테고리 설정 메서드 (양방향 연관관계 처리)
-     *
-     * @param category 설정할 음식 카테고리
-     */
-    public void setFoodCategory(FoodCategoryEntity category) {
-        // 기존 카테고리와의 연관관계 제거
-        if (this.foodCategoryEntity != null && this.foodCategoryEntity != category) {
-            this.foodCategoryEntity.getFridgeFoodList().remove(this);
-        }
-
-        this.foodCategoryEntity = category;
-
-        // 새 카테고리와 양방향 연관관계 설정
-        if (category != null && !category.getFridgeFoodList().contains(this)) {
-            category.getFridgeFoodList().add(this);
-        }
-    }
-
-    /**
-     * 음식 카테고리 연관관계 제거 메서드
-     */
-    public void removeFoodCategory() {
-        if (this.foodCategoryEntity != null) {
-            // 카테고리의 음식 목록에서 현재 음식 제거
-            this.foodCategoryEntity.getFridgeFoodList().remove(this);
-            this.foodCategoryEntity = null;
-        }
-    }
 
     /**
      * 냉장고 설정 메서드 (양방향 연관관계 처리)
