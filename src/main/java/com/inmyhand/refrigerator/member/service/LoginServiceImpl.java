@@ -40,7 +40,7 @@ public class LoginServiceImpl implements LoginService {
         String refreshToken = jwtTokenUtil.generateRefreshToken(member);
 
         //기존 리프레시 토큰이 있으면 토큰 값만 수정(나중에 Redis에서도 처리하도록 변경할 것!)
-        RefreshTokenEntity existingToken = refreshTokenRepository.findByMemberEntity(member);
+        RefreshTokenEntity existingToken = refreshTokenRepository.findByMemberEntity(member).orElse(null);
 
         if (existingToken != null) {
             existingToken.setTokenValue(refreshToken);
