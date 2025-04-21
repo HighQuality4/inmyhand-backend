@@ -14,4 +14,10 @@ public interface RecipeQueryService {
     public List<RecipeSummaryDTO> getArrayRecipeList(String orderBy, String sortType);
 
     public RecipeDetailDTO getRecipeDetail(Long recipeId);
+
+    public List<RecipeSummaryDTO> getSearchRecipeList(String keyword);
+
+    public List<RecipeSummaryDTO> getMyRecipeList(Long userId);
+
+    public List<RecipeSummaryDTO> getMyLikeRecipeList(Long userId);
 }
