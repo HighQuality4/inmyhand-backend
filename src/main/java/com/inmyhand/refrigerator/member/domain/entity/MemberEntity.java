@@ -88,6 +88,7 @@ public class MemberEntity {
     @JsonIgnoreProperties("memberEntity")
     private List<HealthInterestEntity> healthInterestList = new ArrayList<>();
 
+    @Builder.Default
     @OneToMany(mappedBy = "memberEntity", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonIgnoreProperties("memberEntity")
     private List<MemberRoleEntity> memberRoleList = new ArrayList<>();
