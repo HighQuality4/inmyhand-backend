@@ -18,6 +18,7 @@ function onButtonClick(e){
 	alert("동작 테스트합니다");
 	
 	app.lookup("foodListGrid").redraw();
+		
 }
 
 /*
@@ -26,22 +27,15 @@ function onButtonClick(e){
  */
 function onBodyLoad2(e){
 	app.lookup("getFoodList").send();
+	app.lookup("getFridgeList").send();
 }
 
-
-
-function onBtnEnabledTrueClick( /* cpr.events.CMouseEvent */ e) {
-    var grd = app.lookup("sampleGrd");
-    var dsList = app.lookup("dsList");
-
-    var rowIdx = grd.getSelectedRowIndex();
-    dsList.setValue(rowIdx, "enabled", "true");
-}
-
-function onBtnEnabledFalseClick( /* cpr.events.CMouseEvent */ e) {
-    var grd = app.lookup("sampleGrd");
-    var dsList = app.lookup("dsList");
-
-    var rowIdx = grd.getSelectedRowIndex();
-    dsList.setValue(rowIdx, "enabled", "false");
-}
+/*
+ * "Button" 버튼에서 click 이벤트 발생 시 호출.
+ * 사용자가 컨트롤을 클릭할 때 발생하는 이벤트.
+ */
+//function onButtonClick2(e){
+//	var button = e.control;
+//	app.lookup("getFridgeList").send();
+//	
+//}
