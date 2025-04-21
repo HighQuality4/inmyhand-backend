@@ -1,7 +1,7 @@
 package com.inmyhand.refrigerator.recipe.service;
 
 import com.inmyhand.refrigerator.recipe.domain.dto.RecipeDetailDTO;
-import com.inmyhand.refrigerator.recipe.domain.dto2.RecipeSummaryDTO;
+import com.inmyhand.refrigerator.recipe.domain.dto.RecipeSummaryDTO;
 
 import java.util.List;
 
@@ -14,4 +14,10 @@ public interface RecipeQueryService {
     public List<RecipeSummaryDTO> getArrayRecipeList(String orderBy, String sortType);
 
     public RecipeDetailDTO getRecipeDetail(Long recipeId);
+
+    public List<RecipeSummaryDTO> getSearchRecipeList(String keyword);
+
+    public List<RecipeSummaryDTO> getMyRecipeList(Long userId);
+
+    public List<RecipeSummaryDTO> getMyLikeRecipeList(Long userId);
 }

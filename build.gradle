@@ -21,9 +21,7 @@ configurations {
 
 repositories {
     mavenCentral()
-    flatDir {            // 추가
-        dirs 'libs'     //
-    }
+    maven { url 'https://jitpack.io' }
 }
 
 ext {
@@ -42,9 +40,9 @@ dependencies {
 	implementation 'org.springframework.ai:spring-ai-vertex-ai-gemini-spring-boot-starter'
     implementation 'org.json:json:20240303'
     compileOnly 'org.projectlombok:lombok'
-    implementation 'org.postgresql:postgresql'
-    implementation 'com.squareup.okhttp3:okhttp:4.11.0'
     annotationProcessor 'org.projectlombok:lombok'
+    implementation 'com.squareup.okhttp3:okhttp:4.11.0'
+    implementation 'org.postgresql:postgresql'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testImplementation 'org.springframework.security:spring-security-test'
 //    runtimeOnly 'com.h2database:h2'
@@ -52,8 +50,7 @@ dependencies {
 
 
     //eXBuilder6에 필요함
-    implementation files('libs/cleopatra_server_ee9.jar') // 추가
-
+    implementation files('libs/cleopatra_server_ee9.jar')
 
     //QueryDSL
     implementation 'com.querydsl:querydsl-jpa:5.0.0:jakarta'
@@ -67,7 +64,8 @@ dependencies {
 	runtimeOnly 'io.jsonwebtoken:jjwt-impl:0.12.6'
 	runtimeOnly 'io.jsonwebtoken:jjwt-jackson:0.12.6'
 
-
+    // 한국어 형태소 분석
+    implementation 'com.github.shin285:KOMORAN:3.3.9'
 
 }
 

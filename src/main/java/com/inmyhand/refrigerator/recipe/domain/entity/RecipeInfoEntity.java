@@ -203,6 +203,28 @@ public class RecipeInfoEntity {
         step.setRecipeInfoEntity(this);
     }
 
+    public void addRecipeIngredient(RecipeIngredientEntity ingredient) {
+        if (this.recipeIngredientList == null) {
+            this.recipeIngredientList = new ArrayList<>();
+        }
+        this.recipeIngredientList.add(ingredient);
+        ingredient.setRecipeInfoEntity(this);
+    }
+
+    public void addRecipeCategory(RecipeCategoryEntity category) {
+        if (this.recipeCategoryList == null) {
+            this.recipeCategoryList = new ArrayList<>();
+        }
+        this.recipeCategoryList.add(category);
+        category.setRecipeInfoEntity(this);
+    }
+
+    public void addFilesEntity(FilesEntity file) {
+        if (this.filesEntities == null) this.filesEntities = new ArrayList<>();
+        this.filesEntities.add(file);
+        file.setRecipeInfoEntity(this);
+    }
+
     /*
      // 부모 레시피와의 연관관계 제거
 

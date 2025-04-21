@@ -1,9 +1,7 @@
 package com.inmyhand.refrigerator.recipe.mapper;
 
-import com.inmyhand.refrigerator.recipe.domain.dto2.RecipeStepsEntityDto;
+import com.inmyhand.refrigerator.recipe.domain.dto.RecipeStepsEntityDto;
 import com.inmyhand.refrigerator.recipe.domain.entity.RecipeStepsEntity;
-import com.inmyhand.refrigerator.recipe.domain.entity.RecipeInfoEntity;
-import com.inmyhand.refrigerator.files.domain.entity.FilesEntity;
 import org.springframework.stereotype.Component;
 
 import java.util.List;

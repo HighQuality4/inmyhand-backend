@@ -1,6 +1,6 @@
 package com.inmyhand.refrigerator.recipe.mapper;
 
-import com.inmyhand.refrigerator.recipe.domain.dto2.RecipeCategoryEntityDto;
+import com.inmyhand.refrigerator.recipe.domain.dto.RecipeCategoryEntityDto;
 import com.inmyhand.refrigerator.recipe.domain.entity.RecipeCategoryEntity;
 import org.springframework.stereotype.Component;
 
