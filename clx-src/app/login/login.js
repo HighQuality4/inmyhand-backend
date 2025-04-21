@@ -20,3 +20,28 @@ function onButtonClick(e){
 	
 	app.lookup("smsLogin").send(); // 서버 전송
 }
+
+/*
+ * 버튼에서 click 이벤트 발생 시 호출.
+ * 사용자가 컨트롤을 클릭할 때 발생하는 이벤트.
+ */
+function onButtonClickNaver(e){
+	window.location.href = "http://localhost:7079/oauth2/authorization/naver";
+}
+
+/*
+ * 버튼에서 click 이벤트 발생 시 호출.
+ * 사용자가 컨트롤을 클릭할 때 발생하는 이벤트.
+ */
+function onButtonClickGoogle(e){
+	window.location.href = "http://localhost:7079/oauth2/authorization/google";	
+}
+
+/*
+ * 버튼에서 click 이벤트 발생 시 호출.
+ * 사용자가 컨트롤을 클릭할 때 발생하는 이벤트.
+ */
+function onButtonClickKakao(e){
+	window.location.href = "http://localhost:7079/oauth2/authorization/kakao";
+	
+}

@@ -53,6 +53,24 @@
         <cl:xylayoutdata std:sid="sxyl-data-2654b855" top="433px" left="40px" width="520px" height="74px" horizontalAnchor="LEFT" verticalAnchor="TOP" screenid="default"/>
       </cl:responsivexylayoutdata>
     </cl:output>
+    <cl:button std:sid="button-862df382" id="네이버" style="border-radius:100%; background-size:contain; background-image:url('../../theme/images/네이버.png');">
+      <cl:listener std:sid="listener-d40b80c6" name="click" handler="onButtonClickNaver"/>
+      <cl:responsivexylayoutdata std:sid="rxyl-data-cca8342c">
+        <cl:xylayoutdata std:sid="sxyl-data-4df56f4b" top="555px" left="40px" width="100px" height="100px" horizontalAnchor="LEFT" verticalAnchor="TOP" screenid="default"/>
+      </cl:responsivexylayoutdata>
+    </cl:button>
+    <cl:button std:sid="button-95a0a11f" id="구글" style="border-radius:100%; background-size:contain; background-image:url('../../theme/images/구글.png');">
+      <cl:listener std:sid="listener-97825cc1" name="click" handler="onButtonClickGoogle"/>
+      <cl:responsivexylayoutdata std:sid="rxyl-data-cb6d0266">
+        <cl:xylayoutdata std:sid="sxyl-data-6d833771" top="555px" left="250px" width="98px" height="100px" horizontalAnchor="LEFT" verticalAnchor="TOP" screenid="default"/>
+      </cl:responsivexylayoutdata>
+    </cl:button>
+    <cl:button std:sid="button-32f311b5" id="카카오" style="border-radius:100%; background-size:contain; background-image:url('../../theme/images/카카오.png');">
+      <cl:listener std:sid="listener-79f5a63e" name="click" handler="onButtonClickKakao"/>
+      <cl:responsivexylayoutdata std:sid="rxyl-data-41ef01ff">
+        <cl:xylayoutdata std:sid="sxyl-data-bc0dba88" top="555px" left="460px" width="100px" height="100px" horizontalAnchor="LEFT" verticalAnchor="TOP" screenid="default"/>
+      </cl:responsivexylayoutdata>
+    </cl:button>
     <cl:responsivexylayout std:sid="r-xylayout-3e5555da"/>
   </body>
   <std:studiosetting>
