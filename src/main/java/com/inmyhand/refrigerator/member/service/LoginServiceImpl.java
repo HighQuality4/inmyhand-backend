@@ -28,7 +28,7 @@ public class LoginServiceImpl implements LoginService {
     @Transactional
     @Override
     public LoginResponseDTO login(LoginRequestDTO loginRequestDTO, HttpServletResponse response) {
-        
+
         // 비밀번호 매칭 프로세스 추가하기!
         MemberEntity member = loginRepository.findByEmail(loginRequestDTO.getEmail()).orElseThrow(()->new RuntimeException("사용자를 찾을 수 없습니다."));
 
