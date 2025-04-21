@@ -2,8 +2,11 @@ package com.inmyhand.refrigerator.fridge.domain.dto.food;
 
 import lombok.*;
 
+import java.lang.reflect.Field;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Getter
 @Setter
@@ -19,5 +22,5 @@ public class FridgeFoodDTO {
     private Date saveDate;
     private Long foodCategoryId;
     private Long fridgeId;
-    private List<FridgeDTO> fridgeList;
+
 }

@@ -10,9 +10,10 @@ import java.util.List;
 
 @Repository
 public interface MemberGroupRoleRepository extends JpaRepository<MemberGroupRoleEntity, Long> {
-//    List<MemberGroupRoleEntity> findByFridgeMember_Id(Long id);
-//
+    List<MemberGroupRoleEntity> findByFridgeMemberEntity_Id(Long id);
+    List<MemberGroupRoleEntity> findAllByFridgeMemberEntity_Id(Long fridgeMemberId);
 //    MemberGroupRoleEntity findByFridgeMemberIdAndGroupRoleId(Long fridgeMemberId, Long groupRoleId);
     List<MemberGroupRoleEntity> findByFridgeMemberEntity(FridgeMemberEntity fridgeMember);
+
 
 }

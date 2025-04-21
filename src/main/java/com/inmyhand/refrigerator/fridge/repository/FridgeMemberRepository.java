@@ -26,4 +26,9 @@ public interface FridgeMemberRepository extends JpaRepository<FridgeMemberEntity
     Optional<FridgeMemberEntity> findByFridgeEntity_IdAndMemberEntity_Nickname(Long fridgeId, String nickname);
     List<FridgeMemberEntity> findByMemberEntity_Id(Long memberId);
 
+    // 즐겨찾기 냉장고 전체 조회
+    List<FridgeMemberEntity> findByMemberEntity_IdAndFavoriteStateTrue(Long memberId);
+
+    // 즐겨찾기 냉장고 중 가장 먼저 가입한 냉장고 (메인)
+    Optional<FridgeMemberEntity> findFirstByMemberEntity_IdAndFavoriteStateTrueOrderByJoinDateAsc(Long memberId);
 }

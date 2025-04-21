@@ -1,6 +1,5 @@
 package com.inmyhand.refrigerator.fridge.controller;
 
-import com.inmyhand.refrigerator.fridge.domain.dto.food.FridgeWithRoleDTO;
 import com.inmyhand.refrigerator.fridge.domain.dto.group.ChangeRoleDTO;
 import com.inmyhand.refrigerator.fridge.domain.dto.group.FridgeGroupMemberDTO;
 import com.inmyhand.refrigerator.fridge.domain.dto.group.FridgeGroupRequestDTO;
