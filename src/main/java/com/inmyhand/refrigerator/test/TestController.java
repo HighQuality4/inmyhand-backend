@@ -1,6 +1,8 @@
 package com.inmyhand.refrigerator.test;
 
 import com.cleopatra.protocol.data.DataRequest;
+import com.cleopatra.spring.CommonsMultipartFile;
+import com.inmyhand.refrigerator.fridge.domain.dto.ReceiptDTO;
 import com.inmyhand.refrigerator.fridge.service.ocr.ReceiptExtraction;
 import com.inmyhand.refrigerator.util.ConverterClassUtil;
 import lombok.RequiredArgsConstructor;
@@ -25,42 +27,27 @@ import java.util.Map;
 public class TestController {
 
 	private final ReceiptExtraction receiptExtraction;
-	
-	@GetMapping("/test")
-	public String test1() {
-		return "/app/test/first-test";
-	}
 
-	@GetMapping("/recipe")
-	public String recipe() {
-		return "/app/layout/layout";
-	}
+//	@PostMapping("/api/page-routes")
+//	public ResponseEntity<Resource> getRouterJson() {
+//		Resource resource = new ClassPathResource("view/data/router.json");
+//
+//		if (resource.exists()) {
+//			return ResponseEntity.ok()
+//					.contentType(MediaType.APPLICATION_JSON)
+//					.body(resource);
+//		}
+//
+//		return ResponseEntity.notFound().build();
+//	}
 
-	@GetMapping("/testtt")
-	public String testtt() {
-		return "/app/layout/layout";
-	}
-
-	@PostMapping("/api/page-routes")
-	public ResponseEntity<Resource> getRouterJson() {
-		Resource resource = new ClassPathResource("view/data/router.json");
-
-		if (resource.exists()) {
-			return ResponseEntity.ok()
-					.contentType(MediaType.APPLICATION_JSON)
-					.body(resource);
-		}
-
-		return ResponseEntity.notFound().build();
-	}
-
-	@GetMapping("/test/datarequest")
-	@ResponseBody
-	public ResponseEntity<?> test2() {
-
-		return ResponseEntity.ok(Map.of("as", "asd"));
-
-	}
+//	@GetMapping("/test/datarequest")
+//	@ResponseBody
+//	public ResponseEntity<?> test2() {
+//
+//		return ResponseEntity.ok(Map.of("as", "asd"));
+//
+//	}
 	
 	@PostMapping("/api/board")
 	public ResponseEntity<?> indexBoard(){
@@ -88,23 +75,7 @@ public class TestController {
 		log.info("map={}",setDate);
 		return ResponseEntity.ok(setDate);
 	}
-	
 
-//	@GetMapping("/api/aitest")
-//	@ResponseBody
-//	public ResponseEntity<?> test3() throws Exception {
-//		        File image = new File("/Users/yeongbee/Final-Project/영수증/images1.jpeg");
-//		CommonsMultipartFile commonsMultipartFile = receiptExtraction.convertFileToMultipart(image);
-//		ReceiptDTO receiptDTO = receiptExtraction.extractReceiptData(commonsMultipartFile);
-//
-//        log.info("receiptDTO: {}", receiptDTO);
-//        System.out.println("MultipartFile 이름: " + receiptDTO.toString());
-//
-//		return ResponseEntity.ok(receiptDTO);
-//	}
-
-	
-	
 	
 	@PostMapping("/api/index")
 	public ResponseEntity<?> test2(DataRequest dataRequest) {

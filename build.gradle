@@ -79,3 +79,13 @@ dependencyManagement {
 tasks.named('test') {
     useJUnitPlatform()
 }
+
+def querydslDir = "src/main/generated"
+
+tasks.withType(JavaCompile) {
+    options.getGeneratedSourceOutputDirectory().set(file(querydslDir))
+}
+
+sourceSets {
+    main.java.srcDirs += [ querydslDir ]
+}
