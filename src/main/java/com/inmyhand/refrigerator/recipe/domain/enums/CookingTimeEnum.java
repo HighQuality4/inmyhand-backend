@@ -1,5 +1,7 @@
 package com.inmyhand.refrigerator.recipe.domain.enums;
 
+import java.util.Arrays;
+
 public enum CookingTimeEnum {
 
     WITHIN_5_MINUTES("5분 이내"),
@@ -17,5 +19,12 @@ public enum CookingTimeEnum {
 
     public String getLabel() {
         return label;
+    }
+
+    public static CookingTimeEnum fromLabel(String label) {
+        return Arrays.stream(CookingTimeEnum.values())
+                .filter(e -> e.getLabel().equals(label))
+                .findFirst()
+                .orElseThrow(() -> new IllegalArgumentException("해당 라벨에 맞는 CookingTimeEnum이 없습니다: " + label));
     }
 }

@@ -2,9 +2,11 @@ package com.inmyhand.refrigerator.recipe.service;
 
 import com.inmyhand.refrigerator.recipe.domain.dto.*;
 import com.inmyhand.refrigerator.recipe.domain.entity.RecipeInfoEntity;
+import com.inmyhand.refrigerator.recipe.domain.entity.RecipeLikesEntity;
 import com.inmyhand.refrigerator.recipe.domain.entity.RecipeNutrientAnalysisEntity;
 import com.inmyhand.refrigerator.recipe.mapper.RecipeSummaryMapper;
 import com.inmyhand.refrigerator.recipe.repository.RecipeInfoRepository;
+import com.inmyhand.refrigerator.recipe.repository.RecipeLikesRepository;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +23,8 @@ import java.util.stream.Collectors;
 public class RecipeQueryServiceImpl implements RecipeQueryService {
     @Autowired
     private RecipeInfoRepository infoRepository;
+    @Autowired
+    private RecipeLikesRepository likesRepository;
 
     private final RecipeSummaryMapper summaryMapper;
 
@@ -145,4 +149,29 @@ public class RecipeQueryServiceImpl implements RecipeQueryService {
                 analysis
         );
     }
+
+    // 레시피 검색
+    public List<RecipeSummaryDTO> getSearchRecipeList(String keyword) {
+        List<RecipeInfoEntity> recipes = infoRepository.findByRecipeNameContaining(keyword);
+        return summaryMapper.toDtoList(recipes);
+    }
+
+    // TODO : 내가 등록한 레시피 조회
+    public List<RecipeSummaryDTO> getMyRecipeList(Long userId) {
+        List<RecipeInfoEntity> recipes = infoRepository.findByMemberEntityId(userId);
+
+        return summaryMapper.toDtoList(recipes);
+    }
+
+    // TODO : 좋아요 체크한 레시피 조회
+    public List<RecipeSummaryDTO> getMyLikeRecipeList(Long userId) {
+        List<RecipeLikesEntity> likesEntities = likesRepository.findByMemberEntity_Id(userId);
+
+        List<RecipeInfoEntity> likedRecipes = likesEntities.stream()
+                .map(RecipeLikesEntity::getRecipeInfoEntity)
+                .collect(Collectors.toList());
+
+        return summaryMapper.toDtoList(likedRecipes);
+    }
+
 }

@@ -14,4 +14,10 @@ public interface RecipeInfoRepository extends JpaRepository<RecipeInfoEntity, Lo
     // 인기 레시피 - 제일 좋아요가 많은 레시피 N개 추출
     @Query("SELECT r FROM RecipeInfoEntity r LEFT JOIN r.recipeLikesList l GROUP BY r.id ORDER BY COUNT(l) DESC")
     List<RecipeInfoEntity> findTop5ByOrderByLikesCountDesc(Pageable pageable);
+
+    // 레시피 검색
+    List<RecipeInfoEntity> findByRecipeNameContaining(String keyword);
+
+    // 내가 등록한 레시피 조회
+    List<RecipeInfoEntity> findByMemberEntityId(Long memberEntityId);
 }
