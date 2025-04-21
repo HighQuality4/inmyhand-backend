@@ -29,6 +29,7 @@ import java.util.List;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
 @ToString(exclude = {"memeberAllergyList", "hateFoodList", "healthInterestList",
         "memberRoleList", "refreshTokenList", "paymentList",
         "fridgeMemberList", "recipeInfoList", "recipeCommentList", "recipeLikesList",
