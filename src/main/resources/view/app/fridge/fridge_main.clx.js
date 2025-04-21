@@ -324,7 +324,6 @@
 			});
 			
 			var userDefinedControl_1 = linker.userDefinedControl_1 = new udc.fridge.fridgeCRUD("fridgeCRUD");
-			userDefinedControl_1.addStr = "추가";
 			container.addChild(userDefinedControl_1, {
 				positions: [
 					{
@@ -353,8 +352,6 @@
 			if(typeof onBodyLoad2 == "function"){
 				app.addEventListener("load", onBodyLoad2);
 			}
-			// Linking
-			linker.userDefinedControl_1.grdCtrl = linker.grid_1;
 		}
 	});
 	app.title = "fridge_main";
