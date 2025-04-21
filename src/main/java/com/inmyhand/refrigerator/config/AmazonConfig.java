@@ -13,7 +13,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.beans.factory.annotation.Value;
 
-@Configuration
+//@Configuration
 @Getter
 @RequiredArgsConstructor
 public class AmazonConfig {

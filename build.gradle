@@ -45,9 +45,7 @@ dependencies {
     implementation 'org.postgresql:postgresql'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testImplementation 'org.springframework.security:spring-security-test'
-//    runtimeOnly 'com.h2database:h2'
     testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
-
 
     //eXBuilder6에 필요함
     implementation files('libs/cleopatra_server_ee9.jar')
@@ -66,6 +64,9 @@ dependencies {
 
     // 한국어 형태소 분석
     implementation 'com.github.shin285:KOMORAN:3.3.9'
+
+
+    implementation 'org.springframework.cloud:spring-cloud-starter-aws:2.2.6.RELEASE'
 
 }
 
