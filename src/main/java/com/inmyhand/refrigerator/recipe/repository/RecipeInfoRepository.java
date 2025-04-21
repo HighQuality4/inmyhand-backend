@@ -20,7 +20,7 @@ public interface RecipeInfoRepository extends JpaRepository<RecipeInfoEntity, Lo
     List<RecipeInfoEntity> findByMemberEntityId(Long memberEntityId);
 
     // 레시피 이름 관련 모두 찾기
-    Optional<List<RecipeInfoEntity>> findByRecipeNameContaining(String keyword);
+    List<RecipeInfoEntity> findByRecipeNameContaining(String keyword);
 
     //레시피 이름으로 찾기
     Optional<RecipeInfoEntity> findByRecipeName(String recipeName);

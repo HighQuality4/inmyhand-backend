@@ -46,7 +46,7 @@ public class PopularSearchService {
             return;
         }
 
-        List<RecipeInfoEntity> list = recipeInfoRepository.findByRecipeNameContaining(keyword).orElse(null);
+        List<RecipeInfoEntity> list = recipeInfoRepository.findByRecipeNameContaining(keyword);
 
         if (list != null && !list.isEmpty()) {
             list.stream()

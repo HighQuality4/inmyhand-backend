@@ -153,7 +153,7 @@ public class RecipeQueryServiceImpl implements RecipeQueryService {
 
     // 레시피 검색
     public List<RecipeSummaryDTO> getSearchRecipeList(String keyword) {
-        List<RecipeInfoEntity> recipes = infoRepository.findByRecipeNameContaining(keyword).orElse(new ArrayList<>());
+        List<RecipeInfoEntity> recipes = infoRepository.findByRecipeNameContaining(keyword);
         return summaryMapper.toDtoList(recipes);
     }
 
