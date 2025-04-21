@@ -87,15 +87,16 @@ public class FridgeFoodRestController {
     }
 //
 //    // 식재료 정보 입력
-//    @PostMapping
-//    public ResponseEntity<Void> createFridgeFood(
-//            @PathVariable Long fridgeId,
-//            @RequestBody FridgeFoodDTO dto) {
-//
-//        dto.setFridgeId(fridgeId); // fridgeId 설정
-//        fridgeFoodService.svcCreateFridgeFood(dto);
-//        return ResponseEntity.status(HttpStatus.CREATED).build();
-//    }
+    @PostMapping("/create/{fridgeId}")
+    public ResponseEntity<Void> createFridgeFood(
+            @PathVariable Long fridgeId,
+            @RequestBody List<FridgeFoodDTO> dto) {
+
+        fridgeFoodService.svcCreateFridgeFood(fridgeId,dto);
+        return ResponseEntity.status(HttpStatus.CREATED).build();
+    }
+
+
 //
 //    // 2. 식재료 수정
 //    @PutMapping("/{foodId}")

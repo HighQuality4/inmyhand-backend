@@ -4,7 +4,6 @@ import com.inmyhand.refrigerator.fridge.domain.dto.food.FridgeDTO;
 import com.inmyhand.refrigerator.fridge.domain.dto.food.FridgeFoodDTO;
 import com.inmyhand.refrigerator.fridge.domain.dto.food.FridgeMainPageDTO;
 import com.inmyhand.refrigerator.fridge.domain.dto.food.FridgeWithRolesDTO;
-import com.inmyhand.refrigerator.fridge.domain.entity.FoodCategoryEntity;
 import com.inmyhand.refrigerator.fridge.domain.entity.FridgeEntity;
 import com.inmyhand.refrigerator.fridge.domain.entity.FridgeFoodEntity;
 import com.inmyhand.refrigerator.fridge.domain.entity.FridgeMemberEntity;
@@ -22,7 +21,6 @@ public class FridgeFoodService {
 
     private final FridgeFoodRepository fridgeFoodRepository;
     private final FridgeRepository fridgeRepository;
-    private final FoodCategoryRepository foodCategoryRepository;
     private final FridgeMemberRepository fridgeMemberRepository;
     private final MemberGroupRoleRepository memberGroupRoleRepository;
 
@@ -105,30 +103,31 @@ public class FridgeFoodService {
                 .endDate(food.getEndDate())
                 .chargeDate(food.getChargeDate())
                 .saveDate(food.getSaveDate())
-                .foodCategoryId(food.getFoodCategoryEntity().getId())
                 .build();
     }
     //-------------------------------------------------------
 
     // 1. Create
-    public void svcCreateFridgeFood(FridgeFoodDTO dto) {
-        FridgeEntity fridge = fridgeRepository.findById(dto.getFridgeId())
-                .orElseThrow(() -> new IllegalArgumentException("냉장고 없음"));
+    public void svcCreateFridgeFood(Long fridgeId,List<FridgeFoodDTO> dtoList) {
 
-        FoodCategoryEntity category = foodCategoryRepository.findById(dto.getFoodCategoryId())
-                .orElseThrow(() -> new IllegalArgumentException("카테고리 없음"));
 
-        FridgeFoodEntity food = FridgeFoodEntity.builder()
-                .foodName(dto.getFoodName())
-                .foodAmount(dto.getFoodAmount())
-                .endDate(dto.getEndDate())
-                .chargeDate(dto.getChargeDate())
-                .saveDate(dto.getSaveDate())
-                .fridgeEntity(fridge)
-                .foodCategoryEntity(category)
-                .build();
+        // 예시: FridgeEntity를 fridgeId로 가져온다고 가정
+        FridgeEntity fridge = fridgeRepository.findById(fridgeId)
+                .orElseThrow(() -> new IllegalArgumentException("Fridge not found"));
 
-        fridgeFoodRepository.save(food);
+        for (FridgeFoodDTO dto : dtoList) {
+
+            FridgeFoodEntity food = FridgeFoodEntity.builder()
+                    .foodName(dto.getFoodName())
+                    .foodAmount(dto.getFoodAmount())
+                    .endDate(dto.getEndDate())
+                    .chargeDate(dto.getChargeDate())
+                    .saveDate(dto.getSaveDate())
+                    .fridgeEntity(fridge)
+                    .build();
+
+            fridgeFoodRepository.save(food);
+        }
     }
 
     // 2. Update
@@ -139,8 +138,6 @@ public class FridgeFoodService {
         FridgeEntity fridge = fridgeRepository.findById(dto.getFridgeId())
                 .orElseThrow(() -> new IllegalArgumentException("냉장고 없음"));
 
-        FoodCategoryEntity category = foodCategoryRepository.findById(dto.getFoodCategoryId())
-                .orElseThrow(() -> new IllegalArgumentException("카테고리 없음"));
 
         FridgeFoodEntity updated = FridgeFoodEntity.builder()
                 .id(existing.getId()) // ID 유지
@@ -150,7 +147,6 @@ public class FridgeFoodService {
                 .chargeDate(dto.getChargeDate())
                 .saveDate(dto.getSaveDate())
                 .fridgeEntity(fridge)
-                .foodCategoryEntity(category)
                 .build();
 
         fridgeFoodRepository.save(updated);
@@ -182,7 +178,6 @@ public class FridgeFoodService {
                 .chargeDate(entity.getChargeDate())
                 .saveDate(entity.getSaveDate())
                 .fridgeId(entity.getFridgeEntity().getId())
-                .foodCategoryId(entity.getFoodCategoryEntity().getId())
                 .build();
     }
 }

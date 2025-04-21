@@ -8,6 +8,8 @@ import lombok.RequiredArgsConstructor;
 import org.postgresql.util.PGobject;
 import org.springframework.stereotype.Repository;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @Repository
@@ -62,6 +64,38 @@ public class FoodVectorRepositoryImpl implements FoodVectorRepository {
                 .setParameter("embeddingStr", embeddingStr);
 
         query.executeUpdate();
+    }
+
+
+    public List<FoodVectorRequestDTO> findByCategoryNameContaining(String keyword) {
+        String query = """
+        SELECT id, category_name, natural_text, embedding, expiration_info
+        FROM food_vector
+        WHERE category_name ILIKE :keyword
+        ORDER BY category_name ASC
+        LIMIT 10
+    """;
+
+        List<Object[]> results = entityManager.createNativeQuery(query)
+                .setParameter("keyword", "%" + keyword + "%") // 부분 매칭
+                .getResultList();
+
+        List<FoodVectorRequestDTO> dtoList = new ArrayList<>();
+
+        for (Object[] result : results) {
+            PGobject embeddingObj = (PGobject) result[3];
+            String embeddingStr = embeddingObj.getValue();
+
+            dtoList.add(FoodVectorRequestDTO.builder()
+                    .inputText(null)
+                    .categoryName((String) result[1])
+                    .naturalText((String) result[2])
+                    .expirationInfo(((Number) result[4]).intValue())
+                    .distance(null)
+                    .build());
+        }
+
+        return dtoList;
     }
 
 }
