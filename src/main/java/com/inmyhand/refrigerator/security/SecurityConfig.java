@@ -50,16 +50,21 @@ public class SecurityConfig {
     }
 
     @Bean
-    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+    public SecurityFilterChain filterChain(HttpSecurity http, Oauth2UserDetailService oauth2UserDetailService, CustomOAuth2SuccessHandler customOAuth2SuccessHandler) throws Exception {
 
         http
-                .cors(withDefaults())
+                .cors(cors -> cors.configurationSource(corsConfigurationSource()))
                 .csrf(AbstractHttpConfigurer::disable)
                 .sessionManagement(session -> session
                         .sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(auth -> auth.anyRequest().permitAll()) //나중에 수정
                 .httpBasic(AbstractHttpConfigurer::disable)
-                .oauth2Login(AbstractHttpConfigurer::disable)//나중에 설정 고칠 것.
+                .oauth2Login(oauth2 -> oauth2
+                        .userInfoEndpoint(userInfo -> userInfo
+                                .userService(oauth2UserDetailService)
+                        )
+                        .successHandler(customOAuth2SuccessHandler)
+                )
                 //.formLogin(AbstractHttpConfigurer::disable)
                 //.formLogin(withDefaults()) //테스트 용도
 //                .headers(headers -> headers
