@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:cl="http://tomatosystem.co.kr/cleopatra" xmlns:std="http://tomatosystem.co.kr/cleopatra/studio" std:sid="html-cef4f320" version="1.0.5481">
+  <head std:sid="head-1bf9200e">
+    <std:metadata>
+      <std:property key="template-file" value="templates/contents_container.clx"/>
+    </std:metadata>
+    <screen std:sid="screen-00315057" id="default" name="default" width="1024px" height="768px" useCustomWidth="true" useCustomHeight="true" customHeight="1000" customWidth="600" active="true"/>
+    <screen std:sid="screen-d184c9ef" id="tablet" name="tablet" width="500px" height="667px"/>
+    <screen std:sid="screen-dfce70c5" id="mobile" name="mobile" width="350px" height="525px"/>
+    <cl:model std:sid="model-c2e79a6e">
+      <cl:datamap std:sid="d-map-e2d18edb" id="dmLogin">
+        <cl:datacolumnlist>
+          <cl:datacolumn std:sid="d-column-a2aea2d1" name="email" datatype="string" defaultvalue=""/>
+          <cl:datacolumn std:sid="d-column-3554e54e" name="password" datatype="string"/>
+        </cl:datacolumnlist>
+      </cl:datamap>
+      <cl:submission std:sid="submission-45dd3510" id="smsLogin" async="true" method="post" action="http://localhost:7079/login" mediatype="application/json" responsetype="javascript" fallbackContentType="application/json">
+        <cl:requestdata dataid="dmLogin"/>
+      </cl:submission>
+    </cl:model>
+    <cl:appspec/>
+  </head>
+  <body std:sid="body-c43e6d9f" style="background-color:#FFFFFF; color:#000000;" class="contents-container">
+    <cl:group std:sid="group-0f9d529b" id="loginForm" class="login_input">
+      <cl:responsivexylayoutdata std:sid="rxyl-data-a8ef5b31">
+        <cl:xylayoutdata std:sid="sxyl-data-e64e465a" top="132px" left="40px" width="520px" height="170px" horizontalAnchor="LEFT" verticalAnchor="TOP" screenid="default"/>
+      </cl:responsivexylayoutdata>
+      <cl:inputbox std:sid="i-box-6c262ea3" id="email" style="border-radius:5px; background-color:#FFFBF7; font-size:24px;" value="" placeholder="아이디">
+        <cl:formdata std:sid="f-data-d672af3b" row="0" col="0"/>
+      </cl:inputbox>
+      <cl:inputbox std:sid="i-box-32516a75" id="password" style="border-radius:5px; color:#000000; font-size:24px;" placeholder="비밀번호">
+        <cl:formdata std:sid="f-data-dbbcf666" row="1" col="0"/>
+      </cl:inputbox>
+      <cl:formlayout std:sid="f-layout-504b6ebb" scrollable="false" hspace="10px" vspace="10px" top-margin="5px" right-margin="5px" bottom-margin="5px" left-margin="5px">
+        <cl:rows length="74" unit="PIXEL"/>
+        <cl:rows length="74" unit="PIXEL"/>
+        <cl:columns length="1" unit="FRACTION"/>
+      </cl:formlayout>
+    </cl:group>
+    <cl:button std:sid="button-083111ef" style="background-color:#856C66; color:#856C66; font-family:@Kim jung chul Myungjo Bold;" value="로그인">
+      <cl:listener std:sid="listener-1920fe0c" name="click" handler="onButtonClick"/>
+      <cl:responsivexylayoutdata std:sid="rxyl-data-3f149ade">
+        <cl:xylayoutdata std:sid="sxyl-data-deb1a1dc" top="336px" left="40px" width="520px" height="74px" horizontalAnchor="LEFT" verticalAnchor="TOP" screenid="default"/>
+      </cl:responsivexylayoutdata>
+    </cl:button>
+    <cl:output std:sid="output-970e83fe" style="color:#000000; font-weight:bold; font-size:24px; font-family:Kim jung chul Myungjo Regular;" value="로그인">
+      <cl:responsivexylayoutdata std:sid="rxyl-data-ad6cd248">
+        <cl:xylayoutdata std:sid="sxyl-data-82928203" top="49px" left="40px" width="520px" height="74px" horizontalAnchor="LEFT" verticalAnchor="TOP" screenid="default"/>
+      </cl:responsivexylayoutdata>
+    </cl:output>
+    <cl:output std:sid="output-694f9248" style="color:#000000; font-weight:bold; font-size:24px; font-family:Kim jung chul Myungjo Regular;" value="소셜 로그인">
+      <cl:responsivexylayoutdata std:sid="rxyl-data-52ade60c">
+        <cl:xylayoutdata std:sid="sxyl-data-2654b855" top="433px" left="40px" width="520px" height="74px" horizontalAnchor="LEFT" verticalAnchor="TOP" screenid="default"/>
+      </cl:responsivexylayoutdata>
+    </cl:output>
+    <cl:responsivexylayout std:sid="r-xylayout-3e5555da"/>
+  </body>
+  <std:studiosetting>
+    <std:hruler/>
+    <std:vruler>
+      <std:guide position="49"/>
+    </std:vruler>
+  </std:studiosetting>
+</html>
