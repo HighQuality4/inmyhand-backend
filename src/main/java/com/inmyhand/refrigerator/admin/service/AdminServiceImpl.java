@@ -51,13 +51,19 @@ public class AdminServiceImpl implements AdminService {
      * @param memberEntityDto
      */
     @Override
-    @Transactional(readOnly = true)
-    public void updateMember(MemberEntityDto memberEntityDto) {
-        MemberEntity entity = memberMapper.toEntity(memberEntityDto);
-        memberRepository.save(entity);
+    @Transactional
+    public void updateMember(List<MemberEntityDto> memberEntityDto) {
+        List<MemberEntity> entity = memberMapper.toEntityList(memberEntityDto);
+        memberRepository.saveAll(entity);
     }
 
 
-
-
+    /**
+     * Repository 에서 DTO로 불러오기
+     *
+     */
+    @Transactional(readOnly = true)
+    public List<MemberEntityDto> findAllMembers() {
+        return memberRepository.findAllMemberDto();
+    }
 }
