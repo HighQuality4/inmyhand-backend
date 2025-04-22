@@ -2,11 +2,13 @@ package com.inmyhand.refrigerator.web;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.View;
+
 import com.cleopatra.spring.UIView;
 import com.cleopatra.ui.PageGenerator;
+
 import jakarta.annotation.PostConstruct;
+import jakarta.servlet.http.HttpServletRequest;
 
 @Controller
 public class CleopatraUIController {
@@ -16,8 +18,10 @@ public class CleopatraUIController {
         PageGenerator.getInstance().setURLSuffix(".clx");
     }
 
-    @RequestMapping(value = {"/**/*.clx", "/*.clx"})
-    public View handleClxRequests() {
+    @GetMapping(value = {"/**/*.clx", "/*.clx"})
+    public View handleClxRequests(HttpServletRequest request) {
+        String requestId = request.getRequestURI();
+        System.out.println("requestId = " + requestId);
         return new UIView();
     }
 
@@ -25,4 +29,11 @@ public class CleopatraUIController {
     public String forwardToLayout() {
         return "/app/layout/layout";
     }
+    
+    @GetMapping("/admin/user")
+    public String adminUserPage() {
+    	return "/app/admin/admin-user";
+    }
+
+    
 }
