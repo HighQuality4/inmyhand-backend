@@ -11,8 +11,5 @@ public class FoodVectorRequestDTO {
     private String naturalText;     // 원래 DB text
     private int expirationInfo;     // 유통기한
     private Double distance;        // 유사도
-
-    private Long id;
-
 }
 

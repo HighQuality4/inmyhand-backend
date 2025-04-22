@@ -1,8 +1,8 @@
-.contents-container > .cl-layout.cl-scrollbar::-webkit-scrollbar {
+.contents-container > .cl-layout::-webkit-scrollbar {
 		display:none;
 }
 
-.contents-container > .cl-scrollbar {
+.contents-container > .cl-layout {
 	padding: 20px 40px;
     box-sizing: border-box !important;
 }

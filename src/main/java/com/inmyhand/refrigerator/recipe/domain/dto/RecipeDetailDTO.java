@@ -29,7 +29,8 @@ public class RecipeDetailDTO implements Serializable {
     private Date createdAt;
     private Date updatedAt;
 
-    private String nickname;
+    private String userNickname;
+    private String userProfileImageUrl;
     private Long likeCount;
     private Long viewCount;
 

@@ -26,8 +26,8 @@ public class RecipeController {
     }
 
     // 인기 레시피 목록 조회
-    @GetMapping("/popular")
-    public List<RecipeSummaryDTO> getPopularRecipeList() {
+    @PostMapping("/popular")
+        public List<RecipeSummaryDTO> getPopularRecipeList() {
         return recipeQueryService.getPopularRecipeList();
     }
 

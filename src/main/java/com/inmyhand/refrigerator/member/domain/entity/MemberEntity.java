@@ -29,6 +29,7 @@ import java.util.List;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
 @ToString(exclude = {"memeberAllergyList", "hateFoodList", "healthInterestList",
         "memberRoleList", "refreshTokenList", "paymentList",
         "fridgeMemberList", "recipeInfoList", "recipeCommentList", "recipeLikesList",
@@ -87,6 +88,7 @@ public class MemberEntity {
     @JsonIgnoreProperties("memberEntity")
     private List<HealthInterestEntity> healthInterestList = new ArrayList<>();
 
+    @Builder.Default
     @OneToMany(mappedBy = "memberEntity", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonIgnoreProperties("memberEntity")
     private List<MemberRoleEntity> memberRoleList = new ArrayList<>();

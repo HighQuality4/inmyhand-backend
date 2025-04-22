@@ -28,6 +28,7 @@ public class LoginServiceImpl implements LoginService {
     @Transactional
     @Override
     public LoginResponseDTO login(LoginRequestDTO loginRequestDTO, HttpServletResponse response) {
+
         // 비밀번호 매칭 프로세스 추가하기!
         MemberEntity member = loginRepository.findByEmail(loginRequestDTO.getEmail()).orElseThrow(()->new RuntimeException("사용자를 찾을 수 없습니다."));
 
@@ -39,7 +40,7 @@ public class LoginServiceImpl implements LoginService {
         String refreshToken = jwtTokenUtil.generateRefreshToken(member);
 
         //기존 리프레시 토큰이 있으면 토큰 값만 수정(나중에 Redis에서도 처리하도록 변경할 것!)
-        RefreshTokenEntity existingToken = refreshTokenRepository.findByMemberEntity(member);
+        RefreshTokenEntity existingToken = refreshTokenRepository.findByMemberEntity(member).orElse(null);
 
         if (existingToken != null) {
             existingToken.setTokenValue(refreshToken);
@@ -65,8 +66,6 @@ public class LoginServiceImpl implements LoginService {
 
         response.addHeader("Set-Cookie", accessCookie.toString());
 
-
-
         return LoginResponseDTO.builder()
                 .email(member.getEmail())
                 .nickname(member.getNickname())
@@ -74,7 +73,5 @@ public class LoginServiceImpl implements LoginService {
                 .refreshToken(refreshToken)
                 .build();
     }
-
-
 
 }
