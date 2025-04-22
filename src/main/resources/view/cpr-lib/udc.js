@@ -8,448 +8,7 @@
  */
 (function(){
 	// App Declaration
-		var internalApp = new cpr.core.App("udc/footer", { 
-			onPrepare: function(loader) {
-				loader.addCSS("theme/custom/footer.part.css");
-			},
-			onCreate: function(/* cpr.core.AppInstance */ app, exports) {
-				var linker = {};
-				// Start - User Script
-				/************************************************
-				 * footer.js
-				 * Created at 2025. 4. 10. 오후 6:47:24.
-				 *
-				 * @author gyrud
-				 ************************************************/
-	
-				/**
-				 * UDC 컨트롤이 그리드의 뷰 모드에서 표시할 텍스트를 반환합니다.
-				 */
-				exports.getText = function(){
-					// TODO: 그리드의 뷰 모드에서 표시할 텍스트를 반환하는 하는 코드를 작성해야 합니다.
-					return "";
-				};
-	
-				/*
-				 * 루트 컨테이너에서 load 이벤트 발생 시 호출.
-				 * 앱이 최초 구성된후 최초 랜더링 직후에 발생하는 이벤트 입니다.
-				 */
-				function onBodyLoad(e){
-					cpr.core.ResourceLoader.loadCSS("theme/custom/footer.part.css");
-				};
-				// End - User Script
-				
-				// Header
-				app.supportMedia("all and (min-width: 1024px)", "default");
-				app.supportMedia("all and (min-width: 500px) and (max-width: 1023.984px)", "tablet");
-				app.supportMedia("all and (max-width: 499.984px)", "mobile");
-				
-				// Configure root container
-				var container = app.getContainer();
-				container.style.css({
-					"width" : "100%",
-					"top" : "0px",
-					"height" : "100%",
-					"left" : "0px"
-				});
-				
-				// Layout
-				var xYLayout_1 = new cpr.controls.layouts.XYLayout();
-				container.setLayout(xYLayout_1);
-				
-				// UI Configuration
-				var group_1 = new cpr.controls.Container();
-				group_1.style.css({
-					"background-color" : "#FFFFFF"
-				});
-				var formLayout_1 = new cpr.controls.layouts.FormLayout();
-				formLayout_1.scrollable = false;
-				formLayout_1.horizontalSpacing = "0px";
-				formLayout_1.verticalSpacing = "0px";
-				formLayout_1.topMargin = "0px";
-				formLayout_1.rightMargin = "0px";
-				formLayout_1.bottomMargin = "0px";
-				formLayout_1.leftMargin = "0px";
-				formLayout_1.setColumns(["40px", "40px", "1fr", "40px", "1fr", "40px", "1fr", "40px", "40px"]);
-				formLayout_1.setRows(["10px", "50px", "10px"]);
-				group_1.setLayout(formLayout_1);
-				(function(container){
-					var group_2 = new cpr.controls.Container();
-					var formLayout_2 = new cpr.controls.layouts.FormLayout();
-					formLayout_2.scrollable = false;
-					formLayout_2.horizontalSpacing = "0px";
-					formLayout_2.verticalSpacing = "0px";
-					formLayout_2.topMargin = "0px";
-					formLayout_2.rightMargin = "0px";
-					formLayout_2.bottomMargin = "0px";
-					formLayout_2.leftMargin = "0px";
-					formLayout_2.setColumns(["1fr"]);
-					formLayout_2.setRows(["30px", "1fr"]);
-					group_2.setLayout(formLayout_2);
-					(function(container){
-						var output_1 = new cpr.controls.Output();
-						output_1.value = "홈";
-						output_1.style.setClasses(["nav-text"]);
-						container.addChild(output_1, {
-							"colIndex": 0,
-							"rowIndex": 1
-						});
-						var image_1 = new cpr.controls.Image();
-						image_1.src = "theme/images/home.svg";
-						container.addChild(image_1, {
-							"colIndex": 0,
-							"rowIndex": 0
-						});
-					})(group_2);
-					container.addChild(group_2, {
-						"colIndex": 1,
-						"rowIndex": 1
-					});
-					var group_3 = new cpr.controls.Container();
-					var formLayout_3 = new cpr.controls.layouts.FormLayout();
-					formLayout_3.scrollable = false;
-					formLayout_3.horizontalSpacing = "0px";
-					formLayout_3.verticalSpacing = "0px";
-					formLayout_3.topMargin = "0px";
-					formLayout_3.rightMargin = "0px";
-					formLayout_3.bottomMargin = "0px";
-					formLayout_3.leftMargin = "0px";
-					formLayout_3.setColumns(["1fr"]);
-					formLayout_3.setRows(["30px", "1fr"]);
-					group_3.setLayout(formLayout_3);
-					(function(container){
-						var output_2 = new cpr.controls.Output();
-						output_2.value = "냉장고";
-						output_2.style.setClasses(["nav-text"]);
-						container.addChild(output_2, {
-							"colIndex": 0,
-							"rowIndex": 1
-						});
-						var image_2 = new cpr.controls.Image();
-						image_2.src = "theme/images/refrigerator.svg";
-						container.addChild(image_2, {
-							"colIndex": 0,
-							"rowIndex": 0
-						});
-					})(group_3);
-					container.addChild(group_3, {
-						"colIndex": 3,
-						"rowIndex": 1
-					});
-					var group_4 = new cpr.controls.Container();
-					var formLayout_4 = new cpr.controls.layouts.FormLayout();
-					formLayout_4.scrollable = false;
-					formLayout_4.horizontalSpacing = "0px";
-					formLayout_4.verticalSpacing = "0px";
-					formLayout_4.topMargin = "0px";
-					formLayout_4.rightMargin = "0px";
-					formLayout_4.bottomMargin = "0px";
-					formLayout_4.leftMargin = "0px";
-					formLayout_4.setColumns(["1fr"]);
-					formLayout_4.setRows(["30px", "1fr"]);
-					group_4.setLayout(formLayout_4);
-					(function(container){
-						var output_3 = new cpr.controls.Output();
-						output_3.value = "레시피";
-						output_3.style.setClasses(["nav-text"]);
-						container.addChild(output_3, {
-							"colIndex": 0,
-							"rowIndex": 1
-						});
-						var image_3 = new cpr.controls.Image();
-						image_3.src = "theme/images/recipe.svg";
-						container.addChild(image_3, {
-							"colIndex": 0,
-							"rowIndex": 0
-						});
-					})(group_4);
-					container.addChild(group_4, {
-						"colIndex": 5,
-						"rowIndex": 1
-					});
-					var group_5 = new cpr.controls.Container();
-					var formLayout_5 = new cpr.controls.layouts.FormLayout();
-					formLayout_5.scrollable = false;
-					formLayout_5.horizontalSpacing = "0px";
-					formLayout_5.verticalSpacing = "0px";
-					formLayout_5.topMargin = "0px";
-					formLayout_5.rightMargin = "0px";
-					formLayout_5.bottomMargin = "0px";
-					formLayout_5.leftMargin = "0px";
-					formLayout_5.setColumns(["1fr"]);
-					formLayout_5.setRows(["30px", "1fr"]);
-					group_5.setLayout(formLayout_5);
-					(function(container){
-						var output_4 = new cpr.controls.Output();
-						output_4.value = "로그인";
-						output_4.style.setClasses(["nav-text"]);
-						container.addChild(output_4, {
-							"colIndex": 0,
-							"rowIndex": 1
-						});
-						var image_4 = new cpr.controls.Image();
-						image_4.src = "theme/images/user.svg";
-						container.addChild(image_4, {
-							"colIndex": 0,
-							"rowIndex": 0
-						});
-					})(group_5);
-					container.addChild(group_5, {
-						"colIndex": 7,
-						"rowIndex": 1
-					});
-				})(group_1);
-				container.addChild(group_1, {
-					"top": "0px",
-					"right": "0px",
-					"bottom": "0px",
-					"left": "0px"
-				});
-				if(typeof onBodyLoad == "function"){
-					app.addEventListener("load", onBodyLoad);
-				}
-			}
-		});
-	internalApp.title = "footer";
-	
-	// Type declaration for footer
-	cpr.utils.Util.ensurePackage("udc").footer = function(id){
-		cpr.controls.UDCBase.call(this, "udc.footer", internalApp, id);
-	};
-	
-	udc.footer.prototype = Object.create(cpr.controls.UDCBase.prototype);
-	Object.defineProperty(udc.footer.prototype, "type", {
-		get : function(){
-			return "udc.footer";
-		},
-		
-		configurable: true
-	});
-	
-	// App Properties
-	
-	// Register type into the Platform and package
-	cpr.core.Platform.INSTANCE.register(internalApp);
-})();
-/// end - udc.footer
-/// start - udc.header
-/*
- * UDC Qualified Name: udc.header
- * App URI: udc/header
- * Source Location: udc/header.clx
- *
- * This file was generated by eXBuilder6 compiler(1.0.5481), Don't edit manually.
- */
-(function(){
-	// App Declaration
-		var internalApp = new cpr.core.App("udc/header", { 
-			onPrepare: function(loader) {
-			},
-			onCreate: function(/* cpr.core.AppInstance */ app, exports) {
-				var linker = {};
-				// Start - User Script
-				/************************************************
-				 * header.js
-				 * Created at 2025. 4. 10. 오후 6:43:53.
-				 *
-				 * @author gyrud
-				 ************************************************/
-				/*
-				 * 그룹에서 click 이벤트 발생 시 호출.
-				 * 사용자가 컨트롤을 클릭할 때 발생하는 이벤트.
-				 */
-				function onReceiptPhotoClick(e){
-					var receiptPhoto = e.control;
-					
-					window.location.pathname = "/recipt/photo";
-				}
-	
-				/*
-				 * 그룹에서 click 이벤트 발생 시 호출.
-				 * 사용자가 컨트롤을 클릭할 때 발생하는 이벤트.
-				 */
-				function onRecipeRegistrationClick(e){
-					var recipeRegistration = e.control;
-					
-					window.location.pathname = "/recipe";
-				};
-				// End - User Script
-				
-				// Header
-				app.supportMedia("all and (min-width: 1024px)", "default");
-				app.supportMedia("all and (min-width: 500px) and (max-width: 1023.984px)", "tablet");
-				app.supportMedia("all and (max-width: 499.984px)", "mobile");
-				
-				// Configure root container
-				var container = app.getContainer();
-				container.style.css({
-					"width" : "100%",
-					"top" : "0px",
-					"height" : "100%",
-					"left" : "0px"
-				});
-				
-				// Layout
-				var xYLayout_1 = new cpr.controls.layouts.XYLayout();
-				container.setLayout(xYLayout_1);
-				
-				// UI Configuration
-				var group_1 = new cpr.controls.Container();
-				group_1.style.css({
-					"background-color" : "#FBF3EB"
-				});
-				var formLayout_1 = new cpr.controls.layouts.FormLayout();
-				formLayout_1.scrollable = false;
-				formLayout_1.horizontalSpacing = "0px";
-				formLayout_1.verticalSpacing = "0px";
-				formLayout_1.topMargin = "0px";
-				formLayout_1.rightMargin = "0px";
-				formLayout_1.bottomMargin = "0px";
-				formLayout_1.leftMargin = "0px";
-				formLayout_1.setColumns(["40px", "1fr", "1fr", "48px", "10px", "48px", "40px"]);
-				formLayout_1.setRows(["10px", "1fr", "10px"]);
-				group_1.setLayout(formLayout_1);
-				(function(container){
-					var output_1 = new cpr.controls.Output();
-					output_1.value = "내손안의 냉장고";
-					output_1.style.css({
-						"color" : "#856C66",
-						"font-weight" : "bold",
-						"font-size" : "20px",
-						"font-family" : "Kim jung chul Myungjo Regular"
-					});
-					container.addChild(output_1, {
-						"colIndex": 1,
-						"rowIndex": 1,
-						"colSpan": 1,
-						"rowSpan": 1
-					});
-					var group_2 = new cpr.controls.Container("recipeRegistration");
-					var formLayout_2 = new cpr.controls.layouts.FormLayout();
-					formLayout_2.scrollable = false;
-					formLayout_2.horizontalSpacing = "0px";
-					formLayout_2.verticalSpacing = "0px";
-					formLayout_2.topMargin = "0px";
-					formLayout_2.rightMargin = "0px";
-					formLayout_2.bottomMargin = "0px";
-					formLayout_2.leftMargin = "0px";
-					formLayout_2.setColumns(["1fr"]);
-					formLayout_2.setRows(["35px", "5px", "1fr"]);
-					group_2.setLayout(formLayout_2);
-					(function(container){
-						var image_1 = new cpr.controls.Image();
-						image_1.src = "theme/images/recipe_registration.svg";
-						container.addChild(image_1, {
-							"colIndex": 0,
-							"rowIndex": 0
-						});
-						var output_2 = new cpr.controls.Output();
-						output_2.value = "레시피 등록";
-						output_2.style.css({
-							"color" : "#856C66",
-							"font-weight" : "bold",
-							"font-size" : "10px",
-							"text-align" : "center"
-						});
-						container.addChild(output_2, {
-							"colIndex": 0,
-							"rowIndex": 2
-						});
-					})(group_2);
-					if(typeof onRecipeRegistrationClick == "function") {
-						group_2.addEventListener("click", onRecipeRegistrationClick);
-					}
-					container.addChild(group_2, {
-						"colIndex": 5,
-						"rowIndex": 1,
-						"colSpan": 1,
-						"rowSpan": 1,
-						"width": 100,
-						"height": 9
-					});
-					var group_3 = new cpr.controls.Container("receiptPhoto");
-					var formLayout_3 = new cpr.controls.layouts.FormLayout();
-					formLayout_3.scrollable = false;
-					formLayout_3.horizontalSpacing = "0px";
-					formLayout_3.verticalSpacing = "0px";
-					formLayout_3.topMargin = "0px";
-					formLayout_3.rightMargin = "0px";
-					formLayout_3.bottomMargin = "0px";
-					formLayout_3.leftMargin = "0px";
-					formLayout_3.setColumns(["1fr"]);
-					formLayout_3.setRows(["35px", "5px", "1fr"]);
-					group_3.setLayout(formLayout_3);
-					(function(container){
-						var image_2 = new cpr.controls.Image();
-						image_2.src = "theme/images/receipt_photo.svg";
-						container.addChild(image_2, {
-							"colIndex": 0,
-							"rowIndex": 0
-						});
-						var output_3 = new cpr.controls.Output();
-						output_3.value = "영수증 촬영";
-						output_3.style.css({
-							"color" : "#856C66",
-							"font-weight" : "bold",
-							"font-size" : "10px",
-							"text-align" : "center"
-						});
-						container.addChild(output_3, {
-							"colIndex": 0,
-							"rowIndex": 2
-						});
-					})(group_3);
-					if(typeof onReceiptPhotoClick == "function") {
-						group_3.addEventListener("click", onReceiptPhotoClick);
-					}
-					container.addChild(group_3, {
-						"colIndex": 3,
-						"rowIndex": 1,
-						"colSpan": 1,
-						"rowSpan": 1
-					});
-				})(group_1);
-				container.addChild(group_1, {
-					"top": "0px",
-					"right": "0px",
-					"bottom": "0px",
-					"left": "0px"
-				});
-			}
-		});
-	internalApp.title = "header";
-	
-	// Type declaration for header
-	cpr.utils.Util.ensurePackage("udc").header = function(id){
-		cpr.controls.UDCBase.call(this, "udc.header", internalApp, id);
-	};
-	
-	udc.header.prototype = Object.create(cpr.controls.UDCBase.prototype);
-	Object.defineProperty(udc.header.prototype, "type", {
-		get : function(){
-			return "udc.header";
-		},
-		
-		configurable: true
-	});
-	
-	// App Properties
-	
-	// Register type into the Platform and package
-	cpr.core.Platform.INSTANCE.register(internalApp);
-})();
-/// end - udc.header
-/// start - udc.recipe.recipe_card
-/*
- * UDC Qualified Name: udc.recipe.recipe_card
- * App URI: udc/recipe/recipe_card
- * Source Location: udc/recipe/recipe_card.clx
- *
- * This file was generated by eXBuilder6 compiler(1.0.5481), Don't edit manually.
- */
-(function(){
-	// App Declaration
-		var internalApp = new cpr.core.App("udc/recipe/recipe_card", { 
+		var internalApp = new cpr.core.App("udc/recipe/recipe_card", {
 			onPrepare: function(loader) {
 			},
 			onCreate: function(/* cpr.core.AppInstance */ app, exports) {
@@ -515,14 +74,14 @@
 							"bottom": "150px",
 							"width": "250px",
 							"left": "calc(50% - 125px)"
-						}, 
+						},
 						{
 							"media": "all and (min-width: 500px) and (max-width: 1023.984px)",
 							"top": "0px",
 							"bottom": "150px",
 							"width": "122px",
 							"left": "calc(50% - 61px)"
-						}, 
+						},
 						{
 							"media": "all and (max-width: 499.984px)",
 							"top": "0px",
@@ -532,7 +91,7 @@
 						}
 					]
 				});
-				
+
 				var group_1 = new cpr.controls.Container();
 				group_1.style.css({
 					"border-radius" : "5px",
@@ -857,14 +416,14 @@
 							"bottom": "0px",
 							"width": "250px",
 							"left": "calc(50% - 125px)"
-						}, 
+						},
 						{
 							"media": "all and (min-width: 500px) and (max-width: 1023.984px)",
 							"top": "250px",
 							"bottom": "0px",
 							"width": "122px",
 							"left": "calc(50% - 61px)"
-						}, 
+						},
 						{
 							"media": "all and (max-width: 499.984px)",
 							"top": "250px",
@@ -981,7 +540,7 @@
 			return this.getEmbeddedAppInstance().setAppProperty("calories", newValue, true);
 		}
 	});
-	
+
 	// Register type into the Platform and package
 	cpr.core.Platform.INSTANCE.register(internalApp);
 })();
@@ -996,7 +555,7 @@
  */
 (function(){
 	// App Declaration
-		var internalApp = new cpr.core.App("udc/recipe/recipe_title", { 
+		var internalApp = new cpr.core.App("udc/recipe/recipe_title", {
 			onPrepare: function(loader) {
 			},
 			onCreate: function(/* cpr.core.AppInstance */ app, exports) {
@@ -1011,7 +570,6 @@
 				// End - User Script
 				
 				// Header
-				app.declareAppProperty("value", null);
 				app.supportMedia("all and (min-width: 1024px)", "default");
 				app.supportMedia("all and (min-width: 500px) and (max-width: 1023.984px)", "tablet");
 				app.supportMedia("all and (max-width: 499.984px)", "mobile");
@@ -1019,7 +577,6 @@
 				// Configure root container
 				var container = app.getContainer();
 				container.style.css({
-					"font-weight" : "normal",
 					"width" : "100%",
 					"top" : "0px",
 					"height" : "100%",
@@ -1093,7 +650,7 @@
 			return this.getEmbeddedAppInstance().setAppProperty("value", newValue, true);
 		}
 	});
-	
+
 	// Register type into the Platform and package
 	cpr.core.Platform.INSTANCE.register(internalApp);
 })();

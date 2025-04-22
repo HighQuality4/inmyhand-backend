@@ -11,5 +11,6 @@ import java.util.List;
 public interface AdminService {
     MemberEntityDto findByMemberOne(Long id);
     List<MemberEntityDto> findByMemberAll();
-    void updateMember(MemberEntityDto memberEntityDto);
+    void updateMember(List<MemberEntityDto> memberEntityDto);
+    List<MemberEntityDto> findAllMembers();
 }
