@@ -16,7 +16,7 @@ public class RedisKeyManager {
     private static final String TEMP_PREFIX = "TEMP";     // 임시저장 관련
 
     // 로그인 관련 키 생성
-    public String getLoginKey(String userId) {
+    public String getLoginKey(Long userId) {
         return String.format("%s:REFRESH_TOKEN:%s", AUTH_PREFIX, userId);
     }
 
