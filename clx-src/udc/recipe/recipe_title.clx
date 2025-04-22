@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:cl="http://tomatosystem.co.kr/cleopatra" xmlns:std="http://tomatosystem.co.kr/cleopatra/studio" std:sid="html-6f0e7ccb" version="1.0.5481">
+  <head std:sid="head-3a738a2d">
+    <std:metadata>
+      <std:property key="template-file" value="templates/contents_container.clx"/>
+    </std:metadata>
+    <screen std:sid="screen-0f6fb009" id="default" name="default" width="1024px" height="768px" customHeight="600" customWidth="800" active="true"/>
+    <screen std:sid="screen-c3ddc728" id="tablet" name="tablet" width="500px" height="667px"/>
+    <screen std:sid="screen-a805b964" id="mobile" name="mobile" width="350px" height="525px"/>
+    <cl:model std:sid="model-c78ebf20"/>
+    <cl:appspec>
+      <cl:property name="value" type="string"/>
+    </cl:appspec>
+  </head>
+  <body std:sid="body-6c6a0d6a" style="top:0px; left:0px; font-weight:normal; width:600px; height:30px;">
+    <cl:listener std:sid="listener-2c6d1378" name="load" handler="onBodyLoad"/>
+    <cl:group std:sid="group-947d44b8">
+      <cl:xylayoutdata std:sid="xyl-data-1780e785" width="150px" height="30px" horizontalAnchor="CENTER" verticalAnchor="CENTER"/>
+      <cl:img std:sid="image-7842800a" src="../../theme/images/recipe.svg">
+        <cl:xylayoutdata std:sid="xyl-data-05e0c131" top="0px" left="0px" width="30px" height="30px" horizontalAnchor="LEFT" verticalAnchor="TOP"/>
+      </cl:img>
+      <cl:output std:sid="output-6e804228" id="titleValue" style="color:#856C66; font-weight:bold; font-size:16px;">
+        <cl:apppropbind property="value" category="PROPERTY" app-property="value"/>
+        <cl:xylayoutdata std:sid="xyl-data-3ead55eb" top="0px" left="40px" width="110px" height="30px" horizontalAnchor="LEFT" verticalAnchor="TOP"/>
+      </cl:output>
+      <cl:xylayout std:sid="xylayout-423e4605"/>
+    </cl:group>
+    <cl:xylayout std:sid="xylayout-6ff50f2b"/>
+  </body>
+  <std:studiosetting>
+    <std:hruler>
+      <std:guide position="300"/>
+    </std:hruler>
+    <std:vruler/>
+  </std:studiosetting>
+</html>

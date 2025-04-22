@@ -15,5 +15,6 @@ public class RecipeSummaryDTO {
     private String cookingTime;
     private Integer calories;
     private Long likeCount;
-    private String nickname;
+    private String userNickname;
+    private String userProfileImageUrl;
 }

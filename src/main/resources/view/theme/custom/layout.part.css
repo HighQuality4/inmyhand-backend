@@ -1,4 +1,4 @@
-.contents-container > .cl-layout.cl-scrollbar::-webkit-scrollbar {
+.contents-container > .cl-layout::-webkit-scrollbar {
 		display:none;
 }
 

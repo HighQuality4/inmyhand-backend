@@ -41,7 +41,7 @@ public class RecipeSummaryMapper {
         
         // 닉네임 설정
         if (entity.getMemberEntity() != null) {
-            dto.setNickname(entity.getMemberEntity().getNickname());
+            dto.setUserNickname(entity.getMemberEntity().getNickname());
         }
         
         // 좋아요 개수
@@ -75,6 +75,14 @@ public class RecipeSummaryMapper {
             dto.setCategories(categoryDTOs);
         } else {
             dto.setCategories(Collections.emptyList());
+        }
+
+        // 사용자 프로필 사진 매핑
+        String profileUrl = null;
+        FilesEntity profileFile = entity.getMemberEntity().getFilesEntity();
+        if (profileFile != null) {
+            profileUrl = profileFile.getFileUrl();
+            dto.setUserProfileImageUrl(profileUrl);
         }
         
         return dto;

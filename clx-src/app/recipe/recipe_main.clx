@@ -7,51 +7,31 @@
     <screen std:sid="screen-23f2e4ce" id="default" name="default" width="1024px" height="768px" useCustomWidth="true" useCustomHeight="true" customHeight="2000" customWidth="600" active="true"/>
     <screen std:sid="screen-959108c3" id="tablet" name="tablet" width="500px" height="667px"/>
     <screen std:sid="screen-5e545b99" id="mobile" name="mobile" width="350px" height="525px"/>
-    <cl:model std:sid="model-c2e79a6e"/>
+    <cl:model std:sid="model-c2e79a6e">
+      <cl:submission std:sid="submission-fedf4426" id="popularRecipeListSms" action="/api/recipes/popular">
+        <cl:listener std:sid="listener-82a1af6e" name="submit-success" handler="onPopularRecipeListSmsSubmitSuccess2"/>
+      </cl:submission>
+    </cl:model>
     <cl:appspec/>
   </head>
   <body std:sid="body-c43e6d9f" style="background-color:#FFFFFF;" class="contents-container">
-    <cl:grid std:sid="grid-885f3848" id="grd1">
-      <cl:responsivexylayoutdata std:sid="rxyl-data-5ab0f347">
-        <cl:xylayoutdata std:sid="sxyl-data-0a0b7745" top="0px" right="0px" left="0px" height="1001px" horizontalAnchor="BOTH" verticalAnchor="TOP" screenid="default"/>
+    <cl:listener std:sid="listener-1662a3eb" name="load" handler="onBodyLoad2"/>
+    <cl:group std:sid="group-d128c392" id="popluarRecipeContainer">
+      <cl:responsivexylayoutdata std:sid="rxyl-data-1f782cb2">
+        <cl:xylayoutdata std:sid="sxyl-data-b7beb9cb" top="0px" right="0px" left="0px" height="1000px" horizontalAnchor="BOTH" verticalAnchor="TOP" screenid="default"/>
       </cl:responsivexylayoutdata>
-      <cl:gridcolumn std:sid="g-column-39d8488b"/>
-      <cl:gridcolumn std:sid="g-column-bc900b59"/>
-      <cl:gridcolumn std:sid="g-column-0f961c3b"/>
-      <cl:gridcolumn std:sid="g-column-163c57f5"/>
-      <cl:gridcolumn std:sid="g-column-5f0fc7c0"/>
-      <cl:gridheader std:sid="gh-band-7daa9271">
-        <cl:gridrow std:sid="g-row-e8b63b03"/>
-        <cl:gridcell std:sid="gh-cell-e3f176a2" rowindex="0" colindex="0"/>
-        <cl:gridcell std:sid="gh-cell-12379ab9" rowindex="0" colindex="1"/>
-        <cl:gridcell std:sid="gh-cell-49714547" rowindex="0" colindex="2"/>
-        <cl:gridcell std:sid="gh-cell-f8f4461b" rowindex="0" colindex="3"/>
-        <cl:gridcell std:sid="gh-cell-d2948681" rowindex="0" colindex="4"/>
-      </cl:gridheader>
-      <cl:griddetail std:sid="gd-band-60433707">
-        <cl:gridrow std:sid="g-row-a1943aa9"/>
-        <cl:gridcell std:sid="gd-cell-6e2abad4" rowindex="0" colindex="0"/>
-        <cl:gridcell std:sid="gd-cell-dc546e3b" rowindex="0" colindex="1"/>
-        <cl:gridcell std:sid="gd-cell-29289f65" rowindex="0" colindex="2"/>
-        <cl:gridcell std:sid="gd-cell-d68019c0" rowindex="0" colindex="3"/>
-        <cl:gridcell std:sid="gd-cell-3abb6f43" rowindex="0" colindex="4"/>
-      </cl:griddetail>
-    </cl:grid>
-    <cl:output std:sid="output-38f60f7c" value="asdfasdfasdfasdfasdfsasdfasdfasdfasdfasdfsasdfasdfasdfasdfasdfsasdfasdfasdfasdfasdfsasdfasdfasdfasdfasdfsasdfasdfasdfasdfasdfsasdfasdfasdfasdfasdfs">
-      <cl:responsivexylayoutdata std:sid="rxyl-data-9fd478b1">
-        <cl:xylayoutdata std:sid="sxyl-data-20463ca2" top="1000px" right="0px" left="0px" height="36px" horizontalAnchor="BOTH" verticalAnchor="TOP" screenid="default"/>
-      </cl:responsivexylayoutdata>
-    </cl:output>
-    <cl:group std:sid="group-9c3da0e0">
-      <cl:responsivexylayoutdata std:sid="rxyl-data-3e4cba00">
-        <cl:xylayoutdata std:sid="sxyl-data-5ee7653b" top="1046px" right="0px" left="0px" height="200px" horizontalAnchor="BOTH" verticalAnchor="TOP" screenid="default"/>
-      </cl:responsivexylayoutdata>
-      <cl:output std:sid="output-7cf91fed" value="asdfasdfasdfasdfasdfsasdfasdfasdfasdfasdfsasdfasdfasdfasdfasdfsasdfasdfasdfasdfasdfsasdfasdfasdfasdfasdfsasdfasdfasdfasdfasdfsasdfasdfasdfasdfasdfs">
-        <cl:xylayoutdata std:sid="xyl-data-72a46b58" top="0px" right="0px" left="0px" height="36px" horizontalAnchor="BOTH" verticalAnchor="TOP"/>
-      </cl:output>
-      <cl:xylayout std:sid="xylayout-c0634ca2"/>
+      <cl:udc std:sid="ud-control-4ace6599" id="popluarRecipeTitle" type="udc.recipe.recipe_title">
+        <cl:verticaldata std:sid="v-data-7a314836" width="600px" height="30px" autosize="none"/>
+        <cl:property name="value" value="인기 레시피" type="string"/>
+      </cl:udc>
+      <cl:group std:sid="group-dd08368c" id="popluarRecipeList">
+        <cl:listener std:sid="listener-341e34b4" name="before-draw" handler="onPopluarRecipeListBeforeDraw"/>
+        <cl:verticaldata std:sid="v-data-0b8401ca" width="600px" height="" autosize="height"/>
+        <cl:flowlayout std:sid="f-layout-4e019a88" scrollable="false" hspacing="20" vspacing="20" halign="center" valign="top" linewrap="true" maxcontentwidth="-1"/>
+      </cl:group>
+      <cl:verticallayout std:sid="v-layout-07a70670" scrollable="false" spacing="20"/>
     </cl:group>
-    <cl:responsivexylayout std:sid="r-xylayout-3e5555da"/>
+    <cl:responsivexylayout std:sid="r-xylayout-3e5555da" scrollable="true"/>
   </body>
   <std:studiosetting>
     <std:hruler/>
