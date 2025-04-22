@@ -120,25 +120,5 @@ public class FridgeGroupInvitationService {
         );
     }
 
-    public List<FridgeWithRoleDTO> getFridgesWithRoleNamesByMember(Long memberId) {
-        // 해당 멤버가 참여한 냉장고 조회
-        List<FridgeMemberEntity> fridgeMembers = fridgeMemberRepository.findByMemberEntity_Id(memberId);
 
-        List<FridgeWithRoleDTO> fridgeWithRoles = new ArrayList<>();
-
-        for (FridgeMemberEntity fridgeMember : fridgeMembers) {
-            // 해당 냉장고에서 유저의 역할을 조회
-            List<MemberGroupRoleEntity> memberGroupRoles = memberGroupRoleRepository.findByFridgeMemberEntity(fridgeMember);
-            for (MemberGroupRoleEntity memberGroupRole : memberGroupRoles) {
-                GroupRoleEntity groupRole = memberGroupRole.getGroupRoleEntity();
-                // 역할 이름만 DTO에 추가
-                fridgeWithRoles.add(new FridgeWithRoleDTO(
-                        fridgeMember.getFridgeEntity().getFridgeName(),
-                        groupRole.getRoleName()
-                ));
-            }
-        }
-
-        return fridgeWithRoles;
-    }
 }
