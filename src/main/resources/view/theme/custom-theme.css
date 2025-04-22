@@ -1,0 +1,49 @@
+/* 커스텀 버튼 */
+/* 모든 컨트롤에 적용될 기본 폰트 */
+/* 기본 텍스트 색상 */
+/* disable 상태를 나타내는 텍스트 색상 */
+/* 기본 보더 색상 */
+/* 포커스 보더 색상 */
+/* Disable 상태의 보더 색상. */
+/* 내부에 아이템을 갖는 컨트롤의 경우, 각 아이템에 마우스 호버시의 텍스트 색상 */
+/* 내부에 아이템을 갖는 컨트롤의 경우, 각 아이템에 마우스 호버시의 배경 색상 */
+/* 내부에 아이템을 갖는 컨트롤의 경우, 각 아이템에 선택된 경우 텍스트 색상 */
+/* 내부에 아이템을 갖는 컨트롤의 경우, 각 아이템이 선택된 경우 배경 색상 */
+/* 내부에 아이템을 갖는 컨트롤이 Disabled된 경우, 각 아이템에 선택된 경우 텍스트 색상 */
+/* 내부에 아이템을 갖는 컨트롤의 Disabled된 경우, 각 아이템이 선택된 경우 배경 색상 */
+/* 버튼 */
+.custom-button {
+  font: 14px "김정철 명조 레귤러", "KimjungchulMyungjo-Regular", sans-serif;
+  font-weight: bold;
+  color: #5A2613;
+  background-image: linear-gradient(to bottom, #FFF1E8 0%, #FFF1E8 50%, #FCD4B7 100%);
+  border-radius: 4px;
+  border: solid 1px #DB6E36;
+  /* 더 진하고 선명한 오렌지톤 */
+  text-shadow: 0px 1px 0px white;
+  /*
+  * 저장	포인트 오렌지	#F59760	메인 액션 버튼용, 시선 끌기 좋아
+	추가	포레스트 그린	#4CAF50	긍정적 액션, 조화로움
+	삭제	클래식 레드	#E53935	경고/삭제용으로 직관적
+	취소	쿨 그레이	#9E9E9E	중립적이고 방해 안 되는 색
+  */
+  /* 텍스트 스타일 */
+  /* 아이콘 스타일 */
+  /* 마우스 호버 스타일 */
+  /* 포커스 스타일 */
+  /* 클릭 스타일 */
+}
+.custom-button:not(.cl-disabled):hover {
+  color: #1068A4;
+}
+.custom-button.cl-focus {
+  border: solid 1px #1369C5;
+}
+.custom-button:not(.cl-disabled).cl-activated,
+.custom-button:not(.cl-disabled):active {
+  background-image: linear-gradient(#ddd, #eee 5px, #ddd);
+}
+/* Disable 상태의 버튼 */
+.cl-button.cl-disabled {
+  color: #666;
+}

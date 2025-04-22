@@ -20,7 +20,7 @@ public class FridgeFoodDTO {
     private Date endDate;
     private Date chargeDate;
     private Date saveDate;
-    private String foodCategoryName;
+    private String categoryName;
     private Long fridgeId;
 
 }

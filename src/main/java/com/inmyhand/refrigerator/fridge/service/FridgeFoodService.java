@@ -139,7 +139,7 @@ public class FridgeFoodService {
                     .chargeDate(dto.getChargeDate())
                     .saveDate(dto.getSaveDate())
                     .fridgeEntity(fridge)
-                    .categoryName(dto.getFoodCategoryName())
+                    .categoryName(dto.getCategoryName())
                     .build();
 
             fridgeFoodRepository.save(food);
@@ -196,6 +196,7 @@ public class FridgeFoodService {
                 .endDate(entity.getEndDate())
                 .chargeDate(entity.getChargeDate())
                 .saveDate(entity.getSaveDate())
+                .categoryName(entity.getCategoryName())
                 .fridgeId(entity.getFridgeEntity().getId())
                 .build();
     }
