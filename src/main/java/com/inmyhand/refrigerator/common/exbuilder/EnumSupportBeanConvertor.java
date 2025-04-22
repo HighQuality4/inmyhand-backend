@@ -2,6 +2,7 @@ package com.inmyhand.refrigerator.common.exbuilder;
 
 import com.cleopatra.protocol.data.DefaultBeanConvertor;
 import com.cleopatra.protocol.data.ParameterRow;
+import com.inmyhand.refrigerator.error.exception.EnumParsingError;
 import lombok.extern.slf4j.Slf4j;
 
 import java.lang.reflect.Method;
@@ -49,7 +50,7 @@ public class EnumSupportBeanConvertor<B> extends DefaultBeanConvertor<B> {
 
             return beanInstance;
         } catch (Exception e) {
-            throw new RuntimeException(e);
+            throw new EnumParsingError("Failed to convert " + beanInstance.getClass().getName());
         }
     }
 }
