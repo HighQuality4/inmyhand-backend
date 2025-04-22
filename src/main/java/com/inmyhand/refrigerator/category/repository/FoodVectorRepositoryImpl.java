@@ -66,7 +66,7 @@ public class FoodVectorRepositoryImpl implements FoodVectorRepository {
         query.executeUpdate();
     }
 
-
+    @Override
     public List<FoodVectorRequestDTO> findByCategoryNameContaining(String keyword) {
         String query = """
         SELECT id, category_name, natural_text, embedding, expiration_info
@@ -77,20 +77,25 @@ public class FoodVectorRepositoryImpl implements FoodVectorRepository {
     """;
 
         List<Object[]> results = entityManager.createNativeQuery(query)
-                .setParameter("keyword", "%" + keyword + "%") // 부분 매칭
+                .setParameter("keyword", "%" + keyword + "%")
                 .getResultList();
 
         List<FoodVectorRequestDTO> dtoList = new ArrayList<>();
 
         for (Object[] result : results) {
+            Long id = ((Number) result[0]).longValue();
+            String categoryName = (String) result[1];
+            String naturalText = (String) result[2];
             PGobject embeddingObj = (PGobject) result[3];
             String embeddingStr = embeddingObj.getValue();
+            int expirationInfo = ((Number) result[4]).intValue();
 
             dtoList.add(FoodVectorRequestDTO.builder()
+                    .id(id)
                     .inputText(null)
-                    .categoryName((String) result[1])
-                    .naturalText((String) result[2])
-                    .expirationInfo(((Number) result[4]).intValue())
+                    .categoryName(categoryName)
+                    .naturalText(naturalText)
+                    .expirationInfo(expirationInfo)
                     .distance(null)
                     .build());
         }
