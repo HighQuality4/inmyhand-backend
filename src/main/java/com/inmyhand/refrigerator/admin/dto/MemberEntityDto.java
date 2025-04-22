@@ -1,14 +1,16 @@
 package com.inmyhand.refrigerator.admin.dto;
 
+import java.io.Serializable;
+import java.util.Date;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonFormat.Shape;
 import com.inmyhand.refrigerator.member.domain.enums.MemberStatus;
+
 import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.Value;
-
-import java.io.Serializable;
-import java.util.Date;
 
 
 /**
@@ -16,9 +18,9 @@ import java.util.Date;
  */
 @Data
 @AllArgsConstructor
+@NoArgsConstructor
 public class MemberEntityDto implements Serializable {
 
-    @NotBlank
     Long id;
 
     @NotBlank
@@ -29,14 +31,13 @@ public class MemberEntityDto implements Serializable {
 
     @NotBlank
     String nickname;
-
-    @NotBlank
+    
+    @JsonFormat(shape = Shape.STRING, pattern =  "yyyy-MM-dd")
     Date regdate;
 
     @NotBlank
     String providerId;
-
-    @NotBlank
+    
     MemberStatus status;
 
     @NotBlank
