@@ -3,6 +3,7 @@ package com.inmyhand.refrigerator.web;
 
 import org.springframework.stereotype.Controller;
 
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.View;
 
@@ -25,14 +26,14 @@ public class CleopatraUIController {
 		instance.setURLSuffix(".clx");
 	}
 
-	@RequestMapping("/**/*.clx")
-	public View index() {
+	@RequestMapping(value = {"/**/*.clx", "/*.clx"})
+	public View handleClxRequests() {
 		return new UIView();
 	}
 
-	@RequestMapping("/*.clx")
-	public View index2() {
-		return new UIView();
+	@GetMapping(value = {"/{path:[^\\.]*}","/**/{path:[^\\.]*}"})
+	public String forwardToLayout() {
+		return "/app/layout/layout";
 	}
 
 }
