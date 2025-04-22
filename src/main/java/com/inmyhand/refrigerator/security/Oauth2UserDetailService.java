@@ -1,6 +1,5 @@
 package com.inmyhand.refrigerator.security;
 
-import com.inmyhand.refrigerator.member.domain.dto.LoginResponseDTO;
 import com.inmyhand.refrigerator.member.domain.entity.MemberEntity;
 import com.inmyhand.refrigerator.member.domain.entity.MemberRoleEntity;
 import com.inmyhand.refrigerator.member.domain.entity.RefreshTokenEntity;
@@ -51,7 +50,7 @@ public class Oauth2UserDetailService implements OAuth2UserService<OAuth2UserRequ
         String name = null;
         String nickname = null;
         String accessToken = null;
-        String provider = registrationId;
+        String provider = registrationId.toUpperCase();
 
         if (registrationId.equals("naver")) { //네이버
             Map<String, Object> response = (Map<String, Object>) attributes.get("response"); //네이버는 사용자 정보가 response 안에 있음.
@@ -74,7 +73,7 @@ public class Oauth2UserDetailService implements OAuth2UserService<OAuth2UserRequ
         RefreshTokenEntity existedToken = refreshTokenRepository.findByMemberEntity(member).orElse(null);
         System.out.println("member: " + member);
 
-        if (member == null) {
+        if (member == null) { // 멤버 조회결과가 없다면
             member = MemberEntity.builder()
                     .email(email)
                     .memberName(name)
@@ -84,7 +83,6 @@ public class Oauth2UserDetailService implements OAuth2UserService<OAuth2UserRequ
                     .build();
             memberRepository.save(member);
 
-            accessToken = jwtTokenUtil.generateAccessToken(member);
             MemberRoleEntity role = new MemberRoleEntity();
             role.setUserRole(MemberRole.freetier); // 기본값이지만 명시적 지정
             role.setMemberEntity(member);
@@ -97,8 +95,8 @@ public class Oauth2UserDetailService implements OAuth2UserService<OAuth2UserRequ
             refreshTokenRepository.save(refreshTokenEntity);
             refreshTokenRepository.flush();
 
-        } else {
-            if (existedToken == null) {
+        } else { // 멤버조회 결과가 있다면
+            if (existedToken == null) { //거기에 토큰이 없다면
                 existedToken = new RefreshTokenEntity();
                 existedToken.setMemberEntity(member);
             }
@@ -109,7 +107,7 @@ public class Oauth2UserDetailService implements OAuth2UserService<OAuth2UserRequ
             refreshTokenRepository.save(existedToken);
             refreshTokenRepository.flush();
         }
-
+        accessToken = jwtTokenUtil.generateAccessToken(member);
         List<GrantedAuthority> authorities = member.getMemberRoleList().stream()
                 .map(role -> new SimpleGrantedAuthority("ROLE_" + role.getUserRole().name().toUpperCase()))
                 .collect(Collectors.toList());
