@@ -1,9 +1,7 @@
 package com.inmyhand.refrigerator.security;
 
 import com.inmyhand.refrigerator.security.jwt.JwtAuthenticationFilter;
-import com.inmyhand.refrigerator.security.jwt.JwtTokenUtil;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -11,20 +9,15 @@ import org.springframework.security.config.annotation.authentication.configurati
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
-import org.springframework.security.config.annotation.web.configurers.HeadersConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-import org.springframework.security.web.header.writers.XXssProtectionHeaderWriter;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
-
-import static org.springframework.security.config.Customizer.withDefaults;
-
 
 /**
  * 시큐리티 설정
@@ -39,10 +32,6 @@ import static org.springframework.security.config.Customizer.withDefaults;
 public class SecurityConfig {
 
     private final JwtAuthenticationFilter jwtAuthenticationFilter;
-
-    private final CustomUserDetailsService customUserDetailsService;
-
-
 
     @Bean
     public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration) throws Exception {
@@ -65,7 +54,7 @@ public class SecurityConfig {
                         )
                         .successHandler(customOAuth2SuccessHandler)
                 )
-                //.formLogin(AbstractHttpConfigurer::disable)
+                .formLogin(AbstractHttpConfigurer::disable)
                 //.formLogin(withDefaults()) //테스트 용도
 //                .headers(headers -> headers
 //                        // 최신 OWASP 권장사항에 따라 X-XSS-Protection 헤더를 비활성화
@@ -86,7 +75,7 @@ public class SecurityConfig {
     public CorsConfigurationSource corsConfigurationSource() { //CORS 커스터마이징
         CorsConfiguration config = new CorsConfiguration();
 
-        config.addAllowedOrigin("http://127.0.0.1:52194"); // or "*"
+        config.addAllowedOrigin("http://localhost:7079"); // or "*"
         config.addAllowedMethod("*");
         config.addAllowedHeader("*");
         config.setAllowCredentials(true); // 쿠키 사용할 경우
@@ -99,8 +88,7 @@ public class SecurityConfig {
 
     @Bean
     public PasswordEncoder passwordEncoder() {
-        return NoOpPasswordEncoder.getInstance(); // 테스트 전용, 절대 운영 금지
-        //return new BCryptPasswordEncoder();
+        return new BCryptPasswordEncoder();
     }
 
 }
