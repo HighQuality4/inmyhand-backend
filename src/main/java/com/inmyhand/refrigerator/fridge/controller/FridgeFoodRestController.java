@@ -32,7 +32,7 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 @Slf4j
 public class FridgeFoodRestController {
-
+ 
     private final FridgeFoodService fridgeFoodService;
     private final FoodVectorService foodVectorService;
 
