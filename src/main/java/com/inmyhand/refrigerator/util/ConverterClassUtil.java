@@ -1,10 +1,10 @@
 package com.inmyhand.refrigerator.util;
-import java.util.Collections;
 import java.util.List;
 
 import com.cleopatra.protocol.data.DataRequest;
 import com.cleopatra.protocol.data.ParameterGroup;
 import com.cleopatra.protocol.data.RowState;
+import com.inmyhand.refrigerator.common.exbuilder.EnumSupportBeanConvertor;
 import com.inmyhand.refrigerator.error.exception.ParamGroupIsNullException;
 import lombok.extern.slf4j.Slf4j;
 
@@ -28,7 +28,12 @@ public class ConverterClassUtil {
             log.error("[getSingleClass] paramGroupId 값이 없습니다.");
             throw new ParamGroupIsNullException("paramGroupId 값이 없습니다.");
         }
-        return className.cast(paramGroup.getBeanData(className));
+
+        // DefaultBeanConvertor를 확장한 Enum을 지원하는 컨버터 사용
+        EnumSupportBeanConvertor<T> convertor = new EnumSupportBeanConvertor<>(className);
+        convertor.setDateFormat("yyyy-MM-dd"); // 날짜 형식도 설정
+
+        return className.cast(paramGroup.getBeanData(convertor));
     }
 
     /**
@@ -45,8 +50,14 @@ public class ConverterClassUtil {
             log.error("[getClassList] paramGroupId 값이 없습니다.");
             throw new ParamGroupIsNullException("paramGroupId 값이 없습니다.");
         }
-        return paramGroup.getAllBeanList(className);
+
+        // DefaultBeanConvertor를 확장한 Enum을 지원하는 컨버터 사용
+        EnumSupportBeanConvertor<T> convertor = new EnumSupportBeanConvertor<>(className);
+        convertor.setDateFormat("yyyy-MM-dd"); // 날짜 형식도 설정
+
+        return paramGroup.getAllBeanList(convertor);
     }
+
 
     /**
      * 특정 상태의 DTO 객체 리스트 가져오기 (추가/수정/삭제 등)
@@ -58,24 +69,30 @@ public class ConverterClassUtil {
      * @return 특정 상태의 Class 객체 리스트
      */
     private static <T> List<T> getStatedClassList(DataRequest dataRequest, String paramGroupId,
-                                              Class<T> className, RowState rowState) {
+                                                  Class<T> className, RowState rowState) {
         ParameterGroup paramGroup = dataRequest.getParameterGroup(paramGroupId);
         if (paramGroup == null) {
             log.error("[getStatedClassList] paramGroupId 값이 없습니다.");
             throw new ParamGroupIsNullException("paramGroupId 값이 없습니다.");
         }
-        return paramGroup.getStatedBeanList(rowState, className);
+
+        // DefaultBeanConvertor를 확장한 Enum을 지원하는 컨버터 사용
+        EnumSupportBeanConvertor<T> convertor = new EnumSupportBeanConvertor<>(className);
+        convertor.setDateFormat("yyyy-MM-dd"); // 날짜 형식 설정
+
+        // 커스텀 컨버터를 사용하여 지정된 상태의 Bean 리스트 변환
+        return paramGroup.getStatedBeanList(rowState, convertor);
     }
 
-
-    /**
-     * DataRequest에서 자동으로 단일 객체 또는 리스트 반환 (ParameterGroup 타입에 따라)
-     * @param <T> 반환할 Class 타입
-     * @param dataRequest 데이터 요청 객체
-     * @param paramGroupId 파라미터 그룹 ID
-     * @param className 변환할 Class 클래스
-     * @return 단일 Class 객체 또는 Class 객체 리스트
-     */
+//
+//    /**
+//     * DataRequest에서 자동으로 단일 객체 또는 리스트 반환 (ParameterGroup 타입에 따라)
+//     * @param <T> 반환할 Class 타입
+//     * @param dataRequest 데이터 요청 객체
+//     * @param paramGroupId 파라미터 그룹 ID
+//     * @param className 변환할 Class 클래스
+//     * @return 단일 Class 객체 또는 Class 객체 리스트
+//     */
 
 /*    @SuppressWarnings("unchecked")
     public static <T> Object getClass(DataRequest dataRequest, String paramGroupId, Class<T> className) {
