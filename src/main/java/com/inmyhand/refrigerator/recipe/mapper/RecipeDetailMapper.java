@@ -47,10 +47,25 @@ public class RecipeDetailMapper {
         dto.setRecipeDepth(entity.getRecipeDepth());
         dto.setCreatedAt(entity.getCreatedAt());
         dto.setUpdatedAt(entity.getUpdatedAt());
-        
-        // 통계 정보 설정
+
+        // 부모 레시피
+        Long parentRecipeId = entity.getParentRecipe() != null
+                ? entity.getParentRecipe().getId()
+                : null;
+
+        dto.setParentRecipeId(parentRecipeId);
+
+        // 사용자 닉네임
         if (entity.getMemberEntity() != null) {
-            dto.setNickname(entity.getMemberEntity().getNickname());
+            dto.setUserNickname(entity.getMemberEntity().getNickname());
+        }
+
+        // 사용자 사진
+        String profileUrl = null;
+        FilesEntity profileFile = entity.getMemberEntity().getFilesEntity();
+        if (profileFile != null) {
+            profileUrl = profileFile.getFileUrl();
+            dto.setUserProfileImageUrl(profileUrl);
         }
         
         // 좋아요 개수

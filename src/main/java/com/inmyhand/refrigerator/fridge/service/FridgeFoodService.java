@@ -1,6 +1,9 @@
 package com.inmyhand.refrigerator.fridge.service;
 
-import com.inmyhand.refrigerator.fridge.domain.dto.food.*;
+import com.inmyhand.refrigerator.fridge.domain.dto.food.FridgeDTO;
+import com.inmyhand.refrigerator.fridge.domain.dto.food.FridgeFoodDTO;
+import com.inmyhand.refrigerator.fridge.domain.dto.food.FridgeMainPageDTO;
+import com.inmyhand.refrigerator.fridge.domain.dto.food.FridgeWithRolesDTO;
 import com.inmyhand.refrigerator.fridge.domain.entity.FridgeEntity;
 import com.inmyhand.refrigerator.fridge.domain.entity.FridgeFoodEntity;
 import com.inmyhand.refrigerator.fridge.domain.entity.FridgeMemberEntity;
@@ -35,24 +38,6 @@ public class FridgeFoodService {
 
 
     // 내가 참여하고 있는 냉장고 리스트 정보 출력
-    public List<FridgeWithRoleDTO> svcGetFridgeListWithLeaderFlag(Long memberId) {
-        List<FridgeMemberEntity> fridgeMembers = fridgeMemberRepository.findByMemberEntity_Id(memberId);
-
-        return fridgeMembers.stream()
-                .map(fridgeMember -> {
-                    boolean isLeader = memberGroupRoleRepository.findAllByFridgeMemberEntity_Id(fridgeMember.getId())
-                            .stream()
-                            .anyMatch(role -> "leader".equals(role.getGroupRoleEntity().getRoleName())); // ✅ leader 여부 판단
-
-                    return FridgeWithRoleDTO.builder()
-                            .fridgeId(fridgeMember.getFridgeEntity().getId())
-                            .fridgeName(fridgeMember.getFridgeEntity().getFridgeName())
-                            .favoriteState(fridgeMember.getFavoriteState())
-                            .isLeader(isLeader) // ✅ true or false 설정
-                            .build();
-                })
-                .collect(Collectors.toList());
-    }
     public List<FridgeWithRolesDTO> svcGetFridgeListWithRoles(Long memberId) {
         List<FridgeMemberEntity> fridgeMembers = fridgeMemberRepository.findByMemberEntity_Id(memberId);
 
@@ -139,15 +124,11 @@ public class FridgeFoodService {
                     .chargeDate(dto.getChargeDate())
                     .saveDate(dto.getSaveDate())
                     .fridgeEntity(fridge)
-                    .categoryName(dto.getCategoryName())
                     .build();
 
             fridgeFoodRepository.save(food);
         }
     }
-
-
-
 
     // 2. Update
     public void svcUpdateFridgeFood(Long fridgeFoodId, FridgeFoodDTO dto) {
@@ -196,7 +177,6 @@ public class FridgeFoodService {
                 .endDate(entity.getEndDate())
                 .chargeDate(entity.getChargeDate())
                 .saveDate(entity.getSaveDate())
-                .categoryName(entity.getCategoryName())
                 .fridgeId(entity.getFridgeEntity().getId())
                 .build();
     }

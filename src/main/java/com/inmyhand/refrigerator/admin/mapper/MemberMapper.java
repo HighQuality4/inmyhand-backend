@@ -1,14 +1,31 @@
 package com.inmyhand.refrigerator.admin.mapper;
 
-import com.inmyhand.refrigerator.admin.dto.MemberEntityDto;
-import com.inmyhand.refrigerator.member.domain.entity.MemberEntity;
-import org.springframework.stereotype.Component;
-
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.springframework.stereotype.Component;
+
+import com.inmyhand.refrigerator.admin.dto.MemberEntityDto;
+import com.inmyhand.refrigerator.member.domain.entity.MemberEntity;
+
 @Component
 public class MemberMapper {
+
+    /**
+     * MemberEntityDto 리스트를 MemberEntity 리스트로 변환합니다.
+     * @param dtoList 변환할 DTO 리스트
+     * @return 변환된 Entity 리스트
+     */
+    public List<MemberEntity> toEntityList(List<MemberEntityDto> dtoList) {
+        if (dtoList == null) {
+            return Collections.emptyList();
+        }
+
+        return dtoList.stream()
+                .map(this::toEntity)
+                .collect(Collectors.toList());
+    }
 
     /**
      * DTO -> MemberEntity

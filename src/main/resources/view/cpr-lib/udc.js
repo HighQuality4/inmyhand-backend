@@ -8,16 +8,15 @@
  */
 (function(){
 	// App Declaration
-		var internalApp = new cpr.core.App("udc/footer", { 
+		var internalApp = new cpr.core.App("udc/recipe/recipe_card", {
 			onPrepare: function(loader) {
-				loader.addCSS("theme/custom/footer.part.css");
 			},
 			onCreate: function(/* cpr.core.AppInstance */ app, exports) {
 				var linker = {};
 				// Start - User Script
 				/************************************************
-				 * footer.js
-				 * Created at 2025. 4. 10. 오후 6:47:24.
+				 * recipe_card.js
+				 * Created at 2025. 4. 21. 오전 10:31:19.
 				 *
 				 * @author gyrud
 				 ************************************************/
@@ -28,18 +27,21 @@
 				exports.getText = function(){
 					// TODO: 그리드의 뷰 모드에서 표시할 텍스트를 반환하는 하는 코드를 작성해야 합니다.
 					return "";
-				};
-	
-				/*
-				 * 루트 컨테이너에서 load 이벤트 발생 시 호출.
-				 * 앱이 최초 구성된후 최초 랜더링 직후에 발생하는 이벤트 입니다.
-				 */
-				function onBodyLoad(e){
-					cpr.core.ResourceLoader.loadCSS("theme/custom/footer.part.css");
-				};
+				};;
 				// End - User Script
 				
 				// Header
+				app.declareAppProperty("title", "-");
+				app.declareAppProperty("typeCategory", "-");
+				app.declareAppProperty("situationCategory", "-");
+				app.declareAppProperty("methodCategory", "-");
+				app.declareAppProperty("difficulty", "-");
+				app.declareAppProperty("cookingTime", "-");
+				app.declareAppProperty("author", "-");
+				app.declareAppProperty("likesCount", "-");
+				app.declareAppProperty("recipeImg", "../../theme/images/recipe.svg");
+				app.declareAppProperty("authorImg", "../../theme/images/user.svg");
+				app.declareAppProperty("calories", "-");
 				app.supportMedia("all and (min-width: 1024px)", "default");
 				app.supportMedia("all and (min-width: 500px) and (max-width: 1023.984px)", "tablet");
 				app.supportMedia("all and (max-width: 499.984px)", "mobile");
@@ -54,225 +56,517 @@
 				});
 				
 				// Layout
-				var xYLayout_1 = new cpr.controls.layouts.XYLayout();
-				container.setLayout(xYLayout_1);
+				var responsiveXYLayout_1 = new cpr.controls.layouts.ResponsiveXYLayout();
+				container.setLayout(responsiveXYLayout_1);
 				
 				// UI Configuration
+				var image_1 = new cpr.controls.Image();
+				image_1.style.css({
+					"border-radius" : "5px",
+					"box-shadow" : "0 2px 6px rgba(0, 0, 0, 0.1)"
+				});
+				image_1.bind("src").toAppProperty("recipeImg");
+				container.addChild(image_1, {
+					positions: [
+						{
+							"media": "all and (min-width: 1024px)",
+							"top": "0px",
+							"bottom": "150px",
+							"width": "250px",
+							"left": "calc(50% - 125px)"
+						},
+						{
+							"media": "all and (min-width: 500px) and (max-width: 1023.984px)",
+							"top": "0px",
+							"bottom": "150px",
+							"width": "122px",
+							"left": "calc(50% - 61px)"
+						},
+						{
+							"media": "all and (max-width: 499.984px)",
+							"top": "0px",
+							"bottom": "150px",
+							"width": "85px",
+							"left": "calc(50% - 42px)"
+						}
+					]
+				});
+
 				var group_1 = new cpr.controls.Container();
 				group_1.style.css({
-					"background-color" : "#FFFFFF"
+					"border-radius" : "5px",
+					"background-color" : "#FBF3EB",
+					"box-shadow" : "0 2px 6px rgba(0, 0, 0, 0.1)"
 				});
-				var formLayout_1 = new cpr.controls.layouts.FormLayout();
-				formLayout_1.scrollable = false;
-				formLayout_1.horizontalSpacing = "0px";
-				formLayout_1.verticalSpacing = "0px";
-				formLayout_1.topMargin = "0px";
-				formLayout_1.rightMargin = "0px";
-				formLayout_1.bottomMargin = "0px";
-				formLayout_1.leftMargin = "0px";
-				formLayout_1.setColumns(["40px", "40px", "1fr", "40px", "1fr", "40px", "1fr", "40px", "40px"]);
-				formLayout_1.setRows(["10px", "50px", "10px"]);
-				group_1.setLayout(formLayout_1);
+				var xYLayout_1 = new cpr.controls.layouts.XYLayout();
+				group_1.setLayout(xYLayout_1);
 				(function(container){
 					var group_2 = new cpr.controls.Container();
-					var formLayout_2 = new cpr.controls.layouts.FormLayout();
-					formLayout_2.scrollable = false;
-					formLayout_2.horizontalSpacing = "0px";
-					formLayout_2.verticalSpacing = "0px";
-					formLayout_2.topMargin = "0px";
-					formLayout_2.rightMargin = "0px";
-					formLayout_2.bottomMargin = "0px";
-					formLayout_2.leftMargin = "0px";
-					formLayout_2.setColumns(["1fr"]);
-					formLayout_2.setRows(["30px", "1fr"]);
-					group_2.setLayout(formLayout_2);
+					var verticalLayout_1 = new cpr.controls.layouts.VerticalLayout();
+					group_2.setLayout(verticalLayout_1);
 					(function(container){
-						var output_1 = new cpr.controls.Output();
-						output_1.value = "홈";
-						output_1.style.setClasses(["nav-text"]);
-						container.addChild(output_1, {
-							"colIndex": 0,
-							"rowIndex": 1
+						var output_1 = new cpr.controls.Output("recipeTitle");
+						output_1.style.css({
+							"font-weight" : "bold",
+							"padding-left" : "5px"
 						});
-						var image_1 = new cpr.controls.Image();
-						image_1.src = "theme/images/home.svg";
-						container.addChild(image_1, {
-							"colIndex": 0,
-							"rowIndex": 0
+						output_1.bind("value").toAppProperty("title");
+						container.addChild(output_1, {
+							"autoSize": "both",
+							"width": "250px",
+							"height": "25px"
+						});
+						var group_3 = new cpr.controls.Container();
+						var flowLayout_1 = new cpr.controls.layouts.FlowLayout();
+						flowLayout_1.horizontalSpacing = 5;
+						flowLayout_1.verticalSpacing = 0;
+						flowLayout_1.verticalAlign = "middle";
+						flowLayout_1.lineWrap = false;
+						group_3.setLayout(flowLayout_1);
+						(function(container){
+							var output_2 = new cpr.controls.Output("recipeTypeCate");
+							output_2.style.css({
+								"border-right-style" : "solid",
+								"padding-top" : "3px",
+								"border-top-width" : "1px",
+								"border-bottom-color" : "#856c66",
+								"color" : "#856c66",
+								"border-right-width" : "1px",
+								"padding-left" : "7px",
+								"border-left-color" : "#856c66",
+								"font-size" : "12px",
+								"padding-bottom" : "3px",
+								"border-right-color" : "#856c66",
+								"border-left-width" : "1px",
+								"border-top-style" : "solid",
+								"border-radius" : "5px",
+								"border-left-style" : "solid",
+								"border-bottom-width" : "1px",
+								"border-top-color" : "#856c66",
+								"border-bottom-style" : "solid",
+								"padding-right" : "7px"
+							});
+							output_2.bind("value").toAppProperty("typeCategory");
+							container.addChild(output_2, {
+								"autoSize": "both",
+								"width": "50px",
+								"height": "20px"
+							});
+							var output_3 = new cpr.controls.Output("recipeSituationCate");
+							output_3.style.css({
+								"border-right-style" : "solid",
+								"padding-top" : "3px",
+								"border-top-width" : "1px",
+								"border-bottom-color" : "#856c66",
+								"color" : "#856c66",
+								"border-right-width" : "1px",
+								"padding-left" : "7px",
+								"border-left-color" : "#856c66",
+								"font-size" : "12px",
+								"padding-bottom" : "3px",
+								"border-right-color" : "#856c66",
+								"border-left-width" : "1px",
+								"border-top-style" : "solid",
+								"border-radius" : "5px",
+								"border-left-style" : "solid",
+								"border-bottom-width" : "1px",
+								"border-top-color" : "#856c66",
+								"border-bottom-style" : "solid",
+								"padding-right" : "7px"
+							});
+							output_3.bind("value").toAppProperty("situationCategory");
+							container.addChild(output_3, {
+								"autoSize": "both",
+								"width": "50px",
+								"height": "20px"
+							});
+							var output_4 = new cpr.controls.Output("recipeMethodCater");
+							output_4.style.css({
+								"border-right-style" : "solid",
+								"padding-top" : "3px",
+								"border-top-width" : "1px",
+								"border-bottom-color" : "#856c66",
+								"color" : "#856c66",
+								"border-right-width" : "1px",
+								"padding-left" : "7px",
+								"border-left-color" : "#856c66",
+								"font-size" : "12px",
+								"padding-bottom" : "3px",
+								"border-right-color" : "#856c66",
+								"border-left-width" : "1px",
+								"border-top-style" : "solid",
+								"border-radius" : "5px",
+								"border-left-style" : "solid",
+								"border-bottom-width" : "1px",
+								"border-top-color" : "#856c66",
+								"border-bottom-style" : "solid",
+								"padding-right" : "7px"
+							});
+							output_4.bind("value").toAppProperty("methodCategory");
+							container.addChild(output_4, {
+								"autoSize": "both",
+								"width": "50px",
+								"height": "20px"
+							});
+						})(group_3);
+						container.addChild(group_3, {
+							"autoSize": "both",
+							"width": "100%",
+							"height": "20px"
+						});
+						var group_4 = new cpr.controls.Container();
+						var flowLayout_2 = new cpr.controls.layouts.FlowLayout();
+						flowLayout_2.horizontalSpacing = 5;
+						flowLayout_2.verticalSpacing = 0;
+						flowLayout_2.verticalAlign = "middle";
+						flowLayout_2.lineWrap = false;
+						group_4.setLayout(flowLayout_2);
+						(function(container){
+							var group_5 = new cpr.controls.Container();
+							var flowLayout_3 = new cpr.controls.layouts.FlowLayout();
+							flowLayout_3.scrollable = false;
+							flowLayout_3.horizontalSpacing = 3;
+							flowLayout_3.verticalSpacing = 0;
+							flowLayout_3.verticalAlign = "middle";
+							flowLayout_3.lineWrap = false;
+							group_5.setLayout(flowLayout_3);
+							(function(container){
+								var image_2 = new cpr.controls.Image();
+								image_2.src = "theme/images/difficullty.svg";
+								container.addChild(image_2, {
+									"width": "13px",
+									"height": "13px"
+								});
+								var output_5 = new cpr.controls.Output("recipeDifficulty");
+								output_5.style.css({
+									"color" : "#856C66",
+									"font-size" : "12px"
+								});
+								output_5.bind("value").toAppProperty("difficulty");
+								container.addChild(output_5, {
+									"autoSize": "both",
+									"width": "47px",
+									"height": "20px",
+									"allowNewLine": false
+								});
+							})(group_5);
+							container.addChild(group_5, {
+								"autoSize": "width",
+								"width": "51px",
+								"height": "20px",
+								"allowNewLine": false
+							});
+							var group_6 = new cpr.controls.Container();
+							var flowLayout_4 = new cpr.controls.layouts.FlowLayout();
+							flowLayout_4.scrollable = false;
+							flowLayout_4.horizontalSpacing = 3;
+							flowLayout_4.verticalSpacing = 0;
+							flowLayout_4.verticalAlign = "middle";
+							flowLayout_4.lineWrap = false;
+							group_6.setLayout(flowLayout_4);
+							(function(container){
+								var image_3 = new cpr.controls.Image();
+								image_3.src = "theme/images/clock.svg";
+								container.addChild(image_3, {
+									"width": "15px",
+									"height": "15px"
+								});
+								var output_6 = new cpr.controls.Output("recipeCookingTime");
+								output_6.style.css({
+									"color" : "#856C66",
+									"font-size" : "12px"
+								});
+								output_6.bind("value").toAppProperty("cookingTime");
+								container.addChild(output_6, {
+									"autoSize": "both",
+									"width": "47px",
+									"height": "20px",
+									"allowNewLine": false
+								});
+							})(group_6);
+							container.addChild(group_6, {
+								"autoSize": "width",
+								"width": "71px",
+								"height": "20px",
+								"allowNewLine": false
+							});
+							var group_7 = new cpr.controls.Container();
+							var flowLayout_5 = new cpr.controls.layouts.FlowLayout();
+							flowLayout_5.scrollable = false;
+							flowLayout_5.horizontalSpacing = 0;
+							flowLayout_5.verticalSpacing = 0;
+							flowLayout_5.verticalAlign = "middle";
+							flowLayout_5.lineWrap = false;
+							group_7.setLayout(flowLayout_5);
+							(function(container){
+								var image_4 = new cpr.controls.Image();
+								image_4.src = "theme/images/calories.svg";
+								container.addChild(image_4, {
+									"width": "20px",
+									"height": "20px"
+								});
+								var output_7 = new cpr.controls.Output("recipeCalories");
+								output_7.style.css({
+									"color" : "#856C66",
+									"font-size" : "12px"
+								});
+								output_7.bind("value").toAppProperty("calories");
+								container.addChild(output_7, {
+									"autoSize": "both",
+									"width": "47px",
+									"height": "20px",
+									"allowNewLine": false
+								});
+							})(group_7);
+							container.addChild(group_7, {
+								"autoSize": "width",
+								"width": "71px",
+								"height": "20px",
+								"allowNewLine": false
+							});
+						})(group_4);
+						container.addChild(group_4, {
+							"autoSize": "both",
+							"width": "210px",
+							"height": "20px"
+						});
+						var group_8 = new cpr.controls.Container();
+						var flowLayout_6 = new cpr.controls.layouts.FlowLayout();
+						flowLayout_6.scrollable = false;
+						flowLayout_6.horizontalSpacing = 0;
+						flowLayout_6.verticalSpacing = 0;
+						flowLayout_6.verticalAlign = "middle";
+						flowLayout_6.lineWrap = false;
+						group_8.setLayout(flowLayout_6);
+						(function(container){
+							var group_9 = new cpr.controls.Container();
+							var flowLayout_7 = new cpr.controls.layouts.FlowLayout();
+							flowLayout_7.verticalAlign = "middle";
+							group_9.setLayout(flowLayout_7);
+							(function(container){
+								var image_5 = new cpr.controls.Image();
+								image_5.style.css({
+									"border-radius" : "100%"
+								});
+								image_5.bind("src").toAppProperty("authorImg");
+								container.addChild(image_5, {
+									"width": "20px",
+									"height": "20px"
+								});
+								var output_8 = new cpr.controls.Output("recipeAuthor");
+								output_8.bind("value").toAppProperty("author");
+								container.addChild(output_8, {
+									"autoSize": "both",
+									"width": "50px",
+									"height": "20px"
+								});
+							})(group_9);
+							container.addChild(group_9, {
+								"autoSize": "height",
+								"width": "50%",
+								"height": "30px"
+							});
+							var group_10 = new cpr.controls.Container();
+							var flowLayout_8 = new cpr.controls.layouts.FlowLayout();
+							flowLayout_8.horizontalAlign = "right";
+							flowLayout_8.verticalAlign = "middle";
+							group_10.setLayout(flowLayout_8);
+							(function(container){
+								var image_6 = new cpr.controls.Image();
+								image_6.src = "theme/images/heart.svg";
+								image_6.style.css({
+									"border-radius" : "100%"
+								});
+								container.addChild(image_6, {
+									"width": "20px",
+									"height": "20px"
+								});
+								var output_9 = new cpr.controls.Output("recipeLikesCount");
+								output_9.bind("value").toAppProperty("likesCount");
+								container.addChild(output_9, {
+									"autoSize": "both",
+									"width": "50px",
+									"height": "20px"
+								});
+							})(group_10);
+							container.addChild(group_10, {
+								"autoSize": "height",
+								"width": "50%",
+								"height": "30px"
+							});
+						})(group_8);
+						container.addChild(group_8, {
+							"autoSize": "both",
+							"width": "100%",
+							"height": "30px"
 						});
 					})(group_2);
 					container.addChild(group_2, {
-						"colIndex": 1,
-						"rowIndex": 1
-					});
-					var group_3 = new cpr.controls.Container();
-					var formLayout_3 = new cpr.controls.layouts.FormLayout();
-					formLayout_3.scrollable = false;
-					formLayout_3.horizontalSpacing = "0px";
-					formLayout_3.verticalSpacing = "0px";
-					formLayout_3.topMargin = "0px";
-					formLayout_3.rightMargin = "0px";
-					formLayout_3.bottomMargin = "0px";
-					formLayout_3.leftMargin = "0px";
-					formLayout_3.setColumns(["1fr"]);
-					formLayout_3.setRows(["30px", "1fr"]);
-					group_3.setLayout(formLayout_3);
-					(function(container){
-						var output_2 = new cpr.controls.Output();
-						output_2.value = "냉장고";
-						output_2.style.setClasses(["nav-text"]);
-						container.addChild(output_2, {
-							"colIndex": 0,
-							"rowIndex": 1
-						});
-						var image_2 = new cpr.controls.Image();
-						image_2.src = "theme/images/refrigerator.svg";
-						container.addChild(image_2, {
-							"colIndex": 0,
-							"rowIndex": 0
-						});
-					})(group_3);
-					container.addChild(group_3, {
-						"colIndex": 3,
-						"rowIndex": 1
-					});
-					var group_4 = new cpr.controls.Container();
-					var formLayout_4 = new cpr.controls.layouts.FormLayout();
-					formLayout_4.scrollable = false;
-					formLayout_4.horizontalSpacing = "0px";
-					formLayout_4.verticalSpacing = "0px";
-					formLayout_4.topMargin = "0px";
-					formLayout_4.rightMargin = "0px";
-					formLayout_4.bottomMargin = "0px";
-					formLayout_4.leftMargin = "0px";
-					formLayout_4.setColumns(["1fr"]);
-					formLayout_4.setRows(["30px", "1fr"]);
-					group_4.setLayout(formLayout_4);
-					(function(container){
-						var output_3 = new cpr.controls.Output();
-						output_3.value = "레시피";
-						output_3.style.setClasses(["nav-text"]);
-						container.addChild(output_3, {
-							"colIndex": 0,
-							"rowIndex": 1
-						});
-						var image_3 = new cpr.controls.Image();
-						image_3.src = "theme/images/recipe.svg";
-						container.addChild(image_3, {
-							"colIndex": 0,
-							"rowIndex": 0
-						});
-					})(group_4);
-					container.addChild(group_4, {
-						"colIndex": 5,
-						"rowIndex": 1
-					});
-					var group_5 = new cpr.controls.Container();
-					var formLayout_5 = new cpr.controls.layouts.FormLayout();
-					formLayout_5.scrollable = false;
-					formLayout_5.horizontalSpacing = "0px";
-					formLayout_5.verticalSpacing = "0px";
-					formLayout_5.topMargin = "0px";
-					formLayout_5.rightMargin = "0px";
-					formLayout_5.bottomMargin = "0px";
-					formLayout_5.leftMargin = "0px";
-					formLayout_5.setColumns(["1fr"]);
-					formLayout_5.setRows(["30px", "1fr"]);
-					group_5.setLayout(formLayout_5);
-					(function(container){
-						var output_4 = new cpr.controls.Output();
-						output_4.value = "로그인";
-						output_4.style.setClasses(["nav-text"]);
-						container.addChild(output_4, {
-							"colIndex": 0,
-							"rowIndex": 1
-						});
-						var image_4 = new cpr.controls.Image();
-						image_4.src = "theme/images/user.svg";
-						container.addChild(image_4, {
-							"colIndex": 0,
-							"rowIndex": 0
-						});
-					})(group_5);
-					container.addChild(group_5, {
-						"colIndex": 7,
-						"rowIndex": 1
+						"width": "210px",
+						"height": "110px",
+						"left": "calc(50% - 105px)",
+						"top": "calc(50% - 55px)"
 					});
 				})(group_1);
 				container.addChild(group_1, {
-					"top": "0px",
-					"right": "0px",
-					"bottom": "0px",
-					"left": "0px"
+					positions: [
+						{
+							"media": "all and (min-width: 1024px)",
+							"top": "250px",
+							"bottom": "0px",
+							"width": "250px",
+							"left": "calc(50% - 125px)"
+						},
+						{
+							"media": "all and (min-width: 500px) and (max-width: 1023.984px)",
+							"top": "250px",
+							"bottom": "0px",
+							"width": "122px",
+							"left": "calc(50% - 61px)"
+						},
+						{
+							"media": "all and (max-width: 499.984px)",
+							"top": "250px",
+							"bottom": "0px",
+							"width": "85px",
+							"left": "calc(50% - 42px)"
+						}
+					]
 				});
-				if(typeof onBodyLoad == "function"){
-					app.addEventListener("load", onBodyLoad);
-				}
 			}
 		});
-	internalApp.title = "footer";
+	internalApp.title = "recipe_card";
 	
-	// Type declaration for footer
-	cpr.utils.Util.ensurePackage("udc").footer = function(id){
-		cpr.controls.UDCBase.call(this, "udc.footer", internalApp, id);
+	// Type declaration for recipe_card
+	cpr.utils.Util.ensurePackage("udc.recipe").recipe_card = function(id){
+		cpr.controls.UDCBase.call(this, "udc.recipe.recipe_card", internalApp, id);
 	};
 	
-	udc.footer.prototype = Object.create(cpr.controls.UDCBase.prototype);
-	Object.defineProperty(udc.footer.prototype, "type", {
+	udc.recipe.recipe_card.prototype = Object.create(cpr.controls.UDCBase.prototype);
+	Object.defineProperty(udc.recipe.recipe_card.prototype, "type", {
 		get : function(){
-			return "udc.footer";
+			return "udc.recipe.recipe_card";
 		},
 		
 		configurable: true
 	});
 	
 	// App Properties
-	
+	Object.defineProperty(udc.recipe.recipe_card.prototype, "title", {
+		get: function(){
+			return this.getEmbeddedAppInstance().getAppProperty("title");
+		},
+		set: function(newValue){
+			return this.getEmbeddedAppInstance().setAppProperty("title", newValue, true);
+		}
+	});
+	Object.defineProperty(udc.recipe.recipe_card.prototype, "typeCategory", {
+		get: function(){
+			return this.getEmbeddedAppInstance().getAppProperty("typeCategory");
+		},
+		set: function(newValue){
+			return this.getEmbeddedAppInstance().setAppProperty("typeCategory", newValue, true);
+		}
+	});
+	Object.defineProperty(udc.recipe.recipe_card.prototype, "situationCategory", {
+		get: function(){
+			return this.getEmbeddedAppInstance().getAppProperty("situationCategory");
+		},
+		set: function(newValue){
+			return this.getEmbeddedAppInstance().setAppProperty("situationCategory", newValue, true);
+		}
+	});
+	Object.defineProperty(udc.recipe.recipe_card.prototype, "methodCategory", {
+		get: function(){
+			return this.getEmbeddedAppInstance().getAppProperty("methodCategory");
+		},
+		set: function(newValue){
+			return this.getEmbeddedAppInstance().setAppProperty("methodCategory", newValue, true);
+		}
+	});
+	Object.defineProperty(udc.recipe.recipe_card.prototype, "difficulty", {
+		get: function(){
+			return this.getEmbeddedAppInstance().getAppProperty("difficulty");
+		},
+		set: function(newValue){
+			return this.getEmbeddedAppInstance().setAppProperty("difficulty", newValue, true);
+		}
+	});
+	Object.defineProperty(udc.recipe.recipe_card.prototype, "cookingTime", {
+		get: function(){
+			return this.getEmbeddedAppInstance().getAppProperty("cookingTime");
+		},
+		set: function(newValue){
+			return this.getEmbeddedAppInstance().setAppProperty("cookingTime", newValue, true);
+		}
+	});
+	Object.defineProperty(udc.recipe.recipe_card.prototype, "author", {
+		get: function(){
+			return this.getEmbeddedAppInstance().getAppProperty("author");
+		},
+		set: function(newValue){
+			return this.getEmbeddedAppInstance().setAppProperty("author", newValue, true);
+		}
+	});
+	Object.defineProperty(udc.recipe.recipe_card.prototype, "likesCount", {
+		get: function(){
+			return this.getEmbeddedAppInstance().getAppProperty("likesCount");
+		},
+		set: function(newValue){
+			return this.getEmbeddedAppInstance().setAppProperty("likesCount", newValue, true);
+		}
+	});
+	Object.defineProperty(udc.recipe.recipe_card.prototype, "recipeImg", {
+		get: function(){
+			return this.getEmbeddedAppInstance().getAppProperty("recipeImg");
+		},
+		set: function(newValue){
+			return this.getEmbeddedAppInstance().setAppProperty("recipeImg", newValue, true);
+		}
+	});
+	Object.defineProperty(udc.recipe.recipe_card.prototype, "authorImg", {
+		get: function(){
+			return this.getEmbeddedAppInstance().getAppProperty("authorImg");
+		},
+		set: function(newValue){
+			return this.getEmbeddedAppInstance().setAppProperty("authorImg", newValue, true);
+		}
+	});
+	Object.defineProperty(udc.recipe.recipe_card.prototype, "calories", {
+		get: function(){
+			return this.getEmbeddedAppInstance().getAppProperty("calories");
+		},
+		set: function(newValue){
+			return this.getEmbeddedAppInstance().setAppProperty("calories", newValue, true);
+		}
+	});
+
 	// Register type into the Platform and package
 	cpr.core.Platform.INSTANCE.register(internalApp);
 })();
-/// end - udc.footer
-/// start - udc.header
+/// end - udc.recipe.recipe_card
+/// start - udc.recipe.recipe_title
 /*
- * UDC Qualified Name: udc.header
- * App URI: udc/header
- * Source Location: udc/header.clx
+ * UDC Qualified Name: udc.recipe.recipe_title
+ * App URI: udc/recipe/recipe_title
+ * Source Location: udc/recipe/recipe_title.clx
  *
  * This file was generated by eXBuilder6 compiler(1.0.5481), Don't edit manually.
  */
 (function(){
 	// App Declaration
-		var internalApp = new cpr.core.App("udc/header", { 
+		var internalApp = new cpr.core.App("udc/recipe/recipe_title", {
 			onPrepare: function(loader) {
 			},
 			onCreate: function(/* cpr.core.AppInstance */ app, exports) {
 				var linker = {};
 				// Start - User Script
 				/************************************************
-				 * header.js
-				 * Created at 2025. 4. 10. 오후 6:43:53.
+				 * recipe_title.js
+				 * Created at 2025. 4. 21. 오전 9:57:21.
 				 *
 				 * @author gyrud
-				 ************************************************/
-				/*
-				 * 그룹에서 click 이벤트 발생 시 호출.
-				 * 사용자가 컨트롤을 클릭할 때 발생하는 이벤트.
-				 */
-				function onReceiptPhotoClick(e){
-					var receiptPhoto = e.control;
-					
-					window.location.pathname = "/recipt/photo";
-				}
-	
-				/*
-				 * 그룹에서 click 이벤트 발생 시 호출.
-				 * 사용자가 컨트롤을 클릭할 때 발생하는 이벤트.
-				 */
-				function onRecipeRegistrationClick(e){
-					var recipeRegistration = e.control;
-					
-					window.location.pathname = "/recipe";
-				};
+				 ************************************************/;
 				// End - User Script
 				
 				// Header
@@ -295,147 +589,69 @@
 				
 				// UI Configuration
 				var group_1 = new cpr.controls.Container();
-				group_1.style.css({
-					"background-color" : "#FBF3EB"
-				});
-				var formLayout_1 = new cpr.controls.layouts.FormLayout();
-				formLayout_1.scrollable = false;
-				formLayout_1.horizontalSpacing = "0px";
-				formLayout_1.verticalSpacing = "0px";
-				formLayout_1.topMargin = "0px";
-				formLayout_1.rightMargin = "0px";
-				formLayout_1.bottomMargin = "0px";
-				formLayout_1.leftMargin = "0px";
-				formLayout_1.setColumns(["40px", "1fr", "1fr", "48px", "10px", "48px", "40px"]);
-				formLayout_1.setRows(["10px", "1fr", "10px"]);
-				group_1.setLayout(formLayout_1);
+				var xYLayout_2 = new cpr.controls.layouts.XYLayout();
+				group_1.setLayout(xYLayout_2);
 				(function(container){
-					var output_1 = new cpr.controls.Output();
-					output_1.value = "내손안의 냉장고";
+					var image_1 = new cpr.controls.Image();
+					image_1.src = "theme/images/recipe.svg";
+					container.addChild(image_1, {
+						"top": "0px",
+						"left": "0px",
+						"width": "30px",
+						"height": "30px"
+					});
+					var output_1 = new cpr.controls.Output("titleValue");
 					output_1.style.css({
 						"color" : "#856C66",
 						"font-weight" : "bold",
-						"font-size" : "20px",
-						"font-family" : "Kim jung chul Myungjo Regular"
+						"font-size" : "16px"
 					});
+					output_1.bind("value").toAppProperty("value");
 					container.addChild(output_1, {
-						"colIndex": 1,
-						"rowIndex": 1,
-						"colSpan": 1,
-						"rowSpan": 1
-					});
-					var group_2 = new cpr.controls.Container("recipeRegistration");
-					var formLayout_2 = new cpr.controls.layouts.FormLayout();
-					formLayout_2.scrollable = false;
-					formLayout_2.horizontalSpacing = "0px";
-					formLayout_2.verticalSpacing = "0px";
-					formLayout_2.topMargin = "0px";
-					formLayout_2.rightMargin = "0px";
-					formLayout_2.bottomMargin = "0px";
-					formLayout_2.leftMargin = "0px";
-					formLayout_2.setColumns(["1fr"]);
-					formLayout_2.setRows(["35px", "5px", "1fr"]);
-					group_2.setLayout(formLayout_2);
-					(function(container){
-						var image_1 = new cpr.controls.Image();
-						image_1.src = "theme/images/recipe_registration.svg";
-						container.addChild(image_1, {
-							"colIndex": 0,
-							"rowIndex": 0
-						});
-						var output_2 = new cpr.controls.Output();
-						output_2.value = "레시피 등록";
-						output_2.style.css({
-							"color" : "#856C66",
-							"font-weight" : "bold",
-							"font-size" : "10px",
-							"text-align" : "center"
-						});
-						container.addChild(output_2, {
-							"colIndex": 0,
-							"rowIndex": 2
-						});
-					})(group_2);
-					if(typeof onRecipeRegistrationClick == "function") {
-						group_2.addEventListener("click", onRecipeRegistrationClick);
-					}
-					container.addChild(group_2, {
-						"colIndex": 5,
-						"rowIndex": 1,
-						"colSpan": 1,
-						"rowSpan": 1,
-						"width": 100,
-						"height": 9
-					});
-					var group_3 = new cpr.controls.Container("receiptPhoto");
-					var formLayout_3 = new cpr.controls.layouts.FormLayout();
-					formLayout_3.scrollable = false;
-					formLayout_3.horizontalSpacing = "0px";
-					formLayout_3.verticalSpacing = "0px";
-					formLayout_3.topMargin = "0px";
-					formLayout_3.rightMargin = "0px";
-					formLayout_3.bottomMargin = "0px";
-					formLayout_3.leftMargin = "0px";
-					formLayout_3.setColumns(["1fr"]);
-					formLayout_3.setRows(["35px", "5px", "1fr"]);
-					group_3.setLayout(formLayout_3);
-					(function(container){
-						var image_2 = new cpr.controls.Image();
-						image_2.src = "theme/images/receipt_photo.svg";
-						container.addChild(image_2, {
-							"colIndex": 0,
-							"rowIndex": 0
-						});
-						var output_3 = new cpr.controls.Output();
-						output_3.value = "영수증 촬영";
-						output_3.style.css({
-							"color" : "#856C66",
-							"font-weight" : "bold",
-							"font-size" : "10px",
-							"text-align" : "center"
-						});
-						container.addChild(output_3, {
-							"colIndex": 0,
-							"rowIndex": 2
-						});
-					})(group_3);
-					if(typeof onReceiptPhotoClick == "function") {
-						group_3.addEventListener("click", onReceiptPhotoClick);
-					}
-					container.addChild(group_3, {
-						"colIndex": 3,
-						"rowIndex": 1,
-						"colSpan": 1,
-						"rowSpan": 1
+						"top": "0px",
+						"left": "40px",
+						"width": "110px",
+						"height": "30px"
 					});
 				})(group_1);
 				container.addChild(group_1, {
-					"top": "0px",
-					"right": "0px",
-					"bottom": "0px",
-					"left": "0px"
+					"width": "150px",
+					"height": "30px",
+					"left": "calc(50% - 75px)",
+					"top": "calc(50% - 15px)"
 				});
+				if(typeof onBodyLoad == "function"){
+					app.addEventListener("load", onBodyLoad);
+				}
 			}
 		});
-	internalApp.title = "header";
+	internalApp.title = "recipe_title";
 	
-	// Type declaration for header
-	cpr.utils.Util.ensurePackage("udc").header = function(id){
-		cpr.controls.UDCBase.call(this, "udc.header", internalApp, id);
+	// Type declaration for recipe_title
+	cpr.utils.Util.ensurePackage("udc.recipe").recipe_title = function(id){
+		cpr.controls.UDCBase.call(this, "udc.recipe.recipe_title", internalApp, id);
 	};
 	
-	udc.header.prototype = Object.create(cpr.controls.UDCBase.prototype);
-	Object.defineProperty(udc.header.prototype, "type", {
+	udc.recipe.recipe_title.prototype = Object.create(cpr.controls.UDCBase.prototype);
+	Object.defineProperty(udc.recipe.recipe_title.prototype, "type", {
 		get : function(){
-			return "udc.header";
+			return "udc.recipe.recipe_title";
 		},
 		
 		configurable: true
 	});
 	
 	// App Properties
-	
+	Object.defineProperty(udc.recipe.recipe_title.prototype, "value", {
+		get: function(){
+			return this.getEmbeddedAppInstance().getAppProperty("value");
+		},
+		set: function(newValue){
+			return this.getEmbeddedAppInstance().setAppProperty("value", newValue, true);
+		}
+	});
+
 	// Register type into the Platform and package
 	cpr.core.Platform.INSTANCE.register(internalApp);
 })();
-/// end - udc.header
+/// end - udc.recipe.recipe_title

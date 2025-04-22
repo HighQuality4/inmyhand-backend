@@ -28,18 +28,6 @@ public class TestController {
 
 	private final ReceiptExtraction receiptExtraction;
 
-
-	@GetMapping(value = "/{path:[^\\.]*}")
-	public String forward() {
-		return "/app/layout/layout";
-	}
-
-	@GetMapping(value = "/**/{path:[^\\.]*}")
-	public String forwardPaths() {
-		return "/app/layout/layout";
-	}
-
-
 //	@PostMapping("/api/page-routes")
 //	public ResponseEntity<Resource> getRouterJson() {
 //		Resource resource = new ClassPathResource("view/data/router.json");

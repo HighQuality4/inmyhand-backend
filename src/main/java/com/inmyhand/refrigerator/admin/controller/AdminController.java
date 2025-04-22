@@ -1,46 +1,40 @@
 package com.inmyhand.refrigerator.admin.controller;
 
+import java.util.List;
+import java.util.Map;
+
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
+
 import com.cleopatra.protocol.data.DataRequest;
 import com.cleopatra.protocol.data.ParameterGroup;
 import com.inmyhand.refrigerator.admin.dto.MemberEntityDto;
 import com.inmyhand.refrigerator.admin.service.AdminService;
-import com.inmyhand.refrigerator.test.TestDTO;
 import com.inmyhand.refrigerator.util.ConverterClassUtil;
-import jakarta.servlet.http.HttpSession;
+
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import lombok.extern.slf4j.Slf4j;
 
-import java.util.List;
-import java.util.Map;
-
-@Controller
+@RestController
 @RequiredArgsConstructor
-@RequestMapping("/admin")
+@RequestMapping("/api/admin")
+@Slf4j
 public class AdminController {
 
     private final AdminService adminService;
-
-    @GetMapping("/")
-    public String adminPage() {
-        return "admin/user-view";
-    }
-
 
     /**
      * key : ad1
      * value : List<MemberEntityDto>
      * @return
      */
-    @PostMapping("/api/admin/user-all-view")
+    @PostMapping("/users")
     @ResponseBody
     public ResponseEntity<Map<String, List<MemberEntityDto>>> adminUserView() {
-        return ResponseEntity.ok(Map.of("ad1", adminService.findByMemberAll()));
+        return ResponseEntity.ok(Map.of("getusers", adminService.findAllMembers()));
     }
 
     /**
@@ -49,23 +43,13 @@ public class AdminController {
      * value : List<MemberEntityDto>
      * @return
      */
-    @PostMapping("/api/admin/user-update")
+    @PostMapping("/user-update")
     @ResponseBody
     public ResponseEntity<Map<String, List<MemberEntityDto>>> adminUserView2(DataRequest dataRequest) {
 
-        // 1
-        adminService.updateMember(ConverterClassUtil
-                .getSingleClass(dataRequest, "dm1",MemberEntityDto.class));
-        // 2
-//        MemberEntityDto dm1 = ConverterClassUtil.getSingleClass(dataRequest, "dm1", MemberEntityDto.class);
-//        adminService.updateMember(dm1);
+    	List<MemberEntityDto> classList = ConverterClassUtil.getClassList(dataRequest, "getusers", MemberEntityDto.class);
+        adminService.updateMember(classList);
 
-        // 3
-//        ParameterGroup dm2 = dataRequest.getParameterGroup("dm1");
-//        MemberEntityDto beanData = (MemberEntityDto)dm2.getBeanData(MemberEntityDto.class);
-//        adminService.updateMember(beanData);
-
-
-        return ResponseEntity.ok(Map.of("ad1", adminService.findByMemberAll()));
+        return ResponseEntity.ok(Map.of("getusers",  adminService.findAllMembers()));
     }
 }

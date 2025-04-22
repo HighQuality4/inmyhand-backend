@@ -16,10 +16,45 @@
 			 * Created at 2025. 4. 17. 오후 1:52:50.
 			 *
 			 * @author gyrud
-			 ************************************************/;
+			 ************************************************/
+
+			const createRecipeCardModule = cpr.core.Module.require("module/recipe/createRecipeCard");
+			const createRecipeCard = createRecipeCardModule.createRecipeCard;
+
+			/*
+			 * 루트 컨테이너에서 load 이벤트 발생 시 호출.
+			 * 앱이 최초 구성된후 최초 랜더링 직후에 발생하는 이벤트 입니다.
+			 */
+			function onBodyLoad2(e){
+				const popularRecipeListSms = app.lookup("popularRecipeListSms");
+				popularRecipeListSms.send();
+			}
+
+			/*
+			 * 서브미션에서 submit-success 이벤트 발생 시 호출.
+			 * 통신이 성공하면 발생합니다.
+			 */
+			function onPopularRecipeListSmsSubmitSuccess2(e){
+				const popularRecipeListSms = e.control;
+				
+				const recipeContainer = app.lookup("popluarRecipeList"); 
+
+				const result = popularRecipeListSms.xhr.responseText;
+				const resultJson = JSON.parse(result);
+				
+				createRecipeCard(resultJson, recipeContainer);
+
+				app.getContainer().redraw();
+			};
 			// End - User Script
 			
 			// Header
+			var submission_1 = new cpr.protocols.Submission("popularRecipeListSms");
+			submission_1.action = "/api/recipes/popular";
+			if(typeof onPopularRecipeListSmsSubmitSuccess2 == "function") {
+				submission_1.addEventListener("submit-success", onPopularRecipeListSmsSubmitSuccess2);
+			}
+			app.register(submission_1);
 			app.supportMedia("all and (min-width: 1024px)", "default");
 			app.supportMedia("all and (min-width: 500px) and (max-width: 1023.984px)", "tablet");
 			app.supportMedia("all and (max-width: 499.984px)", "mobile");
@@ -35,171 +70,70 @@
 			
 			// Layout
 			var responsiveXYLayout_1 = new cpr.controls.layouts.ResponsiveXYLayout();
+			responsiveXYLayout_1.scrollable = true;
 			container.setLayout(responsiveXYLayout_1);
 			
 			// UI Configuration
-			var grid_1 = new cpr.controls.Grid("grd1");
-			grid_1.init({
-				"columns": [
-					{"width": "100px"},
-					{"width": "100px"},
-					{"width": "100px"},
-					{"width": "100px"},
-					{"width": "100px"}
-				],
-				"header": {
-					"rows": [{"height": "24px"}],
-					"cells": [
-						{
-							"constraint": {"rowIndex": 0, "colIndex": 0},
-							"configurator": function(cell){
-							}
-						},
-						{
-							"constraint": {"rowIndex": 0, "colIndex": 1},
-							"configurator": function(cell){
-							}
-						},
-						{
-							"constraint": {"rowIndex": 0, "colIndex": 2},
-							"configurator": function(cell){
-							}
-						},
-						{
-							"constraint": {"rowIndex": 0, "colIndex": 3},
-							"configurator": function(cell){
-							}
-						},
-						{
-							"constraint": {"rowIndex": 0, "colIndex": 4},
-							"configurator": function(cell){
-							}
-						}
-					]
-				},
-				"detail": {
-					"rows": [{"height": "24px"}],
-					"cells": [
-						{
-							"constraint": {"rowIndex": 0, "colIndex": 0},
-							"configurator": function(cell){
-							}
-						},
-						{
-							"constraint": {"rowIndex": 0, "colIndex": 1},
-							"configurator": function(cell){
-							}
-						},
-						{
-							"constraint": {"rowIndex": 0, "colIndex": 2},
-							"configurator": function(cell){
-							}
-						},
-						{
-							"constraint": {"rowIndex": 0, "colIndex": 3},
-							"configurator": function(cell){
-							}
-						},
-						{
-							"constraint": {"rowIndex": 0, "colIndex": 4},
-							"configurator": function(cell){
-							}
-						}
-					]
-				}
-			});
-			container.addChild(grid_1, {
-				positions: [
-					{
-						"media": "all and (min-width: 1024px)",
-						"top": "0px",
-						"right": "0px",
-						"left": "0px",
-						"height": "1001px"
-					}, 
-					{
-						"media": "all and (min-width: 500px) and (max-width: 1023.984px)",
-						"top": "0px",
-						"right": "0px",
-						"left": "0px",
-						"height": "1001px"
-					}, 
-					{
-						"media": "all and (max-width: 499.984px)",
-						"top": "0px",
-						"right": "0px",
-						"left": "0px",
-						"height": "1001px"
-					}
-				]
-			});
-			
-			var output_1 = new cpr.controls.Output();
-			output_1.value = "asdfasdfasdfasdfasdfsasdfasdfasdfasdfasdfsasdfasdfasdfasdfasdfsasdfasdfasdfasdfasdfsasdfasdfasdfasdfasdfsasdfasdfasdfasdfasdfsasdfasdfasdfasdfasdfs";
-			container.addChild(output_1, {
-				positions: [
-					{
-						"media": "all and (min-width: 1024px)",
-						"top": "1000px",
-						"right": "0px",
-						"left": "0px",
-						"height": "36px"
-					}, 
-					{
-						"media": "all and (min-width: 500px) and (max-width: 1023.984px)",
-						"top": "1000px",
-						"right": "0px",
-						"left": "0px",
-						"height": "36px"
-					}, 
-					{
-						"media": "all and (max-width: 499.984px)",
-						"top": "1000px",
-						"right": "0px",
-						"left": "0px",
-						"height": "36px"
-					}
-				]
-			});
-			
-			var group_1 = new cpr.controls.Container();
-			var xYLayout_1 = new cpr.controls.layouts.XYLayout();
-			group_1.setLayout(xYLayout_1);
+			var group_1 = new cpr.controls.Container("popluarRecipeContainer");
+			var verticalLayout_1 = new cpr.controls.layouts.VerticalLayout();
+			verticalLayout_1.scrollable = false;
+			verticalLayout_1.spacing = 20;
+			group_1.setLayout(verticalLayout_1);
 			(function(container){
-				var output_2 = new cpr.controls.Output();
-				output_2.value = "asdfasdfasdfasdfasdfsasdfasdfasdfasdfasdfsasdfasdfasdfasdfasdfsasdfasdfasdfasdfasdfsasdfasdfasdfasdfasdfsasdfasdfasdfasdfasdfsasdfasdfasdfasdfasdfs";
-				container.addChild(output_2, {
-					"top": "0px",
-					"right": "0px",
-					"left": "0px",
-					"height": "36px"
+				var userDefinedControl_1 = new udc.recipe.recipe_title("popluarRecipeTitle");
+				userDefinedControl_1.value = "인기 레시피";
+				container.addChild(userDefinedControl_1, {
+					"autoSize": "none",
+					"width": "600px",
+					"height": "30px"
+				});
+				var group_2 = new cpr.controls.Container("popluarRecipeList");
+				var flowLayout_1 = new cpr.controls.layouts.FlowLayout();
+				flowLayout_1.scrollable = false;
+				flowLayout_1.horizontalSpacing = 20;
+				flowLayout_1.verticalSpacing = 20;
+				flowLayout_1.horizontalAlign = "center";
+				flowLayout_1.verticalAlign = "top";
+				flowLayout_1.lineWrap = true;
+				flowLayout_1.maxContentWidth = -1;
+				group_2.setLayout(flowLayout_1);
+				if(typeof onPopluarRecipeListBeforeDraw == "function") {
+					group_2.addEventListener("before-draw", onPopluarRecipeListBeforeDraw);
+				}
+				container.addChild(group_2, {
+					"autoSize": "height",
+					"width": "600px",
+					"height": ""
 				});
 			})(group_1);
 			container.addChild(group_1, {
 				positions: [
 					{
 						"media": "all and (min-width: 1024px)",
-						"top": "1046px",
+						"top": "0px",
 						"right": "0px",
 						"left": "0px",
-						"height": "200px"
+						"height": "1000px"
 					}, 
 					{
 						"media": "all and (min-width: 500px) and (max-width: 1023.984px)",
-						"top": "1046px",
+						"top": "0px",
 						"right": "0px",
 						"left": "0px",
-						"height": "200px"
+						"height": "1000px"
 					}, 
 					{
 						"media": "all and (max-width: 499.984px)",
-						"top": "1046px",
+						"top": "0px",
 						"right": "0px",
 						"left": "0px",
-						"height": "200px"
+						"height": "1000px"
 					}
 				]
 			});
+			if(typeof onBodyLoad2 == "function"){
+				app.addEventListener("load", onBodyLoad2);
+			}
 		}
 	});
 	app.title = "recipe_main";

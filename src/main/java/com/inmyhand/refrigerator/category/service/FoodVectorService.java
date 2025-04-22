@@ -2,7 +2,6 @@ package com.inmyhand.refrigerator.category.service;
 
 import com.inmyhand.refrigerator.category.EmbeddingUtil;
 import com.inmyhand.refrigerator.category.domain.dto.FoodVectorRequestDTO;
-import com.inmyhand.refrigerator.category.domain.dto.SearchFoodCategoryDTO;
 import com.inmyhand.refrigerator.category.repository.FoodVectorRepository;
 import com.inmyhand.refrigerator.fridge.domain.dto.ReceiptDTO;
 import lombok.RequiredArgsConstructor;
@@ -42,18 +41,6 @@ public class FoodVectorService {
         return futures.stream()
                 .map(CompletableFuture::join)
                 .toList();
-    }
-
-    public List<SearchFoodCategoryDTO> svcCategoryNameContaining(String keyword) {
-
-
-        return foodVectorRepository.findByCategoryNameContaining(keyword).stream()
-                .map(dto -> SearchFoodCategoryDTO.builder()
-                        .categoryId(dto.getId())
-                        .categoryName(dto.getCategoryName())
-                        .expirationInfo(dto.getExpirationInfo())
-                        .build())
-                .collect(Collectors.toList());
     }
 
 }
