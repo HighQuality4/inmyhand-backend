@@ -28,12 +28,16 @@ public class JwtTokenUtil {
     // 토큰 생성
     public String generateAccessToken(MemberEntity member) {
         Map<String, Object> claims = new HashMap<>();
+        claims.put("userId", member.getId());
+        claims.put("nickname", member.getNickname());
         // 추가 클레임 설정 가능
         return createToken(claims, member.getEmail(), access_expiration);
     }
 
     public String generateRefreshToken(MemberEntity member) {
         Map<String, Object> claims = new HashMap<>();
+        claims.put("userId", member.getId());
+        claims.put("nickname", member.getNickname());
         return createToken(claims, member.getEmail(), refresh_expiration);
     }
 
@@ -59,6 +63,17 @@ public class JwtTokenUtil {
                 .getPayload()  // getBody() -> getPayload()로 변경
                 .getSubject();
     }
+
+    // 토큰에서 사용자id(번호) 추출
+    public Long getUserIdFromToken(String token) {
+        return Jwts.parser()
+                .verifyWith(getSigningKey())
+                .build()
+                .parseSignedClaims(token)
+                .getPayload()
+                .get("userId", Long.class);
+    }
+
 
     // 토큰 유효성 검증
     public boolean validateToken(String token) {
