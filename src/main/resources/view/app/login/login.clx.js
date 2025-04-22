@@ -147,22 +147,22 @@
 					{
 						"media": "all and (min-width: 1024px)",
 						"top": "132px",
-						"left": "40px",
-						"width": "520px",
+						"right": "0px",
+						"left": "0px",
 						"height": "170px"
 					}, 
 					{
 						"media": "all and (min-width: 500px) and (max-width: 1023.984px)",
 						"top": "132px",
-						"left": "20px",
-						"width": "254px",
+						"right": "0px",
+						"left": "0px",
 						"height": "170px"
 					}, 
 					{
 						"media": "all and (max-width: 499.984px)",
 						"top": "132px",
-						"left": "14px",
-						"width": "178px",
+						"right": "0px",
+						"left": "0px",
 						"height": "170px"
 					}
 				]
@@ -173,6 +173,8 @@
 			button_1.style.css({
 				"background-color" : "#856C66",
 				"color" : "#856C66",
+				"font-weight" : "bold",
+				"font-size" : "16px",
 				"font-family" : "@Kim jung chul Myungjo Bold"
 			});
 			if(typeof onButtonClick == "function") {
@@ -183,22 +185,22 @@
 					{
 						"media": "all and (min-width: 1024px)",
 						"top": "336px",
-						"left": "40px",
-						"width": "520px",
+						"right": "0px",
+						"left": "0px",
 						"height": "74px"
 					}, 
 					{
 						"media": "all and (min-width: 500px) and (max-width: 1023.984px)",
 						"top": "336px",
-						"left": "20px",
-						"width": "254px",
+						"right": "0px",
+						"left": "0px",
 						"height": "74px"
 					}, 
 					{
 						"media": "all and (max-width: 499.984px)",
 						"top": "336px",
-						"left": "14px",
-						"width": "178px",
+						"right": "0px",
+						"left": "0px",
 						"height": "74px"
 					}
 				]
@@ -217,22 +219,22 @@
 					{
 						"media": "all and (min-width: 1024px)",
 						"top": "49px",
-						"left": "40px",
-						"width": "520px",
+						"right": "0px",
+						"left": "0px",
 						"height": "74px"
 					}, 
 					{
 						"media": "all and (min-width: 500px) and (max-width: 1023.984px)",
 						"top": "49px",
-						"left": "20px",
-						"width": "254px",
+						"right": "0px",
+						"left": "0px",
 						"height": "74px"
 					}, 
 					{
 						"media": "all and (max-width: 499.984px)",
 						"top": "49px",
-						"left": "14px",
-						"width": "178px",
+						"right": "0px",
+						"left": "0px",
 						"height": "74px"
 					}
 				]
@@ -251,128 +253,167 @@
 					{
 						"media": "all and (min-width: 1024px)",
 						"top": "433px",
-						"left": "40px",
-						"width": "520px",
+						"right": "0px",
+						"left": "0px",
 						"height": "74px"
 					}, 
 					{
 						"media": "all and (min-width: 500px) and (max-width: 1023.984px)",
 						"top": "433px",
-						"left": "20px",
-						"width": "254px",
+						"right": "0px",
+						"left": "0px",
 						"height": "74px"
 					}, 
 					{
 						"media": "all and (max-width: 499.984px)",
 						"top": "433px",
-						"left": "14px",
-						"width": "178px",
+						"right": "0px",
+						"left": "0px",
 						"height": "74px"
 					}
 				]
 			});
 			
-			var button_2 = new cpr.controls.Button("네이버");
-			button_2.style.css({
-				"border-radius" : "100%",
-				"background-size" : "contain",
-				"background-image" : "url('theme/images/\\B124\\C774\\BC84.png')"
-			});
-			if(typeof onButtonClickNaver == "function") {
-				button_2.addEventListener("click", onButtonClickNaver);
-			}
-			container.addChild(button_2, {
+			var group_2 = new cpr.controls.Container();
+			var flowLayout_1 = new cpr.controls.layouts.FlowLayout();
+			flowLayout_1.horizontalSpacing = 50;
+			flowLayout_1.verticalSpacing = 0;
+			flowLayout_1.horizontalAlign = "center";
+			flowLayout_1.verticalAlign = "middle";
+			group_2.setLayout(flowLayout_1);
+			(function(container){
+				var button_2 = new cpr.controls.Button("네이버");
+				button_2.style.css({
+					"border-radius" : "100%",
+					"background-size" : "contain",
+					"border-top-width" : "0px",
+					"border-right-width" : "0px",
+					"border-bottom-width" : "0px",
+					"background-image" : "url('theme/images/\\B124\\C774\\BC84.png')",
+					"border-left-width" : "0px"
+				});
+				if(typeof onButtonClickNaver == "function") {
+					button_2.addEventListener("click", onButtonClickNaver);
+				}
+				container.addChild(button_2, {
+					"autoSize": "none",
+					"width": "100px",
+					"height": "100px"
+				});
+				var button_3 = new cpr.controls.Button("구글");
+				button_3.style.css({
+					"border-radius" : "100%",
+					"background-size" : "contain",
+					"border-top-width" : "0px",
+					"border-right-width" : "0px",
+					"border-bottom-width" : "0px",
+					"background-image" : "url('theme/images/\\AD6C\\AE00.png')",
+					"border-left-width" : "0px"
+				});
+				if(typeof onButtonClickGoogle == "function") {
+					button_3.addEventListener("click", onButtonClickGoogle);
+				}
+				container.addChild(button_3, {
+					"autoSize": "none",
+					"width": "95px",
+					"height": "97px"
+				});
+				var button_4 = new cpr.controls.Button("카카오");
+				button_4.style.css({
+					"border-radius" : "100%",
+					"background-size" : "contain",
+					"border-top-width" : "0px",
+					"border-right-width" : "0px",
+					"border-bottom-width" : "0px",
+					"background-image" : "url('theme/images/\\CE74\\CE74\\C624.png')",
+					"border-left-width" : "0px"
+				});
+				if(typeof onButtonClickKakao == "function") {
+					button_4.addEventListener("click", onButtonClickKakao);
+				}
+				container.addChild(button_4, {
+					"autoSize": "none",
+					"width": "100px",
+					"height": "100px"
+				});
+			})(group_2);
+			container.addChild(group_2, {
 				positions: [
 					{
 						"media": "all and (min-width: 1024px)",
-						"top": "555px",
-						"left": "40px",
-						"width": "100px",
+						"top": "517px",
+						"right": "0px",
+						"left": "0px",
 						"height": "100px"
 					}, 
 					{
 						"media": "all and (min-width: 500px) and (max-width: 1023.984px)",
-						"top": "555px",
-						"left": "20px",
-						"width": "49px",
+						"top": "517px",
+						"right": "0px",
+						"left": "0px",
 						"height": "100px"
 					}, 
 					{
 						"media": "all and (max-width: 499.984px)",
-						"top": "555px",
-						"left": "14px",
-						"width": "34px",
+						"top": "517px",
+						"right": "0px",
+						"left": "0px",
 						"height": "100px"
 					}
 				]
 			});
 			
-			var button_3 = new cpr.controls.Button("구글");
-			button_3.style.css({
-				"border-radius" : "100%",
-				"background-size" : "contain",
-				"background-image" : "url('theme/images/\\AD6C\\AE00.png')"
-			});
-			if(typeof onButtonClickGoogle == "function") {
-				button_3.addEventListener("click", onButtonClickGoogle);
-			}
-			container.addChild(button_3, {
+			var group_3 = new cpr.controls.Container();
+			var flowLayout_2 = new cpr.controls.layouts.FlowLayout();
+			flowLayout_2.horizontalSpacing = 20;
+			flowLayout_2.verticalSpacing = 0;
+			flowLayout_2.horizontalAlign = "center";
+			flowLayout_2.verticalAlign = "middle";
+			group_3.setLayout(flowLayout_2);
+			(function(container){
+				var button_5 = new cpr.controls.Button();
+				button_5.value = "비밀번호 찾기";
+				button_5.style.css({
+					"font-weight" : "bold",
+					"font-size" : "16px"
+				});
+				container.addChild(button_5, {
+					"width": "235px",
+					"height": "75px"
+				});
+				var button_6 = new cpr.controls.Button();
+				button_6.value = "회원가입";
+				button_6.style.css({
+					"font-weight" : "bold",
+					"font-size" : "16px"
+				});
+				container.addChild(button_6, {
+					"width": "236px",
+					"height": "75px"
+				});
+			})(group_3);
+			container.addChild(group_3, {
 				positions: [
 					{
 						"media": "all and (min-width: 1024px)",
-						"top": "555px",
-						"left": "250px",
-						"width": "98px",
-						"height": "100px"
+						"top": "624px",
+						"right": "0px",
+						"left": "0px",
+						"height": "75px"
 					}, 
 					{
 						"media": "all and (min-width: 500px) and (max-width: 1023.984px)",
-						"top": "555px",
-						"left": "122px",
-						"width": "48px",
-						"height": "100px"
+						"top": "624px",
+						"right": "0px",
+						"left": "0px",
+						"height": "75px"
 					}, 
 					{
 						"media": "all and (max-width: 499.984px)",
-						"top": "555px",
-						"left": "85px",
-						"width": "33px",
-						"height": "100px"
-					}
-				]
-			});
-			
-			var button_4 = new cpr.controls.Button("카카오");
-			button_4.style.css({
-				"border-radius" : "100%",
-				"background-size" : "contain",
-				"background-image" : "url('theme/images/\\CE74\\CE74\\C624.png')"
-			});
-			if(typeof onButtonClickKakao == "function") {
-				button_4.addEventListener("click", onButtonClickKakao);
-			}
-			container.addChild(button_4, {
-				positions: [
-					{
-						"media": "all and (min-width: 1024px)",
-						"top": "555px",
-						"left": "460px",
-						"width": "100px",
-						"height": "100px"
-					}, 
-					{
-						"media": "all and (min-width: 500px) and (max-width: 1023.984px)",
-						"top": "555px",
-						"left": "225px",
-						"width": "49px",
-						"height": "100px"
-					}, 
-					{
-						"media": "all and (max-width: 499.984px)",
-						"top": "555px",
-						"left": "157px",
-						"width": "34px",
-						"height": "100px"
+						"top": "624px",
+						"right": "0px",
+						"left": "0px",
+						"height": "75px"
 					}
 				]
 			});
