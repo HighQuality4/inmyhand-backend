@@ -1,13 +1,18 @@
 package com.inmyhand.refrigerator.recipe.repository;
 
-import com.inmyhand.refrigerator.recipe.domain.entity.RecipeInfoEntity;
+import java.util.List;
+import java.util.Optional;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
-import java.util.List;
-import java.util.Optional;
+import com.inmyhand.refrigerator.admin.dto.AdminRecipeInfoDto;
+import com.inmyhand.refrigerator.recipe.domain.entity.RecipeInfoEntity;
+
+
 
 public interface RecipeInfoRepository extends JpaRepository<RecipeInfoEntity, Long> {
     // 모든 레시피 목록 조회 - 기본으로 최신 레시피가 제일 첫번째에 오도록 함
@@ -25,5 +30,13 @@ public interface RecipeInfoRepository extends JpaRepository<RecipeInfoEntity, Lo
 
     //레시피 이름으로 찾기
     Optional<RecipeInfoEntity> findByRecipeName(String recipeName);
+
+    @Query("SELECT new com.inmyhand.refrigerator.admin.dto.AdminRecipeInfoDto(" +
+            "r.id, r.recipeName, r.createdAt, " +
+            "SIZE(r.recipeLikesList), SIZE(r.recipeViewsList)) " +
+            "FROM RecipeInfoEntity r " +
+            "WHERE r.memberEntity.id = :id " +
+            "ORDER BY r.createdAt ASC")
+    Page<AdminRecipeInfoDto> findAdminRecipeInfoUser(@Param("id") Long id, Pageable pageable);
 }
 
