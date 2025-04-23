@@ -8,11 +8,11 @@
 (function(){
 	cpr.core.Module.define("data/embeddedRoutes", function(exports, globals, module){
 		const embeddedRoutes = [
-		  { path: "/recipe", loadApp: "app/recipe/recipe_main" }, // 정적 경로
-		  { path: /^\/recipe\/(\d+)$/, loadApp: "app/recipe/recipe_detail" }, // id 값이 있는 경우
-		  { path: "/recipe/search", loadApp: "app/recipe/recipe_search" }, // 쿼리 파라미터가 있는 경우
-		  { path: "/users/login", loadApp: "app/login/login" },
-		  { path: "/users/mypage", loadApp: "app/mypage/mypage"}
+			{ path: "/recipe", loadApp: "app/recipe/recipe_main" }, // 정적 경로
+			{ path: /^\/recipe\/(\d+)$/, loadApp: "app/recipe/recipe_detail" }, // id 값이 있는 경우
+			{ path: "/recipe/search", loadApp: "app/recipe/recipe_search" }, // 쿼리 파라미터가 있는 경우
+			{ path: "/users/login", loadApp: "app/login/login" },
+			{ path: "/users/mypage", loadApp: "app/mypage/mypage"}
 		];
 
 		exports.embeddedRoutes = embeddedRoutes;
@@ -46,33 +46,33 @@
 				recipeCard.recipeImg = resultJson[i].fileUrl;
 				recipeCard.authorImg = resultJson[i].userProfileImageUrl;
 				recipeCard.calories = resultJson[i].calories+"kcal";
-				
+
 				const categories = resultJson[i].categories;
 				for (let j = 0; j < categories.length; j++) {
-				  const category = categories[j];
-				  switch (category.recipeCategoryType) {
-				    case "종류별":
-				      recipeCard.typeCategory = "#" + category.recipeCategoryName;
-				      break;
-				    case "상황별":
-				      recipeCard.situationCategory = "#" + category.recipeCategoryName;
-				      break;
-				    case "방법별":
-				      recipeCard.methodCategory = "#" + category.recipeCategoryName;
-				      break;
-				    default:
-				      break;
-				  }
+					const category = categories[j];
+					switch (category.recipeCategoryType) {
+						case "종류별":
+							recipeCard.typeCategory = "#" + category.recipeCategoryName;
+							break;
+						case "상황별":
+							recipeCard.situationCategory = "#" + category.recipeCategoryName;
+							break;
+						case "방법별":
+							recipeCard.methodCategory = "#" + category.recipeCategoryName;
+							break;
+						default:
+							break;
+					}
 				}
-				
+
 				recipeContainer.addChild(recipeCard, {
-				  width: "250px",
-				  height: "400px",
-				});	
+					width: "250px",
+					height: "400px",
+				});
 			}
 		}
 
 		exports.createRecipeCard = createRecipeCard;
 	});
 })();
-/// end - module/recipe/createRecipeCard
+/// 1 end - module/recipe/createRecipeCard
