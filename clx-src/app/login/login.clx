@@ -14,7 +14,8 @@
           <cl:datacolumn std:sid="d-column-3554e54e" name="password" datatype="string"/>
         </cl:datacolumnlist>
       </cl:datamap>
-      <cl:submission std:sid="submission-45dd3510" id="smsLogin" async="true" method="post" action="http://localhost:7079/login" mediatype="application/json" responsetype="javascript" fallbackContentType="application/json">
+      <cl:submission std:sid="submission-45dd3510" id="smsLogin" async="true" method="post" action="http://localhost:7079/api/users/login" mediatype="application/json" responsetype="javascript" fallbackContentType="application/json">
+        <cl:listener std:sid="listener-695d0ae4" name="submit-success" handler="onSmsLoginSubmitSuccess"/>
         <cl:requestdata dataid="dmLogin"/>
       </cl:submission>
     </cl:model>
@@ -28,7 +29,7 @@
       <cl:inputbox std:sid="i-box-6c262ea3" id="email" style="border-radius:5px; background-color:#FFFBF7; font-size:24px;" value="" placeholder="아이디">
         <cl:formdata std:sid="f-data-d672af3b" row="0" col="0"/>
       </cl:inputbox>
-      <cl:inputbox std:sid="i-box-32516a75" id="password" style="border-radius:5px; color:#000000; font-size:24px;" placeholder="비밀번호">
+      <cl:inputbox std:sid="i-box-32516a75" id="password" style="border-radius:5px; color:#000000; font-size:24px;" value="" secret="true" placeholder="비밀번호">
         <cl:formdata std:sid="f-data-dbbcf666" row="1" col="0"/>
       </cl:inputbox>
       <cl:formlayout std:sid="f-layout-504b6ebb" scrollable="false" hspace="10px" vspace="10px" top-margin="5px" right-margin="5px" bottom-margin="5px" left-margin="5px">

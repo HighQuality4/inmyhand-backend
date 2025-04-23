@@ -45,3 +45,28 @@ function onButtonClickKakao(e){
 	window.location.href = "http://localhost:7079/oauth2/authorization/kakao";
 	
 }
+
+/*
+ * 서브미션에서 submit-success 이벤트 발생 시 호출.
+ * 통신이 성공하면 발생합니다.
+ */
+function onSmsLoginSubmitSuccess(e){
+	var smsLogin = e.control;
+	var sub = e.control;
+
+	// 쿠키에서 userId 꺼내서 localStorage에 저장
+	var userId = document.cookie
+		.split('; ')
+		.find(function(row) {
+    		return row.indexOf("userId=") === 0;  // "userId="로 시작하는 문자열
+  		})
+		?.split('=')[1];
+
+	if (userId) {
+		localStorage.setItem("userId", userId);
+		console.log("userId 저장 완료: " + userId);
+	}
+
+	// 이후 페이지 이동 등
+	location.href = "/users/mypage"; // 로그인 후 이동할 페이지(나중에 메인으로 고치세요!)
+}

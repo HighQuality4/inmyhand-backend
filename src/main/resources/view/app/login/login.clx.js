@@ -57,6 +57,31 @@
 			function onButtonClickKakao(e){
 				window.location.href = "http://localhost:7079/oauth2/authorization/kakao";
 				
+			}
+
+			/*
+			 * 서브미션에서 submit-success 이벤트 발생 시 호출.
+			 * 통신이 성공하면 발생합니다.
+			 */
+			function onSmsLoginSubmitSuccess(e){
+				var smsLogin = e.control;
+				var sub = e.control;
+
+				// 쿠키에서 userId 꺼내서 localStorage에 저장
+				var userId = document.cookie
+					.split('; ')
+					.find(function(row) {
+			    		return row.indexOf("userId=") === 0;  // "userId="로 시작하는 문자열
+			  		})
+					?.split('=')[1];
+
+				if (userId) {
+					localStorage.setItem("userId", userId);
+					console.log("userId 저장 완료: " + userId);
+				}
+
+				// 이후 페이지 이동 등
+				location.href = "/users/mypage"; // 로그인 후 이동할 페이지(나중에 메인으로 고치세요!)
 			};
 			// End - User Script
 			
@@ -79,11 +104,14 @@
 			var submission_1 = new cpr.protocols.Submission("smsLogin");
 			submission_1.async = true;
 			submission_1.method = "post";
-			submission_1.action = "http://localhost:7079/login";
+			submission_1.action = "http://localhost:7079/api/users/login";
 			submission_1.mediaType = "application/json";
 			submission_1.responseType = "javascript";
 			submission_1.fallbackContentType = "application/json";
 			submission_1.addRequestData(dataMap_1);
+			if(typeof onSmsLoginSubmitSuccess == "function") {
+				submission_1.addEventListener("submit-success", onSmsLoginSubmitSuccess);
+			}
 			app.register(submission_1);
 			app.supportMedia("all and (min-width: 1024px)", "default");
 			app.supportMedia("all and (min-width: 500px) and (max-width: 1023.984px)", "tablet");
@@ -131,6 +159,8 @@
 					"rowIndex": 0
 				});
 				var inputBox_2 = new cpr.controls.InputBox("password");
+				inputBox_2.value = "";
+				inputBox_2.secret = true;
 				inputBox_2.placeholder = "비밀번호";
 				inputBox_2.style.css({
 					"border-radius" : "5px",
