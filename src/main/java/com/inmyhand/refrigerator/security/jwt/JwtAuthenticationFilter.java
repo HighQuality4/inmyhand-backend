@@ -1,5 +1,7 @@
 package com.inmyhand.refrigerator.security.jwt;
 
+import com.inmyhand.refrigerator.common.redis.RedisKeyManager;
+import com.inmyhand.refrigerator.common.redis.RedisUtil;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -22,6 +24,8 @@ import java.io.IOException;
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
     private final JwtTokenUtil jwtTokenUtil;
+    private final RedisUtil redisUtil;
+    private final RedisKeyManager redisKeyManager;
     private final UserDetailsService userDetailsService;
 
 
@@ -46,6 +50,17 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             if (jwtTokenUtil.validateToken(token)) {
                 // 토큰에서 사용자명 추출
                 String username = jwtTokenUtil.getUsernameFromToken(token);
+                Long userId = jwtTokenUtil.getUserIdFromToken(token);
+
+                //블랙리스트 키값 만들어서 조회
+                String blackListKey = redisKeyManager.getBlackListKey(userId);
+
+                String blacklistedToken = redisUtil.get(blackListKey);
+
+                if (blacklistedToken != null && blacklistedToken.equals(token)) {
+                    log.warn("블랙리스트에 등록된 토큰입니다: {}", token);
+                    throw new SecurityException("로그아웃된 토큰입니다");
+                }
 
                 // UserDetails 객체 가져오기
                 UserDetails userDetails = userDetailsService.loadUserByUsername(username);
