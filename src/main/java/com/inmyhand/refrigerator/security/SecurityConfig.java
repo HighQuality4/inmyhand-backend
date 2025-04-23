@@ -9,6 +9,7 @@ import org.springframework.security.config.annotation.authentication.configurati
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
+import org.springframework.security.config.annotation.web.configurers.RequestCacheConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.NoOpPasswordEncoder;
@@ -55,6 +56,7 @@ public class SecurityConfig {
                         .successHandler(customOAuth2SuccessHandler)
                 )
                 .formLogin(AbstractHttpConfigurer::disable)
+                .requestCache(RequestCacheConfigurer::disable)
                 //.formLogin(withDefaults()) //테스트 용도
 //                .headers(headers -> headers
 //                        // 최신 OWASP 권장사항에 따라 X-XSS-Protection 헤더를 비활성화
