@@ -70,8 +70,7 @@ function onButtonClick3(e){
 	
 	// 저장 이벤트 (save-click) 전파하기
 	var saveClick = new cpr.events.CUIEvent("save-click");
-	
-	app.dispatchEvent(saveClick);
+	app.dispatchEvent(saveClick);	
 	
 }
 
@@ -93,6 +92,6 @@ function onCancelDummyClick(e){
 	
 	/** @type cpr.controls.Grid */
 	var grd = app.getAppProperty("grdCtrl");
-	
-	grd.revertData();
+
+	grd.revertData(); 
 }

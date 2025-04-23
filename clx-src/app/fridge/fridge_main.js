@@ -16,7 +16,8 @@
 function onButtonClick(e){
 	var button = e.control;
 	alert("동작 테스트합니다");
-	app.lookup("foodListGrid").redraw();		
+	app.lookup("foodListGrid").redraw();
+	
 }
 
 
@@ -28,9 +29,7 @@ function onBodyLoad2(e){
 	app.lookup("getFoodList").send();
 	app.lookup("getFridgeList").send();
 	
-	
 }
-
 
 
 
@@ -40,6 +39,7 @@ function onBodyLoad2(e){
  */
 function onButtonClick2(e){
 	var button = e.control;
+	
 //	app.lookup("getFridgeList").send();
 	
 	
@@ -66,10 +66,20 @@ function focusItem(vsValue) {
 
 function fixGridSetting(){
 	
-	var grid = app.lookup("foodListGrid")
+	var grid = app.lookup("foodListGrid");
 	// 좌측 틀고정을 가로사이즈 100px, 고정되는 셀 수는 2개로 설정합니다.
 	grid.leftSplitWidth = 100;
 	grid.rightSplit = 1;
+	
+	
+//	var email = app.lookup("email").value;
+//	var password = app.lookup("password").value; // 요청 데이터 담는 DataMap
+//	
+//	var dm = app.lookup("dmLogin");
+//	dm.setValue("email", email);
+//	dm.setValue("password", password);
+//	
+//	app.lookup("smsLogin").send();
 }
 
 function onRowAdded(event) {
@@ -91,3 +101,97 @@ function onRowAdded(event) {
 }
 
 
+function controlFoodInsertGrid(e){
+}
+
+
+//----------------------------------------
+/*
+ * 그리드에서 insert 이벤트 발생 시 호출.
+ * Grid의 행이 추가되었을 때 이벤트.
+ */
+	/*
+	function onFoodListGridInsert(e){
+		
+		// 현재 이벤트 중인 음식 그리드
+		var foodListGrid = e.control;
+		
+		// 현재 클릭된 row 번호
+		var totalGridIndex = e.rowIndex;
+		
+		// 
+		var countSelectGridrow = totalGridIndex-1;
+		
+		
+		var formatGrid = app.lookup("foodListGrid");
+		
+	//	
+	//	formatGrid.focusCell(, );
+	//	
+	//	
+		if(countSelectGridrow > 7){
+			countSelectGridrow = 7;	
+		}
+		
+		alert(e.relativeTargetName + "countSelectGridrow" + countSelectGridrow);
+		
+		
+	//	for (var i = countSelectGridrow; i < totalGridIndex; i++) {
+	//	  var rowData = {
+	//	    id: ds.getValue(i, "id"),
+	//	    foodName: ds.getValue(i, "foodName")
+	//	    // 필요한 컬럼 계속 추가
+	//	  };
+	//
+	//	}
+		
+//	var foodDataSet = app.lookup("insertFoodList");
+//	
+//	var totalInsertRow = foodDataSet.getRowCount();
+//		
+//	alert(totalInsertRow);	
+//	for (var i = 0; i < totalInsertRow; i++) {
+//	  var rowData = {
+//	    id: foodDataSet.getValue(i, "id"),
+//	    foodName: foodDataSet.getValue(i, "foodName"),
+//	    foodAmount: foodDataSet.getValue(i, "foodAmount")
+//	    // 필요한 컬럼 계속 추가
+//	  };
+//	    alert("rowData[" + i + "]\n" +
+//        "id: " + rowData.id + "\n" +
+//        "foodName: " + rowData.foodName + "\n" +
+//        "foodAmount: " + rowData.foodAmount);
+//	}
+		
+	}
+	*/
+
+/*
+ * 사용자 정의 컨트롤에서 save-click 이벤트 발생 시 호출.
+ * 저장버튼 클릭시 발생하는 이벤트
+ */
+function onFridgeCRUDSaveClick(e){
+	var fridgeCRUD = e.control;
+	
+	
+	var foodDataSet = app.lookup("insertFoodList");
+	
+	var totalInsertRow = foodDataSet.getRowCount();
+		
+	alert(totalInsertRow);
+	
+//	for (var i = 0; i < totalInsertRow; i++) {
+//	  var rowData = {
+//	    id: foodDataSet.getValue(i, "id"),
+//	    foodName: foodDataSet.getValue(i, "foodName"),
+//	    foodAmount: foodDataSet.getValue(i, "foodAmount")
+//	    // 필요한 컬럼 계속 추가
+//	  };
+//	    alert("rowData[" + i + "]\n" +
+//        "id: " + rowData.id + "\n" +
+//        "foodName: " + rowData.foodName + "\n" +
+//        "foodAmount: " + rowData.foodAmount);
+//	}
+	app.lookup("sendFoodList").send();	
+	
+}

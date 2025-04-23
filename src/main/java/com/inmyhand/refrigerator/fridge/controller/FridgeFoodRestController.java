@@ -84,11 +84,14 @@ public class FridgeFoodRestController {
 
     //-----------------------------------------
     // 저장하기
-    @PostMapping("/create/dto")
+    @PostMapping("/create/foodList")
     public ResponseEntity<?> createDtoSend(DataRequest dataRequest) {
-        log.info("data={}", dataRequest);
-        FridgeFoodDTO singleClass = ConverterClassUtil.getSingleClass(dataRequest, "sendFridgeFoodDTO",FridgeFoodDTO.class);
+        log.info("data={}", dataRequest.getRequestObject().toString());
+
+
+        FridgeFoodDTO singleClass = ConverterClassUtil.getSingleClass(dataRequest, "sendFoodList",FridgeFoodDTO.class);
         log.info("data={}",singleClass);
+
         return ResponseEntity.ok(singleClass);
     }
 
@@ -112,7 +115,9 @@ public class FridgeFoodRestController {
             @RequestBody List<FridgeFoodDTO> dtoList) {
 
         fridgeFoodService.svcCreateFridgeFood(fridgeId,dtoList);
+
         return ResponseEntity.status(HttpStatus.CREATED).build();
+
     }
 
 

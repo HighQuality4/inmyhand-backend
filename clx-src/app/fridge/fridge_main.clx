@@ -28,7 +28,7 @@
           <cl:datacolumn std:sid="d-column-81b115a5" name="isLeader" datatype="string"/>
         </cl:datacolumnlist>
       </cl:dataset>
-      <cl:dataset std:sid="d-set-cda9aa60" id="searchfoodCategoryList">
+      <cl:dataset std:sid="d-set-cda9aa60" id="searchCategoryList">
         <cl:datacolumnlist>
           <cl:datacolumn std:sid="d-column-18ca45c3" name="categoryId" datatype="number"/>
           <cl:datacolumn std:sid="d-column-84f8930c" name="categoryName"/>
@@ -39,6 +39,18 @@
         <cl:datacolumnlist>
           <cl:datacolumn std:sid="d-column-19bd55f5" name="resultCategoryId"/>
           <cl:datacolumn std:sid="d-column-b2c9eb01" name="resultCategroyName"/>
+        </cl:datacolumnlist>
+      </cl:dataset>
+      <cl:dataset std:sid="d-set-6a401884" id="insertFoodList">
+        <cl:datacolumnlist>
+          <cl:datacolumn std:sid="d-column-d53312a1" name="id" datatype="number" displayonly="false"/>
+          <cl:datacolumn std:sid="d-column-164428bd" name="foodName" datatype="string" displayonly="false"/>
+          <cl:datacolumn std:sid="d-column-43160a08" name="foodAmount" datatype="number" displayonly="false"/>
+          <cl:datacolumn std:sid="d-column-3a2fc3a2" name="endDate" datatype="string" displayonly="false"/>
+          <cl:datacolumn std:sid="d-column-b90b261b" name="chargeDate" datatype="string" displayonly="false"/>
+          <cl:datacolumn std:sid="d-column-adad79bb" name="saveDate" datatype="string" displayonly="false"/>
+          <cl:datacolumn std:sid="d-column-84f72e7d" name="categoryName" datatype="string" displayonly="false"/>
+          <cl:datacolumn std:sid="d-column-3b5afb82" name="fridgeId" datatype="number" displayonly="false"/>
         </cl:datacolumnlist>
       </cl:dataset>
       <cl:datamap std:sid="d-map-a9e62653" id="fridgeIdParam">
@@ -60,7 +72,11 @@
       </cl:submission>
       <cl:submission std:sid="submission-c3ea6524" id="searchFoodCategoryList" action="/search" mediatype="application/json">
         <cl:requestdata dataid="searchDataParam"/>
-        <cl:responsedata dataid="searchfoodCategoryList"/>
+        <cl:responsedata dataid="searchCategoryList"/>
+      </cl:submission>
+      <cl:submission std:sid="submission-2e5a1016" id="sendFoodList" action="/api/fridge/create/foodList">
+        <cl:requestdata dataid="fridgeIdParam"/>
+        <cl:responsedata dataid="insertFoodList"/>
       </cl:submission>
     </cl:model>
     <cl:appspec/>
@@ -87,109 +103,142 @@
       <cl:grid std:sid="grid-9ffa6eda" id="foodListGrid" datasetid="foodList">
         <cl:verticaldata std:sid="v-data-bb6beb3d" width="419px" height="223px" autosize="none"/>
         <cl:gridcolumn std:sid="g-column-722aba1a" width="32px"/>
+        <cl:gridcolumn std:sid="g-column-7276f0e6" width="60px"/>
         <cl:gridcolumn std:sid="g-column-35c1309d" width="47px"/>
         <cl:gridcolumn std:sid="g-column-4a22f058" width="60px"/>
         <cl:gridcolumn std:sid="g-column-ebc991c9" width="60px"/>
         <cl:gridcolumn std:sid="g-column-c504197e" width="60px"/>
         <cl:gridcolumn std:sid="g-column-1e192d4b" width="60px"/>
         <cl:gridcolumn std:sid="g-column-fb2a894a" width="60px"/>
-        <cl:gridcolumn std:sid="g-column-7276f0e6" width="60px"/>
         <cl:gridcolumn std:sid="g-column-bc32faa1" width="60px"/>
         <cl:gridheader std:sid="gh-band-c5e23382">
           <cl:gridrow std:sid="g-row-5fad6385" height="24px"/>
           <cl:gridcell std:sid="gh-cell-31bc55e9" rowindex="0" colindex="0" sortable="false" filterable="false"/>
-          <cl:gridcell std:sid="gh-cell-2e59d067" rowindex="0" colindex="1" targetcolumnname="id" sortable="false" filterable="false" text="id"/>
-          <cl:gridcell std:sid="gh-cell-0b8f1395" rowindex="0" colindex="2" targetcolumnname="foodName" sortable="false" filterable="false" text="음식이름"/>
-          <cl:gridcell std:sid="gh-cell-cfab1654" rowindex="0" colindex="3" targetcolumnname="foodAmount" sortable="false" filterable="false" text="수량"/>
-          <cl:gridcell std:sid="gh-cell-99d7de27" rowindex="0" colindex="4" targetcolumnname="endDate" sortable="false" filterable="false" text="유통기한"/>
-          <cl:gridcell std:sid="gh-cell-40b4180c" rowindex="0" colindex="5" targetcolumnname="chargeDate" sortable="false" filterable="false" text="구매일"/>
-          <cl:gridcell std:sid="gh-cell-992eb534" rowindex="0" colindex="6" targetcolumnname="saveDate" sortable="false" filterable="false" text="등록일"/>
-          <cl:gridcell std:sid="gh-cell-f6e7c010" rowindex="0" colindex="7" targetcolumnname="categoryName" sortable="false" filterable="false" text="카테고리이름"/>
+          <cl:gridcell std:sid="gh-cell-f6e7c010" rowindex="0" colindex="1" targetcolumnname="categoryName" sortable="false" filterable="false" text="카테고리이름"/>
+          <cl:gridcell std:sid="gh-cell-2e59d067" rowindex="0" colindex="2" targetcolumnname="id" sortable="false" filterable="false" text="id"/>
+          <cl:gridcell std:sid="gh-cell-0b8f1395" rowindex="0" colindex="3" targetcolumnname="foodName" sortable="false" filterable="false" text="음식이름"/>
+          <cl:gridcell std:sid="gh-cell-cfab1654" rowindex="0" colindex="4" targetcolumnname="foodAmount" sortable="false" filterable="false" text="수량"/>
+          <cl:gridcell std:sid="gh-cell-99d7de27" rowindex="0" colindex="5" targetcolumnname="endDate" sortable="false" filterable="false" text="유통기한"/>
+          <cl:gridcell std:sid="gh-cell-40b4180c" rowindex="0" colindex="6" targetcolumnname="chargeDate" sortable="false" filterable="false" text="구매일"/>
+          <cl:gridcell std:sid="gh-cell-992eb534" rowindex="0" colindex="7" targetcolumnname="saveDate" sortable="false" filterable="false" text="등록일"/>
           <cl:gridcell std:sid="gh-cell-73aef589" rowindex="0" colindex="8" targetcolumnname="fridgeId" sortable="false" filterable="false" text="fridgeId"/>
         </cl:gridheader>
         <cl:griddetail std:sid="gd-band-cbb74220">
           <cl:gridrow std:sid="g-row-95f8e622" height="24px"/>
           <cl:gridcell std:sid="gd-cell-9585c0c5" rowindex="0" colindex="0" columntype="rowindex"/>
-          <cl:gridcell std:sid="gd-cell-4722265b" rowindex="0" colindex="1" columnname="id"/>
-          <cl:gridcell std:sid="gd-cell-a8eaa7d3" rowindex="0" colindex="2" columnname="foodName">
+          <cl:gridcell std:sid="gd-cell-253dba53" rowindex="0" colindex="1" columnname="categoryName">
+            <cl:inputbox std:sid="i-box-28b6bd84" id="ipb2">
+              <cl:celldata std:sid="c-data-42541f49"/>
+            </cl:inputbox>
+          </cl:gridcell>
+          <cl:gridcell std:sid="gd-cell-4722265b" rowindex="0" colindex="2" columnname="id"/>
+          <cl:gridcell std:sid="gd-cell-a8eaa7d3" rowindex="0" colindex="3" columnname="foodName">
             <cl:inputbox std:sid="i-box-fb2ac3c0" id="ipb1">
               <cl:celldata std:sid="c-data-8d2bf80a"/>
             </cl:inputbox>
           </cl:gridcell>
-          <cl:gridcell std:sid="gd-cell-e44ce02a" rowindex="0" colindex="3" columnname="foodAmount">
+          <cl:gridcell std:sid="gd-cell-e44ce02a" rowindex="0" colindex="4" columnname="foodAmount">
             <cl:numbereditor std:sid="n-editor-cea37afb" id="nbe1">
               <cl:celldata std:sid="c-data-13cf6c70"/>
             </cl:numbereditor>
           </cl:gridcell>
-          <cl:gridcell std:sid="gd-cell-a6adfb14" rowindex="0" colindex="4" columnname="endDate">
+          <cl:gridcell std:sid="gd-cell-a6adfb14" rowindex="0" colindex="5" columnname="endDate">
             <cl:dateinput std:sid="d-input-253f06da" id="dti1">
               <cl:celldata std:sid="c-data-a044eb64"/>
             </cl:dateinput>
           </cl:gridcell>
-          <cl:gridcell std:sid="gd-cell-852d9263" rowindex="0" colindex="5" columnname="chargeDate">
+          <cl:gridcell std:sid="gd-cell-852d9263" rowindex="0" colindex="6" columnname="chargeDate">
             <cl:dateinput std:sid="d-input-6e6a8019" id="dti2">
               <cl:celldata std:sid="c-data-5554e904"/>
             </cl:dateinput>
           </cl:gridcell>
-          <cl:gridcell std:sid="gd-cell-c5f31072" rowindex="0" colindex="6" columnname="saveDate">
+          <cl:gridcell std:sid="gd-cell-c5f31072" rowindex="0" colindex="7" columnname="saveDate">
             <cl:dateinput std:sid="d-input-3d49a59e" id="dti3">
               <cl:celldata std:sid="c-data-50150778"/>
             </cl:dateinput>
           </cl:gridcell>
-          <cl:gridcell std:sid="gd-cell-253dba53" rowindex="0" colindex="7" columnname="categoryName">
-            <cl:combobox std:sid="c-box-e27dc8be" id="cmb1">
-              <cl:celldata std:sid="c-data-b0dea5dc"/>
-              <cl:item std:sid="t-item-dc4d9867" label="label1" value="value1"/>
-              <cl:item std:sid="t-item-8df22ddc" label="label2" value="value2"/>
-              <cl:item std:sid="t-item-0dc5cd09" label="label3" value="value3"/>
-              <cl:item std:sid="t-item-0dfb86fc" label="label4" value="value4"/>
-              <cl:itemset datasetid="resultCategory" label="resultCategroyName" value="resultCategoryId"/>
-            </cl:combobox>
-          </cl:gridcell>
           <cl:gridcell std:sid="gd-cell-8500bf5a" rowindex="0" colindex="8" columnname="fridgeId"/>
+        </cl:griddetail>
+        <cl:gridrowgrouplist std:sid="grg-list-5c5a8957">
+          <cl:gridrowgroup std:sid="gr-group-c9b5352c" groupcondition="categoryName">
+            <cl:gridgroupheader std:sid="ggh-band-32e6e91a">
+              <cl:gridrow std:sid="g-row-edc2d74a"/>
+              <cl:gridcell std:sid="ggh-cell-aa1c2538" rowindex="0" colindex="0" expr="&quot;&quot;"/>
+              <cl:gridcell std:sid="ggh-cell-73738156" rowindex="0" colindex="2" style="background-color:lightgray;" expr="&quot;&quot;"/>
+              <cl:gridcell std:sid="ggh-cell-b5793964" rowindex="0" colindex="3" style="background-color:lightgray;" expr="&quot;&quot;"/>
+              <cl:gridcell std:sid="ggh-cell-ac6bca6b" rowindex="0" colindex="4" style="background-color:lightgray;" expr="&quot;&quot;"/>
+              <cl:gridcell std:sid="ggh-cell-8cf042a7" rowindex="0" colindex="5" style="background-color:lightgray;" expr="&quot;&quot;"/>
+              <cl:gridcell std:sid="ggh-cell-48e35f6f" rowindex="0" colindex="6" style="background-color:lightgray;" expr="&quot;&quot;"/>
+              <cl:gridcell std:sid="ggh-cell-53393a63" rowindex="0" colindex="7" style="background-color:lightgray;" expr="&quot;&quot;"/>
+              <cl:gridcell std:sid="ggh-cell-22171726" rowindex="0" colindex="1" style="background-color:lightgray;" expr="&quot;&quot;"/>
+              <cl:gridcell std:sid="ggh-cell-12ce6847" rowindex="0" colindex="8" expr="&quot;&quot;"/>
+            </cl:gridgroupheader>
+          </cl:gridrowgroup>
+        </cl:gridrowgrouplist>
+      </cl:grid>
+      <cl:pageindexer std:sid="p-indexer-d762d191">
+        <cl:verticaldata std:sid="v-data-7c061280" width="200px" height="40px"/>
+      </cl:pageindexer>
+      <cl:grid std:sid="grid-b1a283da" id="insertFoodgrd" datasetid="insertFoodList">
+        <cl:verticaldata std:sid="v-data-b981a983" width="400px" height="200px"/>
+        <cl:gridcolumn std:sid="g-column-a2b31b5a" width="50px"/>
+        <cl:gridcolumn std:sid="g-column-523c9d77"/>
+        <cl:gridcolumn std:sid="g-column-5c14db25"/>
+        <cl:gridcolumn std:sid="g-column-f37a8e0c"/>
+        <cl:gridcolumn std:sid="g-column-d07ef43d"/>
+        <cl:gridcolumn std:sid="g-column-439973bb"/>
+        <cl:gridcolumn std:sid="g-column-195dbf3a"/>
+        <cl:gridheader std:sid="gh-band-ff52b1a9">
+          <cl:gridrow std:sid="g-row-4db0b8ae" height="24px"/>
+          <cl:gridcell std:sid="gh-cell-4676fdbf" rowindex="0" colindex="0" sortable="false" filterable="false"/>
+          <cl:gridcell std:sid="gh-cell-ee2c3871" rowindex="0" colindex="1" targetcolumnname="foodName" sortable="false" filterable="false" text="식재료명"/>
+          <cl:gridcell std:sid="gh-cell-a2442108" rowindex="0" colindex="2" targetcolumnname="foodAmount" sortable="false" filterable="false" text="수량"/>
+          <cl:gridcell std:sid="gh-cell-86a984a2" rowindex="0" colindex="3" targetcolumnname="endDate" sortable="false" filterable="false" text="유통기한"/>
+          <cl:gridcell std:sid="gh-cell-014a06e4" rowindex="0" colindex="4" targetcolumnname="chargeDate" sortable="false" filterable="false" text="구매일"/>
+          <cl:gridcell std:sid="gh-cell-a86dfc47" rowindex="0" colindex="5" targetcolumnname="saveDate" sortable="false" filterable="false" text="등록일"/>
+          <cl:gridcell std:sid="gh-cell-217fc8c8" rowindex="0" colindex="6" targetcolumnname="categoryName" sortable="false" filterable="false" text="카테고리이름"/>
+        </cl:gridheader>
+        <cl:griddetail std:sid="gd-band-d0685b18">
+          <cl:gridrow std:sid="g-row-a4d0833e" height="24px"/>
+          <cl:gridcell std:sid="gd-cell-5bf31867" rowindex="0" colindex="0" columntype="rowindex"/>
+          <cl:gridcell std:sid="gd-cell-0cbe8008" rowindex="0" colindex="1" columnname="foodName">
+            <cl:inputbox std:sid="i-box-a551e19e" id="ipb3">
+              <cl:celldata std:sid="c-data-946f72af"/>
+            </cl:inputbox>
+          </cl:gridcell>
+          <cl:gridcell std:sid="gd-cell-11e0438d" rowindex="0" colindex="2" columnname="foodAmount">
+            <cl:numbereditor std:sid="n-editor-64bc4dde" id="nbe2">
+              <cl:celldata std:sid="c-data-6f76726c"/>
+            </cl:numbereditor>
+          </cl:gridcell>
+          <cl:gridcell std:sid="gd-cell-a2164950" rowindex="0" colindex="3" columnname="endDate">
+            <cl:dateinput std:sid="d-input-2cc0c4df" id="dti4">
+              <cl:celldata std:sid="c-data-7e117868"/>
+            </cl:dateinput>
+          </cl:gridcell>
+          <cl:gridcell std:sid="gd-cell-33d41089" rowindex="0" colindex="4" columnname="chargeDate">
+            <cl:dateinput std:sid="d-input-4f0c0c5a" id="dti5">
+              <cl:celldata std:sid="c-data-076f2855"/>
+            </cl:dateinput>
+          </cl:gridcell>
+          <cl:gridcell std:sid="gd-cell-96f5a07b" rowindex="0" colindex="5" columnname="saveDate">
+            <cl:dateinput std:sid="d-input-9568db51" id="dti6">
+              <cl:celldata std:sid="c-data-4a16c121"/>
+            </cl:dateinput>
+          </cl:gridcell>
+          <cl:gridcell std:sid="gd-cell-d9551992" rowindex="0" colindex="6" columnname="categoryName">
+            <cl:inputbox std:sid="i-box-725c9a1a" id="ipb4">
+              <cl:celldata std:sid="c-data-c4df9ec6"/>
+            </cl:inputbox>
+          </cl:gridcell>
         </cl:griddetail>
       </cl:grid>
       <cl:udc std:sid="ud-control-749c2ced" id="fridgeCRUD" type="udc.fridge.fridgeCRUD">
+        <cl:listener std:sid="listener-d7c38793" name="save-click" handler="onFridgeCRUDSaveClick"/>
         <cl:verticaldata std:sid="v-data-b189511f" width="300px" height="40px" autosize="none"/>
-        <cl:property name="grdCtrl" value="foodListGrid" type="control"/>
+        <cl:property name="grdCtrl" value="insertFoodgrd" type="control"/>
         <cl:property name="addStr" value="추가" type="string"/>
       </cl:udc>
-      <cl:grid std:sid="grid-6177c964" id="testgrd" datasetid="foodList">
-        <cl:verticaldata std:sid="v-data-20234ffb" width="400px" height="200px"/>
-        <cl:gridcolumn std:sid="g-column-faa0c25b" width="50px"/>
-        <cl:gridcolumn std:sid="g-column-9b33552c"/>
-        <cl:gridcolumn std:sid="g-column-fd7a63a3"/>
-        <cl:gridcolumn std:sid="g-column-06adbe6e"/>
-        <cl:gridcolumn std:sid="g-column-83585a98"/>
-        <cl:gridcolumn std:sid="g-column-d07c06ef"/>
-        <cl:gridcolumn std:sid="g-column-7537a6b8"/>
-        <cl:gridcolumn std:sid="g-column-a93927c9"/>
-        <cl:gridcolumn std:sid="g-column-e6b8b127"/>
-        <cl:gridheader std:sid="gh-band-18fb488f">
-          <cl:gridrow std:sid="g-row-54ca2fbb" height="24px"/>
-          <cl:gridcell std:sid="gh-cell-2900d036" rowindex="0" colindex="0" sortable="false" filterable="false"/>
-          <cl:gridcell std:sid="gh-cell-b1aabe34" rowindex="0" colindex="1" targetcolumnname="id" sortable="false" filterable="false" text="id"/>
-          <cl:gridcell std:sid="gh-cell-5a717526" rowindex="0" colindex="2" targetcolumnname="foodName" sortable="false" filterable="false" text="foodName"/>
-          <cl:gridcell std:sid="gh-cell-0178f1eb" rowindex="0" colindex="3" targetcolumnname="foodAmount" sortable="false" filterable="false" text="foodAmount"/>
-          <cl:gridcell std:sid="gh-cell-85aa8f20" rowindex="0" colindex="4" targetcolumnname="endDate" sortable="false" filterable="false" text="endDate"/>
-          <cl:gridcell std:sid="gh-cell-01dc397e" rowindex="0" colindex="5" targetcolumnname="chargeDate" sortable="false" filterable="false" text="chargeDate"/>
-          <cl:gridcell std:sid="gh-cell-2d9b91d8" rowindex="0" colindex="6" targetcolumnname="saveDate" sortable="false" filterable="false" text="saveDate"/>
-          <cl:gridcell std:sid="gh-cell-b9b1493e" rowindex="0" colindex="7" targetcolumnname="categoryName" sortable="false" filterable="false" text="categoryName"/>
-          <cl:gridcell std:sid="gh-cell-68ba7577" rowindex="0" colindex="8" targetcolumnname="fridgeId" sortable="false" filterable="false" text="fridgeId"/>
-        </cl:gridheader>
-        <cl:griddetail std:sid="gd-band-a38af66f">
-          <cl:gridrow std:sid="g-row-7cf37a5c" height="24px"/>
-          <cl:gridcell std:sid="gd-cell-56888696" rowindex="0" colindex="0" columntype="rowindex"/>
-          <cl:gridcell std:sid="gd-cell-45a237d7" rowindex="0" colindex="1" columnname="id"/>
-          <cl:gridcell std:sid="gd-cell-a2a16d6c" rowindex="0" colindex="2" columnname="foodName"/>
-          <cl:gridcell std:sid="gd-cell-62a7d1ba" rowindex="0" colindex="3" columnname="foodAmount"/>
-          <cl:gridcell std:sid="gd-cell-7d4d8b32" rowindex="0" colindex="4" columnname="endDate"/>
-          <cl:gridcell std:sid="gd-cell-2d5a96e9" rowindex="0" colindex="5" columnname="chargeDate"/>
-          <cl:gridcell std:sid="gd-cell-2b02066e" rowindex="0" colindex="6" columnname="saveDate"/>
-          <cl:gridcell std:sid="gd-cell-661bbb55" rowindex="0" colindex="7" columnname="categoryName"/>
-          <cl:gridcell std:sid="gd-cell-96d42766" rowindex="0" colindex="8" columnname="fridgeId"/>
-        </cl:griddetail>
-      </cl:grid>
       <cl:verticallayout std:sid="v-layout-312cedea"/>
     </cl:group>
     <cl:responsivexylayout std:sid="r-xylayout-3e5555da"/>
