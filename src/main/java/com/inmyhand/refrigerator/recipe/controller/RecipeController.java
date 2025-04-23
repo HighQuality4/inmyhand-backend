@@ -50,11 +50,13 @@ public class RecipeController {
         return recipeQueryService.getPopularRecipeList();
     }
 
-    // 레시피 목록 정렬 조회 (난이도, 소요시간, 칼로리)
-    @GetMapping("/sort")
-    public List<RecipeSummaryDTO> getSortRecipeList(@RequestParam(name = "sortBy", required = false) String sortBy,
-                                                  @RequestParam(name = "type", required = false, defaultValue = "ASC") String type) {
-        return recipeQueryService.getArrayRecipeList(sortBy, type);
+    // 레시피 목록 정렬 조회 (난이도, 칼로리) - 페이징
+    @PostMapping("/sort")
+    public Page<RecipeSummaryDTO> getSortRecipeList(@RequestParam(name = "sortBy", required = false, defaultValue = "createdAt") String sortBy,
+                                                    @RequestParam(name = "sortType", required = false, defaultValue = "ASC") String sortType,
+                                                    @RequestParam(name = "page", required = false, defaultValue = "0") int page,
+                                                    @RequestParam(name = "size", required = false, defaultValue = "6") int size) {
+        return recipeQueryService.getArrayRecipeList(sortBy, sortType, page, size);
     }
 
     // 레시피 상세 조회
