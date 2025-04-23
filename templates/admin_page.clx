@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:cl="http://tomatosystem.co.kr/cleopatra" xmlns:std="http://tomatosystem.co.kr/cleopatra/studio" std:sid="html-ccceaa9b" version="1.0.5545">
+  <head std:sid="head-1f789cf4">
+    <screen std:sid="screen-3a8302f9" id="default" name="default" width="1024px" height="768px"/>
+    <screen std:sid="screen-521243e5" id="tablet" name="tablet" width="500px" height="667px"/>
+    <screen std:sid="screen-678be243" id="mobile" name="mobile" width="350px" height="525px"/>
+    <link std:sid="link-9036eed1" href="/theme/custom/fridge/button.part.less" rel="stylesheet" type="text/css"/>
+    <link std:sid="link-d80deced" href="/theme/custom/web.part.less" rel="stylesheet" type="text/css"/>
+    <cl:model std:sid="model-5c8945b9"/>
+    <cl:appspec/>
+  </head>
+  <body std:sid="body-552b8625" style="background-color:#f3f1f0; background-image:none;">
+    <cl:group std:sid="group-e4941790">
+      <cl:xylayoutdata std:sid="xyl-data-5a4b53e8" top="120px" right="80px" bottom="80px" left="80px" horizontalAnchor="BOTH" verticalAnchor="BOTH"/>
+      <cl:grid std:sid="grid-ad49875b" id="grd1">
+        <cl:xylayoutdata std:sid="xyl-data-8eeaa4ab" top="20px" right="20px" bottom="20px" left="20px" horizontalAnchor="BOTH" verticalAnchor="BOTH"/>
+        <cl:gridcolumn std:sid="g-column-deb525c1"/>
+        <cl:gridcolumn std:sid="g-column-05ce7244"/>
+        <cl:gridcolumn std:sid="g-column-6a6c74cc"/>
+        <cl:gridcolumn std:sid="g-column-f01beaf0"/>
+        <cl:gridcolumn std:sid="g-column-55fe0252"/>
+        <cl:gridheader std:sid="gh-band-6dd34d49">
+          <cl:gridrow std:sid="g-row-947e9423"/>
+          <cl:gridcell std:sid="gh-cell-525eb4df" rowindex="0" colindex="0"/>
+          <cl:gridcell std:sid="gh-cell-10830c78" rowindex="0" colindex="1"/>
+          <cl:gridcell std:sid="gh-cell-b4f31adf" rowindex="0" colindex="2"/>
+          <cl:gridcell std:sid="gh-cell-8cf7b144" rowindex="0" colindex="3"/>
+          <cl:gridcell std:sid="gh-cell-b65bc959" rowindex="0" colindex="4"/>
+        </cl:gridheader>
+        <cl:griddetail std:sid="gd-band-20814ed5">
+          <cl:gridrow std:sid="g-row-ce49c330"/>
+          <cl:gridcell std:sid="gd-cell-1cdaf5a3" rowindex="0" colindex="0"/>
+          <cl:gridcell std:sid="gd-cell-22b078bf" rowindex="0" colindex="1"/>
+          <cl:gridcell std:sid="gd-cell-50becc4a" rowindex="0" colindex="2"/>
+          <cl:gridcell std:sid="gd-cell-fff681ad" rowindex="0" colindex="3"/>
+          <cl:gridcell std:sid="gd-cell-1083e9f7" rowindex="0" colindex="4"/>
+        </cl:griddetail>
+      </cl:grid>
+      <cl:xylayout std:sid="xylayout-e3060d0a"/>
+    </cl:group>
+    <cl:button std:sid="button-014501db" value="저장">
+      <cl:xylayoutdata std:sid="xyl-data-61811be0" top="100px" right="100px" width="75px" height="30px" horizontalAnchor="RIGHT" verticalAnchor="TOP"/>
+    </cl:button>
+    <cl:group std:sid="group-749c8134" id="header" style="background-color:#FBF3EB;">
+      <cl:xylayoutdata std:sid="xyl-data-8e9a4f08" top="0px" right="0px" left="0px" height="73px" horizontalAnchor="BOTH" verticalAnchor="TOP"/>
+      <cl:output std:sid="output-970e83fe" style="color:#856C66; font-weight:bold; font-size:20px; font-family:Kim jung chul Myungjo Regular;" value="내손안의 냉장고">
+        <cl:formdata std:sid="f-data-0931ddfe" row="1" col="1" rowspan="1" colspan="1"/>
+      </cl:output>
+      <cl:formlayout std:sid="f-layout-1ed27eb3" scrollable="false" hspace="0px" vspace="0px" top-margin="0px" right-margin="0px" bottom-margin="0px" left-margin="0px">
+        <cl:rows length="10" unit="PIXEL" shadetype="NONE" shadecolor="transparent"/>
+        <cl:rows length="1" unit="FRACTION" shadetype="NONE" shadecolor="transparent"/>
+        <cl:rows length="10" unit="PIXEL" shadetype="NONE" shadecolor="transparent"/>
+        <cl:columns length="40" unit="PIXEL"/>
+        <cl:columns length="1" unit="FRACTION"/>
+        <cl:columns length="1" unit="FRACTION"/>
+        <cl:columns length="48" unit="PIXEL" shadetype="NONE" shadecolor="transparent"/>
+        <cl:columns length="10" unit="PIXEL"/>
+        <cl:columns length="48" unit="PIXEL"/>
+        <cl:columns length="40" unit="PIXEL" shadetype="NONE" shadecolor="transparent"/>
+      </cl:formlayout>
+    </cl:group>
+    <cl:group std:sid="group-ac7cc0a8" id="footer" style="background-color:#FFFFFF;" class="page-nav">
+      <cl:xylayoutdata std:sid="xyl-data-41414546" right="0px" bottom="0px" left="0px" height="70px" horizontalAnchor="BOTH" verticalAnchor="BOTTOM"/>
+      <cl:group std:sid="group-9ee798de">
+        <cl:formdata std:sid="f-data-68121057" row="1" col="6"/>
+        <cl:output std:sid="output-b3a6b475" style="text-align:right;" value="Copyright © 내손안의 냉장고!. All rights reserved.">
+          <cl:xylayoutdata std:sid="xyl-data-aaa94c9c" top="0px" right="50px" bottom="0px" left="0px" horizontalAnchor="BOTH" verticalAnchor="BOTH"/>
+        </cl:output>
+        <cl:xylayout std:sid="xylayout-a0eca3d1"/>
+      </cl:group>
+      <cl:formlayout std:sid="f-layout-74818fd6" scrollable="false" hspace="0px" vspace="0px" top-margin="0px" right-margin="0px" bottom-margin="0px" left-margin="0px">
+        <cl:rows length="10" unit="PIXEL"/>
+        <cl:rows length="50" unit="PIXEL"/>
+        <cl:rows length="10" unit="PIXEL"/>
+        <cl:columns length="40" unit="PIXEL" shadetype="NONE" shadecolor="transparent"/>
+        <cl:columns length="40" unit="PIXEL"/>
+        <cl:columns length="1" unit="FRACTION"/>
+        <cl:columns length="40" unit="PIXEL" shadetype="NONE" shadecolor="transparent"/>
+        <cl:columns length="1" unit="FRACTION"/>
+        <cl:columns length="40" unit="PIXEL"/>
+        <cl:columns length="2" unit="FRACTION" shadetype="NONE" shadecolor="transparent"/>
+      </cl:formlayout>
+    </cl:group>
+    <cl:xylayout std:sid="xylayout-976cfdeb"/>
+  </body>
+  <std:studiosetting>
+    <std:hruler/>
+    <std:vruler/>
+  </std:studiosetting>
+</html>

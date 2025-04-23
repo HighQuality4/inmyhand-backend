@@ -6,10 +6,14 @@ import com.inmyhand.refrigerator.recipe.domain.dto.RecipeSummaryDTO;
 import com.inmyhand.refrigerator.recipe.service.RecipeCommandService;
 import com.inmyhand.refrigerator.recipe.service.RecipeQueryService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/recipes")
@@ -19,10 +23,25 @@ public class RecipeController {
     @Autowired
     private RecipeCommandService recipeCommandService;
 
-    // 전체 레시피 목록 조회
-    @GetMapping
-    public List<RecipeSummaryDTO> getAllRecipeList() {
-        return recipeQueryService.getAllRecipeList();
+    // 전체 레시피 목록 조회 - 페이징
+    @PostMapping
+    public Page<RecipeSummaryDTO> getAllRecipeList(@RequestBody Map<String, Object> body) {
+        Map<String, Object> param = (Map<String, Object>) body.get("param");
+
+        int page = 0;
+        int size = 6;
+
+        if (param != null) {
+            if (param.get("page") instanceof List<?> pageList && !pageList.isEmpty()) {
+                page = Integer.parseInt(pageList.get(0).toString());
+            }
+            if (param.get("size") instanceof List<?> sizeList && !sizeList.isEmpty()) {
+                size = Integer.parseInt(sizeList.get(0).toString());
+            }
+        }
+
+        Pageable pageable = PageRequest.of(page, size);
+        return recipeQueryService.getAllRecipeList(pageable);
     }
 
     // 인기 레시피 목록 조회
@@ -31,11 +50,13 @@ public class RecipeController {
         return recipeQueryService.getPopularRecipeList();
     }
 
-    // 레시피 목록 정렬 조회 (난이도, 소요시간, 칼로리)
-    @GetMapping("/sort")
-    public List<RecipeSummaryDTO> getSortRecipeList(@RequestParam(name = "sortBy", required = false) String sortBy,
-                                                  @RequestParam(name = "type", required = false, defaultValue = "ASC") String type) {
-        return recipeQueryService.getArrayRecipeList(sortBy, type);
+    // 레시피 목록 정렬 조회 (난이도, 칼로리) - 페이징
+    @PostMapping("/sort")
+    public Page<RecipeSummaryDTO> getSortRecipeList(@RequestParam(name = "sortBy", required = false, defaultValue = "createdAt") String sortBy,
+                                                    @RequestParam(name = "sortType", required = false, defaultValue = "ASC") String sortType,
+                                                    @RequestParam(name = "page", required = false, defaultValue = "0") int page,
+                                                    @RequestParam(name = "size", required = false, defaultValue = "6") int size) {
+        return recipeQueryService.getArrayRecipeList(sortBy, sortType, page, size);
     }
 
     // 레시피 상세 조회

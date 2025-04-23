@@ -10,7 +10,6 @@
       <cl:property name="grdCtrl" type="control"/>
       <cl:property name="addStr" type="string" default="추가" bindable="false"/>
       <cl:property name="delColor" type="color" default="#FF0000"/>
-      <cl:property name="newProperty1" type="string"/>
       <cl:event name="save-click" type="cpr.events.CAppEvent" std:desc="저장버튼 클릭시 발생하는 이벤트"/>
     </cl:appspec>
   </head>

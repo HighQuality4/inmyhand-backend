@@ -55,3 +55,7 @@ src/main/generated/
 
 ### etc ###
 *.db
+
+### eXBuilder ###
+src/main/resources/view/cpr-lib/udc.js
+src/main/resources/view/cpr-lib/user-modules.js

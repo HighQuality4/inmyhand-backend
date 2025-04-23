@@ -1,17 +1,17 @@
 package com.inmyhand.refrigerator.fridge.domain.dto.food;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
 public class FridgeWithRoleDTO {
+    private Long fridgeId;
     private String fridgeName;
-    private String roleName;
+    private Boolean favoriteState;
+    private Boolean isLeader;
 
 
 }
