@@ -1,5 +1,7 @@
 package com.inmyhand.refrigerator.security;
 
+import com.inmyhand.refrigerator.common.redis.RedisKeyManager;
+import com.inmyhand.refrigerator.common.redis.RedisUtil;
 import com.inmyhand.refrigerator.member.domain.entity.MemberEntity;
 import com.inmyhand.refrigerator.member.domain.entity.MemberRoleEntity;
 import com.inmyhand.refrigerator.member.domain.entity.RefreshTokenEntity;
@@ -26,6 +28,7 @@ import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
 @Service
@@ -35,6 +38,8 @@ import java.util.stream.Collectors;
 public class Oauth2UserDetailService implements OAuth2UserService<OAuth2UserRequest, OAuth2User> {
 
     private final JwtTokenUtil jwtTokenUtil;
+    private final RedisUtil redisUtil;
+    private final RedisKeyManager redisKeyManager;
     private final LoginRepository loginRepository;
     private final MemberRepository memberRepository;
     private final RefreshTokenRepository refreshTokenRepository;
@@ -50,6 +55,7 @@ public class Oauth2UserDetailService implements OAuth2UserService<OAuth2UserRequ
         String name = null;
         String nickname = null;
         String accessToken = null;
+        String refreshToken = null;
         String provider = registrationId.toUpperCase();
 
         if (registrationId.equals("naver")) { //네이버
@@ -69,9 +75,8 @@ public class Oauth2UserDetailService implements OAuth2UserService<OAuth2UserRequ
             name = (String) profile.get("name");
         }
 
-        MemberEntity member = loginRepository.findByEmail(email).orElse(null);
-        RefreshTokenEntity existedToken = refreshTokenRepository.findByMemberEntity(member).orElse(null);
-        System.out.println("member: " + member);
+        MemberEntity member = loginRepository.findByEmail(email).orElse(null); //멤버 있는지 확인
+        RefreshTokenEntity existedToken = refreshTokenRepository.findByMemberEntity(member).orElse(null); //리프레시 토큰 있는지 확인
 
         if (member == null) { // 멤버 조회결과가 없다면
             member = MemberEntity.builder()
@@ -81,7 +86,8 @@ public class Oauth2UserDetailService implements OAuth2UserService<OAuth2UserRequ
                     .providerId(provider)
                     .regdate(new Date())
                     .build();
-            memberRepository.save(member);
+
+            memberRepository.save(member); //멤버 저장
 
             MemberRoleEntity role = new MemberRoleEntity();
             role.setUserRole(MemberRole.freetier); // 기본값이지만 명시적 지정
@@ -89,24 +95,34 @@ public class Oauth2UserDetailService implements OAuth2UserService<OAuth2UserRequ
             member.getMemberRoleList().add(role); // 양방향 연관관계 유지
 
             RefreshTokenEntity refreshTokenEntity = new RefreshTokenEntity();
-            refreshTokenEntity.setTokenValue(jwtTokenUtil.generateRefreshToken(member));
-            refreshTokenEntity.setExpiredAt(Timestamp.valueOf(LocalDateTime.now().plusDays(14))); // 예: 2주 유효
+            refreshTokenEntity.setTokenValue(jwtTokenUtil.generateRefreshToken(member)); //리프레시 토큰 발급
+            refreshTokenEntity.setExpiredAt(Timestamp.valueOf(LocalDateTime.now().plusDays(7))); // 예: 1주 유효
             refreshTokenEntity.setMemberEntity(member);
             refreshTokenRepository.save(refreshTokenEntity);
             refreshTokenRepository.flush();
 
         } else { // 멤버조회 결과가 있다면
-            if (existedToken == null) { //거기에 토큰이 없다면
+            if (existedToken == null) { //거기에 리프레시 토큰이 없다면
                 existedToken = new RefreshTokenEntity();
-                existedToken.setMemberEntity(member);
+                existedToken.setMemberEntity(member); //리프레시 토큰 엔티티에 멤버 정보 넣기
             }
             //리프레시 토큰 값만 갱신
-            String refreshToken = jwtTokenUtil.generateRefreshToken(member);
-            existedToken.setTokenValue(refreshToken);
-            existedToken.setExpiredAt(Timestamp.valueOf(LocalDateTime.now().plusDays(14)));
-            refreshTokenRepository.save(existedToken);
+            refreshToken = jwtTokenUtil.generateRefreshToken(member); //리프레시 토큰 발급
+            existedToken.setTokenValue(refreshToken); //리프레시 토큰 엔티티에 발급한 토큰 넣기
+            existedToken.setExpiredAt(Timestamp.valueOf(LocalDateTime.now().plusDays(7))); //만료기한 설정해서 넣기
+            refreshTokenRepository.save(existedToken); //리프레시 토큰 엔티티 저장
             refreshTokenRepository.flush();
         }
+
+        String redisKey = redisKeyManager.getLoginKey(member.getId());
+        Long expiredTime = jwtTokenUtil.getRemainingTimeFromToken(refreshToken);
+
+        try {
+            redisUtil.set(redisKey, refreshToken, expiredTime, TimeUnit.SECONDS);
+        } catch (Exception e) {
+            log.warn("Redis 저장 실패 - RefreshToken: {}", redisKey, e);
+        }
+
         accessToken = jwtTokenUtil.generateAccessToken(member);
         List<GrantedAuthority> authorities = member.getMemberRoleList().stream()
                 .map(role -> new SimpleGrantedAuthority("ROLE_" + role.getUserRole().name().toUpperCase()))
