@@ -93,7 +93,7 @@ public class MemberEntity {
     @JsonIgnoreProperties("memberEntity")
     private List<MemberRoleEntity> memberRoleList = new ArrayList<>();
 
-    @OneToOne(mappedBy = "memberEntity", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToOne(mappedBy = "memberEntity", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     @JsonIgnoreProperties("memberEntity")
     private RefreshTokenEntity refreshTokenEntity;
 
