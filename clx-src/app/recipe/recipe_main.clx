@@ -14,6 +14,9 @@
       <cl:submission std:sid="submission-d62d132d" id="allRecipeListSms" action="/api/recipes" mediatype="application/json;massdata">
         <cl:listener std:sid="listener-52fbbd66" name="submit-success" handler="onAllRecipeListSmsSubmitSuccess"/>
       </cl:submission>
+      <cl:submission std:sid="submission-86236fce" id="sortRecipeListSms" action="/api/recipes/sort">
+        <cl:listener std:sid="listener-0e69e3c4" name="submit-success" handler="onSortRecipeListSmsSubmitSuccess"/>
+      </cl:submission>
     </cl:model>
     <cl:appspec/>
   </head>
@@ -43,6 +46,8 @@
         <cl:property name="value" value="모든 레시피" type="string"/>
       </cl:udc>
       <cl:udc std:sid="ud-control-381067c0" type="udc.recipe.recipe_sort_select">
+        <cl:listener std:sid="listener-41d2fb25" name="item-click" handler="onRecipe_sort_selectItemClick"/>
+        <cl:listener std:sid="listener-cc4b2b16" name="reset" handler="onRecipe_sort_selectReset"/>
         <cl:verticaldata std:sid="v-data-fb7d51a7" width="600px" height="30px" autosize="both"/>
       </cl:udc>
       <cl:group std:sid="group-a6c7c8a6" id="allRecipeListPageGroup">

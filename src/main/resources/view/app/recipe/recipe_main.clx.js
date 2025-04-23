@@ -21,6 +21,52 @@
 			const createRecipeCardModule = cpr.core.Module.require("module/recipe/createRecipeCard");
 			const createRecipeCard = createRecipeCardModule.createRecipeCard;
 
+			let sortBy = null;
+			let sortType = null;
+			const size = 6;
+
+			// 레시피 정렬 조회 요청
+			const onSortRecipeListSmsSubmit=(page)=>{
+				const sortRecipeListSms = app.lookup("sortRecipeListSms");
+				sortRecipeListSms.addParameter("page", page);
+				sortRecipeListSms.addParameter("size", size);
+				sortRecipeListSms.addParameter("sortBy", sortBy);
+				sortRecipeListSms.addParameter("sortType", sortType);
+				sortRecipeListSms.send();
+				sortRecipeListSms.removeAllParameters();
+			}
+
+			// 레시피 목록 화면 변경
+			const setRecipeList=(submission)=> {
+				const recipeContainer = app.lookup("allRecipeList");
+				
+				if(recipeContainer.getChildrenCount()){
+					recipeContainer.removeAllChildren();
+				}
+				
+				const recipeGroup = app.lookup("allRecipeListPageGroup");
+				const pageIndexer = app.lookup("allRecipePageIndexer");
+				
+				const result = submission.xhr.responseText;
+				const resultJson = JSON.parse(result);
+				
+				createRecipeCard(resultJson.content, recipeContainer);
+				
+				pageIndexer.init(resultJson.totalElements, resultJson.size, (resultJson.number)+1);
+					
+				recipeGroup.redraw();
+			}
+
+			// 레시피 목록 조회 초기화
+			const initRecipeList = () => {
+				const allRecipeListSms = app.lookup("allRecipeListSms");
+				allRecipeListSms.addParameter("page", 0);
+				allRecipeListSms.addParameter("size", size);
+				allRecipeListSms.send();
+				allRecipeListSms.removeAllParameters();
+			}
+
+
 			/*
 			 * 루트 컨테이너에서 load 이벤트 발생 시 호출.
 			 * 앱이 최초 구성된후 최초 랜더링 직후에 발생하는 이벤트 입니다.
@@ -29,11 +75,7 @@
 				const popularRecipeListSms = app.lookup("popularRecipeListSms");
 				popularRecipeListSms.send();
 				
-				const allRecipeListSms = app.lookup("allRecipeListSms");
-				allRecipeListSms.addParameter("page", 0);
-				allRecipeListSms.addParameter("size", 6);
-				allRecipeListSms.send();
-				allRecipeListSms.removeAllParameters();
+				initRecipeList();
 			}
 
 			/*
@@ -58,25 +100,19 @@
 			 * 통신이 성공하면 발생합니다.
 			 */
 			function onAllRecipeListSmsSubmitSuccess(e){
-				var allRecipeListSms = e.control;
+				const allRecipeListSms = e.control;
+
+				setRecipeList(allRecipeListSms);
+			}
+
+			/*
+			 * 서브미션에서 submit-success 이벤트 발생 시 호출.
+			 * 통신이 성공하면 발생합니다.
+			 */
+			function onSortRecipeListSmsSubmitSuccess(e){
+				const sortRecipeListSms = e.control;
 				
-				const recipeContainer = app.lookup("allRecipeList");
-				
-				if(recipeContainer.getChildrenCount()){
-					recipeContainer.removeAllChildren();
-				}
-				
-				const recipeGroup = app.lookup("allRecipeListPageGroup");
-				const pageIndexer = app.lookup("allRecipePageIndexer");
-				
-				const result = allRecipeListSms.xhr.responseText;
-				const resultJson = JSON.parse(result);
-				
-				createRecipeCard(resultJson.content, recipeContainer);
-				
-				pageIndexer.init(resultJson.totalElements, resultJson.size, (resultJson.number)+1);
-					
-				recipeGroup.redraw();
+				setRecipeList(sortRecipeListSms);
 			}
 
 			/*
@@ -86,11 +122,41 @@
 			function onAllRecipePageIndexerSelectionChange(e){
 				var allRecipePageIndexer = e.control;
 				
-				const allRecipeListSms = app.lookup("allRecipeListSms");
-				allRecipeListSms.addParameter("page", Number(allRecipePageIndexer.currentPageIndex)-1);
-				allRecipeListSms.addParameter("size", 6);
-				allRecipeListSms.send();
-				allRecipeListSms.removeAllParameters();
+				const page = Number(allRecipePageIndexer.currentPageIndex)-1;
+				
+				if(sortType==null){
+					const allRecipeListSms = app.lookup("allRecipeListSms");
+					allRecipeListSms.addParameter("page", page);
+					allRecipeListSms.addParameter("size", size);
+					allRecipeListSms.send();
+					allRecipeListSms.removeAllParameters();	
+				} else {
+					onSortRecipeListSmsSubmit(page);
+				}
+			}
+
+			/*
+			 * 사용자 정의 컨트롤에서 item-click 이벤트 발생 시 호출.
+			 */
+			function onRecipe_sort_selectItemClick(e){
+				const recipeSortSelect = e.control;
+				
+				const recipeSortSelectItem = recipeSortSelect.getSortSelectItemValue();
+					
+				if(recipeSortSelectItem) {
+					[sortBy, sortType] = recipeSortSelectItem;
+					onSortRecipeListSmsSubmit(0, 6);
+				}
+			}
+
+			/*
+			 * 사용자 정의 컨트롤에서 reset 이벤트 발생 시 호출.
+			 */
+			function onRecipe_sort_selectReset(e){
+				const recipeSortSelect = e.control;
+				
+				recipeSortSelect.resetRecipeSortSelectBoxItem();
+				initRecipeList();
 			};
 			// End - User Script
 			
@@ -109,6 +175,13 @@
 				submission_2.addEventListener("submit-success", onAllRecipeListSmsSubmitSuccess);
 			}
 			app.register(submission_2);
+			
+			var submission_3 = new cpr.protocols.Submission("sortRecipeListSms");
+			submission_3.action = "/api/recipes/sort";
+			if(typeof onSortRecipeListSmsSubmitSuccess == "function") {
+				submission_3.addEventListener("submit-success", onSortRecipeListSmsSubmitSuccess);
+			}
+			app.register(submission_3);
 			app.supportMedia("all and (min-width: 1024px)", "default");
 			app.supportMedia("all and (min-width: 500px) and (max-width: 1023.984px)", "tablet");
 			app.supportMedia("all and (max-width: 499.984px)", "mobile");
@@ -199,6 +272,12 @@
 					"height": "30px"
 				});
 				var userDefinedControl_3 = new udc.recipe.recipe_sort_select();
+				if(typeof onRecipe_sort_selectItemClick == "function") {
+					userDefinedControl_3.addEventListener("item-click", onRecipe_sort_selectItemClick);
+				}
+				if(typeof onRecipe_sort_selectReset == "function") {
+					userDefinedControl_3.addEventListener("reset", onRecipe_sort_selectReset);
+				}
 				container.addChild(userDefinedControl_3, {
 					"autoSize": "both",
 					"width": "600px",
