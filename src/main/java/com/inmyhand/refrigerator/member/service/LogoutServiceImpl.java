@@ -14,7 +14,7 @@ public class LogoutServiceImpl implements LogoutService {
     private final RedisUtil redisUtil;
     private final RedisKeyManager redisKeyManager;
     private final RefreshTokenRepository refreshTokenRepository;
-    
+
     @Override
     @Transactional
     public void logout(Long userId) {
