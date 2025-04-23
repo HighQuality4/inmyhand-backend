@@ -11,7 +11,9 @@ import com.inmyhand.refrigerator.recipe.repository.RecipeLikesRepository;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
@@ -31,10 +33,9 @@ public class RecipeQueryServiceImpl implements RecipeQueryService {
     private final RecipeDetailMapper detailMapper;
 
     // 모든 레시피 목록 조회
-    public List<RecipeSummaryDTO> getAllRecipeList() {
-        List<RecipeInfoEntity> recipes = infoRepository.findAllByOrderByCreatedAtDesc();
-
-        return summaryMapper.toDtoList(recipes);
+    public Page<RecipeSummaryDTO> getAllRecipeList(Pageable pageable) {
+        Page<RecipeInfoEntity> recipePage = infoRepository.findAllByOrderByCreatedAtDesc(pageable);
+        return recipePage.map(summaryMapper::toDto);
     }
 
     // 인기 레시피 목록 조회

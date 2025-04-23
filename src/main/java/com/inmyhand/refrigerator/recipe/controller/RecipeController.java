@@ -6,10 +6,14 @@ import com.inmyhand.refrigerator.recipe.domain.dto.RecipeSummaryDTO;
 import com.inmyhand.refrigerator.recipe.service.RecipeCommandService;
 import com.inmyhand.refrigerator.recipe.service.RecipeQueryService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/recipes")
@@ -19,10 +23,25 @@ public class RecipeController {
     @Autowired
     private RecipeCommandService recipeCommandService;
 
-    // 전체 레시피 목록 조회
-    @GetMapping
-    public List<RecipeSummaryDTO> getAllRecipeList() {
-        return recipeQueryService.getAllRecipeList();
+    // 전체 레시피 목록 조회 - 페이징
+    @PostMapping
+    public Page<RecipeSummaryDTO> getAllRecipeList(@RequestBody Map<String, Object> body) {
+        Map<String, Object> param = (Map<String, Object>) body.get("param");
+
+        int page = 0;
+        int size = 6;
+
+        if (param != null) {
+            if (param.get("page") instanceof List<?> pageList && !pageList.isEmpty()) {
+                page = Integer.parseInt(pageList.get(0).toString());
+            }
+            if (param.get("size") instanceof List<?> sizeList && !sizeList.isEmpty()) {
+                size = Integer.parseInt(sizeList.get(0).toString());
+            }
+        }
+
+        Pageable pageable = PageRequest.of(page, size);
+        return recipeQueryService.getAllRecipeList(pageable);
     }
 
     // 인기 레시피 목록 조회
