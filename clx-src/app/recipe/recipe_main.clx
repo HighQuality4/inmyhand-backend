@@ -9,16 +9,19 @@
     <screen std:sid="screen-5e545b99" id="mobile" name="mobile" width="350px" height="525px"/>
     <cl:model std:sid="model-c2e79a6e">
       <cl:submission std:sid="submission-fedf4426" id="popularRecipeListSms" action="/api/recipes/popular">
-        <cl:listener std:sid="listener-82a1af6e" name="submit-success" handler="onPopularRecipeListSmsSubmitSuccess2"/>
+        <cl:listener std:sid="listener-82a1af6e" name="submit-success" handler="onPopularRecipeListSmsSubmitSuccess"/>
+      </cl:submission>
+      <cl:submission std:sid="submission-d62d132d" id="allRecipeListSms" action="/api/recipes" mediatype="application/json;massdata">
+        <cl:listener std:sid="listener-52fbbd66" name="submit-success" handler="onAllRecipeListSmsSubmitSuccess"/>
       </cl:submission>
     </cl:model>
     <cl:appspec/>
   </head>
   <body std:sid="body-c43e6d9f" style="background-color:#FFFFFF;" class="contents-container">
-    <cl:listener std:sid="listener-1662a3eb" name="load" handler="onBodyLoad2"/>
-    <cl:group std:sid="group-d128c392" id="popluarRecipeContainer">
+    <cl:listener std:sid="listener-1662a3eb" name="load" handler="onBodyLoad"/>
+    <cl:group std:sid="group-d128c392" id="popluarRecipeContainer" clipcontent="false">
       <cl:responsivexylayoutdata std:sid="rxyl-data-1f782cb2">
-        <cl:xylayoutdata std:sid="sxyl-data-b7beb9cb" top="0px" right="0px" left="0px" height="1000px" horizontalAnchor="BOTH" verticalAnchor="TOP" screenid="default"/>
+        <cl:xylayoutdata std:sid="sxyl-data-b7beb9cb" top="0px" right="0px" left="0px" height="450px" horizontalAnchor="BOTH" verticalAnchor="TOP" screenid="default"/>
       </cl:responsivexylayoutdata>
       <cl:udc std:sid="ud-control-4ace6599" id="popluarRecipeTitle" type="udc.recipe.recipe_title">
         <cl:verticaldata std:sid="v-data-7a314836" width="600px" height="30px" autosize="none"/>
@@ -26,10 +29,35 @@
       </cl:udc>
       <cl:group std:sid="group-dd08368c" id="popluarRecipeList">
         <cl:listener std:sid="listener-341e34b4" name="before-draw" handler="onPopluarRecipeListBeforeDraw"/>
-        <cl:verticaldata std:sid="v-data-0b8401ca" width="600px" height="" autosize="height"/>
+        <cl:verticaldata std:sid="v-data-0b8401ca" width="600px" height="400px" autosize="none"/>
         <cl:flowlayout std:sid="f-layout-4e019a88" scrollable="false" hspacing="20" vspacing="20" halign="center" valign="top" linewrap="true" maxcontentwidth="-1"/>
       </cl:group>
       <cl:verticallayout std:sid="v-layout-07a70670" scrollable="false" spacing="20"/>
+    </cl:group>
+    <cl:group std:sid="group-bda12d96" id="allRecipeContainer">
+      <cl:responsivexylayoutdata std:sid="rxyl-data-93eba8a2">
+        <cl:xylayoutdata std:sid="sxyl-data-a6f77cb8" top="500px" right="0px" left="0px" height="1400px" horizontalAnchor="BOTH" verticalAnchor="TOP" screenid="default"/>
+      </cl:responsivexylayoutdata>
+      <cl:udc std:sid="ud-control-3a763b65" id="allRecipeTitle" type="udc.recipe.recipe_title">
+        <cl:verticaldata std:sid="v-data-bc912e61" width="600px" height="30px"/>
+        <cl:property name="value" value="모든 레시피" type="string"/>
+      </cl:udc>
+      <cl:udc std:sid="ud-control-381067c0" type="udc.recipe.recipe_sort_select">
+        <cl:verticaldata std:sid="v-data-fb7d51a7" width="600px" height="30px" autosize="both"/>
+      </cl:udc>
+      <cl:group std:sid="group-a6c7c8a6" id="allRecipeListPageGroup">
+        <cl:verticaldata std:sid="v-data-67108ebe" width="600px" height="200px" autosize="height"/>
+        <cl:group std:sid="group-93e17d0f" id="allRecipeList">
+          <cl:verticaldata std:sid="v-data-e84e1d7f" width="600px" height="0px" autosize="height"/>
+          <cl:flowlayout std:sid="f-layout-33a2785b" scrollable="false" hspacing="20" vspacing="20" halign="center" valign="top" linewrap="true" maxcontentwidth="-1"/>
+        </cl:group>
+        <cl:pageindexer std:sid="p-indexer-90c2e239" id="allRecipePageIndexer" pagerowcount="6">
+          <cl:listener std:sid="listener-9258cd35" name="selection-change" handler="onAllRecipePageIndexerSelectionChange"/>
+          <cl:verticaldata std:sid="v-data-363f6172" width="600px" height="40px" autosize="none"/>
+        </cl:pageindexer>
+        <cl:verticallayout std:sid="v-layout-eed3abdb" spacing="10"/>
+      </cl:group>
+      <cl:verticallayout std:sid="v-layout-fed91775" spacing="20"/>
     </cl:group>
     <cl:responsivexylayout std:sid="r-xylayout-3e5555da" scrollable="true"/>
   </body>

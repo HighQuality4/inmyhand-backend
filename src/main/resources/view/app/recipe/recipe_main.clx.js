@@ -25,16 +25,22 @@
 			 * 루트 컨테이너에서 load 이벤트 발생 시 호출.
 			 * 앱이 최초 구성된후 최초 랜더링 직후에 발생하는 이벤트 입니다.
 			 */
-			function onBodyLoad2(e){
+			function onBodyLoad(e){
 				const popularRecipeListSms = app.lookup("popularRecipeListSms");
 				popularRecipeListSms.send();
+				
+				const allRecipeListSms = app.lookup("allRecipeListSms");
+				allRecipeListSms.addParameter("page", 0);
+				allRecipeListSms.addParameter("size", 6);
+				allRecipeListSms.send();
+				allRecipeListSms.removeAllParameters();
 			}
 
 			/*
 			 * 서브미션에서 submit-success 이벤트 발생 시 호출.
 			 * 통신이 성공하면 발생합니다.
 			 */
-			function onPopularRecipeListSmsSubmitSuccess2(e){
+			function onPopularRecipeListSmsSubmitSuccess(e){
 				const popularRecipeListSms = e.control;
 				
 				const recipeContainer = app.lookup("popluarRecipeList"); 
@@ -44,17 +50,65 @@
 				
 				createRecipeCard(resultJson, recipeContainer);
 
-				app.getContainer().redraw();
+				recipeContainer.redraw();
+			}
+
+			/*
+			 * 서브미션에서 submit-success 이벤트 발생 시 호출.
+			 * 통신이 성공하면 발생합니다.
+			 */
+			function onAllRecipeListSmsSubmitSuccess(e){
+				var allRecipeListSms = e.control;
+				
+				const recipeContainer = app.lookup("allRecipeList");
+				
+				if(recipeContainer.getChildrenCount()){
+					recipeContainer.removeAllChildren();
+				}
+				
+				const recipeGroup = app.lookup("allRecipeListPageGroup");
+				const pageIndexer = app.lookup("allRecipePageIndexer");
+				
+				const result = allRecipeListSms.xhr.responseText;
+				const resultJson = JSON.parse(result);
+				
+				createRecipeCard(resultJson.content, recipeContainer);
+				
+				pageIndexer.init(resultJson.totalElements, resultJson.size, (resultJson.number)+1);
+					
+				recipeGroup.redraw();
+			}
+
+			/*
+			 * 페이지 인덱서에서 selection-change 이벤트 발생 시 호출.
+			 * Page index를 선택하여 선택된 페이지가 변경된 후에 발생하는 이벤트.
+			 */
+			function onAllRecipePageIndexerSelectionChange(e){
+				var allRecipePageIndexer = e.control;
+				
+				const allRecipeListSms = app.lookup("allRecipeListSms");
+				allRecipeListSms.addParameter("page", Number(allRecipePageIndexer.currentPageIndex)-1);
+				allRecipeListSms.addParameter("size", 6);
+				allRecipeListSms.send();
+				allRecipeListSms.removeAllParameters();
 			};
 			// End - User Script
 			
 			// Header
 			var submission_1 = new cpr.protocols.Submission("popularRecipeListSms");
 			submission_1.action = "/api/recipes/popular";
-			if(typeof onPopularRecipeListSmsSubmitSuccess2 == "function") {
-				submission_1.addEventListener("submit-success", onPopularRecipeListSmsSubmitSuccess2);
+			if(typeof onPopularRecipeListSmsSubmitSuccess == "function") {
+				submission_1.addEventListener("submit-success", onPopularRecipeListSmsSubmitSuccess);
 			}
 			app.register(submission_1);
+			
+			var submission_2 = new cpr.protocols.Submission("allRecipeListSms");
+			submission_2.action = "/api/recipes";
+			submission_2.mediaType = "application/json;massdata";
+			if(typeof onAllRecipeListSmsSubmitSuccess == "function") {
+				submission_2.addEventListener("submit-success", onAllRecipeListSmsSubmitSuccess);
+			}
+			app.register(submission_2);
 			app.supportMedia("all and (min-width: 1024px)", "default");
 			app.supportMedia("all and (min-width: 500px) and (max-width: 1023.984px)", "tablet");
 			app.supportMedia("all and (max-width: 499.984px)", "mobile");
@@ -75,6 +129,7 @@
 			
 			// UI Configuration
 			var group_1 = new cpr.controls.Container("popluarRecipeContainer");
+			group_1.clipContent = false;
 			var verticalLayout_1 = new cpr.controls.layouts.VerticalLayout();
 			verticalLayout_1.scrollable = false;
 			verticalLayout_1.spacing = 20;
@@ -101,9 +156,9 @@
 					group_2.addEventListener("before-draw", onPopluarRecipeListBeforeDraw);
 				}
 				container.addChild(group_2, {
-					"autoSize": "height",
+					"autoSize": "none",
 					"width": "600px",
-					"height": ""
+					"height": "400px"
 				});
 			})(group_1);
 			container.addChild(group_1, {
@@ -113,26 +168,107 @@
 						"top": "0px",
 						"right": "0px",
 						"left": "0px",
-						"height": "1000px"
+						"height": "450px"
 					}, 
 					{
 						"media": "all and (min-width: 500px) and (max-width: 1023.984px)",
 						"top": "0px",
 						"right": "0px",
 						"left": "0px",
-						"height": "1000px"
+						"height": "450px"
 					}, 
 					{
 						"media": "all and (max-width: 499.984px)",
 						"top": "0px",
 						"right": "0px",
 						"left": "0px",
-						"height": "1000px"
+						"height": "450px"
 					}
 				]
 			});
-			if(typeof onBodyLoad2 == "function"){
-				app.addEventListener("load", onBodyLoad2);
+			
+			var group_3 = new cpr.controls.Container("allRecipeContainer");
+			var verticalLayout_2 = new cpr.controls.layouts.VerticalLayout();
+			verticalLayout_2.spacing = 20;
+			group_3.setLayout(verticalLayout_2);
+			(function(container){
+				var userDefinedControl_2 = new udc.recipe.recipe_title("allRecipeTitle");
+				userDefinedControl_2.value = "모든 레시피";
+				container.addChild(userDefinedControl_2, {
+					"width": "600px",
+					"height": "30px"
+				});
+				var userDefinedControl_3 = new udc.recipe.recipe_sort_select();
+				container.addChild(userDefinedControl_3, {
+					"autoSize": "both",
+					"width": "600px",
+					"height": "30px"
+				});
+				var group_4 = new cpr.controls.Container("allRecipeListPageGroup");
+				var verticalLayout_3 = new cpr.controls.layouts.VerticalLayout();
+				verticalLayout_3.spacing = 10;
+				group_4.setLayout(verticalLayout_3);
+				(function(container){
+					var group_5 = new cpr.controls.Container("allRecipeList");
+					var flowLayout_2 = new cpr.controls.layouts.FlowLayout();
+					flowLayout_2.scrollable = false;
+					flowLayout_2.horizontalSpacing = 20;
+					flowLayout_2.verticalSpacing = 20;
+					flowLayout_2.horizontalAlign = "center";
+					flowLayout_2.verticalAlign = "top";
+					flowLayout_2.lineWrap = true;
+					flowLayout_2.maxContentWidth = -1;
+					group_5.setLayout(flowLayout_2);
+					container.addChild(group_5, {
+						"autoSize": "height",
+						"width": "600px",
+						"height": "0px"
+					});
+					var pageIndexer_1 = new cpr.controls.PageIndexer("allRecipePageIndexer");
+					pageIndexer_1.pageRowCount = 6;
+					pageIndexer_1.init(1, 1, 1);
+					if(typeof onAllRecipePageIndexerSelectionChange == "function") {
+						pageIndexer_1.addEventListener("selection-change", onAllRecipePageIndexerSelectionChange);
+					}
+					container.addChild(pageIndexer_1, {
+						"autoSize": "none",
+						"width": "600px",
+						"height": "40px"
+					});
+				})(group_4);
+				container.addChild(group_4, {
+					"autoSize": "height",
+					"width": "600px",
+					"height": "200px"
+				});
+			})(group_3);
+			container.addChild(group_3, {
+				positions: [
+					{
+						"media": "all and (min-width: 1024px)",
+						"top": "500px",
+						"right": "0px",
+						"left": "0px",
+						"height": "1400px"
+					}, 
+					{
+						"media": "all and (min-width: 500px) and (max-width: 1023.984px)",
+						"top": "500px",
+						"right": "0px",
+						"left": "0px",
+						"height": "1400px"
+					}, 
+					{
+						"media": "all and (max-width: 499.984px)",
+						"top": "500px",
+						"right": "0px",
+						"left": "0px",
+						"height": "1400px"
+					}
+				]
+			});
+			if(typeof onBodyLoad == "function"){
+				app.addEventListener("load", onBodyLoad);
 			}
 		}
 	});
