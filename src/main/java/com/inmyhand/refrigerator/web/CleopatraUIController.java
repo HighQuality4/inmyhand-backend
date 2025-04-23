@@ -34,6 +34,11 @@ public class CleopatraUIController {
     public String adminUserPage() {
     	return "/app/admin/admin-user";
     }
+    
+    @GetMapping("/admin/recipe/{id}")
+    public String adminRecipePage() {
+    	return "/app/admin/admin-recipe";
+    }
 
 
 }
