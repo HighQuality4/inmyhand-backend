@@ -4,13 +4,9 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.cleopatra.protocol.data.DataRequest;
-import com.cleopatra.protocol.data.ParameterGroup;
 import com.inmyhand.refrigerator.admin.dto.MemberEntityDto;
 import com.inmyhand.refrigerator.admin.service.AdminService;
 import com.inmyhand.refrigerator.util.ConverterClassUtil;
@@ -31,7 +27,7 @@ public class AdminController {
      * value : List<MemberEntityDto>
      * @return
      */
-    @PostMapping("/users")
+    @GetMapping("/users")
     @ResponseBody
     public ResponseEntity<Map<String, List<MemberEntityDto>>> adminUserView() {
         return ResponseEntity.ok(Map.of("getusers", adminService.findAllMembers()));

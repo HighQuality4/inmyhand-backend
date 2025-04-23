@@ -19,7 +19,8 @@ public interface MemberRepository extends JpaRepository<MemberEntity, Long>, Cus
     @Query("SELECT new com.inmyhand.refrigerator.admin.dto.MemberEntityDto(" +
             "m.id, m.memberName, m.email, m.nickname, m.regdate, " +
             "m.providerId, m.status, m.phoneNum) " +
-            "FROM MemberEntity m")
+            "FROM MemberEntity m " +
+            "ORDER BY m.id ASC ")
     List<MemberEntityDto> findAllMemberDto();
 
 }

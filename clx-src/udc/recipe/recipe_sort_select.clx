@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:cl="http://tomatosystem.co.kr/cleopatra" xmlns:std="http://tomatosystem.co.kr/cleopatra/studio" std:sid="html-a6c4ee0f" version="1.0.5481">
+  <head std:sid="head-7dbb33a8">
+    <std:metadata>
+      <std:property key="template-file" value="templates/contents_container.clx"/>
+    </std:metadata>
+    <screen std:sid="screen-ab8f752b" id="default" name="default" width="1024px" height="768px" customHeight="600" customWidth="800" active="true"/>
+    <screen std:sid="screen-168d1ee9" id="tablet" name="tablet" width="500px" height="667px"/>
+    <screen std:sid="screen-3713cba4" id="mobile" name="mobile" width="350px" height="525px"/>
+    <cl:model std:sid="model-f2667b29"/>
+    <cl:appspec>
+      <cl:event name="item-click" type="cpr.events.CMouseEvent"/>
+      <cl:event name="reset" type="cpr.events.CMouseEvent"/>
+    </cl:appspec>
+  </head>
+  <body std:sid="body-fe3928a7" style="top:0px; left:0px; width:600px; height:30px;">
+    <cl:listener std:sid="listener-3ffbc7ec" name="load" handler="onBodyLoad"/>
+    <cl:button std:sid="button-b845033f" id="sortReset" value="정렬 초기화">
+      <cl:listener std:sid="listener-55ccdb6e" name="click" handler="onSortResetClick"/>
+      <cl:xylayoutdata std:sid="xyl-data-e5989e37" top="0px" right="0px" bottom="0px" width="98px" horizontalAnchor="RIGHT" verticalAnchor="BOTH"/>
+    </cl:button>
+    <cl:linkedcombobox std:sid="lc-box-e4c3bf91" id="recipeSortSelectBox">
+      <cl:listener std:sid="listener-a661bf2e" name="item-click" handler="onRecipeSortSelectBoxItemClick"/>
+      <cl:xylayoutdata std:sid="xyl-data-80d3cd15" top="0px" bottom="0px" left="0px" width="300px" horizontalAnchor="LEFT" verticalAnchor="BOTH"/>
+      <cl:placeholder>정렬 기준</cl:placeholder>
+      <cl:placeholder>순서</cl:placeholder>
+    </cl:linkedcombobox>
+    <cl:xylayout std:sid="xylayout-0eb7cfa8"/>
+  </body>
+  <std:studiosetting>
+    <std:hruler>
+      <std:guide position="132"/>
+      <std:guide position="102"/>
+    </std:hruler>
+    <std:vruler/>
+  </std:studiosetting>
+</html>

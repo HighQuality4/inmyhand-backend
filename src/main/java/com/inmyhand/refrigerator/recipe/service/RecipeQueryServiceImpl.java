@@ -11,7 +11,9 @@ import com.inmyhand.refrigerator.recipe.repository.RecipeLikesRepository;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
@@ -31,10 +33,9 @@ public class RecipeQueryServiceImpl implements RecipeQueryService {
     private final RecipeDetailMapper detailMapper;
 
     // 모든 레시피 목록 조회
-    public List<RecipeSummaryDTO> getAllRecipeList() {
-        List<RecipeInfoEntity> recipes = infoRepository.findAllByOrderByCreatedAtDesc();
-
-        return summaryMapper.toDtoList(recipes);
+    public Page<RecipeSummaryDTO> getAllRecipeList(Pageable pageable) {
+        Page<RecipeInfoEntity> recipePage = infoRepository.findAllByOrderByCreatedAtDesc(pageable);
+        return recipePage.map(summaryMapper::toDto);
     }
 
     // 인기 레시피 목록 조회
@@ -49,14 +50,14 @@ public class RecipeQueryServiceImpl implements RecipeQueryService {
         return summaryMapper.toDtoList(recipes);
     }
 
-    // 레시피 정렬 (난이도, 소요시간, 칼로리 오름차순/내림차순)
-    public List<RecipeSummaryDTO> getArrayRecipeList(String orderBy, String sortType) {
+    // 레시피 정렬 (난이도, 칼로리 오름차순/내림차순)
+    public Page<RecipeSummaryDTO> getArrayRecipeList(String orderBy, String sortType, int page, int size) {
         Sort.Direction direction = Sort.Direction.fromString(sortType.toUpperCase());
-
         Sort sort = Sort.by(direction, orderBy);
-        List<RecipeInfoEntity> recipes = infoRepository.findAll(sort);
+        Pageable pageable = PageRequest.of(page, size, sort);
 
-        return summaryMapper.toDtoList(recipes);
+        Page<RecipeInfoEntity> recipePage = infoRepository.findAll(pageable);
+        return recipePage.map(summaryMapper::toDto);
     }
 
     // 레시피 상세

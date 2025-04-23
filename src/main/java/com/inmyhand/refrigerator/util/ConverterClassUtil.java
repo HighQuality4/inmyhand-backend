@@ -31,7 +31,7 @@ public class ConverterClassUtil {
 
         // DefaultBeanConvertor를 확장한 Enum을 지원하는 컨버터 사용
         EnumSupportBeanConvertor<T> convertor = new EnumSupportBeanConvertor<>(className);
-        convertor.setDateFormat("yyyy-MM-dd"); // 날짜 형식도 설정
+        convertor.setDateFormat("yyyy-MM-dd"); // 날짜 포멧
 
         return className.cast(paramGroup.getBeanData(convertor));
     }
@@ -53,7 +53,7 @@ public class ConverterClassUtil {
 
         // DefaultBeanConvertor를 확장한 Enum을 지원하는 컨버터 사용
         EnumSupportBeanConvertor<T> convertor = new EnumSupportBeanConvertor<>(className);
-        convertor.setDateFormat("yyyy-MM-dd"); // 날짜 형식도 설정
+        convertor.setDateFormat("yyyy-MM-dd"); // 날짜 포멧
 
         return paramGroup.getAllBeanList(convertor);
     }
@@ -78,7 +78,7 @@ public class ConverterClassUtil {
 
         // DefaultBeanConvertor를 확장한 Enum을 지원하는 컨버터 사용
         EnumSupportBeanConvertor<T> convertor = new EnumSupportBeanConvertor<>(className);
-        convertor.setDateFormat("yyyy-MM-dd"); // 날짜 형식 설정
+        convertor.setDateFormat("yyyy-MM-dd"); // 날짜 포멧
 
         // 커스텀 컨버터를 사용하여 지정된 상태의 Bean 리스트 변환
         return paramGroup.getStatedBeanList(rowState, convertor);

@@ -7,6 +7,7 @@ import com.inmyhand.refrigerator.recipe.domain.enums.CookingTimeEnum;
 import com.inmyhand.refrigerator.recipe.domain.enums.DifficultyEnum;
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.BatchSize;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.util.ArrayList;
@@ -52,12 +53,12 @@ public class RecipeInfoEntity {
     @Column(name = "recipe_depth", nullable = false)
     private Integer recipeDepth = 1; // 기본 값을 1으로 지정
 
-    @Column(name = "created_at", columnDefinition = "timestamp default now()")
+    @Column(name = "created_at")
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date createdAt;
 
-    @Column(name = "updated_at", columnDefinition = "timestamp default now()")
+    @Column(name = "updated_at")
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date updatedAt;
@@ -88,39 +89,47 @@ public class RecipeInfoEntity {
             cascade = CascadeType.ALL,
             orphanRemoval = true)
     @JsonIgnoreProperties("recipeInfoEntity")
+    @BatchSize(size = 10)
     private List<RecipeStepsEntity> recipeStepsList = new ArrayList<>();
 
     @OneToMany(mappedBy = "recipeInfoEntity",
             cascade = CascadeType.ALL,
             orphanRemoval = true)
     @JsonIgnoreProperties("recipeInfoEntity")
+    @BatchSize(size = 10)
     private List<RecipeIngredientEntity> recipeIngredientList = new ArrayList<>();
 
     @OneToMany(mappedBy = "recipeInfoEntity",
             cascade = CascadeType.ALL,
             orphanRemoval = true)
     @JsonIgnoreProperties("recipeInfoEntity")
+    @BatchSize(size = 10)
     private List<RecipeCategoryEntity> recipeCategoryList = new ArrayList<>();
 
     @OneToMany(mappedBy = "recipeInfoEntity",
             cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonIgnoreProperties("recipeInfoEntity")
+    @BatchSize(size = 10)
     private List<FilesEntity> filesEntities = new ArrayList<>();
 
     @OneToMany(mappedBy = "recipeInfoEntity", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonIgnoreProperties("recipeInfoEntity")
+    @BatchSize(size = 10)
     private List<RecipeCommentEntity> recipeCommentList = new ArrayList<>();
 
     @OneToMany(mappedBy = "recipeInfoEntity", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonIgnoreProperties("recipeInfoEntity")
+    @BatchSize(size = 10)
     private List<RecipeLikesEntity> recipeLikesList = new ArrayList<>();
 
     @OneToMany(mappedBy = "recipeInfoEntity", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonIgnoreProperties("recipeInfoEntity")
+    @BatchSize(size = 10)
     private List<RecipeViewsEntity> recipeViewsList = new ArrayList<>();
 
     @OneToMany(mappedBy = "recipeInfoEntity", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonIgnoreProperties("recipeInfoEntity")
+    @BatchSize(size = 10)
     private List<RecipeNutrientAnalysisEntity> recipeNutrientAnalysisList = new ArrayList<>();
 
 
