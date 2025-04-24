@@ -60,7 +60,7 @@ public class RecipeController {
     }
 
     // 레시피 상세 조회
-    @GetMapping("/{id}")
+    @PostMapping("/{id}")
     public RecipeDetailDTO getRecipeDetail(@PathVariable("id") Long recipeId) {
         return recipeQueryService.getRecipeDetail(recipeId);
     }
