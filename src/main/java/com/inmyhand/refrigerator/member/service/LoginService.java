@@ -8,5 +8,5 @@ import jakarta.servlet.http.HttpServletResponse;
 import java.util.Optional;
 
 public interface LoginService {
-    public LoginResponseDTO login(LoginRequestDTO loginRequestDTO, HttpServletResponse response);
+    boolean login(LoginRequestDTO loginRequestDTO, HttpServletResponse response);
 }

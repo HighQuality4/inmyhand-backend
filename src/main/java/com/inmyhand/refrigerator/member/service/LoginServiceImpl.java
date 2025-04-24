@@ -1,7 +1,9 @@
 package com.inmyhand.refrigerator.member.service;
 
+import com.google.api.gax.rpc.NotFoundException;
 import com.inmyhand.refrigerator.common.redis.RedisKeyManager;
 import com.inmyhand.refrigerator.common.redis.RedisUtil;
+import com.inmyhand.refrigerator.error.exception.NotMatchPasswordException;
 import com.inmyhand.refrigerator.member.domain.dto.LoginRequestDTO;
 import com.inmyhand.refrigerator.member.domain.dto.LoginResponseDTO;
 import com.inmyhand.refrigerator.member.domain.entity.MemberEntity;
@@ -9,6 +11,7 @@ import com.inmyhand.refrigerator.member.domain.entity.RefreshTokenEntity;
 import com.inmyhand.refrigerator.member.repository.LoginRepository;
 import com.inmyhand.refrigerator.member.repository.RefreshTokenRepository;
 import com.inmyhand.refrigerator.security.jwt.JwtTokenUtil;
+import jakarta.persistence.EntityNotFoundException;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
@@ -36,21 +39,21 @@ public class LoginServiceImpl implements LoginService {
 
     @Transactional
     @Override
-    public LoginResponseDTO login(LoginRequestDTO loginRequestDTO, HttpServletResponse response) {
+    public boolean login(LoginRequestDTO loginRequestDTO, HttpServletResponse response) {
 
         MemberEntity member = loginRepository.findByEmail(loginRequestDTO.getEmail())
-                .orElseThrow(()->new RuntimeException("사용자를 찾을 수 없습니다."));
+                .orElseThrow(()->new EntityNotFoundException("이메일이나 비밀번호가 일치하지 않습니다"));
 
         //해시 암호화된 비밀번호 매칭
         if (!passwordEncoder.matches(loginRequestDTO.getPassword(), member.getPassword())) {
-            throw new RuntimeException("비밀번호가 일치하지 않습니다");
+            throw new NotMatchPasswordException("이메일이나 비밀번호가 일치하지 않습니다");
         }
 
         String accessToken = jwtTokenUtil.generateAccessToken(member);
         String refreshToken = jwtTokenUtil.generateRefreshToken(member);
 
         String redisKey = redisKeyManager.getLoginKey(member.getId());
-        redisUtil.set(redisKey, refreshToken, 7, TimeUnit.DAYS);
+        Long expiredTime = jwtTokenUtil.getRemainingTimeFromToken(accessToken);
 
         //기존 리프레시 토큰이 있으면 토큰 값만 수정(나중에 Redis에서도 처리하도록 변경할 것!)
         RefreshTokenEntity existingToken = refreshTokenRepository.findByMemberEntity(member).orElse(null);
@@ -70,7 +73,7 @@ public class LoginServiceImpl implements LoginService {
         }
 
         try {
-            redisUtil.set(redisKey, refreshToken, 7, TimeUnit.DAYS);
+            redisUtil.set(redisKey, refreshToken, expiredTime, TimeUnit.SECONDS);
         } catch (Exception e) {
             log.warn("Redis 저장 실패 - RefreshToken: {}", redisKey, e);
         }
@@ -86,12 +89,16 @@ public class LoginServiceImpl implements LoginService {
 
         response.addHeader("Set-Cookie", accessCookie.toString());
 
-        return LoginResponseDTO.builder()
-                .email(member.getEmail())
-                .nickname(member.getNickname())
-                .accessToken(accessToken)
-                .refreshToken(refreshToken)
+        ResponseCookie userIdCookie = ResponseCookie.from("userId", String.valueOf(member.getId()))
+                .httpOnly(false) //JS에서 접근 가능
+                .sameSite("Lax")
+                .path("/")
+                .maxAge(Duration.ofDays(7))
                 .build();
+
+        response.addHeader("Set-Cookie", userIdCookie.toString());
+
+        return true;
     }
 
 }

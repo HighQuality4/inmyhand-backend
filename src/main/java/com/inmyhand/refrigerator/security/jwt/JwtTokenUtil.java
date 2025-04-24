@@ -2,6 +2,7 @@ package com.inmyhand.refrigerator.security.jwt;
 
 
 import com.inmyhand.refrigerator.member.domain.entity.MemberEntity;
+import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
@@ -72,6 +73,17 @@ public class JwtTokenUtil {
                 .parseSignedClaims(token)
                 .getPayload()
                 .get("userId", Long.class);
+    }
+
+    // 토큰에서 남은 시간 정보 추출
+    public Long getRemainingTimeFromToken(String token) {
+
+        Claims claims = Jwts.parser()
+                .verifyWith(getSigningKey())
+                .build()
+                .parseSignedClaims(token)
+                .getPayload();
+        return Math.max((claims.getExpiration().getTime() - System.currentTimeMillis()) / 1000, 0L);
     }
 
 
