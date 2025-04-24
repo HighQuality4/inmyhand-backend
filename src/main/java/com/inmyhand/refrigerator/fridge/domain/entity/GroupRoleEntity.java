@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.BatchSize;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,9 +31,11 @@ public class GroupRoleEntity {
 
     @OneToMany(mappedBy = "groupRoleEntity", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonIgnoreProperties("groupRoleEntity")
+    @BatchSize(size = 10)
     private List<PermissionGroupRoleEntity> permissionGroupRoleList = new ArrayList<>();
 
     @OneToMany(mappedBy = "groupRoleEntity", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonIgnoreProperties("groupRoleEntity")
+    @BatchSize(size = 10)
     private List<MemberGroupRoleEntity> userGroupRoleList = new ArrayList<>();
 }
