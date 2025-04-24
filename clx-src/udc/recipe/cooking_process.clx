@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:cl="http://tomatosystem.co.kr/cleopatra" xmlns:std="http://tomatosystem.co.kr/cleopatra/studio" std:sid="html-84004a41" version="1.0.5481">
+  <head std:sid="head-160c8055">
+    <std:metadata>
+      <std:property key="template-file" value="templates/contents_container.clx"/>
+    </std:metadata>
+    <screen std:sid="screen-e3931798" id="default" name="default" width="1024px" height="768px" customHeight="600" customWidth="800" active="true"/>
+    <screen std:sid="screen-9df5ec6f" id="tablet" name="tablet" width="500px" height="667px"/>
+    <screen std:sid="screen-f9203207" id="mobile" name="mobile" width="350px" height="525px"/>
+    <cl:model std:sid="model-053cbbaa"/>
+    <cl:appspec>
+      <cl:property name="sequence" type="number"/>
+      <cl:property name="explanation" type="string"/>
+      <cl:property name="img" type="string"/>
+    </cl:appspec>
+  </head>
+  <body std:sid="body-cbd7cc89" style="top:0px; left:0px; width:500px; height:100px;">
+    <cl:img std:sid="image-2f061bac">
+      <cl:apppropbind property="src" category="PROPERTY" app-property="img"/>
+      <cl:formdata std:sid="f-data-27cb11aa" row="0" col="2"/>
+    </cl:img>
+    <cl:output std:sid="output-8f8207e2">
+      <cl:apppropbind property="value" category="PROPERTY" app-property="explanation"/>
+      <cl:formdata std:sid="f-data-d08b0501" row="0" col="1"/>
+    </cl:output>
+    <cl:output std:sid="output-117fce2c">
+      <cl:apppropbind property="value" category="PROPERTY" app-property="sequence"/>
+      <cl:formdata std:sid="f-data-b73c37be" row="0" col="0"/>
+    </cl:output>
+    <cl:formlayout std:sid="f-layout-c92d0ce9" scrollable="false" hspace="0px" vspace="0px" top-margin="0px" right-margin="0px" bottom-margin="0px" left-margin="0px">
+      <cl:rows length="1" unit="FRACTION"/>
+      <cl:columns length="20" unit="PIXEL" shadetype="NONE" shadecolor="transparent"/>
+      <cl:columns length="1" unit="FRACTION" shadetype="NONE" shadecolor="transparent"/>
+      <cl:columns length="100" unit="PIXEL"/>
+    </cl:formlayout>
+  </body>
+  <std:studiosetting>
+    <std:hruler/>
+    <std:vruler/>
+  </std:studiosetting>
+</html>

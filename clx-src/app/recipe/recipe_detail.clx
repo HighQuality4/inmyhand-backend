@@ -8,39 +8,247 @@
     <screen std:sid="screen-d184c9ef" id="tablet" name="tablet" width="500px" height="667px"/>
     <screen std:sid="screen-dfce70c5" id="mobile" name="mobile" width="350px" height="525px"/>
     <cl:model std:sid="model-c2e79a6e">
-      <cl:dataset std:sid="d-set-1b0d22ac" id="ds1"/>
-      <cl:submission std:sid="submission-ebe5ea95" id="sms1"/>
+      <cl:submission std:sid="submission-bd4706b7" id="recipeDetailSms" action="/api/recipes">
+        <cl:listener std:sid="listener-87d087a9" name="submit-success" handler="onRecipeDetailSmsSubmitSuccess"/>
+      </cl:submission>
     </cl:model>
     <cl:appspec/>
   </head>
   <body std:sid="body-c43e6d9f" style="background-color:#FFFFFF;" class="contents-container">
-    <cl:listener std:sid="listener-de9647dc" name="load" handler="onBodyLoad"/>
-    <cl:grid std:sid="grid-6b3a2daa" id="grd1">
-      <cl:responsivexylayoutdata std:sid="rxyl-data-69c93fce">
-        <cl:xylayoutdata std:sid="sxyl-data-28cb3046" top="100px" left="77px" width="400px" height="200px" horizontalAnchor="LEFT" verticalAnchor="TOP" screenid="default"/>
+    <cl:listener std:sid="listener-ffe40e9d" name="load" handler="onBodyLoad"/>
+    <cl:group std:sid="group-3309885f">
+      <cl:responsivexylayoutdata std:sid="rxyl-data-4da9b2dd">
+        <cl:xylayoutdata std:sid="sxyl-data-f74a2f1c" top="0px" right="0px" left="0px" height="2000px" horizontalAnchor="BOTH" verticalAnchor="TOP" screenid="default"/>
       </cl:responsivexylayoutdata>
-      <cl:gridcolumn std:sid="g-column-93ca7372"/>
-      <cl:gridcolumn std:sid="g-column-7d72e850"/>
-      <cl:gridcolumn std:sid="g-column-09ae2c6c"/>
-      <cl:gridcolumn std:sid="g-column-d11bab6b"/>
-      <cl:gridcolumn std:sid="g-column-2b77238b"/>
-      <cl:gridheader std:sid="gh-band-a7f69802">
-        <cl:gridrow std:sid="g-row-1e853a76"/>
-        <cl:gridcell std:sid="gh-cell-4c3493fb" rowindex="0" colindex="0"/>
-        <cl:gridcell std:sid="gh-cell-ae6fdc87" rowindex="0" colindex="1"/>
-        <cl:gridcell std:sid="gh-cell-94a58f5f" rowindex="0" colindex="2"/>
-        <cl:gridcell std:sid="gh-cell-703ca071" rowindex="0" colindex="3"/>
-        <cl:gridcell std:sid="gh-cell-e7518bcc" rowindex="0" colindex="4"/>
-      </cl:gridheader>
-      <cl:griddetail std:sid="gd-band-1153afb7">
-        <cl:gridrow std:sid="g-row-e5130ab0"/>
-        <cl:gridcell std:sid="gd-cell-69652174" rowindex="0" colindex="0"/>
-        <cl:gridcell std:sid="gd-cell-25a8a79f" rowindex="0" colindex="1"/>
-        <cl:gridcell std:sid="gd-cell-7a02f816" rowindex="0" colindex="2"/>
-        <cl:gridcell std:sid="gd-cell-a840993d" rowindex="0" colindex="3"/>
-        <cl:gridcell std:sid="gd-cell-8a0f5de8" rowindex="0" colindex="4"/>
-      </cl:griddetail>
-    </cl:grid>
+      <cl:group std:sid="group-81addd42">
+        <cl:verticaldata std:sid="v-data-50134e9f" width="100%" height="30px" autosize="height"/>
+        <cl:output std:sid="output-a0d66a1b" id="recipeTitle" value="Output">
+          <cl:xylayoutdata std:sid="xyl-data-f8af4287" top="0px" bottom="0px" left="0px" width="100px" horizontalAnchor="LEFT" verticalAnchor="BOTH"/>
+        </cl:output>
+        <cl:group std:sid="group-e883a10e" id="recipeCategorys">
+          <cl:xylayoutdata std:sid="xyl-data-ad95b91c" top="0px" right="0px" bottom="0px" width="320px" horizontalAnchor="RIGHT" verticalAnchor="BOTH"/>
+          <cl:output std:sid="output-5d6e768d" id="typeCategory" visible="false" value="Output">
+            <cl:formdata std:sid="f-data-824bf08a" row="0" col="0"/>
+          </cl:output>
+          <cl:output std:sid="output-7ce1fa9c" id="situationCategory" visible="false" value="Output">
+            <cl:formdata std:sid="f-data-d1f521b3" row="0" col="1"/>
+          </cl:output>
+          <cl:output std:sid="output-c3741a6d" id="methodCategory" visible="false" value="Output">
+            <cl:formdata std:sid="f-data-6ec39655" row="0" col="2"/>
+          </cl:output>
+          <cl:formlayout std:sid="f-layout-6bdd7a4f" scrollable="false" hspace="10px" vspace="0px" top-margin="0px" right-margin="0px" bottom-margin="0px" left-margin="0px">
+            <cl:rows length="1" unit="FRACTION"/>
+            <cl:columns length="100" unit="PIXEL" autoSizing="true"/>
+            <cl:columns length="100" unit="PIXEL" autoSizing="true"/>
+            <cl:columns length="100" unit="PIXEL" autoSizing="true"/>
+          </cl:formlayout>
+        </cl:group>
+        <cl:xylayout std:sid="xylayout-7a2c871c"/>
+      </cl:group>
+      <cl:img std:sid="image-aed87bd6" id="recipeImg">
+        <cl:verticaldata std:sid="v-data-087f2f05" width="100%" height="520px" autosize="height"/>
+      </cl:img>
+      <cl:output std:sid="output-d14833b3" id="recipeSummary" value="Output">
+        <cl:verticaldata std:sid="v-data-78b6be4a" width="100%" height="20px"/>
+      </cl:output>
+      <cl:group std:sid="group-994c9a8c">
+        <cl:verticaldata std:sid="v-data-bd0b01f9" width="100%" height="30px"/>
+        <cl:group std:sid="group-af9907cc" id="recipeInfo">
+          <cl:xylayoutdata std:sid="xyl-data-e913f989" top="0px" bottom="0px" left="0px" width="400px" horizontalAnchor="LEFT" verticalAnchor="BOTH"/>
+          <cl:output std:sid="output-b0b55bb6" id="difficultyValue" value="Output">
+            <cl:formdata std:sid="f-data-99a3a335" row="0" col="1"/>
+          </cl:output>
+          <cl:output std:sid="output-6f15edc1" id="cookingTimeValue" value="Output">
+            <cl:formdata std:sid="f-data-bfbceab0" row="0" col="3"/>
+          </cl:output>
+          <cl:output std:sid="output-51151abe" id="caloriesValue" value="Output">
+            <cl:formdata std:sid="f-data-63c81808" row="0" col="5"/>
+          </cl:output>
+          <cl:img std:sid="image-0b837d75" id="difficultyImg" src="../../theme/images/difficullty.svg">
+            <cl:formdata std:sid="f-data-afa9cf92" row="0" col="0"/>
+          </cl:img>
+          <cl:img std:sid="image-a390b954" id="cookingTimeImg" src="../../theme/images/clock.svg">
+            <cl:formdata std:sid="f-data-64335aeb" row="0" col="2"/>
+          </cl:img>
+          <cl:img std:sid="image-b6e4808f" id="caloriesImg" src="../../theme/images/calories.svg">
+            <cl:formdata std:sid="f-data-49d593b4" row="0" col="4"/>
+          </cl:img>
+          <cl:formlayout std:sid="f-layout-f4ce1650" scrollable="false" hspace="10px" vspace="0px" top-margin="0px" right-margin="0px" bottom-margin="0px" left-margin="0px">
+            <cl:rows length="1" unit="FRACTION"/>
+            <cl:columns length="15" unit="PIXEL" autoSizing="false"/>
+            <cl:columns length="100" unit="PIXEL" autoSizing="true" shadetype="NONE" shadecolor="transparent"/>
+            <cl:columns length="20" unit="PIXEL" autoSizing="false"/>
+            <cl:columns length="100" unit="PIXEL" autoSizing="true"/>
+            <cl:columns length="30" unit="PIXEL" autoSizing="false"/>
+            <cl:columns length="100" unit="PIXEL" autoSizing="true"/>
+          </cl:formlayout>
+        </cl:group>
+        <cl:group std:sid="group-e154f310" id="recipeAuthor">
+          <cl:xylayoutdata std:sid="xyl-data-ebcecc8f" top="0px" right="0px" bottom="0px" width="130px" horizontalAnchor="RIGHT" verticalAnchor="BOTH"/>
+          <cl:img std:sid="image-38c222c7" id="recipeAuthorImg">
+            <cl:formdata std:sid="f-data-d886a8f0" row="0" col="0"/>
+          </cl:img>
+          <cl:output std:sid="output-3e19da02" id="recipeAuthorName" value="Output">
+            <cl:formdata std:sid="f-data-076424df" row="0" col="1"/>
+          </cl:output>
+          <cl:formlayout std:sid="f-layout-8bb84fb4" scrollable="false" hspace="0px" vspace="0px" top-margin="0px" right-margin="0px" bottom-margin="0px" left-margin="0px">
+            <cl:rows length="1" unit="FRACTION"/>
+            <cl:columns length="30" unit="PIXEL" shadetype="NONE" shadecolor="transparent"/>
+            <cl:columns length="100" unit="PIXEL" autoSizing="true"/>
+          </cl:formlayout>
+        </cl:group>
+        <cl:xylayout std:sid="xylayout-c80f5419"/>
+      </cl:group>
+      <cl:group std:sid="group-e6d2b973" id="InteractionBtnGroup">
+        <cl:verticaldata std:sid="v-data-b35d4b4c" width="400px" height="100px"/>
+        <cl:group std:sid="group-a59d241e" id="likeCountGroup">
+          <cl:formdata std:sid="f-data-49614497" halign="CENTER" valign="FILL" row="0" col="0"/>
+          <cl:img std:sid="image-a297af26" id="likeCountImg" src="../../theme/images/heart_empty.svg">
+            <cl:verticaldata std:sid="v-data-940fe9db" width="70px" height="70px"/>
+          </cl:img>
+          <cl:output std:sid="output-6e8f3bf8" id="likeCountValue" style="text-align:center;" value="Output">
+            <cl:verticaldata std:sid="v-data-7b071bc5" width="100px" height="20px"/>
+          </cl:output>
+          <cl:verticallayout std:sid="v-layout-624fe06b" spacing="10"/>
+        </cl:group>
+        <cl:group std:sid="group-048f2fcf" id="viewCountGroup">
+          <cl:formdata std:sid="f-data-fd1bf7e3" row="0" col="1"/>
+          <cl:img std:sid="image-e671d34f" id="viewCountImg" src="../../theme/images/view.svg">
+            <cl:verticaldata std:sid="v-data-babea513" width="70px" height="70px"/>
+          </cl:img>
+          <cl:output std:sid="output-fed74643" id="viewCountValue" style="text-align:center;" value="Output">
+            <cl:verticaldata std:sid="v-data-8a26f696" width="100px" height="20px"/>
+          </cl:output>
+          <cl:verticallayout std:sid="v-layout-0215e5ce" spacing="10"/>
+        </cl:group>
+        <cl:group std:sid="group-d5d9d1cd" id="applicationGroup">
+          <cl:formdata std:sid="f-data-34ae3bda" row="0" col="3"/>
+          <cl:img std:sid="image-50053735" id="applicationImg" src="../../theme/images/write.svg">
+            <cl:verticaldata std:sid="v-data-816e70e6" width="70px" height="70px"/>
+          </cl:img>
+          <cl:output std:sid="output-9225f4b8" id="applicationValue" style="text-align:center;" value="레시피 응용하기">
+            <cl:verticaldata std:sid="v-data-320a019c" width="100px" height="20px"/>
+          </cl:output>
+          <cl:verticallayout std:sid="v-layout-2860ca8b" spacing="10"/>
+        </cl:group>
+        <cl:group std:sid="group-a88b65ae" id="shareGroup">
+          <cl:formdata std:sid="f-data-7e9e3bb7" row="0" col="2"/>
+          <cl:img std:sid="image-0dce6800" id="shareImg" src="../../theme/images/share.svg">
+            <cl:verticaldata std:sid="v-data-7d379ebf" width="70px" height="70px"/>
+          </cl:img>
+          <cl:output std:sid="output-72827524" id="shareValue" style="text-align:center;" value="공유하기">
+            <cl:verticaldata std:sid="v-data-4a856d5e" width="100px" height="20px"/>
+          </cl:output>
+          <cl:verticallayout std:sid="v-layout-554c9359" spacing="10"/>
+        </cl:group>
+        <cl:formlayout std:sid="f-layout-2f2f64bf" scrollable="false" hspace="40px" vspace="0px" top-margin="0px" right-margin="0px" bottom-margin="0px" left-margin="0px">
+          <cl:rows length="1" unit="FRACTION" minlength="100"/>
+          <cl:columns length="1" unit="FRACTION" shadetype="NONE" shadecolor="transparent" minlength="100"/>
+          <cl:columns length="1" unit="FRACTION" minlength="100"/>
+          <cl:columns length="1" unit="FRACTION" shadetype="NONE" shadecolor="transparent" minlength="100"/>
+          <cl:columns length="1" unit="FRACTION" shadetype="NONE" shadecolor="transparent" minlength="100"/>
+        </cl:formlayout>
+      </cl:group>
+      <cl:group std:sid="group-55662078" style="border-radius:5px; background-color:#FBF3EB;">
+        <cl:verticaldata std:sid="v-data-8ab51b42" width="400px" height="200px"/>
+        <cl:group std:sid="group-d34701df">
+          <cl:xylayoutdata std:sid="xyl-data-bcc07d7c" top="20px" right="10px" bottom="20px" left="10px" horizontalAnchor="BOTH" verticalAnchor="BOTH"/>
+          <cl:udc std:sid="ud-control-0424445c" type="udc.recipe.group_subtitle">
+            <cl:verticaldata std:sid="v-data-097d2a9e" width="580px" height="20px"/>
+            <cl:property name="value" value="재료" type="string"/>
+          </cl:udc>
+          <cl:group std:sid="group-5b5cdcf5" id="ingredientGroup">
+            <cl:verticaldata std:sid="v-data-7a539fd9" width="500px" height="200px" autosize="height"/>
+            <cl:flowlayout std:sid="f-layout-5586c20c"/>
+          </cl:group>
+          <cl:verticallayout std:sid="v-layout-c2608929"/>
+        </cl:group>
+        <cl:xylayout std:sid="xylayout-d09362d5"/>
+      </cl:group>
+      <cl:group std:sid="group-a6ee87ba" style="background-color:#E5E6C7;">
+        <cl:verticaldata std:sid="v-data-f410faf9" width="400px" height="200px" autosize="height"/>
+        <cl:group std:sid="group-86efa8c7">
+          <cl:verticaldata std:sid="v-data-f0263a93" width="580px" height="180px" autosize="height"/>
+          <cl:udc std:sid="ud-control-5f340cdb" type="udc.recipe.group_subtitle">
+            <cl:verticaldata std:sid="v-data-60b4f1a3" width="580px" height="20px"/>
+            <cl:property name="value" value="요리 과정" type="string"/>
+          </cl:udc>
+          <cl:group std:sid="group-74cca36c" id="cookingProcessGroup">
+            <cl:verticaldata std:sid="v-data-33597ea0" width="100%" height="100px" autosize="height"/>
+            <cl:verticallayout std:sid="v-layout-9b02a8f1"/>
+          </cl:group>
+          <cl:verticallayout std:sid="v-layout-28778a6e" leftmargin="10" rightmargin="10" topmargin="20" bottommargin="20"/>
+        </cl:group>
+        <cl:verticallayout std:sid="v-layout-ae7d1eb6"/>
+      </cl:group>
+      <cl:group std:sid="group-2be67b13">
+        <cl:verticaldata std:sid="v-data-1ee09e97" width="400px" height="25px"/>
+        <cl:output std:sid="output-c72ff558" value="등록일">
+          <cl:formdata std:sid="f-data-3ef66e2a" valign="FILL" row="0" col="0"/>
+        </cl:output>
+        <cl:output std:sid="output-0154cfdd" id="updatedAtLabel" visible="false" value="수정일">
+          <cl:formdata std:sid="f-data-d50de1b9" valign="FILL" row="0" col="2"/>
+        </cl:output>
+        <cl:output std:sid="output-84d8f7d3" id="createdAt" value="Output">
+          <cl:formdata std:sid="f-data-80ab0efe" row="0" col="1"/>
+        </cl:output>
+        <cl:output std:sid="output-68a9cd86" id="updatedAt" visible="false" value="Output">
+          <cl:formdata std:sid="f-data-6b0283ca" row="0" col="3"/>
+        </cl:output>
+        <cl:formlayout std:sid="f-layout-4e5d2f6c" scrollable="false" hspace="0px" vspace="0px" top-margin="0px" right-margin="0px" bottom-margin="0px" left-margin="0px">
+          <cl:rows length="25" unit="PIXEL"/>
+          <cl:columns length="50" unit="PIXEL" shadetype="NONE" shadecolor="transparent"/>
+          <cl:columns length="100" unit="PIXEL" shadetype="NONE" shadecolor="transparent"/>
+          <cl:columns length="50" unit="PIXEL" shadetype="NONE" shadecolor="transparent"/>
+          <cl:columns length="100" unit="PIXEL"/>
+          <cl:columns length="1" unit="FRACTION"/>
+        </cl:formlayout>
+      </cl:group>
+      <cl:group std:sid="group-624c58bb" style="background-color:#fbdbcf; background-image:none;" visible="false">
+        <cl:verticaldata std:sid="v-data-c3a288c7" width="600px" height="200px" autosize="height"/>
+        <cl:group std:sid="group-db677bae">
+          <cl:xylayoutdata std:sid="xyl-data-5961a998" top="10px" right="10px" bottom="30px" left="10px" horizontalAnchor="BOTH" verticalAnchor="BOTH"/>
+          <cl:udc std:sid="ud-control-6e299bc8" type="udc.recipe.group_subtitle">
+            <cl:verticaldata std:sid="v-data-7577505c" width="580px" height="20px"/>
+            <cl:property name="value" value="영양소 분석결과" type="string"/>
+          </cl:udc>
+          <cl:verticallayout std:sid="v-layout-a8b89adf"/>
+        </cl:group>
+        <cl:xylayout std:sid="xylayout-613e1205"/>
+      </cl:group>
+      <cl:group std:sid="group-52079b01" style="background-color:#eaf1f3; background-image:none;">
+        <cl:verticaldata std:sid="v-data-382ddd68" width="600px" height="200px" autosize="height"/>
+        <cl:group std:sid="group-d706d98b">
+          <cl:xylayoutdata std:sid="xyl-data-8f70f124" top="10px" right="10px" bottom="30px" left="10px" horizontalAnchor="BOTH" verticalAnchor="BOTH"/>
+          <cl:udc std:sid="ud-control-8b7f493e" type="udc.recipe.group_subtitle">
+            <cl:verticaldata std:sid="v-data-f9d3a4a8" width="580px" height="20px"/>
+            <cl:property name="value" value="댓글" type="string"/>
+          </cl:udc>
+          <cl:group std:sid="group-d8347b4f" id="commentList">
+            <cl:verticaldata std:sid="v-data-34ab34aa" width="400px" height="10px" autosize="height"/>
+            <cl:verticallayout std:sid="v-layout-2407ea47"/>
+          </cl:group>
+          <cl:group std:sid="group-a24f4478">
+            <cl:verticaldata std:sid="v-data-873345bd" width="400px" height="30px"/>
+            <cl:inputbox std:sid="i-box-0dca261c" id="ipb1" placeholder="레시피에 대한 의견을 남겨보세요!">
+              <cl:formdata std:sid="f-data-46221dd1" row="0" col="0"/>
+            </cl:inputbox>
+            <cl:button std:sid="button-ee6e6bf2" value="등록">
+              <cl:formdata std:sid="f-data-4cb6175f" row="0" col="2"/>
+            </cl:button>
+            <cl:formlayout std:sid="f-layout-1f12b6d1" scrollable="false" hspace="0px" vspace="0px" top-margin="0px" right-margin="0px" bottom-margin="0px" left-margin="0px">
+              <cl:rows length="30" unit="PIXEL"/>
+              <cl:columns length="1" unit="FRACTION"/>
+              <cl:columns length="10" unit="PIXEL"/>
+              <cl:columns length="50" unit="PIXEL"/>
+            </cl:formlayout>
+          </cl:group>
+          <cl:verticallayout std:sid="v-layout-97b5b764"/>
+        </cl:group>
+        <cl:xylayout std:sid="xylayout-d99413c0"/>
+      </cl:group>
+      <cl:verticallayout std:sid="v-layout-ef275fcc" spacing="20"/>
+    </cl:group>
     <cl:responsivexylayout std:sid="r-xylayout-3e5555da"/>
   </body>
   <std:studiosetting>
