@@ -59,6 +59,21 @@ public class ConverterClassUtil {
     }
 
 
+    public static <T> List<T> getClassList(DataRequest dataRequest, String paramGroupId, Class<T> className, String date) {
+        ParameterGroup paramGroup = dataRequest.getParameterGroup(paramGroupId);
+        if (paramGroup == null) {
+            log.error("[getClassList] paramGroupId 값이 없습니다.");
+            throw new ParamGroupIsNullException("paramGroupId 값이 없습니다.");
+        }
+
+        // DefaultBeanConvertor를 확장한 Enum을 지원하는 컨버터 사용
+        EnumSupportBeanConvertor<T> convertor = new EnumSupportBeanConvertor<>(className);
+        convertor.setDateFormat(date); // 날짜 포멧
+
+        return paramGroup.getAllBeanList(convertor);
+    }
+
+
     /**
      * 특정 상태의 DTO 객체 리스트 가져오기 (추가/수정/삭제 등)
      * @param <T> 반환할 Class 타입
