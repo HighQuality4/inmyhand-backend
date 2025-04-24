@@ -8,6 +8,7 @@ import com.inmyhand.refrigerator.fridge.repository.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -53,6 +54,7 @@ public class FridgeFoodService {
                 })
                 .collect(Collectors.toList());
     }
+
     public List<FridgeWithRolesDTO> svcGetFridgeListWithRoles(Long memberId) {
         List<FridgeMemberEntity> fridgeMembers = fridgeMemberRepository.findByMemberEntity_Id(memberId);
 
@@ -104,7 +106,7 @@ public class FridgeFoodService {
     // 냉장고 → DTO 변환
     private FridgeDTO convertToDto(FridgeEntity fridge) {
         return FridgeDTO.builder()
-                .id(fridge.getId())
+                .fridgeId(fridge.getId())
                 .fridgeName(fridge.getFridgeName())
                 .build();
     }
@@ -125,7 +127,6 @@ public class FridgeFoodService {
     // 1. Create
     public void svcCreateFridgeFood(Long fridgeId,List<FridgeFoodDTO> dtoList) {
 
-
         // 예시: FridgeEntity를 fridgeId로 가져온다고 가정
         FridgeEntity fridge = fridgeRepository.findById(fridgeId)
                 .orElseThrow(() -> new IllegalArgumentException("Fridge not found"));
@@ -141,34 +142,40 @@ public class FridgeFoodService {
                     .fridgeEntity(fridge)
                     .categoryName(dto.getCategoryName())
                     .build();
-
             fridgeFoodRepository.save(food);
         }
+
     }
 
 
 
 
     // 2. Update
-    public void svcUpdateFridgeFood(Long fridgeFoodId, FridgeFoodDTO dto) {
-        FridgeFoodEntity existing = fridgeFoodRepository.findById(fridgeFoodId)
-                .orElseThrow(() -> new IllegalArgumentException("식재료 없음"));
+    public void svcUpdateFridgeFood(List<FridgeFoodDTO> dtoList) {
+        List<FridgeFoodEntity> updateList = new ArrayList<>();
 
-        FridgeEntity fridge = fridgeRepository.findById(dto.getFridgeId())
-                .orElseThrow(() -> new IllegalArgumentException("냉장고 없음"));
+        for (FridgeFoodDTO dto : dtoList) {
+            FridgeFoodEntity existing = fridgeFoodRepository.findById(dto.getId())
+                    .orElseThrow(() -> new IllegalArgumentException("식재료 없음 (id: " + dto.getId() + ")"));
 
+            FridgeEntity fridge = fridgeRepository.findById(dto.getFridgeId())
+                    .orElseThrow(() -> new IllegalArgumentException("냉장고 없음 (id: " + dto.getFridgeId() + ")"));
 
-        FridgeFoodEntity updated = FridgeFoodEntity.builder()
-                .id(existing.getId()) // ID 유지
-                .foodName(dto.getFoodName())
-                .foodAmount(dto.getFoodAmount())
-                .endDate(dto.getEndDate())
-                .chargeDate(dto.getChargeDate())
-                .saveDate(dto.getSaveDate())
-                .fridgeEntity(fridge)
-                .build();
+            FridgeFoodEntity updated = FridgeFoodEntity.builder()
+                    .id(existing.getId()) // ID 유지
+                    .foodName(dto.getFoodName())
+                    .foodAmount(dto.getFoodAmount())
+                    .endDate(dto.getEndDate())
+                    .chargeDate(dto.getChargeDate())
+                    .saveDate(dto.getSaveDate())
+                    .categoryName(dto.getCategoryName())
+                    .fridgeEntity(fridge)
+                    .build();
 
-        fridgeFoodRepository.save(updated);
+            updateList.add(updated);
+        }
+
+        fridgeFoodRepository.saveAll(updateList); // 리스트 전체 업데이트
     }
 
     // 3. Delete
