@@ -83,7 +83,7 @@
         <cl:responsedata dataid="getusers" isadd="false"/>
       </cl:submission>
       <cl:submission std:sid="submission-a55e4229" id="admin_search" action="/api/admin/user/search">
-        <cl:listener std:sid="listener-6f18aa0d" name="submit-success" handler="onAdmin_searchSubmitSuccess"/>
+        <cl:listener std:sid="listener-b24d3d4c" name="submit-success" handler="onAdmin_searchSubmitSuccess2"/>
         <cl:requestdata/>
         <cl:responsedata dataid="getusers"/>
       </cl:submission>
@@ -93,10 +93,10 @@
   <body std:sid="body-d5d0c96c" style="background-color:#f3f1f0; background-image:none;">
     <cl:listener std:sid="listener-65f3f1b7" name="load" handler="onBodyLoad"/>
     <cl:group std:sid="group-e4941790">
-      <cl:xylayoutdata std:sid="xyl-data-b95aa1fa" top="120px" right="80px" bottom="80px" left="80px" horizontalAnchor="BOTH" verticalAnchor="BOTH"/>
+      <cl:xylayoutdata std:sid="xyl-data-b95aa1fa" top="125px" right="80px" bottom="80px" left="80px" horizontalAnchor="BOTH" verticalAnchor="BOTH"/>
       <cl:grid std:sid="grid-c829bfaa" id="grd1" style="background-color:#eaf1f3; background-image:none;" class="web-grid" datasetid="getusers">
         <cl:listener std:sid="listener-6db670bf" name="cell-click" handler="onGrd1CellClick"/>
-        <cl:xylayoutdata std:sid="xyl-data-806c27d5" top="0px" right="20px" bottom="20px" left="20px" horizontalAnchor="BOTH" verticalAnchor="BOTH"/>
+        <cl:verticaldata std:sid="v-data-473273f9" width="824px" height="475px" autosize="both"/>
         <cl:gridcolumn std:sid="g-column-7493d7e8" width="50px"/>
         <cl:gridcolumn std:sid="g-column-4862e6e5"/>
         <cl:gridcolumn std:sid="g-column-f6f739ee"/>
@@ -109,13 +109,13 @@
         <cl:gridheader std:sid="gh-band-3a5682c0">
           <cl:gridrow std:sid="g-row-aeed66f4"/>
           <cl:gridcell std:sid="gh-cell-d0b5824c" rowindex="0" colindex="0" sortable="false" filterable="false"/>
-          <cl:gridcell std:sid="gh-cell-00fb32f6" rowindex="0" colindex="1" targetcolumnname="memberName" filterable="true" text="이름"/>
-          <cl:gridcell std:sid="gh-cell-f82ece4c" rowindex="0" colindex="2" targetcolumnname="email" sortable="true" text="이메일"/>
-          <cl:gridcell std:sid="gh-cell-9cc4106e" rowindex="0" colindex="3" targetcolumnname="nickname" filterable="true" text="닉네임"/>
-          <cl:gridcell std:sid="gh-cell-cfb5e9b7" rowindex="0" colindex="4" targetcolumnname="regdate" sortable="true" filterable="true" text="가입날짜"/>
-          <cl:gridcell std:sid="gh-cell-de032c88" rowindex="0" colindex="5" targetcolumnname="providerId" sortable="true" filterable="true" text="가입 경로"/>
-          <cl:gridcell std:sid="gh-cell-c02750f7" rowindex="0" colindex="6" targetcolumnname="status" sortable="true" filterable="true" text="상태"/>
-          <cl:gridcell std:sid="gh-cell-a8fc41a2" rowindex="0" colindex="7" targetcolumnname="phoneNum" sortable="true" filterable="true" text="전화번호"/>
+          <cl:gridcell std:sid="gh-cell-00fb32f6" rowindex="0" colindex="1" targetcolumnname="memberName" text="이름"/>
+          <cl:gridcell std:sid="gh-cell-f82ece4c" rowindex="0" colindex="2" targetcolumnname="email" text="이메일"/>
+          <cl:gridcell std:sid="gh-cell-9cc4106e" rowindex="0" colindex="3" targetcolumnname="nickname" text="닉네임"/>
+          <cl:gridcell std:sid="gh-cell-cfb5e9b7" rowindex="0" colindex="4" targetcolumnname="regdate" text="가입날짜"/>
+          <cl:gridcell std:sid="gh-cell-de032c88" rowindex="0" colindex="5" targetcolumnname="providerId" text="가입 경로"/>
+          <cl:gridcell std:sid="gh-cell-c02750f7" rowindex="0" colindex="6" targetcolumnname="status" text="상태"/>
+          <cl:gridcell std:sid="gh-cell-a8fc41a2" rowindex="0" colindex="7" targetcolumnname="phoneNum" text="전화번호"/>
           <cl:gridcell std:sid="gh-cell-5ccfdb26" rowindex="0" colindex="8" targetcolumnname="id" text="작성 레시피 보러가기"/>
         </cl:gridheader>
         <cl:griddetail std:sid="gd-band-eb966916">
@@ -164,7 +164,10 @@
           </cl:gridcell>
         </cl:griddetail>
       </cl:grid>
-      <cl:xylayout std:sid="xylayout-e3060d0a"/>
+      <cl:pageindexer std:sid="p-indexer-f1c8abee" id="RecipeIndex" startpageindex="1" viewpagecount="5">
+        <cl:verticaldata std:sid="v-data-12129016" width="824px" height="40px" autosize="width"/>
+      </cl:pageindexer>
+      <cl:verticallayout std:sid="v-layout-89507b84"/>
     </cl:group>
     <cl:group std:sid="group-ac7cc0a8" id="footer" style="background-color:#FFFFFF;" class="page-nav">
       <cl:xylayoutdata std:sid="xyl-data-7d24fc39" right="0px" bottom="0px" left="0px" height="70px" horizontalAnchor="BOTH" verticalAnchor="BOTTOM"/>
@@ -215,20 +218,20 @@
     <cl:group std:sid="group-303c763f">
       <cl:xylayoutdata std:sid="xyl-data-5ce0ab8d" top="80px" right="80px" left="80px" height="40px" horizontalAnchor="BOTH" verticalAnchor="TOP"/>
       <cl:inputbox std:sid="i-box-3264405a" id="ipb1">
-        <cl:xylayoutdata std:sid="xyl-data-28fb94b5" top="5px" right="149px" bottom="5px" width="180px" horizontalAnchor="RIGHT" verticalAnchor="BOTH"/>
+        <cl:xylayoutdata std:sid="xyl-data-28fb94b5" top="5px" right="295px" bottom="5px" width="180px" horizontalAnchor="RIGHT" verticalAnchor="BOTH"/>
       </cl:inputbox>
       <cl:button std:sid="button-3cc5b059" id="btn1" value="검색">
         <cl:listener std:sid="listener-2d82e600" name="dblclick" handler="onBtn1Dblclick"/>
         <cl:listener std:sid="listener-3eee5722" name="click" handler="onBtn1Click"/>
-        <cl:xylayoutdata std:sid="xyl-data-c92333dd" top="5px" right="89px" width="48px" height="30px" horizontalAnchor="RIGHT" verticalAnchor="TOP"/>
+        <cl:xylayoutdata std:sid="xyl-data-c92333dd" top="5px" right="237px" width="48px" height="30px" horizontalAnchor="RIGHT" verticalAnchor="TOP"/>
       </cl:button>
       <cl:group std:sid="group-8438f97e">
-        <cl:xylayoutdata std:sid="xyl-data-2ab3815b" top="1px" right="329px" width="500px" height="39px" horizontalAnchor="RIGHT" verticalAnchor="TOP"/>
+        <cl:xylayoutdata std:sid="xyl-data-2ab3815b" top="0px" right="485px" width="359px" height="39px" horizontalAnchor="RIGHT" verticalAnchor="TOP"/>
         <cl:radiobutton std:sid="r-button-cf19e876" id="rdb1" fixedwidth="false">
           <cl:listener std:sid="listener-9f9ca01f" name="item-click" handler="onRdb1ItemClick2"/>
           <cl:xylayoutdata std:sid="xyl-data-16053549" top="5px" right="10px" bottom="5px" width="234px" horizontalAnchor="RIGHT" verticalAnchor="BOTH"/>
         </cl:radiobutton>
-        <cl:combobox std:sid="c-box-38cc575f" id="cmb2" tooltip="전체보기" value="전체보기" preventinput="true">
+        <cl:combobox std:sid="c-box-38cc575f" id="cmb2" value="all" preventinput="true">
           <cl:xylayoutdata std:sid="xyl-data-9c7d5838" top="5px" right="250px" bottom="5px" width="100px" horizontalAnchor="RIGHT" verticalAnchor="BOTH"/>
           <cl:itemset datasetid="combosetSearch" label="상태" value="값"/>
         </cl:combobox>
@@ -237,6 +240,10 @@
       <cl:button std:sid="button-29f262a5" id="btn2" value="저장">
         <cl:listener std:sid="listener-a012479e" name="click" handler="onBtn2Click"/>
         <cl:xylayoutdata std:sid="xyl-data-4fe76118" top="5px" right="31px" width="48px" height="30px" horizontalAnchor="RIGHT" verticalAnchor="TOP"/>
+      </cl:button>
+      <cl:button std:sid="button-96099fb3" id="btn3" value="초기화">
+        <cl:listener std:sid="listener-8382c529" name="click" handler="onBtn3Click"/>
+        <cl:xylayoutdata std:sid="xyl-data-4594df85" top="5px" right="180px" bottom="5px" width="48px" horizontalAnchor="RIGHT" verticalAnchor="BOTH"/>
       </cl:button>
       <cl:xylayout std:sid="xylayout-11856252"/>
     </cl:group>

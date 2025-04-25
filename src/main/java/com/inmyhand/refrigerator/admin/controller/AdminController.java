@@ -3,14 +3,11 @@ package com.inmyhand.refrigerator.admin.controller;
 import java.util.List;
 import java.util.Map;
 
+import com.cleopatra.spring.fileupload.MultipartFileItem;
+import com.inmyhand.refrigerator.member.domain.dto.MemberCustomQueryDTO;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.cleopatra.protocol.data.DataRequest;
 import com.inmyhand.refrigerator.admin.dto.MemberEntityDto;
@@ -64,4 +61,19 @@ public class AdminController {
 		return ResponseEntity.ok(adminService.findAllAdminRecipeInfo(id,
 				PageRequest.of(pageId, 30)));
 	}
+
+//	@PostMapping("/user/search")
+//	public ResponseEntity<?> userSearch(@ModelAttribute MemberCustomQueryDTO memberCustomQueryDTO){
+//
+//		return ResponseEntity.ok(Map.of("getusers",adminService.findMemberDTOSearch(memberCustomQueryDTO)));
+//	}
+
+	@PostMapping("/user/search")
+	public ResponseEntity<?> userSearch(@RequestParam(required = false, value = "page", defaultValue = "0") int pageId,
+										@RequestParam( required = false, value = "searchName") String keyword) {
+
+		return ResponseEntity.ok(Map.of("getusers",adminService.findMemberDTOSearch2(PageRequest.of(pageId, 30), keyword)));
+	}
+
+
 }

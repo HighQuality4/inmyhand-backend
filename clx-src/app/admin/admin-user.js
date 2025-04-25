@@ -83,22 +83,42 @@ function onBtn1Click(e){
 	var btn1 = e.control;
 	const rdb1 = app.lookup("rdb1").value;
 	const cmb2 = app.lookup("cmb2").value;
-	
-	const searchSubmission = app.lookup("admin_search");
-	
-	if(rdb1 !== null){
-		searchSubmission.setParameters("searchValue1", rdb1);
-	} else {
-		searchSubmission.setParameters("searchValue1", null);
+	const ipb1 = app.lookup("ipb1").value;
+
+	if (rdb1 === null && (!ipb1 || !ipb1.trim())) {
+		
+	} 
+	else if (rdb1 === null || !ipb1?.trim()) {
+	    alert("입력값을 확인해주세요.");
+	    return;
 	}
+
+	const searchSubmission = app.lookup("admin_search");
+	searchSubmission.removeAllParameters();
+
+	if(rdb1 !== null){
+		searchSubmission.setParameters(rdb1,ipb1);
+	} 
 	
 	if(cmb2 !== null){
-        searchSubmission.setParameters("searchValue2", cmb2);
-    } else {
-        searchSubmission.setParameters("searchValue2", null);
-    }	
-	
+        searchSubmission.setParameters("combo", cmb2);
+    } 
 	
     searchSubmission.send();
 }
 
+/*
+ * "검색" 버튼(btn3)에서 click 이벤트 발생 시 호출.
+ * 사용자가 컨트롤을 클릭할 때 발생하는 이벤트.
+ */
+function onBtn3Click(e){
+	var btn3 = e.control;
+	
+	const rdb1 = app.lookup("rdb1");
+	const cmb2 = app.lookup("cmb2");
+	const ipb1 = app.lookup("ipb1");
+	
+	rdb1.clearSelection();
+	cmb2.clearSelection();
+	ipb1.clear();
+}

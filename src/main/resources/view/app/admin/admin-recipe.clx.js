@@ -36,6 +36,11 @@
 			function loadRecipeData(pageIdx) {
 			    const recipe = app.lookup("adminRecipeGet");
 			    const lastSegment = getLastUrlSegment();
+			    const ipb1 = app.lookup("ipb1").value;
+			    
+			    if (ipb1?.trim()) {
+			   		recipe.setParameters("searchName", ipb1);   
+				}
 			    
 			    // 요청 URL 설정
 			    recipe.setRequestActionUrl(recipe.action + "/" + lastSegment);
@@ -67,8 +72,27 @@
 			    var dmPage = app.lookup("pageIndex");
 			    dmPage.setValue("pageIdx", e.newSelection);
 			    
+			    
 			    // 페이지 인덱스로 데이터 로드
 			    loadRecipeData(dmPage.getDatas().pageIdx);
+			}
+
+			/*
+			 * "검색" 버튼에서 click 이벤트 발생 시 호출.
+			 * 사용자가 컨트롤을 클릭할 때 발생하는 이벤트.
+			 */
+			function onButtonClick(e){
+				var button = e.control;
+				const ipb1 = app.lookup("ipb1").value;
+				if(ipb1.length === 1){
+			        alert("2글자 이상 입력해주세요.");
+			        return;
+			    }
+			    
+			   const sub = app.lookup("adminRecipeGet");
+			   sub.setParameters("searchName", ipb1);
+			   sub.send();
+			   
 			};
 			// End - User Script
 			
@@ -173,15 +197,6 @@
 								{
 									"constraint": {"rowIndex": 0, "colIndex": 1},
 									"configurator": function(cell){
-										cell.filterable = false;
-										cell.sortable = true;
-										cell.targetColumnName = "id";
-										cell.text = "레시피 Id";
-									}
-								},
-								{
-									"constraint": {"rowIndex": 0, "colIndex": 2},
-									"configurator": function(cell){
 										cell.filterable = true;
 										cell.sortable = true;
 										cell.targetColumnName = "recipeName";
@@ -189,7 +204,7 @@
 									}
 								},
 								{
-									"constraint": {"rowIndex": 0, "colIndex": 3},
+									"constraint": {"rowIndex": 0, "colIndex": 2},
 									"configurator": function(cell){
 										cell.filterable = true;
 										cell.sortable = true;
@@ -198,7 +213,7 @@
 									}
 								},
 								{
-									"constraint": {"rowIndex": 0, "colIndex": 4},
+									"constraint": {"rowIndex": 0, "colIndex": 3},
 									"configurator": function(cell){
 										cell.filterable = false;
 										cell.sortable = true;
@@ -207,12 +222,21 @@
 									}
 								},
 								{
-									"constraint": {"rowIndex": 0, "colIndex": 5},
+									"constraint": {"rowIndex": 0, "colIndex": 4},
 									"configurator": function(cell){
 										cell.filterable = false;
 										cell.sortable = true;
 										cell.targetColumnName = "viewCount";
 										cell.text = "조회수";
+									}
+								},
+								{
+									"constraint": {"rowIndex": 0, "colIndex": 5},
+									"configurator": function(cell){
+										cell.filterable = false;
+										cell.sortable = true;
+										cell.targetColumnName = "id";
+										cell.text = "레시피 보러가기";
 									}
 								}
 							]
@@ -229,10 +253,10 @@
 								{
 									"constraint": {"rowIndex": 0, "colIndex": 1},
 									"configurator": function(cell){
-										cell.columnName = "id";
+										cell.columnName = "recipeName";
 										cell.control = (function(){
 											var output_1 = new cpr.controls.Output();
-											output_1.bind("value").toDataColumn("id");
+											output_1.bind("value").toDataColumn("recipeName");
 											return output_1;
 										})();
 									}
@@ -240,10 +264,10 @@
 								{
 									"constraint": {"rowIndex": 0, "colIndex": 2},
 									"configurator": function(cell){
-										cell.columnName = "recipeName";
+										cell.columnName = "createdAt";
 										cell.control = (function(){
 											var output_2 = new cpr.controls.Output();
-											output_2.bind("value").toDataColumn("recipeName");
+											output_2.bind("value").toDataColumn("createdAt");
 											return output_2;
 										})();
 									}
@@ -251,10 +275,10 @@
 								{
 									"constraint": {"rowIndex": 0, "colIndex": 3},
 									"configurator": function(cell){
-										cell.columnName = "createdAt";
+										cell.columnName = "likeCount";
 										cell.control = (function(){
 											var output_3 = new cpr.controls.Output();
-											output_3.bind("value").toDataColumn("createdAt");
+											output_3.bind("value").toDataColumn("likeCount");
 											return output_3;
 										})();
 									}
@@ -262,10 +286,10 @@
 								{
 									"constraint": {"rowIndex": 0, "colIndex": 4},
 									"configurator": function(cell){
-										cell.columnName = "likeCount";
+										cell.columnName = "viewCount";
 										cell.control = (function(){
 											var output_4 = new cpr.controls.Output();
-											output_4.bind("value").toDataColumn("likeCount");
+											output_4.bind("value").toDataColumn("viewCount");
 											return output_4;
 										})();
 									}
@@ -273,10 +297,10 @@
 								{
 									"constraint": {"rowIndex": 0, "colIndex": 5},
 									"configurator": function(cell){
-										cell.columnName = "viewCount";
+										cell.columnName = "보러가기";
 										cell.control = (function(){
 											var output_5 = new cpr.controls.Output();
-											output_5.bind("value").toDataColumn("viewCount");
+											output_5.bind("value").toDataColumn("보러가기");
 											return output_5;
 										})();
 									}
@@ -435,27 +459,22 @@
 				});
 				var button_1 = new cpr.controls.Button();
 				button_1.value = "검색";
+				if(typeof onButtonClick == "function") {
+					button_1.addEventListener("click", onButtonClick);
+				}
 				container.addChild(button_1, {
 					"top": "5px",
 					"right": "30px",
 					"width": "48px",
 					"height": "30px"
 				});
-				var checkBox_1 = new cpr.controls.CheckBox("cbx1");
-				checkBox_1.text = "nickname";
-				container.addChild(checkBox_1, {
+				var output_9 = new cpr.controls.Output();
+				output_9.value = "레시피명 검색 : ";
+				container.addChild(output_9, {
 					"top": "5px",
 					"right": "280px",
 					"bottom": "5px",
-					"width": "91px"
-				});
-				var checkBox_2 = new cpr.controls.CheckBox("cbx2");
-				checkBox_2.text = "Email";
-				container.addChild(checkBox_2, {
-					"top": "5px",
-					"right": "381px",
-					"bottom": "5px",
-					"width": "91px"
+					"width": "100px"
 				});
 			})(group_6);
 			container.addChild(group_6, {

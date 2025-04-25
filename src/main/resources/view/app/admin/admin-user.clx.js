@@ -97,23 +97,44 @@
 				var btn1 = e.control;
 				const rdb1 = app.lookup("rdb1").value;
 				const cmb2 = app.lookup("cmb2").value;
-				
-				const searchSubmission = app.lookup("admin_search");
-				
-				if(rdb1 !== null){
-					searchSubmission.setParameters("searchValue1", rdb1);
-				} else {
-					searchSubmission.setParameters("searchValue1", null);
+				const ipb1 = app.lookup("ipb1").value;
+
+				if (rdb1 === null && (!ipb1 || !ipb1.trim())) {
+					
+				} 
+				else if (rdb1 === null || !ipb1?.trim()) {
+				    alert("입력값을 확인해주세요.");
+				    return;
 				}
+
+				const searchSubmission = app.lookup("admin_search");
+				searchSubmission.removeAllParameters();
+
+				if(rdb1 !== null){
+					searchSubmission.setParameters(rdb1,ipb1);
+				} 
 				
 				if(cmb2 !== null){
-			        searchSubmission.setParameters("searchValue2", cmb2);
-			    } else {
-			        searchSubmission.setParameters("searchValue2", null);
-			    }	
-				
+			        searchSubmission.setParameters("combo", cmb2);
+			    } 
 				
 			    searchSubmission.send();
+			}
+
+			/*
+			 * "검색" 버튼(btn3)에서 click 이벤트 발생 시 호출.
+			 * 사용자가 컨트롤을 클릭할 때 발생하는 이벤트.
+			 */
+			function onBtn3Click(e){
+				var btn3 = e.control;
+				
+				const rdb1 = app.lookup("rdb1");
+				const cmb2 = app.lookup("cmb2");
+				const ipb1 = app.lookup("ipb1");
+				
+				rdb1.clearSelection();
+				cmb2.clearSelection();
+				ipb1.clear();
 			};
 			// End - User Script
 			
@@ -196,8 +217,8 @@
 			var submission_3 = new cpr.protocols.Submission("admin_search");
 			submission_3.action = "/api/admin/user/search";
 			submission_3.addResponseData(dataSet_1, false);
-			if(typeof onAdmin_searchSubmitSuccess == "function") {
-				submission_3.addEventListener("submit-success", onAdmin_searchSubmitSuccess);
+			if(typeof onAdmin_searchSubmitSuccess2 == "function") {
+				submission_3.addEventListener("submit-success", onAdmin_searchSubmitSuccess2);
 			}
 			app.register(submission_3);
 			app.supportMedia("all and (min-width: 1024px)", "default");
@@ -219,8 +240,8 @@
 			
 			// UI Configuration
 			var group_1 = new cpr.controls.Container();
-			var xYLayout_2 = new cpr.controls.layouts.XYLayout();
-			group_1.setLayout(xYLayout_2);
+			var verticalLayout_1 = new cpr.controls.layouts.VerticalLayout();
+			group_1.setLayout(verticalLayout_1);
 			(function(container){
 				var grid_1 = new cpr.controls.Grid("grd1");
 				grid_1.init({
@@ -249,7 +270,6 @@
 							{
 								"constraint": {"rowIndex": 0, "colIndex": 1},
 								"configurator": function(cell){
-									cell.filterable = true;
 									cell.targetColumnName = "memberName";
 									cell.text = "이름";
 								}
@@ -257,7 +277,6 @@
 							{
 								"constraint": {"rowIndex": 0, "colIndex": 2},
 								"configurator": function(cell){
-									cell.sortable = true;
 									cell.targetColumnName = "email";
 									cell.text = "이메일";
 								}
@@ -265,7 +284,6 @@
 							{
 								"constraint": {"rowIndex": 0, "colIndex": 3},
 								"configurator": function(cell){
-									cell.filterable = true;
 									cell.targetColumnName = "nickname";
 									cell.text = "닉네임";
 								}
@@ -273,8 +291,6 @@
 							{
 								"constraint": {"rowIndex": 0, "colIndex": 4},
 								"configurator": function(cell){
-									cell.filterable = true;
-									cell.sortable = true;
 									cell.targetColumnName = "regdate";
 									cell.text = "가입날짜";
 								}
@@ -282,8 +298,6 @@
 							{
 								"constraint": {"rowIndex": 0, "colIndex": 5},
 								"configurator": function(cell){
-									cell.filterable = true;
-									cell.sortable = true;
 									cell.targetColumnName = "providerId";
 									cell.text = "가입 경로";
 								}
@@ -291,8 +305,6 @@
 							{
 								"constraint": {"rowIndex": 0, "colIndex": 6},
 								"configurator": function(cell){
-									cell.filterable = true;
-									cell.sortable = true;
 									cell.targetColumnName = "status";
 									cell.text = "상태";
 								}
@@ -300,8 +312,6 @@
 							{
 								"constraint": {"rowIndex": 0, "colIndex": 7},
 								"configurator": function(cell){
-									cell.filterable = true;
-									cell.sortable = true;
 									cell.targetColumnName = "phoneNum";
 									cell.text = "전화번호";
 								}
@@ -433,14 +443,21 @@
 					grid_1.addEventListener("cell-click", onGrd1CellClick);
 				}
 				container.addChild(grid_1, {
-					"top": "0px",
-					"right": "20px",
-					"bottom": "20px",
-					"left": "20px"
+					"autoSize": "both",
+					"width": "824px",
+					"height": "475px"
+				});
+				var pageIndexer_1 = new cpr.controls.PageIndexer("RecipeIndex");
+				pageIndexer_1.startPageIndex = 1;
+				pageIndexer_1.viewPageCount = 5;
+				container.addChild(pageIndexer_1, {
+					"autoSize": "width",
+					"width": "824px",
+					"height": "40px"
 				});
 			})(group_1);
 			container.addChild(group_1, {
-				"top": "120px",
+				"top": "125px",
 				"right": "80px",
 				"bottom": "80px",
 				"left": "80px"
@@ -464,8 +481,8 @@
 			group_2.setLayout(formLayout_1);
 			(function(container){
 				var group_3 = new cpr.controls.Container();
-				var xYLayout_3 = new cpr.controls.layouts.XYLayout();
-				group_3.setLayout(xYLayout_3);
+				var xYLayout_2 = new cpr.controls.layouts.XYLayout();
+				group_3.setLayout(xYLayout_2);
 				(function(container){
 					var output_8 = new cpr.controls.Output();
 					output_8.value = "Copyright © 내손안의 냉장고!. All rights reserved.";
@@ -547,13 +564,13 @@
 			});
 			
 			var group_5 = new cpr.controls.Container();
-			var xYLayout_4 = new cpr.controls.layouts.XYLayout();
-			group_5.setLayout(xYLayout_4);
+			var xYLayout_3 = new cpr.controls.layouts.XYLayout();
+			group_5.setLayout(xYLayout_3);
 			(function(container){
 				var inputBox_1 = new cpr.controls.InputBox("ipb1");
 				container.addChild(inputBox_1, {
 					"top": "5px",
-					"right": "149px",
+					"right": "295px",
 					"bottom": "5px",
 					"width": "180px"
 				});
@@ -567,13 +584,13 @@
 				}
 				container.addChild(button_1, {
 					"top": "5px",
-					"right": "89px",
+					"right": "237px",
 					"width": "48px",
 					"height": "30px"
 				});
 				var group_6 = new cpr.controls.Container();
-				var xYLayout_5 = new cpr.controls.layouts.XYLayout();
-				group_6.setLayout(xYLayout_5);
+				var xYLayout_4 = new cpr.controls.layouts.XYLayout();
+				group_6.setLayout(xYLayout_4);
 				(function(container){
 					var radioButton_1 = new cpr.controls.RadioButton("rdb1");
 					radioButton_1.fixedWidth = false;
@@ -587,8 +604,7 @@
 						"width": "234px"
 					});
 					var comboBox_2 = new cpr.controls.ComboBox("cmb2");
-					comboBox_2.tooltip = "전체보기";
-					comboBox_2.value = "전체보기";
+					comboBox_2.value = "all";
 					comboBox_2.preventInput = true;
 					(function(comboBox_2){
 						comboBox_2.setItemSet(app.lookup("combosetSearch"), {
@@ -604,9 +620,9 @@
 					});
 				})(group_6);
 				container.addChild(group_6, {
-					"top": "1px",
-					"right": "329px",
-					"width": "500px",
+					"top": "0px",
+					"right": "485px",
+					"width": "359px",
 					"height": "39px"
 				});
 				var button_2 = new cpr.controls.Button("btn2");
@@ -619,6 +635,17 @@
 					"right": "31px",
 					"width": "48px",
 					"height": "30px"
+				});
+				var button_3 = new cpr.controls.Button("btn3");
+				button_3.value = "초기화";
+				if(typeof onBtn3Click == "function") {
+					button_3.addEventListener("click", onBtn3Click);
+				}
+				container.addChild(button_3, {
+					"top": "5px",
+					"right": "180px",
+					"bottom": "5px",
+					"width": "48px"
 				});
 			})(group_5);
 			container.addChild(group_5, {

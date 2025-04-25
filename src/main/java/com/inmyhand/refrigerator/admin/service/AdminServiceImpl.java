@@ -3,6 +3,7 @@ package com.inmyhand.refrigerator.admin.service;
 import com.inmyhand.refrigerator.admin.dto.AdminRecipeInfoDto;
 import com.inmyhand.refrigerator.admin.dto.MemberEntityDto;
 import com.inmyhand.refrigerator.admin.mapper.MemberMapper;
+import com.inmyhand.refrigerator.member.domain.dto.MemberCustomQueryDTO;
 import com.inmyhand.refrigerator.member.domain.entity.MemberEntity;
 import com.inmyhand.refrigerator.member.domain.enums.MemberStatus;
 import com.inmyhand.refrigerator.member.repository.MemberRepository;
@@ -78,5 +79,15 @@ public class AdminServiceImpl implements AdminService {
     @Override
     public Page<AdminRecipeInfoDto> findAllAdminRecipeInfo(Long id, Pageable pageable) {
         return recipeInfoRepository.findAdminRecipeInfoUser(id, pageable);
+    }
+
+    @Override
+    public List<MemberEntityDto> findMemberDTOSearch(MemberCustomQueryDTO memberCustomQueryDTO) {
+        return memberRepository.searchMember(memberCustomQueryDTO);
+    }
+
+    @Override
+    public Page<AdminRecipeInfoDto> findMemberDTOSearch2(Pageable pageable, String name) {
+        return recipeInfoRepository.customQueryRecipe(pageable, name);
     }
 }
