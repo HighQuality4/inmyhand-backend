@@ -1,5 +1,7 @@
 package com.inmyhand.refrigerator.files.service;
 
+import com.cleopatra.protocol.data.UploadFile;
+import com.cleopatra.util.UploadFileToMultipartFileConverter;
 import com.inmyhand.refrigerator.files.domain.entity.FileUploadRequest;
 import com.inmyhand.refrigerator.files.domain.entity.FileUploadResponse;
 import com.inmyhand.refrigerator.files.domain.entity.FilesEntity;
@@ -22,8 +24,10 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.util.Date;
+import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -37,6 +41,24 @@ public class FileUploadService {
     @Value("${file.upload-dir}")
     private String uploadDir;
 
+    /**
+     * 리스트 변환 (UploadFile -> MultipartFile)
+     * @param uploadFiles list of custom UploadFile objects
+     */
+    public List<MultipartFile>  processUploadFiles(List<UploadFile> uploadFiles) {
+        List<MultipartFile> multipartFiles = uploadFiles.stream()
+                .map(UploadFileToMultipartFileConverter::toMultipartFile)
+                .collect(Collectors.toList());
+
+        return multipartFiles;
+    }
+    /**
+     * 단일변환 (UploadFile -> MultipartFile)
+     * @param uploadFile list of custom UploadFile objects
+     */
+    public MultipartFile processUploadFile(UploadFile uploadFile) {
+        return UploadFileToMultipartFileConverter.toMultipartFile(uploadFile);
+    }
 
     public FileUploadResponse uploadByType(FileUploadRequest req) {
         MultipartFile file = req.getFile();

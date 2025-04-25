@@ -1,9 +1,15 @@
 package com.inmyhand.refrigerator.files.controller;
 
+import com.cleopatra.XBConfig;
+import com.cleopatra.protocol.data.DataRequest;
+import com.cleopatra.protocol.data.UploadFile;
+
+import com.cleopatra.util.UploadFileToMultipartFileConverter;
 import com.inmyhand.refrigerator.files.domain.entity.FileUploadRequest;
 import com.inmyhand.refrigerator.files.domain.entity.FileUploadResponse;
 import com.inmyhand.refrigerator.files.service.FileUploadService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
@@ -11,15 +17,18 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
 import org.springframework.web.multipart.MultipartFile;
 
-import java.net.MalformedURLException;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.util.List;
+
+import java.io.File;
+import java.io.IOException;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @RestController
 @RequiredArgsConstructor
+@Slf4j
 @RequestMapping("/api/files")
 public class FileUploadController {
 
@@ -44,31 +53,52 @@ public class FileUploadController {
             @RequestParam(value = "stepId", required = false) Long stepId) {
 
         // 이미지 파일 업로드 서비스 호출
+        log.info("uploadImage 실행 >>>>>>>>>");
         FileUploadRequest request = new FileUploadRequest(file, memberId, recipeId, stepId);
         return fileUploadService.uploadByType(request);  // 서비스로 파일 업로드 처리
     }
 
-    /**
-     * 업로드된 이미지 파일 미리보기 (이미지 URL로 미리보기)
-     * @param fileUrl 이미지 파일의 URL 경로
-     * @return 이미지 미리보기
-     */
-    @GetMapping("/preview-image")
-    public ResponseEntity<Resource> previewImage(@RequestParam("fileUrl") String fileUrl) {
-        Path path = Paths.get(uploadDir).resolve(fileUrl.substring(fileUrl.lastIndexOf("/") + 1));
-        try {
-            Resource resource = new UrlResource(path.toUri());
-            if (resource.exists()) {
-                return ResponseEntity.ok()
-                        .header(HttpHeaders.CONTENT_TYPE, "image/jpeg")
-                        .body(resource);
-            } else {
-                return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+    @PostMapping("/upload-test")
+    public ResponseEntity<?> fileUploadTest(DataRequest dataRequest) throws IOException {
+        Map<String, UploadFile[]> uploadFiles = dataRequest.getUploadFiles();
+        if (uploadFiles != null && !uploadFiles.isEmpty()) {
+            for (Map.Entry<String, UploadFile[]> entry : uploadFiles.entrySet()) {
+                UploadFile[] uFiles = entry.getValue();
+
+                if (uFiles.length == 1) {
+                    // 단일 파일
+                    UploadFile single = uFiles[0];
+                    MultipartFile mf = UploadFileToMultipartFileConverter.toMultipartFile(single);
+
+                    log.info("단일 파일 업로드 처리: {}, size: {}",
+                    mf.getOriginalFilename(), mf.getSize());
+
+                    Long memberId = 23L;
+                    Long recipeId = null;
+                    Long stepId = null;
+
+                    // 이미지 파일 업로드 서비스 호출
+                    FileUploadRequest request = new FileUploadRequest(mf, memberId, recipeId, stepId);
+                    fileUploadService.uploadByType(request);
+
+
+                } else if (uFiles.length > 1) {
+                    // 다중 파일
+                    // 추후를 위한 로직 설계
+                    List<MultipartFile> mfs = Arrays.stream(uFiles)
+                            .map(UploadFileToMultipartFileConverter::toMultipartFile)
+                            .toList();
+
+                    log.info("다중 파일 업로드 처리: count = {}", mfs.size());
+                }
             }
-        } catch (MalformedURLException e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
         }
+        return ResponseEntity.ok("ok");
     }
+
+
+
+
 
 
 }

@@ -4,7 +4,8 @@ const embeddedRoutes = [
   { path: "/recipe/search", loadApp: "app/recipe/recipe_search" }, // 쿼리 파라미터가 있는 경우
   { path: "/users/login", loadApp: "app/login/login" },
   { path: "/users/mypage", loadApp: "app/mypage/mypage"},
-  { path: "/fridge", loadApp: "app/fridge/fridge_main" }
+  { path: "/fridge", loadApp: "app/fridge/fridge_main" },
+  { path: "/fridge/auto", loadApp: "app/fridge/fridge_auto" }
 ];
 
 exports.embeddedRoutes = embeddedRoutes;
