@@ -72,7 +72,7 @@
 			    if(clickedColumnName === "id") {
 			        var recipeId = usersDataset.getValue(e.rowIndex, clickedColumnName);
 			        if(recipeId) {
-			            window.location.href = "/recipe/" + recipeId;
+			            window.location.href = "/admin/recipe/" + recipeId;
 			        }
 			    }
 			    

@@ -19,7 +19,17 @@
           <cl:datacolumn std:sid="d-column-3e50e9bf" name="viewCount"/>
         </cl:datacolumnlist>
       </cl:dataset>
-      <cl:submission std:sid="submission-07e09448" id="admin-recipe-get" method="get" action="/api/admin/recipe">
+      <cl:datamap std:sid="d-map-96875bbf" id="pageIndex">
+        <cl:datacolumnlist>
+          <cl:datacolumn std:sid="d-column-846f5314" name="totCnt" datatype="string" defaultvalue="30"/>
+          <cl:datacolumn std:sid="d-column-59461cb1" name="rowSize" datatype="string" defaultvalue="10"/>
+          <cl:datacolumn std:sid="d-column-a67114f2" name="pageIdx" datatype="string" defaultvalue="1"/>
+          <cl:datacolumn std:sid="d-column-fd0201b3" name="sortCondition" datatype="string" defaultvalue="asc"/>
+        </cl:datacolumnlist>
+      </cl:datamap>
+      <cl:submission std:sid="submission-f9288e4c" id="adminRecipeGet" method="get" action="/api/admin/recipe">
+        <cl:listener std:sid="listener-e34366e8" name="submit-success" handler="onAdminRecipeGetSubmitSuccess2"/>
+        <cl:requestdata dataid="pageIndex"/>
         <cl:responsedata dataid="content"/>
       </cl:submission>
     </cl:model>
@@ -31,7 +41,7 @@
       <cl:xylayoutdata std:sid="xyl-data-5a4b53e8" top="120px" right="80px" bottom="80px" left="80px" horizontalAnchor="BOTH" verticalAnchor="BOTH"/>
       <cl:group std:sid="group-3aab3ce5">
         <cl:xylayoutdata std:sid="xyl-data-8f91f2ac" top="20px" right="20px" bottom="20px" left="20px" horizontalAnchor="BOTH" verticalAnchor="BOTH"/>
-        <cl:grid std:sid="grid-ad49875b" id="grd1" style="background-color:#eaf1f3; background-image:none;" datasetid="content">
+        <cl:grid std:sid="grid-ad49875b" id="grd1" style="background-color:#eaf1f3; background-image:none;" datasetid="content" autorowheight="all" topsplitheight="0" leftsplit="0">
           <cl:verticaldata std:sid="v-data-e31c08de" width="824px" height="475px" autosize="both"/>
           <cl:gridcolumn std:sid="g-column-08493dad" width="50px"/>
           <cl:gridcolumn std:sid="g-column-fbd9c9a6"/>
@@ -78,8 +88,11 @@
             </cl:gridcell>
           </cl:griddetail>
         </cl:grid>
-        <cl:pageindexer std:sid="p-indexer-f1c8abee" id="RecipeIndex1">
-          <cl:listener std:sid="listener-f11c30ba" name="selection-change" handler="onRecipeIndex1SelectionChange"/>
+        <cl:pageindexer std:sid="p-indexer-f1c8abee" id="RecipeIndex" startpageindex="1" viewpagecount="5">
+          <cl:listener std:sid="listener-0abf705e" name="selection-change" handler="onRecipeIndexSelectionChange"/>
+          <cl:datamapbind property="totalRowCount" category="PROPERTY" datacontrolid="pageIndex" columnname="totCnt"/>
+          <cl:datamapbind property="pageRowCount" category="PROPERTY" datacontrolid="pageIndex" columnname="rowSize"/>
+          <cl:datamapbind property="currentPageIndex" category="PROPERTY" datacontrolid="pageIndex" columnname="pageIdx"/>
           <cl:verticaldata std:sid="v-data-12129016" width="844px" height="40px" autosize="width"/>
         </cl:pageindexer>
         <cl:verticallayout std:sid="v-layout-a05141fc"/>
