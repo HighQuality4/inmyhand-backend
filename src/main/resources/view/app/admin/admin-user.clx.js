@@ -24,37 +24,35 @@
 			 * 앱이 최초 구성된후 최초 랜더링 직후에 발생하는 이벤트 입니다.
 			 */
 			function onBodyLoad(e){
-					app.lookup("admin_sms1").send();
+				app.lookup("admin_sms1").send();
+				
+				radioInit();
 				
 			}
+
+			const radioInit = () => {
+					
+				var rdb = app.lookup("rdb1");
+			    var ds1 = app.lookup("ds1");
+			    rdb.setItemSet(ds1, {
+			        label: "상태", 
+			        value: "값"    
+			    });
+			}
+
+
 			/*
 			 * 콤보 박스에서 item-click 이벤트 발생 시 호출.
 			 * 아이템 클릭시 발생하는 이벤트.
 			 */
 			function onCmb1ItemClick(e){
 				var cmb1 = e.control;
-				var comboBox_1 = new cpr.controls.ComboBox("cmb1");
-				comboBox_1.setItemSet(comboset, {label: "상태", value: "값"});
+				var combo1 = app.lookup("cmb1");
+				var comboset = app.lookup("comboset");
+				combo1.setItemSet(comboset, {label: "상태", value: "값"});
 
 			}
 
-			///*
-			// * "Button" 버튼에서 click 이벤트 발생 시 호출.
-			// * 사용자가 컨트롤을 클릭할 때 발생하는 이벤트.
-			// */
-			//function onButtonClick(e){
-			//	 var button = e.control; // 이벤트 발생 버튼 참조
-			//	  // 'getusers' 데이터셋 참조 가져오기
-			//        
-			//      // 가져온 id 값을 사용하여 페이지를 이동합니다
-			//      window.location.href = "/recipe/" +  app.lookup("getusers").getValue(0, "id");  
-			//}
-			//
-			//
-			////	var btn1 = app.lookup("getusers").getRowDataRanged().forEach(function(each){
-			////		  			window.location.href = 'http://localhost:7079/recipe/'+ btn1;
-			////
-			////	});
 
 			/*
 			 * 그리드에서 cell-click 이벤트 발생 시 호출.
@@ -79,14 +77,43 @@
 			  
 			}
 
+
 			/*
-			 * "저장" 버튼에서 click 이벤트 발생 시 호출.
+			 * "저장" 버튼(btn2)에서 click 이벤트 발생 시 호출.
 			 * 사용자가 컨트롤을 클릭할 때 발생하는 이벤트.
 			 */
-			function onButtonClick(e){
-				var button = e.control;
-				app.lookup("admin_update").send();	
+			function onBtn2Click(e){
+				var btn2 = e.control;
+					app.lookup("admin_update").send();	
 				
+			}
+
+			/*
+			 * "검색" 버튼(btn1)에서 click 이벤트 발생 시 호출.
+			 * 사용자가 컨트롤을 클릭할 때 발생하는 이벤트.
+			 */
+			function onBtn1Click(e){
+				
+				var btn1 = e.control;
+				const rdb1 = app.lookup("rdb1").value;
+				const cmb2 = app.lookup("cmb2").value;
+				
+				const searchSubmission = app.lookup("admin_search");
+				
+				if(rdb1 !== null){
+					searchSubmission.setParameters("searchValue1", rdb1);
+				} else {
+					searchSubmission.setParameters("searchValue1", null);
+				}
+				
+				if(cmb2 !== null){
+			        searchSubmission.setParameters("searchValue2", cmb2);
+			    } else {
+			        searchSubmission.setParameters("searchValue2", null);
+			    }	
+				
+				
+			    searchSubmission.send();
 			};
 			// End - User Script
 			
@@ -121,6 +148,34 @@
 				]
 			});
 			app.register(dataSet_2);
+			
+			var dataSet_3 = new cpr.data.DataSet("combosetSearch");
+			dataSet_3.parseData({
+				"columns": [
+					{"name": "상태"},
+					{"name": "값"}
+				],
+				"rows": [
+					{"상태": "전체보기", "값": "all"},
+					{"상태": "활성화", "값": "active"},
+					{"상태": "비활성화", "값": "banned"}
+				]
+			});
+			app.register(dataSet_3);
+			
+			var dataSet_4 = new cpr.data.DataSet("ds1");
+			dataSet_4.parseData({
+				"columns": [
+					{"name": "상태"},
+					{"name": "값"}
+				],
+				"rows": [
+					{"상태": "닉네임", "값": "nickname"},
+					{"상태": "이름", "값": "name"},
+					{"상태": "이메일", "값": "email"}
+				]
+			});
+			app.register(dataSet_4);
 			var submission_1 = new cpr.protocols.Submission("admin_sms1");
 			submission_1.method = "get";
 			submission_1.action = "/api/admin/users";
@@ -137,6 +192,14 @@
 				submission_2.addEventListener("submit-success", onAdmin_updateSubmitSuccess);
 			}
 			app.register(submission_2);
+			
+			var submission_3 = new cpr.protocols.Submission("admin_search");
+			submission_3.action = "/api/admin/user/search";
+			submission_3.addResponseData(dataSet_1, false);
+			if(typeof onAdmin_searchSubmitSuccess == "function") {
+				submission_3.addEventListener("submit-success", onAdmin_searchSubmitSuccess);
+			}
+			app.register(submission_3);
 			app.supportMedia("all and (min-width: 1024px)", "default");
 			app.supportMedia("all and (min-width: 500px) and (max-width: 1023.984px)", "tablet");
 			app.supportMedia("all and (max-width: 499.984px)", "mobile");
@@ -362,11 +425,15 @@
 					}
 				});
 				grid_1.style.setClasses(["web-grid"]);
+				grid_1.style.css({
+					"background-color" : "#eaf1f3",
+					"background-image" : "none"
+				});
 				if(typeof onGrd1CellClick == "function") {
 					grid_1.addEventListener("cell-click", onGrd1CellClick);
 				}
 				container.addChild(grid_1, {
-					"top": "20px",
+					"top": "0px",
 					"right": "20px",
 					"bottom": "20px",
 					"left": "20px"
@@ -377,18 +444,6 @@
 				"right": "80px",
 				"bottom": "80px",
 				"left": "80px"
-			});
-			
-			var button_1 = new cpr.controls.Button();
-			button_1.value = "저장";
-			if(typeof onButtonClick == "function") {
-				button_1.addEventListener("click", onButtonClick);
-			}
-			container.addChild(button_1, {
-				"top": "100px",
-				"right": "100px",
-				"width": "75px",
-				"height": "30px"
 			});
 			
 			var group_2 = new cpr.controls.Container("footer");
@@ -489,6 +544,88 @@
 				"right": "0px",
 				"left": "0px",
 				"height": "73px"
+			});
+			
+			var group_5 = new cpr.controls.Container();
+			var xYLayout_4 = new cpr.controls.layouts.XYLayout();
+			group_5.setLayout(xYLayout_4);
+			(function(container){
+				var inputBox_1 = new cpr.controls.InputBox("ipb1");
+				container.addChild(inputBox_1, {
+					"top": "5px",
+					"right": "149px",
+					"bottom": "5px",
+					"width": "180px"
+				});
+				var button_1 = new cpr.controls.Button("btn1");
+				button_1.value = "검색";
+				if(typeof onBtn1Dblclick == "function") {
+					button_1.addEventListener("dblclick", onBtn1Dblclick);
+				}
+				if(typeof onBtn1Click == "function") {
+					button_1.addEventListener("click", onBtn1Click);
+				}
+				container.addChild(button_1, {
+					"top": "5px",
+					"right": "89px",
+					"width": "48px",
+					"height": "30px"
+				});
+				var group_6 = new cpr.controls.Container();
+				var xYLayout_5 = new cpr.controls.layouts.XYLayout();
+				group_6.setLayout(xYLayout_5);
+				(function(container){
+					var radioButton_1 = new cpr.controls.RadioButton("rdb1");
+					radioButton_1.fixedWidth = false;
+					if(typeof onRdb1ItemClick2 == "function") {
+						radioButton_1.addEventListener("item-click", onRdb1ItemClick2);
+					}
+					container.addChild(radioButton_1, {
+						"top": "5px",
+						"right": "10px",
+						"bottom": "5px",
+						"width": "234px"
+					});
+					var comboBox_2 = new cpr.controls.ComboBox("cmb2");
+					comboBox_2.tooltip = "전체보기";
+					comboBox_2.value = "전체보기";
+					comboBox_2.preventInput = true;
+					(function(comboBox_2){
+						comboBox_2.setItemSet(app.lookup("combosetSearch"), {
+							"label": "상태",
+							"value": "값"
+						});
+					})(comboBox_2);
+					container.addChild(comboBox_2, {
+						"top": "5px",
+						"right": "250px",
+						"bottom": "5px",
+						"width": "100px"
+					});
+				})(group_6);
+				container.addChild(group_6, {
+					"top": "1px",
+					"right": "329px",
+					"width": "500px",
+					"height": "39px"
+				});
+				var button_2 = new cpr.controls.Button("btn2");
+				button_2.value = "저장";
+				if(typeof onBtn2Click == "function") {
+					button_2.addEventListener("click", onBtn2Click);
+				}
+				container.addChild(button_2, {
+					"top": "5px",
+					"right": "31px",
+					"width": "48px",
+					"height": "30px"
+				});
+			})(group_5);
+			container.addChild(group_5, {
+				"top": "80px",
+				"right": "80px",
+				"left": "80px",
+				"height": "40px"
 			});
 			if(typeof onBodyLoad == "function"){
 				app.addEventListener("load", onBodyLoad);

@@ -309,14 +309,14 @@
 					});
 				})(group_2);
 				container.addChild(group_2, {
-					"top": "20px",
+					"top": "0px",
 					"right": "20px",
 					"bottom": "20px",
 					"left": "20px"
 				});
 			})(group_1);
 			container.addChild(group_1, {
-				"top": "120px",
+				"top": "125px",
 				"right": "80px",
 				"bottom": "80px",
 				"left": "80px"
@@ -420,6 +420,49 @@
 				"bottom": "0px",
 				"left": "0px",
 				"height": "70px"
+			});
+			
+			var group_6 = new cpr.controls.Container();
+			var xYLayout_4 = new cpr.controls.layouts.XYLayout();
+			group_6.setLayout(xYLayout_4);
+			(function(container){
+				var inputBox_1 = new cpr.controls.InputBox("ipb1");
+				container.addChild(inputBox_1, {
+					"top": "5px",
+					"right": "90px",
+					"bottom": "5px",
+					"width": "180px"
+				});
+				var button_1 = new cpr.controls.Button();
+				button_1.value = "검색";
+				container.addChild(button_1, {
+					"top": "5px",
+					"right": "30px",
+					"width": "48px",
+					"height": "30px"
+				});
+				var checkBox_1 = new cpr.controls.CheckBox("cbx1");
+				checkBox_1.text = "nickname";
+				container.addChild(checkBox_1, {
+					"top": "5px",
+					"right": "280px",
+					"bottom": "5px",
+					"width": "91px"
+				});
+				var checkBox_2 = new cpr.controls.CheckBox("cbx2");
+				checkBox_2.text = "Email";
+				container.addChild(checkBox_2, {
+					"top": "5px",
+					"right": "381px",
+					"bottom": "5px",
+					"width": "91px"
+				});
+			})(group_6);
+			container.addChild(group_6, {
+				"top": "80px",
+				"right": "80px",
+				"left": "80px",
+				"height": "40px"
 			});
 			if(typeof onBodyLoad == "function"){
 				app.addEventListener("load", onBodyLoad);

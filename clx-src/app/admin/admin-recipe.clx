@@ -38,9 +38,9 @@
   <body std:sid="body-552b8625" style="background-color:#f3f1f0; background-image:none;">
     <cl:listener std:sid="listener-127b9aa0" name="load" handler="onBodyLoad"/>
     <cl:group std:sid="group-e4941790">
-      <cl:xylayoutdata std:sid="xyl-data-5a4b53e8" top="120px" right="80px" bottom="80px" left="80px" horizontalAnchor="BOTH" verticalAnchor="BOTH"/>
+      <cl:xylayoutdata std:sid="xyl-data-5a4b53e8" top="125px" right="80px" bottom="80px" left="80px" horizontalAnchor="BOTH" verticalAnchor="BOTH"/>
       <cl:group std:sid="group-3aab3ce5">
-        <cl:xylayoutdata std:sid="xyl-data-8f91f2ac" top="20px" right="20px" bottom="20px" left="20px" horizontalAnchor="BOTH" verticalAnchor="BOTH"/>
+        <cl:xylayoutdata std:sid="xyl-data-8f91f2ac" top="0px" right="20px" bottom="20px" left="20px" horizontalAnchor="BOTH" verticalAnchor="BOTH"/>
         <cl:grid std:sid="grid-ad49875b" id="grd1" style="background-color:#eaf1f3; background-image:none;" datasetid="content" autorowheight="all" topsplitheight="0" leftsplit="0">
           <cl:verticaldata std:sid="v-data-e31c08de" width="824px" height="475px" autosize="both"/>
           <cl:gridcolumn std:sid="g-column-08493dad" width="50px"/>
@@ -144,6 +144,22 @@
         <cl:columns length="40" unit="PIXEL"/>
         <cl:columns length="2" unit="FRACTION" shadetype="NONE" shadecolor="transparent"/>
       </cl:formlayout>
+    </cl:group>
+    <cl:group std:sid="group-2bb0c468">
+      <cl:xylayoutdata std:sid="xyl-data-fa2b2019" top="80px" right="80px" left="80px" height="40px" horizontalAnchor="BOTH" verticalAnchor="TOP"/>
+      <cl:inputbox std:sid="i-box-3264405a" id="ipb1">
+        <cl:xylayoutdata std:sid="xyl-data-28fb94b5" top="5px" right="90px" bottom="5px" width="180px" horizontalAnchor="RIGHT" verticalAnchor="BOTH"/>
+      </cl:inputbox>
+      <cl:button std:sid="button-3cc5b059" value="검색">
+        <cl:xylayoutdata std:sid="xyl-data-c92333dd" top="5px" right="30px" width="48px" height="30px" horizontalAnchor="RIGHT" verticalAnchor="TOP"/>
+      </cl:button>
+      <cl:checkbox std:sid="c-box-b0b4d5eb" id="cbx1" text="nickname">
+        <cl:xylayoutdata std:sid="xyl-data-9c75a239" top="5px" right="280px" bottom="5px" width="91px" horizontalAnchor="RIGHT" verticalAnchor="BOTH"/>
+      </cl:checkbox>
+      <cl:checkbox std:sid="c-box-eed2dd2d" id="cbx2" text="Email">
+        <cl:xylayoutdata std:sid="xyl-data-6cbc4a27" top="5px" right="381px" bottom="5px" width="91px" horizontalAnchor="RIGHT" verticalAnchor="BOTH"/>
+      </cl:checkbox>
+      <cl:xylayout std:sid="xylayout-7f675445"/>
     </cl:group>
     <cl:xylayout std:sid="xylayout-976cfdeb"/>
   </body>
