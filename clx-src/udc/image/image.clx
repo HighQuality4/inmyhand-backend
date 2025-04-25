@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:cl="http://tomatosystem.co.kr/cleopatra" xmlns:std="http://tomatosystem.co.kr/cleopatra/studio" std:sid="html-3edd65a6" version="1.0.5545">
+  <head std:sid="head-e6cc7408">
+    <std:metadata>
+      <std:property key="template-file" value="templates/contents_container.clx"/>
+    </std:metadata>
+    <screen std:sid="screen-f8467e70" id="default" name="default" width="1024px" height="768px" customHeight="600" customWidth="800" active="true"/>
+    <screen std:sid="screen-7cb65a04" id="tablet" name="tablet" width="500px" height="667px"/>
+    <screen std:sid="screen-9efeb755" id="mobile" name="mobile" width="350px" height="525px"/>
+    <cl:model std:sid="model-84546047">
+      <cl:datamap std:sid="d-map-71256033" id="dm1"/>
+    </cl:model>
+    <cl:appspec/>
+  </head>
+  <body std:sid="body-cf8cee30" style="top:0px; left:0px; width:100px; height:100px;">
+    <cl:group std:sid="group-4fed0f1a">
+      <cl:listener std:sid="listener-0fb069d1" name="click" handler="onGroupClick"/>
+      <cl:xylayoutdata std:sid="xyl-data-72c0b71f" top="5px" left="5px" width="90px" height="90px" horizontalAnchor="LEFT" verticalAnchor="TOP"/>
+      <cl:img std:sid="image-0d05a052" id="sampleImg" src="../../theme/images/heart_empty.svg">
+        <cl:listener std:sid="listener-64069c7f" name="click" handler="onSampleImgClick"/>
+        <cl:formdata std:sid="f-data-d5452cc4" row="0" col="0"/>
+      </cl:img>
+      <cl:group std:sid="group-1b5f6d58">
+        <cl:formdata std:sid="f-data-eb1c08fc" row="1" col="0"/>
+        <cl:fileinput std:sid="f-input-e687d605" id="selectFileInput">
+          <cl:listener std:sid="listener-79ed5139" name="value-change" handler="onSelectFileInputValueChange"/>
+          <cl:formdata std:sid="f-data-4f09563f" row="0" col="0"/>
+        </cl:fileinput>
+        <cl:button std:sid="button-8df26c4d" id="deleteBtn" value="x">
+          <cl:listener std:sid="listener-f62b1071" name="click" handler="onButtonClick"/>
+          <cl:formdata std:sid="f-data-acaacd08" row="0" col="1"/>
+        </cl:button>
+        <cl:formlayout std:sid="f-layout-1d196b35" scrollable="false" hspace="1px" vspace="1px" top-margin="0px" right-margin="0px" bottom-margin="0px" left-margin="0px">
+          <cl:rows length="1" unit="FRACTION"/>
+          <cl:columns length="60" unit="PIXEL" shadetype="NONE" shadecolor="transparent"/>
+          <cl:columns length="18" unit="PIXEL" shadetype="NONE" shadecolor="transparent"/>
+        </cl:formlayout>
+      </cl:group>
+      <cl:formlayout std:sid="f-layout-502284a6" scrollable="false" hspace="5px" vspace="1px" top-margin="5px" right-margin="5px" bottom-margin="5px" left-margin="5px">
+        <cl:rows length="60" unit="PIXEL" shadetype="NONE" shadecolor="transparent"/>
+        <cl:rows length="19" unit="PIXEL"/>
+        <cl:columns length="1" unit="FRACTION"/>
+      </cl:formlayout>
+    </cl:group>
+    <cl:xylayout std:sid="xylayout-7605e862"/>
+  </body>
+  <std:studiosetting>
+    <std:hruler/>
+    <std:vruler/>
+  </std:studiosetting>
+</html>
