@@ -1,22 +1,22 @@
 package com.inmyhand.refrigerator.admin.service;
 
-import com.inmyhand.refrigerator.admin.dto.AdminRecipeInfoDto;
-import com.inmyhand.refrigerator.admin.dto.MemberEntityDto;
-import com.inmyhand.refrigerator.admin.mapper.MemberMapper;
-import com.inmyhand.refrigerator.member.domain.dto.MemberCustomQueryDTO;
-import com.inmyhand.refrigerator.member.domain.entity.MemberEntity;
-import com.inmyhand.refrigerator.member.domain.enums.MemberStatus;
-import com.inmyhand.refrigerator.member.repository.MemberRepository;
-import com.inmyhand.refrigerator.recipe.repository.RecipeInfoRepository;
-import jakarta.persistence.EntityNotFoundException;
-import lombok.RequiredArgsConstructor;
+import java.util.List;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
-import java.util.stream.Collectors;
+import com.inmyhand.refrigerator.admin.dto.AdminRecipeInfoDto;
+import com.inmyhand.refrigerator.admin.dto.MemberEntityDto;
+import com.inmyhand.refrigerator.admin.mapper.MemberMapper;
+import com.inmyhand.refrigerator.member.domain.dto.MemberCustomQueryDTO;
+import com.inmyhand.refrigerator.member.domain.entity.MemberEntity;
+import com.inmyhand.refrigerator.member.repository.MemberRepository;
+import com.inmyhand.refrigerator.recipe.repository.RecipeInfoRepository;
+
+import jakarta.persistence.EntityNotFoundException;
+import lombok.RequiredArgsConstructor;
 
 @Service
 @RequiredArgsConstructor
@@ -81,13 +81,9 @@ public class AdminServiceImpl implements AdminService {
         return recipeInfoRepository.findAdminRecipeInfoUser(id, pageable);
     }
 
-    @Override
-    public List<MemberEntityDto> findMemberDTOSearch(MemberCustomQueryDTO memberCustomQueryDTO) {
-        return memberRepository.searchMember(memberCustomQueryDTO);
-    }
 
     @Override
-    public Page<AdminRecipeInfoDto> findMemberDTOSearch2(Pageable pageable, String name) {
-        return recipeInfoRepository.customQueryRecipe(pageable, name);
+    public Page<MemberEntityDto> findMemberDTOSearch(Pageable pageable,MemberCustomQueryDTO memberCustomQueryDTO) {
+        return memberRepository.searchMemberWithPaging(memberCustomQueryDTO, pageable);
     }
 }

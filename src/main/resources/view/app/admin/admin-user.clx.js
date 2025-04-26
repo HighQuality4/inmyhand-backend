@@ -61,7 +61,7 @@
 			function onGrd1CellClick(e){
 
 				var grd1 = e.control;
-			    var usersDataset = app.lookup("getusers");
+			    var usersDataset = app.lookup("content");
 			    
 			    // 클릭된 열의 이름 가져오기
 			    var clickedColumnName =  e.columnName;
@@ -139,7 +139,7 @@
 			// End - User Script
 			
 			// Header
-			var dataSet_1 = new cpr.data.DataSet("getusers");
+			var dataSet_1 = new cpr.data.DataSet("content");
 			dataSet_1.parseData({
 				"columns" : [
 					{"name": "memberName"},
@@ -245,7 +245,7 @@
 			(function(container){
 				var grid_1 = new cpr.controls.Grid("grd1");
 				grid_1.init({
-					"dataSet": app.lookup("getusers"),
+					"dataSet": app.lookup("content"),
 					"columns": [
 						{"width": "50px"},
 						{"width": "100px"},

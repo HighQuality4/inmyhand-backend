@@ -6,7 +6,7 @@
     <screen std:sid="screen-4a69d7e9" id="mobile" name="mobile" width="350px" height="525px"/>
     <link std:sid="link-73567cf0" href="../../theme/custom/web.part.less" rel="stylesheet" type="text/css"/>
     <cl:model std:sid="model-c486f8c4">
-      <cl:dataset std:sid="d-set-4410d5bc" id="getusers">
+      <cl:dataset std:sid="d-set-4410d5bc" id="content">
         <cl:datacolumnlist>
           <cl:datacolumn comment="이름" std:sid="d-column-0ce75837" name="memberName"/>
           <cl:datacolumn comment="이메일" std:sid="d-column-b15aa09f" name="email"/>
@@ -75,17 +75,17 @@
         </cl:datarowlist>
       </cl:dataset>
       <cl:submission std:sid="submission-b70704b3" id="admin_sms1" method="get" action="/api/admin/users">
-        <cl:responsedata dataid="getusers" isadd="true"/>
+        <cl:responsedata dataid="content" isadd="true"/>
       </cl:submission>
       <cl:submission std:sid="submission-95c7363e" id="admin_update" method="put" action="/api/admin/user-update" mediatype="application/json">
         <cl:listener std:sid="listener-a87a8825" name="submit-success" handler="onAdmin_updateSubmitSuccess"/>
-        <cl:requestdata dataid="getusers" payload="modified"/>
-        <cl:responsedata dataid="getusers" isadd="false"/>
+        <cl:requestdata dataid="content" payload="modified"/>
+        <cl:responsedata dataid="content" isadd="false"/>
       </cl:submission>
       <cl:submission std:sid="submission-a55e4229" id="admin_search" action="/api/admin/user/search">
         <cl:listener std:sid="listener-b24d3d4c" name="submit-success" handler="onAdmin_searchSubmitSuccess2"/>
         <cl:requestdata/>
-        <cl:responsedata dataid="getusers"/>
+        <cl:responsedata dataid="content"/>
       </cl:submission>
     </cl:model>
     <cl:appspec/>
@@ -94,7 +94,7 @@
     <cl:listener std:sid="listener-65f3f1b7" name="load" handler="onBodyLoad"/>
     <cl:group std:sid="group-e4941790">
       <cl:xylayoutdata std:sid="xyl-data-b95aa1fa" top="125px" right="80px" bottom="80px" left="80px" horizontalAnchor="BOTH" verticalAnchor="BOTH"/>
-      <cl:grid std:sid="grid-c829bfaa" id="grd1" style="background-color:#eaf1f3; background-image:none;" class="web-grid" datasetid="getusers">
+      <cl:grid std:sid="grid-c829bfaa" id="grd1" style="background-color:#eaf1f3; background-image:none;" class="web-grid" datasetid="content">
         <cl:listener std:sid="listener-6db670bf" name="cell-click" handler="onGrd1CellClick"/>
         <cl:verticaldata std:sid="v-data-473273f9" width="824px" height="475px" autosize="both"/>
         <cl:gridcolumn std:sid="g-column-7493d7e8" width="50px"/>
