@@ -44,10 +44,11 @@ public class FridgeFoodRestController {
     }
 
     //-----------------------------------------
+    // 냉장고별 식재료 결과 출력
     @PostMapping("/change")
     public ResponseEntity<?> getChangeFridgeFoods() {
 
-        Long fridgeId = 2L;
+        Long fridgeId = 1L; // userid = 3L
         List<FridgeFoodDTO> foodsList = fridgeFoodService.svcGetAllFridgeFoods(fridgeId);
         Map<String, Object> result = DtoMapperUtils.wrapInMap("foodList", foodsList);
 
@@ -64,6 +65,55 @@ public class FridgeFoodRestController {
 
         return ResponseEntity.ok(result);
     }
+
+
+    //-----------------------------------------
+    @PostMapping("/create/{fridgeId}")
+    public ResponseEntity<Void> createFridgeFood(
+            @PathVariable Long fridgeId,
+            @RequestBody List<FridgeFoodDTO> dtoList) {
+
+        fridgeFoodService.svcCreateFridgeFood(fridgeId,dtoList);
+
+        return ResponseEntity.status(HttpStatus.CREATED).build();
+
+    }
+
+    // 저장하기 test해야돼
+    @PostMapping("/create/foodList")
+    public ResponseEntity<?> createDtoSend(DataRequest dataRequest) {
+//        log.info("data={}", dataRequest.getRequestObject().toString());
+
+        List<FridgeFoodDTO> classList = ConverterClassUtil.getClassList(dataRequest, "insertFoodList",FridgeFoodDTO.class,"yyyyMMdd");
+        log.info("data={}",classList);
+        FridgeDTO single = ConverterClassUtil.getSingleClass(dataRequest, "fridgeIdParam",FridgeDTO.class);
+
+//        long fridgeId = single.getFridgeId();
+//        log.info("fridgeId={}",fridgeId);
+        long fridgeId = 1L;
+        fridgeFoodService.svcCreateFridgeFood(fridgeId,classList);
+
+        return ResponseEntity.ok("저장에 성공했습니다.");
+    }
+
+    @PutMapping("/update")
+    public void updateFridgeFood(@RequestBody List<FridgeFoodDTO> dtoList) {
+        fridgeFoodService.svcUpdateFridgeFood(dtoList);
+    }
+
+    // 수정하기 test해야돼
+    @PutMapping("/update/foodList")
+    public ResponseEntity<?> updateFoodDtoSend(DataRequest dataRequest) {
+
+        List<FridgeFoodDTO> updateList = ConverterClassUtil.getClassList(dataRequest, "updateFoodList",FridgeFoodDTO.class,"yyyyMMdd");
+        log.info("data={}",updateList);
+
+        fridgeFoodService.svcUpdateFridgeFood(updateList);
+
+        return ResponseEntity.ok("수정에 성공했습니다.");
+    }
+
+    //-----------------------
     @PostMapping("/search")
     public  ResponseEntity<?>  searchByCategoryName(DataRequest dataRequest) {
         SearchDTO singleClass = ConverterClassUtil.getSingleClass(dataRequest, "searchDataParam",SearchDTO.class);
@@ -82,19 +132,7 @@ public class FridgeFoodRestController {
     }
 
 
-    //-----------------------------------------
-    // 저장하기
-    @PostMapping("/create/foodList")
-    public ResponseEntity<?> createDtoSend(DataRequest dataRequest) {
-        log.info("data={}", dataRequest.getRequestObject().toString());
-
-
-        FridgeFoodDTO singleClass = ConverterClassUtil.getSingleClass(dataRequest, "sendFoodList",FridgeFoodDTO.class);
-        log.info("data={}",singleClass);
-
-        return ResponseEntity.ok(singleClass);
-    }
-
+    //-----------------------
     // 유저의 참여중인 냉장고 리스트 + 권한정보
     @GetMapping("/myFridgeListAndRole/{memberId}")
     public ResponseEntity<List<FridgeWithRolesDTO>> getFridgeListWithRole(@PathVariable Long memberId) {
@@ -109,16 +147,7 @@ public class FridgeFoodRestController {
     }
 //
 //    // 식재료 정보 입력
-    @PostMapping("/create/{fridgeId}")
-    public ResponseEntity<Void> createFridgeFood(
-            @PathVariable Long fridgeId,
-            @RequestBody List<FridgeFoodDTO> dtoList) {
 
-        fridgeFoodService.svcCreateFridgeFood(fridgeId,dtoList);
-
-        return ResponseEntity.status(HttpStatus.CREATED).build();
-
-    }
 
 
 //

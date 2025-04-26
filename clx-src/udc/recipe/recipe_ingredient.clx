@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:cl="http://tomatosystem.co.kr/cleopatra" xmlns:std="http://tomatosystem.co.kr/cleopatra/studio" std:sid="html-8f461c8e" version="1.0.5481">
+  <head std:sid="head-00dcea76">
+    <std:metadata>
+      <std:property key="template-file" value="templates/contents_container.clx"/>
+    </std:metadata>
+    <screen std:sid="screen-f1d8df29" id="default" name="default" width="1024px" height="768px" customHeight="600" customWidth="800" active="true"/>
+    <screen std:sid="screen-9a77c971" id="tablet" name="tablet" width="500px" height="667px"/>
+    <screen std:sid="screen-8d1b7189" id="mobile" name="mobile" width="350px" height="525px"/>
+    <cl:model std:sid="model-8380a19a"/>
+    <cl:appspec>
+      <cl:property name="ingredientName" type="string"/>
+      <cl:property name="ingredientCount" type="string"/>
+    </cl:appspec>
+  </head>
+  <body std:sid="body-00e16232" style="top:0px; left:0px; width:500px; height:30px;">
+    <cl:output std:sid="output-f0935b2b">
+      <cl:apppropbind property="value" category="PROPERTY" app-property="ingredientName"/>
+      <cl:flowlayoutdata std:sid="f-data-1d9eb503" width="50%" height="30px"/>
+    </cl:output>
+    <cl:output std:sid="output-e70a3ed0" style="text-align:right;">
+      <cl:apppropbind property="value" category="PROPERTY" app-property="ingredientCount"/>
+      <cl:flowlayoutdata std:sid="f-data-18290af8" width="50%" height="30px"/>
+    </cl:output>
+    <cl:flowlayout std:sid="f-layout-98f2db26" hspacing="0" vspacing="0" linewrap="false"/>
+  </body>
+  <std:studiosetting>
+    <std:hruler/>
+    <std:vruler/>
+  </std:studiosetting>
+</html>

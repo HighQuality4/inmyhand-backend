@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.*;
 import com.inmyhand.refrigerator.member.domain.entity.MemberEntity;
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.BatchSize;
 
 import java.util.Date;
 import java.util.List;
@@ -33,7 +34,6 @@ public class FridgeMemberEntity {
     @JoinColumn(name = "member_id")
     @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "nickname")
     @JsonIdentityReference(alwaysAsId = true)
-
     private MemberEntity memberEntity;
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -45,6 +45,7 @@ public class FridgeMemberEntity {
     @OneToMany(mappedBy = "fridgeMemberEntity", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonIgnoreProperties("fridgeMemberEntity")
     @JsonIgnore
+    @BatchSize(size = 10)
     private List<MemberGroupRoleEntity> permissionGroupRoleList;
 
     /**

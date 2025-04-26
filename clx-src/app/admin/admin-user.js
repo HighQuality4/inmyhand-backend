@@ -10,37 +10,35 @@
  * 앱이 최초 구성된후 최초 랜더링 직후에 발생하는 이벤트 입니다.
  */
 function onBodyLoad(e){
-		app.lookup("admin_sms1").send();
+	app.lookup("admin_sms1").send();
+	
+	radioInit();
 	
 }
+
+const radioInit = () => {
+		
+	var rdb = app.lookup("rdb1");
+    var ds1 = app.lookup("ds1");
+    rdb.setItemSet(ds1, {
+        label: "상태", 
+        value: "값"    
+    });
+}
+
+
 /*
  * 콤보 박스에서 item-click 이벤트 발생 시 호출.
  * 아이템 클릭시 발생하는 이벤트.
  */
 function onCmb1ItemClick(e){
 	var cmb1 = e.control;
-	var comboBox_1 = new cpr.controls.ComboBox("cmb1");
-	comboBox_1.setItemSet(comboset, {label: "상태", value: "값"});
+	var combo1 = app.lookup("cmb1");
+	var comboset = app.lookup("comboset");
+	combo1.setItemSet(comboset, {label: "상태", value: "값"});
 
 }
 
-///*
-// * "Button" 버튼에서 click 이벤트 발생 시 호출.
-// * 사용자가 컨트롤을 클릭할 때 발생하는 이벤트.
-// */
-//function onButtonClick(e){
-//	 var button = e.control; // 이벤트 발생 버튼 참조
-//	  // 'getusers' 데이터셋 참조 가져오기
-//        
-//      // 가져온 id 값을 사용하여 페이지를 이동합니다
-//      window.location.href = "/recipe/" +  app.lookup("getusers").getValue(0, "id");  
-//}
-//
-//
-////	var btn1 = app.lookup("getusers").getRowDataRanged().forEach(function(each){
-////		  			window.location.href = 'http://localhost:7079/recipe/'+ btn1;
-////
-////	});
 
 /*
  * 그리드에서 cell-click 이벤트 발생 시 호출.
@@ -49,7 +47,7 @@ function onCmb1ItemClick(e){
 function onGrd1CellClick(e){
 
 	var grd1 = e.control;
-    var usersDataset = app.lookup("getusers");
+    var usersDataset = app.lookup("content");
     
     // 클릭된 열의 이름 가져오기
     var clickedColumnName =  e.columnName;
@@ -58,20 +56,70 @@ function onGrd1CellClick(e){
     if(clickedColumnName === "id") {
         var recipeId = usersDataset.getValue(e.rowIndex, clickedColumnName);
         if(recipeId) {
-            window.location.href = "/recipe/" + recipeId;
+            window.location.href = "/admin/recipe/" + recipeId;
         }
     }
     
   
 }
 
+
 /*
- * "저장" 버튼에서 click 이벤트 발생 시 호출.
+ * "저장" 버튼(btn2)에서 click 이벤트 발생 시 호출.
  * 사용자가 컨트롤을 클릭할 때 발생하는 이벤트.
  */
-function onButtonClick(e){
-	var button = e.control;
-	app.lookup("admin_update").send();	
+function onBtn2Click(e){
+	var btn2 = e.control;
+		app.lookup("admin_update").send();	
 	
 }
 
+/*
+ * "검색" 버튼(btn1)에서 click 이벤트 발생 시 호출.
+ * 사용자가 컨트롤을 클릭할 때 발생하는 이벤트.
+ */
+function onBtn1Click(e){
+	
+	var btn1 = e.control;
+	const rdb1 = app.lookup("rdb1").value;
+	const cmb2 = app.lookup("cmb2").value;
+	const ipb1 = app.lookup("ipb1").value;
+
+	if (rdb1 === null && (!ipb1 || !ipb1.trim())) {
+		
+	} 
+	else if (rdb1 === null || !ipb1?.trim()) {
+	    alert("입력값을 확인해주세요.");
+	    return;
+	}
+
+	const searchSubmission = app.lookup("admin_search");
+	searchSubmission.removeAllParameters();
+
+	if(rdb1 !== null){
+		searchSubmission.setParameters(rdb1,ipb1);
+	} 
+	
+	if(cmb2 !== null){
+        searchSubmission.setParameters("combo", cmb2);
+    } 
+	
+    searchSubmission.send();
+}
+
+/*
+ * "검색" 버튼(btn3)에서 click 이벤트 발생 시 호출.
+ * 사용자가 컨트롤을 클릭할 때 발생하는 이벤트.
+ */
+function onBtn3Click(e){
+	var btn3 = e.control;
+	
+	const rdb1 = app.lookup("rdb1");
+	const cmb2 = app.lookup("cmb2");
+	const ipb1 = app.lookup("ipb1");
+	
+	rdb1.clearSelection();
+	cmb2.clearSelection();
+	ipb1.clear();
+	cmb2.value = "전체보기";
+}

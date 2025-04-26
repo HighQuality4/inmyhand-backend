@@ -8,6 +8,7 @@ import lombok.*;
 @AllArgsConstructor
 @Builder
 public class FridgeDTO {
-    private Long id;
+
     private String fridgeName;
+    private Long fridgeId;
 }

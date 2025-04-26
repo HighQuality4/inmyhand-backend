@@ -1,21 +1,22 @@
 package com.inmyhand.refrigerator.admin.service;
 
-import com.inmyhand.refrigerator.admin.dto.AdminRecipeInfoDto;
-import com.inmyhand.refrigerator.admin.dto.MemberEntityDto;
-import com.inmyhand.refrigerator.admin.mapper.MemberMapper;
-import com.inmyhand.refrigerator.member.domain.entity.MemberEntity;
-import com.inmyhand.refrigerator.member.domain.enums.MemberStatus;
-import com.inmyhand.refrigerator.member.repository.MemberRepository;
-import com.inmyhand.refrigerator.recipe.repository.RecipeInfoRepository;
-import jakarta.persistence.EntityNotFoundException;
-import lombok.RequiredArgsConstructor;
+import java.util.List;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
-import java.util.stream.Collectors;
+import com.inmyhand.refrigerator.admin.dto.AdminRecipeInfoDto;
+import com.inmyhand.refrigerator.admin.dto.MemberEntityDto;
+import com.inmyhand.refrigerator.admin.mapper.MemberMapper;
+import com.inmyhand.refrigerator.member.domain.dto.MemberCustomQueryDTO;
+import com.inmyhand.refrigerator.member.domain.entity.MemberEntity;
+import com.inmyhand.refrigerator.member.repository.MemberRepository;
+import com.inmyhand.refrigerator.recipe.repository.RecipeInfoRepository;
+
+import jakarta.persistence.EntityNotFoundException;
+import lombok.RequiredArgsConstructor;
 
 @Service
 @RequiredArgsConstructor
@@ -76,7 +77,13 @@ public class AdminServiceImpl implements AdminService {
      * @return
      */
     @Override
-    public Page<AdminRecipeInfoDto> findAllAdminRecipeInfo(Long id, Pageable pageable) {
-        return recipeInfoRepository.findAdminRecipeInfoUser(id, pageable);
+    public Page<AdminRecipeInfoDto> findAllAdminRecipeInfo(Long id, String name, Pageable pageable) {
+        return recipeInfoRepository.customQueryRecipe(pageable, name, id);
+    }
+
+
+    @Override
+    public Page<MemberEntityDto> findMemberDTOSearch(Pageable pageable,MemberCustomQueryDTO memberCustomQueryDTO) {
+        return memberRepository.searchMemberWithPaging(memberCustomQueryDTO, pageable);
     }
 }

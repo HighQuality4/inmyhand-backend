@@ -3,6 +3,7 @@ package com.inmyhand.refrigerator.fridge.domain.entity;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.BatchSize;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,6 +30,7 @@ public class PermissionEntity {
 
     @OneToMany(mappedBy = "permissionEntity", cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.LAZY)
     @JsonIgnoreProperties("permissionEntity")
+    @BatchSize(size = 10)
     private List<PermissionGroupRoleEntity> permissionsGroupRoleList = new ArrayList<>();
 
 

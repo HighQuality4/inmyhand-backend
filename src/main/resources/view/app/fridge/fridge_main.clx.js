@@ -29,8 +29,7 @@
 			function onButtonClick(e){
 				var button = e.control;
 				alert("동작 테스트합니다");
-				app.lookup("foodListGrid").redraw();
-				
+
 			}
 
 
@@ -39,42 +38,59 @@
 			 * 앱이 최초 구성된후 최초 랜더링 직후에 발생하는 이벤트 입니다.
 			 */
 			function onBodyLoad2(e){
-				app.lookup("getFoodList").send();
-				app.lookup("getFridgeList").send();
-				
-			}
 
+				app.lookup("getFridgeList").send();
+				app.lookup("getFoodList").send();
+			}
 
 
 			/*
-			 * "Button" 버튼에서 click 이벤트 발생 시 호출.
-			 * 사용자가 컨트롤을 클릭할 때 발생하는 이벤트.
+			 * 서브미션에서 submit-success 이벤트 발생 시 호출.
+			 * 통신이 성공하면 발생합니다.
 			 */
-			function onButtonClick2(e){
-				var button = e.control;
+			function onGetFridgeListSubmitSuccess(e){
+				var getFridgeList = e.control;
 				
-			//	app.lookup("getFridgeList").send();
-				
-				
-				app.lookup("fridgeList").getRowDataRanged().forEach(function(each){
-					 
-					// NavigationBar에 사용할 올바른 객체는 MenuItem입니다
-					var item = new cpr.controls.MenuItem(each.fridgeName, each.fridgeId, null);
-				
-					// NavigationBar에 아이템 추가
-					app.lookup("fridgNavbar").addItem(item);
-				});
+			//	app.lookup("fridgeList").getRowDataRanged().forEach(function(each){
+			//	 
+			//		// NavigationBar에 사용할 올바른 객체는 MenuItem입니다
+			//		var item = new cpr.controls.MenuItem(each.fridgeName, each.fridgeId, null);
+			//	
+			//		// NavigationBar에 아이템 추가
+			//		app.lookup("fridgNavbar").addItem(item);
+			//	});
 
-				alert("동작 테스트합니다");
-				
 			}
 
 
+			/*
+			 * 내비게이션 바에서 item-click 이벤트 발생 시 호출.
+			 * 아이템 클릭시 발생하는 이벤트.
+			 */
+			function onFridgNavbarItemClick(e){
+
+				var fridgNavbar = e.control;
+
+				alert("클릭됨 "+e.item.value);
+			  	
+			  	var setClickLabelValue = e.item.value; 
+			  	
+			  	// 정적의 nav값 추출했음.
+			  	var vcNav = app.lookup("fridgNavbar");
+			  	
+			    var voItem = vcNav.getItemByValue(setClickLabelValue);
+			    vcNav.focusItem(voItem);
+			    alert(voItem.value);	
+				
+			}
+
 			function focusItem(vsValue) {
+			    
 			    var vcNav = app.lookup("fridgNavbar");
 			    var voItem = vcNav.getItemByValue(vsValue);
 			    vcNav.focusItem(voItem);
-
+			    alert(voItem);
+			    
 			}
 
 			function fixGridSetting(){
@@ -83,16 +99,7 @@
 				// 좌측 틀고정을 가로사이즈 100px, 고정되는 셀 수는 2개로 설정합니다.
 				grid.leftSplitWidth = 100;
 				grid.rightSplit = 1;
-				
-				
-			//	var email = app.lookup("email").value;
-			//	var password = app.lookup("password").value; // 요청 데이터 담는 DataMap
-			//	
-			//	var dm = app.lookup("dmLogin");
-			//	dm.setValue("email", email);
-			//	dm.setValue("password", password);
-			//	
-			//	app.lookup("smsLogin").send();
+
 			}
 
 			function onRowAdded(event) {
@@ -114,70 +121,9 @@
 			}
 
 
-			function controlFoodInsertGrid(e){
-			}
 
 
 			//----------------------------------------
-			/*
-			 * 그리드에서 insert 이벤트 발생 시 호출.
-			 * Grid의 행이 추가되었을 때 이벤트.
-			 */
-				/*
-				function onFoodListGridInsert(e){
-					
-					// 현재 이벤트 중인 음식 그리드
-					var foodListGrid = e.control;
-					
-					// 현재 클릭된 row 번호
-					var totalGridIndex = e.rowIndex;
-					
-					// 
-					var countSelectGridrow = totalGridIndex-1;
-					
-					
-					var formatGrid = app.lookup("foodListGrid");
-					
-				//	
-				//	formatGrid.focusCell(, );
-				//	
-				//	
-					if(countSelectGridrow > 7){
-						countSelectGridrow = 7;	
-					}
-					
-					alert(e.relativeTargetName + "countSelectGridrow" + countSelectGridrow);
-					
-					
-				//	for (var i = countSelectGridrow; i < totalGridIndex; i++) {
-				//	  var rowData = {
-				//	    id: ds.getValue(i, "id"),
-				//	    foodName: ds.getValue(i, "foodName")
-				//	    // 필요한 컬럼 계속 추가
-				//	  };
-				//
-				//	}
-					
-			//	var foodDataSet = app.lookup("insertFoodList");
-			//	
-			//	var totalInsertRow = foodDataSet.getRowCount();
-			//		
-			//	alert(totalInsertRow);	
-			//	for (var i = 0; i < totalInsertRow; i++) {
-			//	  var rowData = {
-			//	    id: foodDataSet.getValue(i, "id"),
-			//	    foodName: foodDataSet.getValue(i, "foodName"),
-			//	    foodAmount: foodDataSet.getValue(i, "foodAmount")
-			//	    // 필요한 컬럼 계속 추가
-			//	  };
-			//	    alert("rowData[" + i + "]\n" +
-			//        "id: " + rowData.id + "\n" +
-			//        "foodName: " + rowData.foodName + "\n" +
-			//        "foodAmount: " + rowData.foodAmount);
-			//	}
-					
-				}
-				*/
 
 			/*
 			 * 사용자 정의 컨트롤에서 save-click 이벤트 발생 시 호출.
@@ -189,23 +135,39 @@
 				
 				var foodDataSet = app.lookup("insertFoodList");
 				
+				var foodDataMap = app.lookup("fridgeIdParam");
+				
+			//	fridgeId 
+			// 	foodDataMap.setAttr("fridgeId", "1");
+				
+				
+				
 				var totalInsertRow = foodDataSet.getRowCount();
 					
-				alert(totalInsertRow);
+				alert("변경된 저장 방법");
+
+				app.lookup("sendFoodList").send();
+				app.lookup("getFoodList").send();
 				
-			//	for (var i = 0; i < totalInsertRow; i++) {
-			//	  var rowData = {
-			//	    id: foodDataSet.getValue(i, "id"),
-			//	    foodName: foodDataSet.getValue(i, "foodName"),
-			//	    foodAmount: foodDataSet.getValue(i, "foodAmount")
-			//	    // 필요한 컬럼 계속 추가
-			//	  };
-			//	    alert("rowData[" + i + "]\n" +
-			//        "id: " + rowData.id + "\n" +
-			//        "foodName: " + rowData.foodName + "\n" +
-			//        "foodAmount: " + rowData.foodAmount);
-			//	}
-				app.lookup("sendFoodList").send();	
+				app.lookup("foodListGrid").redraw();
+				app.lookup("insertFoodgrd").revertData(); 
+				
+				
+			}
+
+
+
+			/*
+			 * 사용자 정의 컨트롤에서 save-update-click 이벤트 발생 시 호출.
+			 * update서버연결저장
+			 */
+			function onFridgeUDSaveUpdateClick(e){
+				var fridgeUD = e.control;
+				app.lookup("updateFoodList").send();
+				
+				
+				app.lookup("getFoodList").send();
+				app.lookup("foodListGrid").redraw();	
 				
 			};
 			// End - User Script
@@ -213,7 +175,8 @@
 			// Header
 			var dataSet_1 = new cpr.data.DataSet("foodList");
 			dataSet_1.parseData({
-				"columns" : [
+				"sortCondition": "categoryName desc",
+				"columns": [
 					{
 						"name": "id",
 						"dataType": "number"
@@ -360,6 +323,9 @@
 			submission_2.action = "/api/fridge/myFridgeList";
 			submission_2.mediaType = "application/json";
 			submission_2.addResponseData(dataSet_2, false);
+			if(typeof onGetFridgeListSubmitSuccess == "function") {
+				submission_2.addEventListener("submit-success", onGetFridgeListSubmitSuccess);
+			}
 			app.register(submission_2);
 			
 			var submission_3 = new cpr.protocols.Submission("searchFoodCategoryList");
@@ -371,9 +337,17 @@
 			
 			var submission_4 = new cpr.protocols.Submission("sendFoodList");
 			submission_4.action = "/api/fridge/create/foodList";
+			submission_4.addRequestData(dataSet_5);
 			submission_4.addRequestData(dataMap_1);
 			submission_4.addResponseData(dataSet_5, false);
 			app.register(submission_4);
+			
+			var submission_5 = new cpr.protocols.Submission("updateFoodList");
+			submission_5.method = "put";
+			submission_5.action = "/api/fridge/update/foodList";
+			submission_5.mediaType = "application/json";
+			submission_5.addRequestData(dataSet_1);
+			app.register(submission_5);
 			app.supportMedia("all and (min-width: 1024px)", "default");
 			app.supportMedia("all and (min-width: 500px) and (max-width: 1023.984px)", "tablet");
 			app.supportMedia("all and (max-width: 499.984px)", "mobile");
@@ -396,37 +370,48 @@
 			var verticalLayout_1 = new cpr.controls.layouts.VerticalLayout();
 			group_1.setLayout(verticalLayout_1);
 			(function(container){
-				var button_1 = new cpr.controls.Button();
-				button_1.value = "Button";
-				if(typeof onButtonClick == "function") {
-					button_1.addEventListener("click", onButtonClick);
-				}
-				container.addChild(button_1, {
-					"width": "100px",
-					"height": "20px"
-				});
-				var button_2 = new cpr.controls.Button();
-				button_2.value = "내비게이션 동적 추가";
-				if(typeof onButtonClick2 == "function") {
-					button_2.addEventListener("click", onButtonClick2);
-				}
-				container.addChild(button_2, {
-					"width": "100px",
-					"height": "20px"
-				});
 				var navigationBar_1 = new cpr.controls.NavigationBar("fridgNavbar");
+				(function(navigationBar_1){
+					navigationBar_1.setItemSet(app.lookup("fridgeList"), {
+						"label": "fridgeName",
+						"value": "fridgeId"
+					});
+				})(navigationBar_1);
 				if(typeof onFridgNavbarSelectionChange == "function") {
 					navigationBar_1.addEventListener("selection-change", onFridgNavbarSelectionChange);
 				}
 				if(typeof onFridgNavbarBeforeContextValueChange == "function") {
 					navigationBar_1.addEventListener("before-context-value-change", onFridgNavbarBeforeContextValueChange);
 				}
+				if(typeof onFridgNavbarItemClick == "function") {
+					navigationBar_1.addEventListener("item-click", onFridgNavbarItemClick);
+				}
 				container.addChild(navigationBar_1, {
 					"autoSize": "none",
 					"width": "419px",
 					"height": "40px"
 				});
-				var grid_1 = new cpr.controls.Grid("foodListGrid");
+				var group_2 = new cpr.controls.Container();
+				var flowLayout_1 = new cpr.controls.layouts.FlowLayout();
+				flowLayout_1.horizontalAlign = "right";
+				group_2.setLayout(flowLayout_1);
+				(function(container){
+					var userDefinedControl_1 = linker.userDefinedControl_1 = new udc.fridge.fridgeUD();
+					if(typeof onFridgeUDSaveUpdateClick == "function") {
+						userDefinedControl_1.addEventListener("save-update-click", onFridgeUDSaveUpdateClick);
+					}
+					container.addChild(userDefinedControl_1, {
+						"autoSize": "none",
+						"width": "220px",
+						"height": "50px"
+					});
+				})(group_2);
+				container.addChild(group_2, {
+					"autoSize": "height",
+					"width": "400px",
+					"height": "50px"
+				});
+				var grid_1 = linker.grid_1 = new cpr.controls.Grid("foodListGrid");
 				grid_1.init({
 					"dataSet": app.lookup("foodList"),
 					"columns": [
@@ -700,7 +685,7 @@
 				container.addChild(grid_1, {
 					"autoSize": "none",
 					"width": "419px",
-					"height": "223px"
+					"height": "238px"
 				});
 				var pageIndexer_1 = new cpr.controls.PageIndexer();
 				container.addChild(pageIndexer_1, {
@@ -867,12 +852,12 @@
 					"width": "400px",
 					"height": "200px"
 				});
-				var userDefinedControl_1 = linker.userDefinedControl_1 = new udc.fridge.fridgeCRUD("fridgeCRUD");
-				userDefinedControl_1.addStr = "추가";
+				var userDefinedControl_2 = linker.userDefinedControl_2 = new udc.fridge.fridgeCRUD("fridgeCRUD");
+				userDefinedControl_2.addStr = "추가";
 				if(typeof onFridgeCRUDSaveClick == "function") {
-					userDefinedControl_1.addEventListener("save-click", onFridgeCRUDSaveClick);
+					userDefinedControl_2.addEventListener("save-click", onFridgeCRUDSaveClick);
 				}
-				container.addChild(userDefinedControl_1, {
+				container.addChild(userDefinedControl_2, {
 					"autoSize": "none",
 					"width": "300px",
 					"height": "40px"
@@ -882,24 +867,24 @@
 				positions: [
 					{
 						"media": "all and (min-width: 1024px)",
-						"top": "117px",
-						"left": "49px",
+						"top": "20px",
+						"left": "64px",
 						"width": "448px",
-						"height": "635px"
+						"height": "657px"
 					}, 
 					{
 						"media": "all and (min-width: 500px) and (max-width: 1023.984px)",
-						"top": "117px",
-						"left": "24px",
+						"top": "20px",
+						"left": "31px",
 						"width": "219px",
-						"height": "635px"
+						"height": "657px"
 					}, 
 					{
 						"media": "all and (max-width: 499.984px)",
-						"top": "117px",
-						"left": "17px",
+						"top": "20px",
+						"left": "22px",
 						"width": "153px",
-						"height": "635px"
+						"height": "657px"
 					}
 				]
 			});
@@ -907,7 +892,8 @@
 				app.addEventListener("load", onBodyLoad2);
 			}
 			// Linking
-			linker.userDefinedControl_1.grdCtrl = linker.grid_2;
+			linker.userDefinedControl_1.grdUDCtrl = linker.grid_1;
+			linker.userDefinedControl_2.grdCtrl = linker.grid_2;
 		}
 	});
 	app.title = "fridge_main";

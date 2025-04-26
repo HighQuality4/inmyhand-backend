@@ -1,5 +1,6 @@
 package com.inmyhand.refrigerator.fridge.domain.dto.food;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.*;
 
 import java.lang.reflect.Field;
@@ -17,8 +18,11 @@ public class FridgeFoodDTO {
     private Long id;
     private String foodName;
     private Long foodAmount;
+    @JsonFormat(pattern = "yyyy-MM-dd")
     private Date endDate;
+    @JsonFormat(pattern = "yyyy-MM-dd")
     private Date chargeDate;
+    @JsonFormat(pattern = "yyyy-MM-dd")
     private Date saveDate;
     private String categoryName;
     private Long fridgeId;
