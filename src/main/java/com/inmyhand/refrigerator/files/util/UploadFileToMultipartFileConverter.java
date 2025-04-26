@@ -1,7 +1,7 @@
-package com.cleopatra.util;
+package com.inmyhand.refrigerator.files.util;
 
-import com.cleopatra.protocol.data.UploadFile;
-import org.springframework.web.multipart.MultipartFile;
+
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -9,6 +9,10 @@ import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.StandardCopyOption;
+
+import org.springframework.web.multipart.MultipartFile;
+
+import com.cleopatra.protocol.data.UploadFile;
 
 /**
  * Utility to convert a custom UploadFile object into Spring's MultipartFile.

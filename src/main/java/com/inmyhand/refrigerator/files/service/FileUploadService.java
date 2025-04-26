@@ -1,11 +1,11 @@
 package com.inmyhand.refrigerator.files.service;
 
 import com.cleopatra.protocol.data.UploadFile;
-import com.cleopatra.util.UploadFileToMultipartFileConverter;
 import com.inmyhand.refrigerator.files.domain.entity.FileUploadRequest;
 import com.inmyhand.refrigerator.files.domain.entity.FileUploadResponse;
 import com.inmyhand.refrigerator.files.domain.entity.FilesEntity;
 import com.inmyhand.refrigerator.files.repository.FilesRepository;
+import com.inmyhand.refrigerator.files.util.UploadFileToMultipartFileConverter;
 import com.inmyhand.refrigerator.member.domain.entity.MemberEntity;
 import com.inmyhand.refrigerator.member.repository.MemberRepository;
 import com.inmyhand.refrigerator.recipe.domain.entity.RecipeInfoEntity;
