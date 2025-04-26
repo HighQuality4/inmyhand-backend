@@ -20,7 +20,7 @@
         <cl:xylayout std:sid="xylayout-ad4e5103"/>
       </cl:group>
       <cl:group std:sid="group-14382c43">
-        <cl:verticaldata std:sid="v-data-2e92cf40" width="400px" height="147px"/>
+        <cl:verticaldata std:sid="v-data-2e92cf40" width="400px" height="100px"/>
         <cl:udc std:sid="ud-control-ff4f9907" id="uploadImage" type="udc.image.UDCImageBox">
           <cl:flowlayoutdata std:sid="f-data-f8f46652" width="100px" height="100px"/>
         </cl:udc>
@@ -28,7 +28,7 @@
       </cl:group>
       <cl:button std:sid="button-ec17644a" value="Button">
         <cl:listener std:sid="listener-7fc68821" name="click" handler="onButtonClick"/>
-        <cl:verticaldata std:sid="v-data-155f1dcb" width="100px" height="20px" autosize="none"/>
+        <cl:verticaldata std:sid="v-data-49d026c9" width="600px" height="20px" autosize="none"/>
       </cl:button>
       <cl:verticallayout std:sid="v-layout-53d426e4"/>
     </cl:group>
@@ -38,6 +38,7 @@
     <std:hruler/>
     <std:vruler>
       <std:guide position="49"/>
+      <std:guide position="110"/>
     </std:vruler>
   </std:studiosetting>
 </html>

@@ -73,7 +73,7 @@
 				})(group_3);
 				container.addChild(group_3, {
 					"width": "400px",
-					"height": "147px"
+					"height": "100px"
 				});
 				var button_1 = new cpr.controls.Button();
 				button_1.value = "Button";
@@ -82,7 +82,7 @@
 				}
 				container.addChild(button_1, {
 					"autoSize": "none",
-					"width": "100px",
+					"width": "600px",
 					"height": "20px"
 				});
 			})(group_1);
