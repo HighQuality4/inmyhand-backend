@@ -39,8 +39,13 @@
 			    const ipb1 = app.lookup("ipb1").value;
 			    
 			    if (ipb1?.trim()) {
-			   		recipe.setParameters("searchName", ipb1);   
+			   		recipe.setParameters("name", ipb1);   
 				}
+				
+				if (ipb1.trim().length === 0) {
+			       recipe.removeAllParameters();
+			    }
+				
 			    
 			    // 요청 URL 설정
 			    recipe.setRequestActionUrl(recipe.action + "/" + lastSegment);
@@ -79,20 +84,49 @@
 
 			/*
 			 * "검색" 버튼에서 click 이벤트 발생 시 호출.
-			 * 사용자가 컨트롤을 클릭할 때 발생하는 이벤트.
+			 * 사용자가 컨트롤을.클릭할 때 발생하는 이벤트.
 			 */
-			function onButtonClick(e){
-				var button = e.control;
-				const ipb1 = app.lookup("ipb1").value;
-				if(ipb1.length === 1){
+			function onButtonClick(e) {
+			    var button = e.control;
+			    const searchValue = app.lookup("ipb1");
+			    
+			    // 검색어 유효성 검사
+			    if (!searchValue || searchValue.value.trim() === "") {
+			        // 검색어가 비어있는 경우
+			        app.lookup("ipb1").value = ""; // 입력 필드 초기화
+			        loadRecipeData(); // 모든 데이터 로드
+			        return;
+			    }
+			    
+			    
+			    // 검색어 길이 검사
+			    if (searchValue.value.trim().length === 1) {
 			        alert("2글자 이상 입력해주세요.");
 			        return;
 			    }
 			    
-			   const sub = app.lookup("adminRecipeGet");
-			   sub.setParameters("searchName", ipb1);
-			   sub.send();
-			   
+			    // 검색 실행
+			    loadRecipeData();
+			}
+
+			/*
+			 * 그리드에서 cell-click 이벤트 발생 시 호출.
+			 * Grid의 Cell 클릭시 발생하는 이벤트.
+			 */
+			function onGrd1CellClick(e){
+				var grd1 = e.control;
+				var usersDataset = app.lookup("content");
+				   // 클릭된 열의 이름 가져오기
+			    var clickedColumnName =  e.columnName;
+			    
+			  console.log("clickedColumnName : " + clickedColumnName);
+			    // "레시피 보러가기" 컬럼인지 확인
+			    if(clickedColumnName === "id") {
+			        var recipeId = usersDataset.getValue(e.rowIndex, clickedColumnName);
+			        if(recipeId) {
+			            window.location.href = "/recipe/" + recipeId;
+			        }
+			    }
 			};
 			// End - User Script
 			
@@ -100,11 +134,11 @@
 			var dataSet_1 = new cpr.data.DataSet("content");
 			dataSet_1.parseData({
 				"columns" : [
-					{"name": "id"},
 					{"name": "recipeName"},
 					{"name": "createdAt"},
 					{"name": "likeCount"},
-					{"name": "viewCount"}
+					{"name": "viewCount"},
+					{"name": "id"}
 				]
 			});
 			app.register(dataSet_1);
@@ -236,7 +270,7 @@
 										cell.filterable = false;
 										cell.sortable = true;
 										cell.targetColumnName = "id";
-										cell.text = "레시피 보러가기";
+										cell.text = "보러가기";
 									}
 								}
 							]
@@ -297,10 +331,11 @@
 								{
 									"constraint": {"rowIndex": 0, "colIndex": 5},
 									"configurator": function(cell){
-										cell.columnName = "보러가기";
+										cell.columnName = "id";
 										cell.control = (function(){
 											var output_5 = new cpr.controls.Output();
-											output_5.bind("value").toDataColumn("보러가기");
+											output_5.displayExp = "\"보러가기\"";
+											output_5.bind("value").toDataColumn("id");
 											return output_5;
 										})();
 									}
@@ -312,6 +347,12 @@
 						"background-color" : "#eaf1f3",
 						"background-image" : "none"
 					});
+					if(typeof onGrd1Click == "function") {
+						grid_1.addEventListener("click", onGrd1Click);
+					}
+					if(typeof onGrd1CellClick == "function") {
+						grid_1.addEventListener("cell-click", onGrd1CellClick);
+					}
 					container.addChild(grid_1, {
 						"autoSize": "both",
 						"width": "824px",

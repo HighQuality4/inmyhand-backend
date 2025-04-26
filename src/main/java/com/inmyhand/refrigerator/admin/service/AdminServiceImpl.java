@@ -77,8 +77,8 @@ public class AdminServiceImpl implements AdminService {
      * @return
      */
     @Override
-    public Page<AdminRecipeInfoDto> findAllAdminRecipeInfo(Long id, Pageable pageable) {
-        return recipeInfoRepository.findAdminRecipeInfoUser(id, pageable);
+    public Page<AdminRecipeInfoDto> findAllAdminRecipeInfo(Long id, String name, Pageable pageable) {
+        return recipeInfoRepository.customQueryRecipe(pageable, name, id);
     }
 
 

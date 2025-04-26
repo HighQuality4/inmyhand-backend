@@ -3,9 +3,7 @@ package com.inmyhand.refrigerator.admin.controller;
 import java.util.List;
 import java.util.Map;
 
-import com.cleopatra.spring.fileupload.MultipartFileItem;
 import com.inmyhand.refrigerator.member.domain.dto.MemberCustomQueryDTO;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -24,57 +22,55 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class AdminController {
 
-	private final AdminService adminService;
+    private final AdminService adminService;
 
-	/**
-	 * key : ad1 value : List<MemberEntityDto>
-	 *
-	 * @return
-	 */
-	@GetMapping("/users")
-	public ResponseEntity<Map<String, List<MemberEntityDto>>> adminUserView() {
-		return ResponseEntity
-				.ok(Map.of("content", adminService.findAllMembers()));
-	}
+    /**
+     * key : ad1 value : List<MemberEntityDto>
+     *
+     * @return
+     */
+    @GetMapping("/users")
+    public ResponseEntity<Map<String, List<MemberEntityDto>>> adminUserView() {
+        return ResponseEntity
+                .ok(Map.of("content", adminService.findAllMembers()));
+    }
 
-	/**
-	 * 유저 업데이트 key : ad1 value : List<MemberEntityDto>
-	 *
-	 * @return
-	 */
-	@PutMapping("/user-update")
-	public ResponseEntity<Map<String, List<MemberEntityDto>>> adminUserView2(
-			DataRequest dataRequest) {
+    /**
+     * 유저 업데이트 key : ad1 value : List<MemberEntityDto>
+     *
+     * @return
+     */
+    @PutMapping("/user-update")
+    public ResponseEntity<Map<String, List<MemberEntityDto>>> adminUserView2(
+            DataRequest dataRequest) {
 
-		List<MemberEntityDto> classList = ConverterClassUtil
-				.getClassList(dataRequest, "getusers", MemberEntityDto.class);
-		adminService.updateMember(classList);
+        List<MemberEntityDto> classList = ConverterClassUtil
+                .getClassList(dataRequest, "getusers", MemberEntityDto.class);
+        adminService.updateMember(classList);
 
-		return ResponseEntity
-				.ok(Map.of("content", adminService.findAllMembers()));
-	}
+        return ResponseEntity
+                .ok(Map.of("content", adminService.findAllMembers()));
+    }
 
-	@GetMapping("/recipe/{id}")
-	public ResponseEntity<?> userRecipe(
-			@RequestParam(required = false, value = "page", defaultValue = "0") int pageId,
-			@PathVariable("id") Long id) {
+    @GetMapping("/recipe/{id}")
+    public ResponseEntity<?> userRecipe(
+            @RequestParam(required = false, value = "page", defaultValue = "0") int pageId,
+            @RequestParam(required = false, value = "name") String name,
+            @PathVariable("id") Long id) {
 
-		return ResponseEntity.ok(adminService.findAllAdminRecipeInfo(id,
-				PageRequest.of(pageId, 30)));
-	}
+        log.info("pageId: " + pageId + ", name: " + name + ", id: " + id);
 
-//	@PostMapping("/user/search")
-//	public ResponseEntity<?> userSearch(@ModelAttribute MemberCustomQueryDTO memberCustomQueryDTO){
-//
-//		return ResponseEntity.ok(Map.of("getusers",adminService.findMemberDTOSearch(memberCustomQueryDTO)));
-//	}
+        return ResponseEntity.ok(adminService.findAllAdminRecipeInfo(id, name,
+                PageRequest.of(pageId, 30)));
+    }
 
-	@PostMapping("/user/search")
-	public ResponseEntity<?> userSearch(@RequestParam(required = false, value = "page", defaultValue = "0") int pageId,
-										@ModelAttribute MemberCustomQueryDTO memberCustomQueryDTO) {
 
-		return ResponseEntity.ok(adminService.findMemberDTOSearch(PageRequest.of(pageId, 30), memberCustomQueryDTO));
-	}
+    @PostMapping("/user/search")
+    public ResponseEntity<?> userSearch(@RequestParam(required = false, value = "page", defaultValue = "0") int pageId,
+                                        @ModelAttribute MemberCustomQueryDTO memberCustomQueryDTO) {
+
+        return ResponseEntity.ok(adminService.findMemberDTOSearch(PageRequest.of(pageId, 30), memberCustomQueryDTO));
+    }
 
 
 }

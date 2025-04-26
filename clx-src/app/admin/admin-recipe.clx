@@ -12,11 +12,11 @@
     <cl:model std:sid="model-5c8945b9">
       <cl:dataset std:sid="d-set-ce7e7ca0" id="content">
         <cl:datacolumnlist>
-          <cl:datacolumn std:sid="d-column-7bdd663b" name="id"/>
           <cl:datacolumn std:sid="d-column-70b6ee69" name="recipeName"/>
           <cl:datacolumn std:sid="d-column-051df245" name="createdAt"/>
           <cl:datacolumn std:sid="d-column-7bd41f92" name="likeCount"/>
           <cl:datacolumn std:sid="d-column-3e50e9bf" name="viewCount"/>
+          <cl:datacolumn std:sid="d-column-7bdd663b" name="id"/>
         </cl:datacolumnlist>
       </cl:dataset>
       <cl:datamap std:sid="d-map-96875bbf" id="pageIndex">
@@ -42,6 +42,8 @@
       <cl:group std:sid="group-3aab3ce5">
         <cl:xylayoutdata std:sid="xyl-data-8f91f2ac" top="0px" right="20px" bottom="20px" left="20px" horizontalAnchor="BOTH" verticalAnchor="BOTH"/>
         <cl:grid std:sid="grid-ad49875b" id="grd1" style="background-color:#eaf1f3; background-image:none;" datasetid="content" autorowheight="all" topsplitheight="0" leftsplit="0">
+          <cl:listener std:sid="listener-008c0c19" name="click" handler="onGrd1Click"/>
+          <cl:listener std:sid="listener-3c738b15" name="cell-click" handler="onGrd1CellClick"/>
           <cl:verticaldata std:sid="v-data-e31c08de" width="824px" height="475px" autosize="both"/>
           <cl:gridcolumn std:sid="g-column-08493dad" width="50px"/>
           <cl:gridcolumn std:sid="g-column-469c0d33"/>
@@ -56,7 +58,7 @@
             <cl:gridcell std:sid="gh-cell-47b2008d" rowindex="0" colindex="2" targetcolumnname="createdAt" sortable="true" filterable="true" text="작성 날짜"/>
             <cl:gridcell std:sid="gh-cell-3e85a200" rowindex="0" colindex="3" targetcolumnname="likeCount" sortable="true" filterable="false" text="좋아요 수"/>
             <cl:gridcell std:sid="gh-cell-adb1bce0" rowindex="0" colindex="4" targetcolumnname="viewCount" sortable="true" filterable="false" text="조회수"/>
-            <cl:gridcell std:sid="gh-cell-2a96cea1" rowindex="0" colindex="5" targetcolumnname="id" sortable="true" filterable="false" text="레시피 보러가기"/>
+            <cl:gridcell std:sid="gh-cell-2a96cea1" rowindex="0" colindex="5" targetcolumnname="id" sortable="true" filterable="false" text="보러가기"/>
           </cl:gridheader>
           <cl:griddetail std:sid="gd-band-90169a36">
             <cl:gridrow std:sid="g-row-666d5a14"/>
@@ -81,8 +83,8 @@
                 <cl:celldata std:sid="c-data-e00077de"/>
               </cl:output>
             </cl:gridcell>
-            <cl:gridcell std:sid="gd-cell-e0d503a6" rowindex="0" colindex="5" columnname="보러가기">
-              <cl:output std:sid="output-ea2c10be">
+            <cl:gridcell std:sid="gd-cell-e0d503a6" rowindex="0" colindex="5" columnname="id">
+              <cl:output std:sid="output-ea2c10be" displayexp="&quot;보러가기&quot;">
                 <cl:celldata std:sid="c-data-575b06f8"/>
               </cl:output>
             </cl:gridcell>

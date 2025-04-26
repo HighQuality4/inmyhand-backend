@@ -24,8 +24,13 @@ function loadRecipeData(pageIdx) {
     const ipb1 = app.lookup("ipb1").value;
     
     if (ipb1?.trim()) {
-   		recipe.setParameters("searchName", ipb1);   
+   		recipe.setParameters("name", ipb1);   
 	}
+	
+	if (ipb1.trim().length === 0) {
+       recipe.removeAllParameters();
+    }
+	
     
     // 요청 URL 설정
     recipe.setRequestActionUrl(recipe.action + "/" + lastSegment);
@@ -64,18 +69,47 @@ function onRecipeIndexSelectionChange(e) {
 
 /*
  * "검색" 버튼에서 click 이벤트 발생 시 호출.
- * 사용자가 컨트롤을 클릭할 때 발생하는 이벤트.
+ * 사용자가 컨트롤을.클릭할 때 발생하는 이벤트.
  */
-function onButtonClick(e){
-	var button = e.control;
-	const ipb1 = app.lookup("ipb1").value;
-	if(ipb1.length === 1){
+function onButtonClick(e) {
+    var button = e.control;
+    const searchValue = app.lookup("ipb1");
+    
+    // 검색어 유효성 검사
+    if (!searchValue || searchValue.value.trim() === "") {
+        // 검색어가 비어있는 경우
+        app.lookup("ipb1").value = ""; // 입력 필드 초기화
+        loadRecipeData(); // 모든 데이터 로드
+        return;
+    }
+    
+    
+    // 검색어 길이 검사
+    if (searchValue.value.trim().length === 1) {
         alert("2글자 이상 입력해주세요.");
         return;
     }
     
-   const sub = app.lookup("adminRecipeGet");
-   sub.setParameters("searchName", ipb1);
-   sub.send();
-   
+    // 검색 실행
+    loadRecipeData();
+}
+
+/*
+ * 그리드에서 cell-click 이벤트 발생 시 호출.
+ * Grid의 Cell 클릭시 발생하는 이벤트.
+ */
+function onGrd1CellClick(e){
+	var grd1 = e.control;
+	var usersDataset = app.lookup("content");
+	   // 클릭된 열의 이름 가져오기
+    var clickedColumnName =  e.columnName;
+    
+  console.log("clickedColumnName : " + clickedColumnName);
+    // "레시피 보러가기" 컬럼인지 확인
+    if(clickedColumnName === "id") {
+        var recipeId = usersDataset.getValue(e.rowIndex, clickedColumnName);
+        if(recipeId) {
+            window.location.href = "/recipe/" + recipeId;
+        }
+    }
 }

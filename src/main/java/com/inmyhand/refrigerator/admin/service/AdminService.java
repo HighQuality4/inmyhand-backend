@@ -17,6 +17,6 @@ public interface AdminService {
     List<MemberEntityDto> findByMemberAll();
     void updateMember(List<MemberEntityDto> memberEntityDto);
     List<MemberEntityDto> findAllMembers();
-    Page<AdminRecipeInfoDto> findAllAdminRecipeInfo(Long id, Pageable pageable);
+    Page<AdminRecipeInfoDto> findAllAdminRecipeInfo(Long id, String name ,Pageable pageable);
     Page<MemberEntityDto> findMemberDTOSearch(Pageable pageable, MemberCustomQueryDTO memberDTO);
 }

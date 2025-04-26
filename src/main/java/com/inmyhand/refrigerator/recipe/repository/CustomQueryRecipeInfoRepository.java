@@ -7,5 +7,5 @@ import org.springframework.data.domain.Pageable;
 
 public interface CustomQueryRecipeInfoRepository {
 
-    Page<AdminRecipeInfoDto> customQueryRecipe(Pageable pageable, String name);
+    Page<AdminRecipeInfoDto> customQueryRecipe(Pageable pageable, String name, Long id);
 }

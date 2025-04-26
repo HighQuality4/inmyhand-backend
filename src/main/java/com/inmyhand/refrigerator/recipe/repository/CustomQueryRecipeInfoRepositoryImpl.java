@@ -1,7 +1,6 @@
 package com.inmyhand.refrigerator.recipe.repository;
 
 import com.inmyhand.refrigerator.admin.dto.AdminRecipeInfoDto;
-import com.inmyhand.refrigerator.recipe.domain.entity.QRecipeInfoEntity;
 import com.querydsl.core.types.Projections;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQuery;
@@ -21,9 +20,8 @@ public class CustomQueryRecipeInfoRepositoryImpl implements CustomQueryRecipeInf
 
     private final JPAQueryFactory jpaQueryFactory;
 
-
     @Override
-    public Page<AdminRecipeInfoDto> customQueryRecipe(Pageable pageable, String name) {
+    public Page<AdminRecipeInfoDto> customQueryRecipe(Pageable pageable, String name, Long id) {
         // 메인 쿼리 생성
         JPAQuery<AdminRecipeInfoDto> query = jpaQueryFactory
                 .select(Projections.constructor(AdminRecipeInfoDto.class,
@@ -33,7 +31,10 @@ public class CustomQueryRecipeInfoRepositoryImpl implements CustomQueryRecipeInf
                         recipeInfoEntity.recipeLikesList.size(),
                         recipeInfoEntity.recipeViewsList.size()))
                 .from(recipeInfoEntity)
-                .where(recipeNameContains(name))  // 별도의 메서드 사용
+                .where(
+                        recipeNameContains(name),
+                        recipeInfoEntity.memberEntity.id.eq(id) // memberEntity의 id로 수정
+                )
                 .orderBy(recipeInfoEntity.createdAt.asc());
 
         // 페이징 처리를 위한 쿼리 실행
@@ -46,7 +47,10 @@ public class CustomQueryRecipeInfoRepositoryImpl implements CustomQueryRecipeInf
         JPAQuery<Long> countQuery = jpaQueryFactory
                 .select(recipeInfoEntity.count())
                 .from(recipeInfoEntity)
-                .where(recipeNameContains(name));  // 동일한 조건 적용
+                .where(
+                        recipeNameContains(name),
+                        recipeInfoEntity.memberEntity.id.eq(id) // 동일한 조건 적용
+                );
 
         // 페이지 결과 반환
         return PageableExecutionUtils.getPage(content, pageable, countQuery::fetchOne);
@@ -58,9 +62,4 @@ public class CustomQueryRecipeInfoRepositoryImpl implements CustomQueryRecipeInf
                 ? recipeInfoEntity.recipeName.contains(name)
                 : null;  // null을 반환하면 QueryDSL이 해당 조건을 무시
     }
-
-
-
-
-
 }
