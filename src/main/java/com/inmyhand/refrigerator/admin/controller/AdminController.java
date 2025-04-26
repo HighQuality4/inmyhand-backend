@@ -5,6 +5,7 @@ import java.util.Map;
 
 import com.cleopatra.spring.fileupload.MultipartFileItem;
 import com.inmyhand.refrigerator.member.domain.dto.MemberCustomQueryDTO;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -33,7 +34,7 @@ public class AdminController {
 	@GetMapping("/users")
 	public ResponseEntity<Map<String, List<MemberEntityDto>>> adminUserView() {
 		return ResponseEntity
-				.ok(Map.of("getusers", adminService.findAllMembers()));
+				.ok(Map.of("content", adminService.findAllMembers()));
 	}
 
 	/**
@@ -50,7 +51,7 @@ public class AdminController {
 		adminService.updateMember(classList);
 
 		return ResponseEntity
-				.ok(Map.of("getusers", adminService.findAllMembers()));
+				.ok(Map.of("content", adminService.findAllMembers()));
 	}
 
 	@GetMapping("/recipe/{id}")
@@ -70,9 +71,9 @@ public class AdminController {
 
 	@PostMapping("/user/search")
 	public ResponseEntity<?> userSearch(@RequestParam(required = false, value = "page", defaultValue = "0") int pageId,
-										@RequestParam( required = false, value = "searchName") String keyword) {
+										@ModelAttribute MemberCustomQueryDTO memberCustomQueryDTO) {
 
-		return ResponseEntity.ok(Map.of("getusers",adminService.findMemberDTOSearch2(PageRequest.of(pageId, 30), keyword)));
+		return ResponseEntity.ok(adminService.findMemberDTOSearch(PageRequest.of(pageId, 30), memberCustomQueryDTO));
 	}
 
 

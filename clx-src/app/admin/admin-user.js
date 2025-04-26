@@ -47,7 +47,7 @@ function onCmb1ItemClick(e){
 function onGrd1CellClick(e){
 
 	var grd1 = e.control;
-    var usersDataset = app.lookup("getusers");
+    var usersDataset = app.lookup("content");
     
     // 클릭된 열의 이름 가져오기
     var clickedColumnName =  e.columnName;
