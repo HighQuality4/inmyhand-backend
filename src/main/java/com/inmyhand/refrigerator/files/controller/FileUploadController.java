@@ -4,27 +4,21 @@ import com.cleopatra.XBConfig;
 import com.cleopatra.protocol.data.DataRequest;
 import com.cleopatra.protocol.data.UploadFile;
 
-import com.cleopatra.util.UploadFileToMultipartFileConverter;
 import com.inmyhand.refrigerator.files.domain.entity.FileUploadRequest;
 import com.inmyhand.refrigerator.files.domain.entity.FileUploadResponse;
 import com.inmyhand.refrigerator.files.service.FileUploadService;
+import com.inmyhand.refrigerator.files.util.UploadFileToMultipartFileConverter;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.core.io.Resource;
-import org.springframework.core.io.UrlResource;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import org.springframework.web.multipart.MultipartFile;
 
 
-import java.io.File;
 import java.io.IOException;
 import java.util.*;
-import java.util.stream.Collectors;
 
 @RestController
 @RequiredArgsConstructor
