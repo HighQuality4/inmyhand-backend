@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:cl="http://tomatosystem.co.kr/cleopatra" xmlns:std="http://tomatosystem.co.kr/cleopatra/studio" std:sid="html-b442c0bb" version="1.0.5545">
+  <head std:sid="head-c50e4652">
+    <screen std:sid="screen-df541710" id="default" name="default" width="1024px" height="768px"/>
+    <screen std:sid="screen-d19f1294" id="tablet" name="tablet" width="500px" height="667px"/>
+    <screen std:sid="screen-946026ef" id="mobile" name="mobile" width="350px" height="525px"/>
+    <cl:model std:sid="model-fde2c13e">
+      <cl:datamap std:sid="d-map-22f31f46" id="dmEmailCode">
+        <cl:datacolumnlist>
+          <cl:datacolumn std:sid="d-column-8a495d61" name="email"/>
+          <cl:datacolumn std:sid="d-column-baebbe05" name="code" datatype="string"/>
+        </cl:datacolumnlist>
+      </cl:datamap>
+      <cl:submission std:sid="submission-d693e66f" id="smsEmailAuth" action="/api/user/auth/verify-code" mediatype="application/json">
+        <cl:listener std:sid="listener-08bc874d" name="submit-success" handler="onSmsEmailAuthSubmitSuccess"/>
+        <cl:listener std:sid="listener-ecaf15b6" name="receive" handler="onSmsEmailAuthReceive"/>
+        <cl:requestdata dataid="dmEmailCode"/>
+      </cl:submission>
+    </cl:model>
+    <cl:appspec/>
+  </head>
+  <body std:sid="body-fa5465cb" style="top:0px; left:0px; width:520px; height:186px;">
+    <cl:udc std:sid="ud-control-67e27371" id="timer" type="udc.register.timer">
+      <cl:xylayoutdata std:sid="xyl-data-7055ab64" top="0px" width="520px" height="52px" horizontalAnchor="CENTER" verticalAnchor="TOP"/>
+    </cl:udc>
+    <cl:inputbox std:sid="i-box-8d546cec" id="code_input" style="text-align:center;" placeholder="인증 코드를 입력하세요">
+      <cl:xylayoutdata std:sid="xyl-data-9a224af3" top="62px" width="520px" height="52px" horizontalAnchor="CENTER" verticalAnchor="TOP"/>
+    </cl:inputbox>
+    <cl:button std:sid="button-8c24ed9c" id="submitConfirm" value="확인">
+      <cl:listener std:sid="listener-c0e25436" name="click" handler="onSubmitConfirmClick"/>
+      <cl:xylayoutdata std:sid="xyl-data-827cab83" top="124px" width="520px" height="52px" horizontalAnchor="CENTER" verticalAnchor="TOP"/>
+    </cl:button>
+    <cl:xylayout std:sid="xylayout-6198d0ef"/>
+  </body>
+  <std:studiosetting>
+    <std:hruler/>
+    <std:vruler/>
+  </std:studiosetting>
+</html>

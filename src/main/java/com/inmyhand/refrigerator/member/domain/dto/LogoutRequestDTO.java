@@ -10,6 +10,6 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 public class LogoutRequestDTO {
-    private Long id;
+    private Long userId;
     private String refreshToken;
 }

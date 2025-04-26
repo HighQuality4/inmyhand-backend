@@ -16,19 +16,24 @@ public class MemberServiceImpl implements MemberService {
     private final PasswordEncoder passwordEncoder;
 
     @Override
-    public MemberEntity registerLocal(MemberDTO memberDTO) {
+    public boolean registerLocal(MemberDTO memberDTO) {
+    	try {
+	        MemberEntity memberEntity = MemberEntity.builder()
+	                .memberName(memberDTO.getMemberName())
+	                .nickname(memberDTO.getNickname())
+	                .password(passwordEncoder.encode(memberDTO.getPassword()))
+	                .email(memberDTO.getEmail())
+	                .phoneNum(memberDTO.getPhoneNum())
+	                .providerId("LOCAL")
+	                .status(MemberStatus.active)
+	                .build();
 
-        MemberEntity memberEntity = MemberEntity.builder()
-                .memberName(memberDTO.getMemberName())
-                .nickname(memberDTO.getNickname())
-                .password(passwordEncoder.encode(memberDTO.getPassword()))
-                .email(memberDTO.getEmail())
-                .phoneNum(memberDTO.getPhoneNum())
-                .providerId("LOCAL")
-                .status(MemberStatus.active)
-                .build();
-
-        return memberRepository.save(memberEntity);
+	        memberRepository.save(memberEntity);
+        
+	        return true;
+	    } catch (Exception e) {
+	    	return false;
+	    } 
     }
 
 //    public String getMemberProfileImage(Long memberId) {

@@ -43,11 +43,10 @@ public class LogInAndOutController {
     }
 
     @PostMapping("/logout")
-    public ResponseEntity<?> logout(DataRequest datarequest) {
-
+    public ResponseEntity<?> ctlLogout(DataRequest datarequest) {
         LogoutRequestDTO logoutRequestDTO = ConverterClassUtil.getSingleClass(datarequest, "dmLogout", LogoutRequestDTO.class);
 
-        Long userId = logoutRequestDTO.getId();
+        Long userId = logoutRequestDTO.getUserId();
 
         // 해당 userId로 리프레시 토큰 조회 후 삭제
         logoutService.logout(userId);
@@ -60,8 +59,19 @@ public class LogInAndOutController {
                 .secure(true)
                 .build();
 
-        return ResponseEntity.ok() //응답 없음: 204 code
-                .header(HttpHeaders.SET_COOKIE, deleteAccessToken.toString())
+        ResponseCookie deleteUserIdToken = ResponseCookie.from("userId", "")
+                .path("/")
+                .maxAge(0)
+                .httpOnly(true)
+                .secure(true)
+                .build();
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.add(HttpHeaders.SET_COOKIE, deleteAccessToken.toString());
+        headers.add(HttpHeaders.SET_COOKIE, deleteUserIdToken.toString());
+
+        return ResponseEntity.ok()
+                .headers(headers)
                 .body("로그아웃 완료");
     }
 

@@ -34,7 +34,7 @@ function onButtonClickNaver(e){
  * 사용자가 컨트롤을 클릭할 때 발생하는 이벤트.
  */
 function onButtonClickGoogle(e){
-	window.location.href = "http://localhost:7079/oauth2/authorization/google";	
+	window.location.href = "http://localhost:7079/oauth2/authorization/google";
 }
 
 /*
