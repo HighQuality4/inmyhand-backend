@@ -16,10 +16,135 @@
 			 * Created at 2025. 4. 17. 오후 1:52:50.
 			 *
 			 * @author gyrud
-			 ************************************************/;
+			 ************************************************/
+
+			/*
+			 * "이메일 인증" 버튼(email_submit)에서 click 이벤트 발생 시 호출.
+			 * 사용자가 컨트롤을 클릭할 때 발생하는 이벤트.
+			 */
+			function onEmail_submitClick(e){
+				var email_submit = e.control;
+				
+				var emailValue = app.lookup("email_input").value;
+			    if (!emailValue) {
+			        alert("이메일을 입력해주세요.");
+			        return;
+			    }
+
+			    var email = app.lookup("smsEmailSend");
+			    var dmEmail = app.lookup("dmEmailAuth");
+			    localStorage.setItem("userEmail", emailValue);
+			    dmEmail.setValue("email", emailValue);
+			    console.log(dmEmail.getValue("email"));
+			    email.send();
+				
+				alert("인증 코드가 발송되었습니다.");
+				
+				var formGroup = app.lookup("confirmForm");
+			    formGroup.visible = true;
+			    
+			    app.setAppProperty("isFormVisible", true);
+			    
+			    // 이메일 인증 타이머 시작 (3분 = 180초)
+			    var confirmForm = app.lookup("confirmForm");
+				confirmForm.callAppMethod("startTimer");
+			}
+
+			/*
+			 * "회원가입" 버튼(register_submit)에서 click 이벤트 발생 시 호출.
+			 * 사용자가 컨트롤을 클릭할 때 발생하는 이벤트.
+			 */
+			function onRegister_submitClick(e){
+				var register_submit = e.control;
+				var email = app.lookup("email_input").value;
+				var name = app.lookup("name_input").value;
+				var nickname = app.lookup("nickname_input").value;
+				var password = app.lookup("password_input").value;
+				var password_confirm = app.lookup("password_confirm").value;
+				var dm = app.lookup("dmRegister");
+				
+				if (password !== password_confirm) {
+					alert("비밀번호가 일치하지 않습니다!!");
+					e.preventDefault(); //서버로 전송 막음
+					return;
+				}
+				var confirmForm = app.lookup("confirmForm");
+				var res = confirmForm.callAppMethod("getRes");  // 인증 플래그 읽기
+			    if (!res) {
+			        alert("이메일 인증을 완료해 주세요.");
+			        e.preventDefault();  // 서버 전송 막기
+			        return;
+			    }
+				
+				dm.setValue("email", email);
+				dm.setValue("memberName", name);
+				dm.setValue("nickname", nickname);
+				dm.setValue("password", password);
+				
+				var sms = app.lookup("smsRegister");
+				sms.send();
+			}
+
+			/*
+			 * 서브미션에서 receive 이벤트 발생 시 호출.
+			 * 서버로 부터 데이터를 모두 전송받았을 때 발생합니다.
+			 */
+			function onSmsRegisterReceive(e){
+				var smsRegister = e.control;
+				var xhr = smsRegister.xhr;
+				var res = JSON.parse(xhr.responseText);
+				console.log(res);
+				if (res === true) {
+					alert("가입에 성공했습니다!");
+				} else {
+					alert("가입에 실패했습니다!");
+					e.preventDefault();
+				}
+				
+			};
 			// End - User Script
 			
 			// Header
+			var dataMap_1 = new cpr.data.DataMap("dmEmailAuth");
+			dataMap_1.parseData({
+				"columns" : [{"name": "email"}]
+			});
+			app.register(dataMap_1);
+			
+			var dataMap_2 = new cpr.data.DataMap("dmRegister");
+			dataMap_2.parseData({
+				"columns" : [
+					{"name": "email"},
+					{"name": "nickname"},
+					{"name": "password"},
+					{"name": "memberName"}
+				]
+			});
+			app.register(dataMap_2);
+			var submission_1 = new cpr.protocols.Submission("smsEmailAuth");
+			submission_1.action = "/api/user/auth/verify-code";
+			submission_1.mediaType = "application/json";
+			if(typeof onSmsEmailAuthSubmitSuccess == "function") {
+				submission_1.addEventListener("submit-success", onSmsEmailAuthSubmitSuccess);
+			}
+			app.register(submission_1);
+			
+			var submission_2 = new cpr.protocols.Submission("smsEmailSend");
+			submission_2.action = "/api/user/auth/verify-email";
+			submission_2.addRequestData(dataMap_1);
+			submission_2.addResponseData(dataMap_1, true);
+			if(typeof onSmsEmailSendSubmitSuccess == "function") {
+				submission_2.addEventListener("submit-success", onSmsEmailSendSubmitSuccess);
+			}
+			app.register(submission_2);
+			
+			var submission_3 = new cpr.protocols.Submission("smsRegister");
+			submission_3.action = "/api/user/register";
+			submission_3.addRequestData(dataMap_2);
+			if(typeof onSmsRegisterReceive == "function") {
+				submission_3.addEventListener("receive", onSmsRegisterReceive);
+			}
+			app.register(submission_3);
 			app.supportMedia("all and (min-width: 1024px)", "default");
 			app.supportMedia("all and (min-width: 500px) and (max-width: 1023.984px)", "tablet");
 			app.supportMedia("all and (max-width: 499.984px)", "mobile");
@@ -34,8 +159,8 @@
 			});
 			
 			// Layout
-			var responsiveXYLayout_1 = new cpr.controls.layouts.ResponsiveXYLayout();
-			container.setLayout(responsiveXYLayout_1);
+			var verticalLayout_1 = new cpr.controls.layouts.VerticalLayout();
+			container.setLayout(verticalLayout_1);
 			
 			// UI Configuration
 			var output_1 = new cpr.controls.Output();
@@ -47,220 +172,106 @@
 				"font-family" : "Kim jung chul Myungjo Regular"
 			});
 			container.addChild(output_1, {
-				positions: [
-					{
-						"media": "all and (min-width: 1024px)",
-						"top": "49px",
-						"left": "40px",
-						"width": "520px",
-						"height": "74px"
-					}, 
-					{
-						"media": "all and (min-width: 500px) and (max-width: 1023.984px)",
-						"top": "49px",
-						"left": "20px",
-						"width": "254px",
-						"height": "74px"
-					}, 
-					{
-						"media": "all and (max-width: 499.984px)",
-						"top": "49px",
-						"left": "14px",
-						"width": "178px",
-						"height": "74px"
-					}
-				]
+				"width": "520px",
+				"height": "74px"
 			});
 			
-			var inputBox_1 = new cpr.controls.InputBox("ipb1");
-			inputBox_1.placeholder = "닉네임 입력";
-			inputBox_1.style.css({
-				"border-radius" : "5px",
-				"text-align" : "center"
-			});
-			container.addChild(inputBox_1, {
-				positions: [
-					{
-						"media": "all and (min-width: 1024px)",
-						"top": "202px",
-						"left": "40px",
-						"width": "520px",
-						"height": "52px"
-					}, 
-					{
-						"media": "all and (min-width: 500px) and (max-width: 1023.984px)",
-						"top": "202px",
-						"left": "20px",
-						"width": "254px",
-						"height": "52px"
-					}, 
-					{
-						"media": "all and (max-width: 499.984px)",
-						"top": "202px",
-						"left": "14px",
-						"width": "178px",
-						"height": "52px"
-					}
-				]
+			var group_1 = new cpr.controls.Container("email_group");
+			var verticalLayout_2 = new cpr.controls.layouts.VerticalLayout();
+			verticalLayout_2.spacing = 10;
+			group_1.setLayout(verticalLayout_2);
+			(function(container){
+				var inputBox_1 = new cpr.controls.InputBox("email_input");
+				inputBox_1.placeholder = "이메일 입력";
+				inputBox_1.style.css({
+					"border-radius" : "5px",
+					"text-align" : "center"
+				});
+				container.addChild(inputBox_1, {
+					"width": "600px",
+					"height": "52px"
+				});
+				var button_1 = new cpr.controls.Button("email_submit");
+				button_1.value = "이메일 인증";
+				button_1.style.css({
+					"border-radius" : "5px"
+				});
+				if(typeof onEmail_submitClick == "function") {
+					button_1.addEventListener("click", onEmail_submitClick);
+				}
+				container.addChild(button_1, {
+					"width": "600px",
+					"height": "52px"
+				});
+				var userDefinedControl_1 = new udc.register.confirmForm("confirmForm");
+				userDefinedControl_1.visible = false;
+				container.addChild(userDefinedControl_1, {
+					"width": "520px",
+					"height": "186px"
+				});
+			})(group_1);
+			container.addChild(group_1, {
+				"autoSize": "height",
+				"width": "100%",
+				"height": "311px"
 			});
 			
-			var inputBox_2 = new cpr.controls.InputBox("ipb2");
-			inputBox_2.placeholder = "비밀번호 입력";
+			var inputBox_2 = new cpr.controls.InputBox("name_input");
+			inputBox_2.placeholder = "이름 입력";
 			inputBox_2.style.css({
 				"border-radius" : "5px",
 				"text-align" : "center"
 			});
 			container.addChild(inputBox_2, {
-				positions: [
-					{
-						"media": "all and (min-width: 1024px)",
-						"top": "264px",
-						"left": "40px",
-						"width": "520px",
-						"height": "52px"
-					}, 
-					{
-						"media": "all and (min-width: 500px) and (max-width: 1023.984px)",
-						"top": "264px",
-						"left": "20px",
-						"width": "254px",
-						"height": "52px"
-					}, 
-					{
-						"media": "all and (max-width: 499.984px)",
-						"top": "264px",
-						"left": "14px",
-						"width": "178px",
-						"height": "52px"
-					}
-				]
+				"autoSize": "none",
+				"width": "600px",
+				"height": "52px"
 			});
 			
-			var inputBox_3 = new cpr.controls.InputBox("ipb3");
-			inputBox_3.placeholder = "비밀번호 확인";
+			var inputBox_3 = new cpr.controls.InputBox("nickname_input");
+			inputBox_3.placeholder = "닉네임 입력";
 			inputBox_3.style.css({
 				"border-radius" : "5px",
 				"text-align" : "center"
 			});
 			container.addChild(inputBox_3, {
-				positions: [
-					{
-						"media": "all and (min-width: 1024px)",
-						"top": "326px",
-						"left": "40px",
-						"width": "520px",
-						"height": "52px"
-					}, 
-					{
-						"media": "all and (min-width: 500px) and (max-width: 1023.984px)",
-						"top": "326px",
-						"left": "20px",
-						"width": "254px",
-						"height": "52px"
-					}, 
-					{
-						"media": "all and (max-width: 499.984px)",
-						"top": "326px",
-						"left": "14px",
-						"width": "178px",
-						"height": "52px"
-					}
-				]
+				"width": "520px",
+				"height": "52px"
 			});
 			
-			var inputBox_4 = new cpr.controls.InputBox("ipb4");
-			inputBox_4.value = "이메일 입력";
-			inputBox_4.placeholder = "이메일";
+			var inputBox_4 = new cpr.controls.InputBox("password_input");
+			inputBox_4.placeholder = "비밀번호 입력";
 			inputBox_4.style.css({
 				"border-radius" : "5px",
 				"text-align" : "center"
 			});
 			container.addChild(inputBox_4, {
-				positions: [
-					{
-						"media": "all and (min-width: 1024px)",
-						"top": "388px",
-						"left": "40px",
-						"width": "520px",
-						"height": "52px"
-					}, 
-					{
-						"media": "all and (min-width: 500px) and (max-width: 1023.984px)",
-						"top": "388px",
-						"left": "20px",
-						"width": "254px",
-						"height": "52px"
-					}, 
-					{
-						"media": "all and (max-width: 499.984px)",
-						"top": "388px",
-						"left": "14px",
-						"width": "178px",
-						"height": "52px"
-					}
-				]
+				"width": "520px",
+				"height": "52px"
 			});
 			
-			var button_1 = new cpr.controls.Button();
-			button_1.value = "회원가입";
-			button_1.style.css({
-				"border-radius" : "5px"
+			var inputBox_5 = new cpr.controls.InputBox("password_confirm");
+			inputBox_5.placeholder = "비밀번호 확인";
+			inputBox_5.style.css({
+				"border-radius" : "5px",
+				"text-align" : "center"
 			});
-			container.addChild(button_1, {
-				positions: [
-					{
-						"media": "all and (min-width: 1024px)",
-						"top": "512px",
-						"left": "40px",
-						"width": "520px",
-						"height": "52px"
-					}, 
-					{
-						"media": "all and (min-width: 500px) and (max-width: 1023.984px)",
-						"top": "512px",
-						"left": "20px",
-						"width": "254px",
-						"height": "52px"
-					}, 
-					{
-						"media": "all and (max-width: 499.984px)",
-						"top": "512px",
-						"left": "14px",
-						"width": "178px",
-						"height": "52px"
-					}
-				]
+			container.addChild(inputBox_5, {
+				"width": "520px",
+				"height": "52px"
 			});
 			
-			var button_2 = new cpr.controls.Button();
-			button_2.value = "이메일 인증";
+			var button_2 = new cpr.controls.Button("register_submit");
+			button_2.value = "회원가입";
 			button_2.style.css({
 				"border-radius" : "5px"
 			});
+			if(typeof onRegister_submitClick == "function") {
+				button_2.addEventListener("click", onRegister_submitClick);
+			}
 			container.addChild(button_2, {
-				positions: [
-					{
-						"media": "all and (min-width: 1024px)",
-						"top": "450px",
-						"left": "40px",
-						"width": "520px",
-						"height": "52px"
-					}, 
-					{
-						"media": "all and (min-width: 500px) and (max-width: 1023.984px)",
-						"top": "450px",
-						"left": "20px",
-						"width": "254px",
-						"height": "52px"
-					}, 
-					{
-						"media": "all and (max-width: 499.984px)",
-						"top": "450px",
-						"left": "14px",
-						"width": "178px",
-						"height": "52px"
-					}
-				]
+				"width": "520px",
+				"height": "52px"
 			});
 		}
 	});
