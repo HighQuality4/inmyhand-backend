@@ -21,6 +21,11 @@ function getLastUrlSegment() {
 function loadRecipeData(pageIdx) {
     const recipe = app.lookup("adminRecipeGet");
     const lastSegment = getLastUrlSegment();
+    const ipb1 = app.lookup("ipb1").value;
+    
+    if (ipb1?.trim()) {
+   		recipe.setParameters("searchName", ipb1);   
+	}
     
     // 요청 URL 설정
     recipe.setRequestActionUrl(recipe.action + "/" + lastSegment);
@@ -52,10 +57,25 @@ function onRecipeIndexSelectionChange(e) {
     var dmPage = app.lookup("pageIndex");
     dmPage.setValue("pageIdx", e.newSelection);
     
+    
     // 페이지 인덱스로 데이터 로드
     loadRecipeData(dmPage.getDatas().pageIdx);
 }
 
-
-
-
+/*
+ * "검색" 버튼에서 click 이벤트 발생 시 호출.
+ * 사용자가 컨트롤을 클릭할 때 발생하는 이벤트.
+ */
+function onButtonClick(e){
+	var button = e.control;
+	const ipb1 = app.lookup("ipb1").value;
+	if(ipb1.length === 1){
+        alert("2글자 이상 입력해주세요.");
+        return;
+    }
+    
+   const sub = app.lookup("adminRecipeGet");
+   sub.setParameters("searchName", ipb1);
+   sub.send();
+   
+}

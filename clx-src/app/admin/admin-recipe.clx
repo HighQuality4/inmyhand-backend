@@ -38,52 +38,52 @@
   <body std:sid="body-552b8625" style="background-color:#f3f1f0; background-image:none;">
     <cl:listener std:sid="listener-127b9aa0" name="load" handler="onBodyLoad"/>
     <cl:group std:sid="group-e4941790">
-      <cl:xylayoutdata std:sid="xyl-data-5a4b53e8" top="120px" right="80px" bottom="80px" left="80px" horizontalAnchor="BOTH" verticalAnchor="BOTH"/>
+      <cl:xylayoutdata std:sid="xyl-data-5a4b53e8" top="125px" right="80px" bottom="80px" left="80px" horizontalAnchor="BOTH" verticalAnchor="BOTH"/>
       <cl:group std:sid="group-3aab3ce5">
-        <cl:xylayoutdata std:sid="xyl-data-8f91f2ac" top="20px" right="20px" bottom="20px" left="20px" horizontalAnchor="BOTH" verticalAnchor="BOTH"/>
+        <cl:xylayoutdata std:sid="xyl-data-8f91f2ac" top="0px" right="20px" bottom="20px" left="20px" horizontalAnchor="BOTH" verticalAnchor="BOTH"/>
         <cl:grid std:sid="grid-ad49875b" id="grd1" style="background-color:#eaf1f3; background-image:none;" datasetid="content" autorowheight="all" topsplitheight="0" leftsplit="0">
           <cl:verticaldata std:sid="v-data-e31c08de" width="824px" height="475px" autosize="both"/>
           <cl:gridcolumn std:sid="g-column-08493dad" width="50px"/>
-          <cl:gridcolumn std:sid="g-column-fbd9c9a6"/>
           <cl:gridcolumn std:sid="g-column-469c0d33"/>
           <cl:gridcolumn std:sid="g-column-157d8c10"/>
           <cl:gridcolumn std:sid="g-column-6db43984"/>
           <cl:gridcolumn std:sid="g-column-9ee07de6"/>
+          <cl:gridcolumn std:sid="g-column-fbd9c9a6"/>
           <cl:gridheader std:sid="gh-band-c00d5566">
             <cl:gridrow std:sid="g-row-b76a7ab2"/>
             <cl:gridcell std:sid="gh-cell-0806f6ce" rowindex="0" colindex="0" sortable="false" filterable="false" text="번호"/>
-            <cl:gridcell std:sid="gh-cell-2a96cea1" rowindex="0" colindex="1" targetcolumnname="id" sortable="true" filterable="false" text="레시피 Id"/>
-            <cl:gridcell std:sid="gh-cell-8eed6866" rowindex="0" colindex="2" targetcolumnname="recipeName" sortable="true" filterable="true" text="제목"/>
-            <cl:gridcell std:sid="gh-cell-47b2008d" rowindex="0" colindex="3" targetcolumnname="createdAt" sortable="true" filterable="true" text="작성 날짜"/>
-            <cl:gridcell std:sid="gh-cell-3e85a200" rowindex="0" colindex="4" targetcolumnname="likeCount" sortable="true" filterable="false" text="좋아요 수"/>
-            <cl:gridcell std:sid="gh-cell-adb1bce0" rowindex="0" colindex="5" targetcolumnname="viewCount" sortable="true" filterable="false" text="조회수"/>
+            <cl:gridcell std:sid="gh-cell-8eed6866" rowindex="0" colindex="1" targetcolumnname="recipeName" sortable="true" filterable="true" text="제목"/>
+            <cl:gridcell std:sid="gh-cell-47b2008d" rowindex="0" colindex="2" targetcolumnname="createdAt" sortable="true" filterable="true" text="작성 날짜"/>
+            <cl:gridcell std:sid="gh-cell-3e85a200" rowindex="0" colindex="3" targetcolumnname="likeCount" sortable="true" filterable="false" text="좋아요 수"/>
+            <cl:gridcell std:sid="gh-cell-adb1bce0" rowindex="0" colindex="4" targetcolumnname="viewCount" sortable="true" filterable="false" text="조회수"/>
+            <cl:gridcell std:sid="gh-cell-2a96cea1" rowindex="0" colindex="5" targetcolumnname="id" sortable="true" filterable="false" text="레시피 보러가기"/>
           </cl:gridheader>
           <cl:griddetail std:sid="gd-band-90169a36">
             <cl:gridrow std:sid="g-row-666d5a14"/>
             <cl:gridcell std:sid="gd-cell-613840d5" rowindex="0" colindex="0" columntype="rowindex"/>
-            <cl:gridcell std:sid="gd-cell-e0d503a6" rowindex="0" colindex="1" columnname="id">
-              <cl:output std:sid="output-ea2c10be">
-                <cl:celldata std:sid="c-data-575b06f8"/>
-              </cl:output>
-            </cl:gridcell>
-            <cl:gridcell std:sid="gd-cell-d57be6ad" rowindex="0" colindex="2" columnname="recipeName">
+            <cl:gridcell std:sid="gd-cell-d57be6ad" rowindex="0" colindex="1" columnname="recipeName">
               <cl:output std:sid="output-2b6ff961">
                 <cl:celldata std:sid="c-data-044cb9bb"/>
               </cl:output>
             </cl:gridcell>
-            <cl:gridcell std:sid="gd-cell-559e5378" rowindex="0" colindex="3" columnname="createdAt">
+            <cl:gridcell std:sid="gd-cell-559e5378" rowindex="0" colindex="2" columnname="createdAt">
               <cl:output std:sid="output-828ab302">
                 <cl:celldata std:sid="c-data-8ffc6141"/>
               </cl:output>
             </cl:gridcell>
-            <cl:gridcell std:sid="gd-cell-55f1b9dc" rowindex="0" colindex="4" columnname="likeCount">
+            <cl:gridcell std:sid="gd-cell-55f1b9dc" rowindex="0" colindex="3" columnname="likeCount">
               <cl:output std:sid="output-67713665">
                 <cl:celldata std:sid="c-data-9673827a"/>
               </cl:output>
             </cl:gridcell>
-            <cl:gridcell std:sid="gd-cell-582a421f" rowindex="0" colindex="5" columnname="viewCount">
+            <cl:gridcell std:sid="gd-cell-582a421f" rowindex="0" colindex="4" columnname="viewCount">
               <cl:output std:sid="output-72fd5796">
                 <cl:celldata std:sid="c-data-e00077de"/>
+              </cl:output>
+            </cl:gridcell>
+            <cl:gridcell std:sid="gd-cell-e0d503a6" rowindex="0" colindex="5" columnname="보러가기">
+              <cl:output std:sid="output-ea2c10be">
+                <cl:celldata std:sid="c-data-575b06f8"/>
               </cl:output>
             </cl:gridcell>
           </cl:griddetail>
@@ -144,6 +144,20 @@
         <cl:columns length="40" unit="PIXEL"/>
         <cl:columns length="2" unit="FRACTION" shadetype="NONE" shadecolor="transparent"/>
       </cl:formlayout>
+    </cl:group>
+    <cl:group std:sid="group-2bb0c468">
+      <cl:xylayoutdata std:sid="xyl-data-fa2b2019" top="80px" right="80px" left="80px" height="40px" horizontalAnchor="BOTH" verticalAnchor="TOP"/>
+      <cl:inputbox std:sid="i-box-3264405a" id="ipb1">
+        <cl:xylayoutdata std:sid="xyl-data-28fb94b5" top="5px" right="90px" bottom="5px" width="180px" horizontalAnchor="RIGHT" verticalAnchor="BOTH"/>
+      </cl:inputbox>
+      <cl:button std:sid="button-3cc5b059" value="검색">
+        <cl:listener std:sid="listener-3991ff5d" name="click" handler="onButtonClick"/>
+        <cl:xylayoutdata std:sid="xyl-data-c92333dd" top="5px" right="30px" width="48px" height="30px" horizontalAnchor="RIGHT" verticalAnchor="TOP"/>
+      </cl:button>
+      <cl:output std:sid="output-c9297ace" value="레시피명 검색 : ">
+        <cl:xylayoutdata std:sid="xyl-data-1f2f0365" top="5px" right="280px" bottom="5px" width="100px" horizontalAnchor="RIGHT" verticalAnchor="BOTH"/>
+      </cl:output>
+      <cl:xylayout std:sid="xylayout-7f675445"/>
     </cl:group>
     <cl:xylayout std:sid="xylayout-976cfdeb"/>
   </body>

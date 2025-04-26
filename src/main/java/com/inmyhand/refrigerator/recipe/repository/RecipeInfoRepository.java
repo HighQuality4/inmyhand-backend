@@ -14,7 +14,7 @@ import com.inmyhand.refrigerator.recipe.domain.entity.RecipeInfoEntity;
 
 
 
-public interface RecipeInfoRepository extends JpaRepository<RecipeInfoEntity, Long> {
+public interface RecipeInfoRepository extends JpaRepository<RecipeInfoEntity, Long>, CustomQueryRecipeInfoRepository {
     // 모든 레시피 목록 조회 - 기본으로 최신 레시피가 제일 첫번째에 오도록 함
     Page<RecipeInfoEntity> findAllByOrderByCreatedAtDesc(Pageable pageable);
 
