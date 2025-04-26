@@ -13,6 +13,7 @@
 		  { path: "/recipe/search", loadApp: "app/recipe/recipe_search" }, // 쿼리 파라미터가 있는 경우
 		  { path: "/users/login", loadApp: "app/login/login" },
 		  { path: "/users/mypage", loadApp: "app/mypage/mypage"},
+		  { path: "/users/register", loadApp: "app/login/register"},
 		  { path: "/fridge", loadApp: "app/fridge/fridge_main" }
 		];
 
