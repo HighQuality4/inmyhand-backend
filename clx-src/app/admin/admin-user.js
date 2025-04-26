@@ -121,4 +121,5 @@ function onBtn3Click(e){
 	rdb1.clearSelection();
 	cmb2.clearSelection();
 	ipb1.clear();
+	cmb2.value = "전체보기";
 }
