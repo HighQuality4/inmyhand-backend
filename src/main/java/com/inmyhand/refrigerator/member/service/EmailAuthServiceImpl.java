@@ -21,8 +21,8 @@ public class EmailAuthServiceImpl implements EmailAuthService {
     public void sendEmailVerification(String email) {
         int code = new SecureRandom().nextInt(900000) + 100000; //UUID.randomUUID().toString();
 
-        // Redis에 30분간 토큰 저장
-        redisUtil.set(redisKeyManager.getEmailAuthKey(code), email, 30, TimeUnit.MINUTES);
+        // Redis에 3분간 코드 저장
+        redisUtil.set(redisKeyManager.getEmailAuthKey(code), email, 3, TimeUnit.MINUTES);
 
         // 메일 발송
         // String link = "http://localhost:7079/api/user/auth/verify-email?token=" + token;
