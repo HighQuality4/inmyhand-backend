@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:cl="http://tomatosystem.co.kr/cleopatra" xmlns:std="http://tomatosystem.co.kr/cleopatra/studio" std:sid="html-fb3fe0cd" version="1.0.5481">
+  <head std:sid="head-7405dd4d">
+    <std:metadata>
+      <std:property key="template-file" value="templates/contents_container.clx"/>
+    </std:metadata>
+    <screen std:sid="screen-0ac93c80" id="default" name="default" width="1024px" height="768px" customHeight="600" customWidth="800" active="true"/>
+    <screen std:sid="screen-0517a9d5" id="tablet" name="tablet" width="500px" height="667px"/>
+    <screen std:sid="screen-2d71a432" id="mobile" name="mobile" width="350px" height="525px"/>
+    <cl:model std:sid="model-8c0085f3">
+      <cl:dataset std:sid="d-set-d42282a0" id="ingredientGridDs">
+        <cl:datacolumnlist>
+          <cl:datacolumn std:sid="d-column-181ee14f" name="ingredientName" datatype="string"/>
+          <cl:datacolumn std:sid="d-column-24d76b54" name="ingredientGroup"/>
+          <cl:datacolumn std:sid="d-column-33a72286" name="ingredientQuantity" datatype="number"/>
+          <cl:datacolumn std:sid="d-column-bd2b0bdd" name="ingredientUnit"/>
+          <cl:datacolumn std:sid="d-column-1690bbb4" name="id" datatype="number"/>
+        </cl:datacolumnlist>
+      </cl:dataset>
+    </cl:model>
+    <cl:appspec>
+      <cl:event name="delete" type="cpr.events.CMouseEvent"/>
+    </cl:appspec>
+  </head>
+  <body std:sid="body-1f481c06" style="top:0px; left:0px; width:500px; height:300px;">
+    <cl:listener std:sid="listener-3d32936c" name="load" handler="onBodyLoad"/>
+    <cl:group std:sid="group-ae407a70">
+      <cl:verticaldata std:sid="v-data-04ccf0a9" width="400px" height="20px"/>
+      <cl:button std:sid="button-725bb210" value="재료 그룹 삭제하기">
+        <cl:listener std:sid="listener-1c3463fd" name="click" handler="onGroupDeleteButtonClick"/>
+        <cl:xylayoutdata std:sid="xyl-data-5b1db74e" top="0px" right="0px" bottom="0px" width="150px" horizontalAnchor="RIGHT" verticalAnchor="BOTH"/>
+      </cl:button>
+      <cl:xylayout std:sid="xylayout-dacbe871"/>
+    </cl:group>
+    <cl:group std:sid="group-1d4fbc99">
+      <cl:verticaldata std:sid="v-data-f8bc844c" width="400px" height="30px"/>
+      <cl:output std:sid="output-4170bcdc" value="재료 그룹명">
+        <cl:xylayoutdata std:sid="xyl-data-5dede53d" top="0px" right="400px" bottom="0px" left="0px" horizontalAnchor="BOTH" verticalAnchor="BOTH"/>
+      </cl:output>
+      <cl:inputbox std:sid="i-box-c3f39f8b" id="ingredientGroupValue" placeholder="예) 양념, 주재료, 소스">
+        <cl:datasetbind property="value" datacontrolid="ingredientGridDs" columnname="ingredientGroup" rowindex="0"/>
+        <cl:xylayoutdata std:sid="xyl-data-e9d3c9da" top="0px" right="0px" bottom="0px" left="100px" horizontalAnchor="BOTH" verticalAnchor="BOTH"/>
+      </cl:inputbox>
+      <cl:xylayout std:sid="xylayout-3a092401"/>
+    </cl:group>
+    <cl:grid std:sid="grid-f74c5352" id="ingredientGrid" datasetid="ingredientGridDs">
+      <cl:verticaldata std:sid="v-data-1a212a94" width="400px" height="50px" autosize="height"/>
+      <cl:gridcolumn std:sid="g-column-1f437bcd" visible="false"/>
+      <cl:gridcolumn std:sid="g-column-b2a0ed5f"/>
+      <cl:gridcolumn std:sid="g-column-b548b65e"/>
+      <cl:gridcolumn std:sid="g-column-b998b39c"/>
+      <cl:gridheader std:sid="gh-band-274e638c">
+        <cl:gridrow std:sid="g-row-5cd5a3c5" height="24px"/>
+        <cl:gridcell std:sid="gh-cell-2d6771bc" rowindex="0" colindex="0" targetcolumnname="id" sortable="false" filterable="false" text="순서"/>
+        <cl:gridcell std:sid="gh-cell-84d0f778" rowindex="0" colindex="1" targetcolumnname="ingredientName" sortable="false" filterable="false" text="재료명"/>
+        <cl:gridcell std:sid="gh-cell-4de97c77" rowindex="0" colindex="2" targetcolumnname="ingredientQuantity" sortable="false" filterable="false" text="수량"/>
+        <cl:gridcell std:sid="gh-cell-f636b2b6" rowindex="0" colindex="3" targetcolumnname="ingredientUnit" sortable="false" filterable="false" text="단위"/>
+      </cl:gridheader>
+      <cl:griddetail std:sid="gd-band-997022a0">
+        <cl:gridrow std:sid="g-row-bb1b39a0" height="24px"/>
+        <cl:gridcell std:sid="gd-cell-897565e4" rowindex="0" colindex="0" columnname="id"/>
+        <cl:gridcell std:sid="gd-cell-1a7b0973" rowindex="0" colindex="1" columnname="ingredientName">
+          <cl:inputbox std:sid="i-box-95d77c94" id="ipb2">
+            <cl:celldata std:sid="c-data-af541c82"/>
+          </cl:inputbox>
+        </cl:gridcell>
+        <cl:gridcell std:sid="gd-cell-69c70c7f" rowindex="0" colindex="2" columnname="ingredientQuantity">
+          <cl:inputbox std:sid="i-box-251b30d8" id="ipb3">
+            <cl:celldata std:sid="c-data-cfaf0e7c"/>
+          </cl:inputbox>
+        </cl:gridcell>
+        <cl:gridcell std:sid="gd-cell-8f639ad9" rowindex="0" colindex="3" columnname="ingredientUnit">
+          <cl:inputbox std:sid="i-box-1ba9744b" id="ipb4">
+            <cl:celldata std:sid="c-data-d954052d"/>
+          </cl:inputbox>
+        </cl:gridcell>
+      </cl:griddetail>
+    </cl:grid>
+    <cl:group std:sid="group-998bfc76">
+      <cl:verticaldata std:sid="v-data-31b33b7d" width="400px" height="20px" autosize="height"/>
+      <cl:button std:sid="button-b4388225" id="ingredientAddBtn" value="재료 추가하기">
+        <cl:listener std:sid="listener-883e8591" name="click" handler="onButtonInsertClick"/>
+        <cl:flowlayoutdata std:sid="f-data-3f5fedf9" width="48%" height="20px" autosize="none"/>
+      </cl:button>
+      <cl:button std:sid="button-faf5d2c6" id="ingredientDelBtn" value="재료 제외하기">
+        <cl:listener std:sid="listener-b165ead0" name="click" handler="onButtonDeleteClick"/>
+        <cl:flowlayoutdata std:sid="f-data-f3e4664a" width="48%" height="20px"/>
+      </cl:button>
+      <cl:flowlayout std:sid="f-layout-51fd72e1" hspacing="10" vspacing="0"/>
+    </cl:group>
+    <cl:verticallayout std:sid="v-layout-8a53b633"/>
+  </body>
+  <std:studiosetting>
+    <std:hruler/>
+    <std:vruler/>
+  </std:studiosetting>
+</html>
