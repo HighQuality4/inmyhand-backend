@@ -10,12 +10,13 @@
     <cl:model std:sid="model-c78ebf20"/>
     <cl:appspec>
       <cl:property name="value" type="string"/>
+      <cl:property name="horizontalAlign" type="string" default="center"/>
     </cl:appspec>
   </head>
-  <body std:sid="body-6c6a0d6a" style="top:0px; left:0px; font-weight:normal; width:600px; height:30px;">
+  <body std:sid="body-6c6a0d6a" style="top:0px; left:0px; width:600px; height:30px;">
     <cl:listener std:sid="listener-2c6d1378" name="load" handler="onBodyLoad"/>
     <cl:group std:sid="group-947d44b8">
-      <cl:xylayoutdata std:sid="xyl-data-1780e785" width="150px" height="30px" horizontalAnchor="CENTER" verticalAnchor="CENTER"/>
+      <cl:flowlayoutdata std:sid="f-data-5e6b7363" width="150px" height="30px"/>
       <cl:img std:sid="image-7842800a" src="../../theme/images/recipe.svg">
         <cl:xylayoutdata std:sid="xyl-data-05e0c131" top="0px" left="0px" width="30px" height="30px" horizontalAnchor="LEFT" verticalAnchor="TOP"/>
       </cl:img>
@@ -25,11 +26,14 @@
       </cl:output>
       <cl:xylayout std:sid="xylayout-423e4605"/>
     </cl:group>
-    <cl:xylayout std:sid="xylayout-6ff50f2b"/>
+    <cl:flowlayout std:sid="f-layout-6a519f93" hspacing="0" vspacing="0">
+      <cl:apppropbind property="horizontalAlign" category="PROPERTY" app-property="horizontalAlign"/>
+    </cl:flowlayout>
   </body>
   <std:studiosetting>
     <std:hruler>
       <std:guide position="300"/>
+      <std:guide position="63"/>
     </std:hruler>
     <std:vruler/>
   </std:studiosetting>
