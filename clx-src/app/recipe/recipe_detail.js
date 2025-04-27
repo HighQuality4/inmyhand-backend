@@ -67,7 +67,6 @@ function onRecipeDetailSmsSubmitSuccess(e){
 	  }
 	}
 	recipeImg.src = resultJson.fileUrl[0];
-	recipeSummary.value = resultJson.fileUrl[0];
 	if(resultJson.summary!=null) {
 		recipeSummary.value = resultJson.summary;
 	} else {
