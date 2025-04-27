@@ -98,33 +98,29 @@
 			container.setLayout(responsiveXYLayout_1);
 			
 			// UI Configuration
-			var button_1 = new cpr.controls.Button();
-			button_1.value = "로그아웃";
-			if(typeof onButtonClick == "function") {
-				button_1.addEventListener("click", onButtonClick);
-			}
-			container.addChild(button_1, {
+			var userDefinedControl_1 = new udc.mypage.profile("profile");
+			container.addChild(userDefinedControl_1, {
 				positions: [
 					{
 						"media": "all and (min-width: 1024px)",
-						"top": "68px",
-						"left": "453px",
-						"width": "100px",
-						"height": "20px"
+						"top": "50px",
+						"width": "520px",
+						"height": "124px",
+						"left": "calc(50% - 260px)"
 					}, 
 					{
 						"media": "all and (min-width: 500px) and (max-width: 1023.984px)",
-						"top": "68px",
-						"left": "221px",
-						"width": "49px",
-						"height": "20px"
+						"top": "50px",
+						"width": "254px",
+						"height": "124px",
+						"left": "calc(50% - 127px)"
 					}, 
 					{
 						"media": "all and (max-width: 499.984px)",
-						"top": "68px",
-						"left": "155px",
-						"width": "34px",
-						"height": "20px"
+						"top": "50px",
+						"width": "178px",
+						"height": "124px",
+						"left": "calc(50% - 89px)"
 					}
 				]
 			});

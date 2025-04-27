@@ -21,12 +21,11 @@
     <cl:appspec/>
   </head>
   <body std:sid="body-c43e6d9f" style="background-color:#FFFFFF;" class="contents-container">
-    <cl:button std:sid="button-4f17afba" value="로그아웃">
-      <cl:listener std:sid="listener-30660249" name="click" handler="onButtonClick"/>
-      <cl:responsivexylayoutdata std:sid="rxyl-data-3a8f11da">
-        <cl:xylayoutdata std:sid="sxyl-data-1745eb05" top="68px" left="453px" width="100px" height="20px" horizontalAnchor="LEFT" verticalAnchor="TOP" screenid="default"/>
+    <cl:udc std:sid="ud-control-cf1083d1" id="profile" type="udc.mypage.profile">
+      <cl:responsivexylayoutdata std:sid="rxyl-data-975432c5">
+        <cl:xylayoutdata std:sid="sxyl-data-65bdba25" top="50px" width="520px" height="124px" horizontalAnchor="CENTER" verticalAnchor="TOP" screenid="default"/>
       </cl:responsivexylayoutdata>
-    </cl:button>
+    </cl:udc>
     <cl:responsivexylayout std:sid="r-xylayout-3e5555da"/>
   </body>
   <std:studiosetting>
