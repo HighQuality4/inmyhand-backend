@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:cl="http://tomatosystem.co.kr/cleopatra" xmlns:std="http://tomatosystem.co.kr/cleopatra/studio" std:sid="html-70e43c2d" version="1.0.5545">
+  <head std:sid="head-61be6b3e">
+    <screen std:sid="screen-bfe43a94" id="default" name="default" width="1024px" height="768px"/>
+    <screen std:sid="screen-df902413" id="tablet" name="tablet" width="500px" height="667px"/>
+    <screen std:sid="screen-a5a65f0d" id="mobile" name="mobile" width="350px" height="525px"/>
+    <cl:model std:sid="model-89cfabd6"/>
+    <cl:appspec/>
+  </head>
+  <body std:sid="body-600a4e2f" style="top:0px; left:0px; width:520px; height:124px;">
+    <cl:group std:sid="group-fe7672b7" style="border-radius:5px; background-color:#FBDBCF;">
+      <cl:verticaldata std:sid="v-data-7dbf38a1" width="520px" height="124px"/>
+      <cl:img std:sid="image-d2d16a2c" style="background-color:#FBDBCF;">
+        <cl:responsivexylayoutdata std:sid="rxyl-data-08d6d003">
+          <cl:xylayoutdata std:sid="sxyl-data-e4497c59" top="9px" left="20px" width="100px" height="100px" horizontalAnchor="LEFT" verticalAnchor="TOP" screenid="default"/>
+        </cl:responsivexylayoutdata>
+        <cl:area std:sid="a-item-20568b92" label="label1" value="value1" shape="circle" coords="50,52,48"/>
+      </cl:img>
+      <cl:output std:sid="output-97f40f7e" style="font-weight:bold; font-size:16px; font-family:@Kim jung chul Myungjo Bold;" value="닉네임:">
+        <cl:responsivexylayoutdata std:sid="rxyl-data-2a6b749e">
+          <cl:xylayoutdata std:sid="sxyl-data-dbb3ec55" top="20px" left="144px" width="100px" height="27px" horizontalAnchor="LEFT" verticalAnchor="TOP" screenid="default"/>
+        </cl:responsivexylayoutdata>
+      </cl:output>
+      <cl:output std:sid="output-210878a7" style="font-weight:bold; font-size:16px;" value="가입일:">
+        <cl:responsivexylayoutdata std:sid="rxyl-data-56dc5c8e">
+          <cl:xylayoutdata std:sid="sxyl-data-85004988" top="79px" left="144px" width="100px" height="30px" horizontalAnchor="LEFT" verticalAnchor="TOP" screenid="default"/>
+        </cl:responsivexylayoutdata>
+      </cl:output>
+      <cl:output std:sid="output-18eccfc4" style="background-color:#FFFFFF; border-radius:5px; text-align:center;" value="Output">
+        <cl:responsivexylayoutdata std:sid="rxyl-data-30790060">
+          <cl:xylayoutdata std:sid="sxyl-data-78bd6039" top="20px" left="279px" width="120px" height="40px" horizontalAnchor="LEFT" verticalAnchor="TOP" screenid="default"/>
+        </cl:responsivexylayoutdata>
+      </cl:output>
+      <cl:output std:sid="output-c62e021b" style="background-color:#FFFFFF; border-radius:5px; text-align:center;" value="Output">
+        <cl:responsivexylayoutdata std:sid="rxyl-data-e4ebc193">
+          <cl:xylayoutdata std:sid="sxyl-data-d17374eb" top="69px" left="279px" width="120px" height="40px" horizontalAnchor="LEFT" verticalAnchor="TOP" screenid="default"/>
+        </cl:responsivexylayoutdata>
+      </cl:output>
+      <cl:responsivexylayout std:sid="r-xylayout-dd430fcd"/>
+    </cl:group>
+    <cl:verticallayout std:sid="v-layout-4c3c592d"/>
+  </body>
+  <std:studiosetting>
+    <std:hruler/>
+    <std:vruler/>
+  </std:studiosetting>
+</html>
