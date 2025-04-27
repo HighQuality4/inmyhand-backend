@@ -1,0 +1,22 @@
+/************************************************
+ * cooking_process_create.js
+ * Created at 2025. 4. 24. 오후 3:28:32.
+ *
+ * @author gyrud
+ ************************************************/
+
+/**
+ * UDC 컨트롤이 그리드의 뷰 모드에서 표시할 텍스트를 반환합니다.
+ */
+exports.getText = function(){
+	// TODO: 그리드의 뷰 모드에서 표시할 텍스트를 반환하는 하는 코드를 작성해야 합니다.
+	return "";
+};
+
+
+exports.getCookingProcessValue=()=>{
+	const stepDescriptionValue = app.lookup("stepDescription").value;
+	const fileUrl = "http://www.foodsafetykorea.go.kr/uploadimg/cook/20_00574_1.png";
+	
+	return {stepDescription:stepDescriptionValue, fileUrl:fileUrl};
+}

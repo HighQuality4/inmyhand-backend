@@ -1,5 +1,6 @@
 package com.inmyhand.refrigerator.recipe.controller;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.inmyhand.refrigerator.recipe.domain.dto.RecipeDetailDTO;
 import com.inmyhand.refrigerator.recipe.domain.dto.RecipeRequestDTO;
 import com.inmyhand.refrigerator.recipe.domain.dto.RecipeSummaryDTO;
@@ -22,6 +23,9 @@ public class RecipeController {
     private RecipeQueryService recipeQueryService;
     @Autowired
     private RecipeCommandService recipeCommandService;
+    @Autowired
+    private ObjectMapper objectMapper;
+
 
     // 전체 레시피 목록 조회 - 페이징
     @PostMapping
@@ -73,7 +77,14 @@ public class RecipeController {
 
     // 레시피 생성
     @PostMapping("/create")
-    public ResponseEntity<Void> createRecipe(@RequestBody RecipeRequestDTO dto){
+    public ResponseEntity<Void> createRecipe(@RequestBody Map<String, Object> body) {
+        Map<String, Object> param = (Map<String, Object>) body.get("param");
+        List<Map<String, Object>> paramList = (List<Map<String, Object>>) param.get("param");
+
+        Map<String, Object> recipeMap = paramList.get(0);
+
+        RecipeRequestDTO dto = objectMapper.convertValue(recipeMap, RecipeRequestDTO.class);
+
         recipeCommandService.createRecipe(dto);
         return ResponseEntity.ok().build();
     }

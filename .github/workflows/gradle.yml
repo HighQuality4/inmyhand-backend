@@ -1,0 +1,60 @@
+name: InMyHand
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  Deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: CI/CD Start
+        uses: appleboy/ssh-action@master
+        env:
+          APPLICATION_YAML: ${{ secrets.APPLICATION_YAML}}
+          APPLICATION_AI_YAML: ${{ secrets.APPLICATION_AI_YAML }}
+          APPLICATION_DB_YAML: ${{ secrets.APPLICATION_DB_YAML }}
+          APPLICATION_EXBUILDER_YAML: ${{ secrets.APPLICATION_EXBUILDER_YAML }}
+          APPLICATION_OAUTH2_YAML: ${{ secrets.APPLICATION_OAUTH2_YAML }}
+          APPLICATION_S3_YAML: ${{ secrets.APPLICATION_S3_YAML }}
+          APPLICATION_EMAIL_YAML: ${{ secrets.APPLICATION_EMAIL_YAML }}
+        with:
+          host: ${{ secrets.LINUX_HOST }}
+          username: ${{ secrets.LINUX_USERNAME}}
+          #          key: ${{ secrets.LINUX_PRIVATE_KEY}}
+          password: ${{ secrets.LINUX_PASSWORD}}
+          port: '8914'
+          envs: APPLICATION_YAML,APPLICATION_AI_YAML,APPLICATION_DB_YAML,APPLICATION_EXBUILDER_YAML,APPLICATION_OAUTH2_YAML,APPLICATION_S3_YAML,APPLICATION_EMAIL_YAML
+          #          script_stop: true
+          script: |
+            cd /home/yeongbee/intemp/inmyhandgit
+            
+            # 디렉토리 생성 확인
+            mkdir -p src/main/resources/yaml
+            
+            # 이전 설정 파일 제거
+            rm -rf src/main/resources/application.yaml
+            rm -f src/main/resources/yaml/application-ai.yaml
+            rm -f src/main/resources/yaml/application-db.yaml
+            rm -f src/main/resources/yaml/application-exbuilder.yaml
+            rm -f src/main/resources/yaml/application-oauth2.yaml
+            rm -f src/main/resources/yaml/application-s3.yaml
+            rm -f src/main/resources/yaml/application-email.yaml
+            
+            git pull origin main
+            
+            # 설정 파일 생성
+            echo "$APPLICATION_YAML" > src/main/resources/application.yaml
+            echo "$APPLICATION_AI_YAML" > src/main/resources/yaml/application-ai.yaml
+            echo "$APPLICATION_DB_YAML" > src/main/resources/yaml/application-db.yaml
+            echo "$APPLICATION_EXBUILDER_YAML" > src/main/resources/yaml/application-exbuilder.yaml
+            echo "$APPLICATION_OAUTH2_YAML" > src/main/resources/yaml/application-oauth2.yaml
+            echo "$APPLICATION_S3_YAML" > src/main/resources/yaml/application-s3.yaml
+            echo "APPLICATION_EMAIL_YAML" > src/main/resources/yaml/application-email.yaml
+            
+            ./gradlew clean build
+            sudo fuser -k -n tcp 7009 || true
+            echo "${{ secrets.LINUX_PWD }}" | sudo -S fuser -k -n tcp 7009 || true
+            ./gradlew clean build -x test
+            nohup java -jar build/libs/*SNAPSHOT.jar > ./output.log 2>&1 &

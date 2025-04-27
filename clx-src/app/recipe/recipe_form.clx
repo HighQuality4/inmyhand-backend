@@ -1,0 +1,236 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:cl="http://tomatosystem.co.kr/cleopatra" xmlns:std="http://tomatosystem.co.kr/cleopatra/studio" std:sid="html-cef4f320" version="1.0.5481">
+  <head std:sid="head-1bf9200e">
+    <std:metadata>
+      <std:property key="template-file" value="templates/contents_container.clx"/>
+    </std:metadata>
+    <screen std:sid="screen-00315057" id="default" name="default" width="1024px" height="768px" useCustomWidth="true" useCustomHeight="true" customHeight="1000" customWidth="600" active="true"/>
+    <screen std:sid="screen-d184c9ef" id="tablet" name="tablet" width="500px" height="667px"/>
+    <screen std:sid="screen-dfce70c5" id="mobile" name="mobile" width="350px" height="525px"/>
+    <cl:model std:sid="model-c2e79a6e">
+      <cl:dataset std:sid="d-set-07579d9b" id="ingredients">
+        <cl:datacolumnlist>
+          <cl:datacolumn std:sid="d-column-ca05f011" name="ingredientName"/>
+          <cl:datacolumn std:sid="d-column-cac43839" name="ingredientGroup"/>
+          <cl:datacolumn std:sid="d-column-f8cd9e53" name="ingredientQuantity"/>
+          <cl:datacolumn std:sid="d-column-282a9882" name="ingredientUnit"/>
+        </cl:datacolumnlist>
+      </cl:dataset>
+      <cl:dataset std:sid="d-set-8bab1272" id="steps">
+        <cl:datacolumnlist>
+          <cl:datacolumn std:sid="d-column-eb6f2e00" name="stepNumber"/>
+          <cl:datacolumn std:sid="d-column-219e85a4" name="stepDescription"/>
+          <cl:datacolumn std:sid="d-column-b807ec8b" name="file"/>
+        </cl:datacolumnlist>
+      </cl:dataset>
+      <cl:dataset std:sid="d-set-8d230ffb" id="categories">
+        <cl:datacolumnlist>
+          <cl:datacolumn std:sid="d-column-04c8cb05" name="recipeCategoryName"/>
+          <cl:datacolumn std:sid="d-column-ec2f0c39" name="recipeCategoryType"/>
+        </cl:datacolumnlist>
+      </cl:dataset>
+      <cl:matrix-submission std:sid="m-submission-e12e021c" id="recipeCreatesSms" async="true" withCredentials="false" method="post" action="/api/recipes/create">
+        <cl:matrix>
+          <cl:request type="object">
+            <cl:data key="userId">
+              <cl:pathref columnName="userId"/>
+            </cl:data>
+            <cl:data key="parentRecipeId">
+              <cl:pathref columnName="parentRecipeId"/>
+            </cl:data>
+            <cl:data key="recipeName">
+              <cl:pathref columnName="recipeName"/>
+            </cl:data>
+            <cl:data key="cookingTime">
+              <cl:pathref columnName="cookingTime"/>
+            </cl:data>
+            <cl:data key="difficulty">
+              <cl:pathref columnName="difficulty"/>
+            </cl:data>
+            <cl:data key="calories">
+              <cl:pathref columnName="calories"/>
+            </cl:data>
+            <cl:data key="summary">
+              <cl:pathref columnName="summary"/>
+            </cl:data>
+            <cl:data key="servings">
+              <cl:pathref columnName="servings"/>
+            </cl:data>
+            <cl:data key="ingredients">
+              <cl:complex dataControl="ingredients" type="array">
+                <cl:data key="ingredientName">
+                  <cl:pathref columnName="ingredientName"/>
+                </cl:data>
+                <cl:data key="ingredientGroup">
+                  <cl:pathref columnName="ingredientGroup"/>
+                </cl:data>
+                <cl:data key="ingredientQuantity">
+                  <cl:pathref columnName="ingredientQuantity"/>
+                </cl:data>
+                <cl:data key="ingredientUnit">
+                  <cl:pathref columnName="ingredientUnit"/>
+                </cl:data>
+              </cl:complex>
+            </cl:data>
+            <cl:data key="steps">
+              <cl:complex dataControl="steps" type="array">
+                <cl:data key="stepNumber">
+                  <cl:pathref columnName="stepNumber"/>
+                </cl:data>
+                <cl:data key="file">
+                  <cl:pathref columnName="file"/>
+                </cl:data>
+                <cl:data key="stepDescription">
+                  <cl:pathref columnName="stepDescription"/>
+                </cl:data>
+              </cl:complex>
+            </cl:data>
+            <cl:data key="categories">
+              <cl:complex dataControl="categories" type="array">
+                <cl:data key="recipeCategoryName">
+                  <cl:pathref columnName="recipeCategoryName"/>
+                </cl:data>
+                <cl:data key="recipeCategoryType">
+                  <cl:pathref columnName="recipeCategoryType"/>
+                </cl:data>
+              </cl:complex>
+            </cl:data>
+          </cl:request>
+          <cl:response type="object"/>
+        </cl:matrix>
+      </cl:matrix-submission>
+      <cl:submission std:sid="submission-c9b6b0c7" id="recipeCreateSms" action="/api/recipes/create" mediatype="application/json">
+        <cl:listener std:sid="listener-db503dcb" name="before-submit" handler="onRecipeCreateSmsBeforeSubmit"/>
+      </cl:submission>
+    </cl:model>
+    <cl:appspec/>
+  </head>
+  <body std:sid="body-c43e6d9f" style="background-color:#FFFFFF;" class="contents-container">
+    <cl:listener std:sid="listener-67fc3b38" name="load" handler="onBodyLoad"/>
+    <cl:output std:sid="output-0480b386" style="font-weight:bold; font-size:20px;" value="레시피 등록">
+      <cl:verticaldata std:sid="v-data-beeca65a" width="600px" height="30px"/>
+    </cl:output>
+    <cl:group std:sid="group-8ca413f6" style="background-color:#EAF1F3;">
+      <cl:verticaldata std:sid="v-data-657f8301" width="600px" height="330px"/>
+      <cl:udc std:sid="ud-control-2f47cf14" type="udc.recipe.group_subtitle">
+        <cl:verticaldata std:sid="v-data-c9030110" width="599px" height="20px"/>
+        <cl:property name="value" value="기본 정보" type="string"/>
+      </cl:udc>
+      <cl:group std:sid="group-af29066e">
+        <cl:verticaldata std:sid="v-data-7ae3c296" width="400px" height="250px" autosize="height"/>
+        <cl:output std:sid="output-54782991" value="레시피명">
+          <cl:formdata std:sid="f-data-0603606e" row="0" col="0"/>
+        </cl:output>
+        <cl:output std:sid="output-6ed64716" value="간단 설명">
+          <cl:formdata std:sid="f-data-9537ddac" row="1" col="0"/>
+        </cl:output>
+        <cl:output std:sid="output-290ec5ec" value="카테고리">
+          <cl:formdata std:sid="f-data-f849c149" row="2" col="0"/>
+        </cl:output>
+        <cl:output std:sid="output-dc5758ed" value="요리완성 사진">
+          <cl:formdata std:sid="f-data-578710b6" row="3" col="0"/>
+        </cl:output>
+        <cl:output std:sid="output-aa32c4e1" value="요리 정보">
+          <cl:formdata std:sid="f-data-cc3fa826" row="4" col="0"/>
+        </cl:output>
+        <cl:output std:sid="output-f9ccfd25" value="칼로리">
+          <cl:formdata std:sid="f-data-6a0387ad" row="5" col="0"/>
+        </cl:output>
+        <cl:inputbox std:sid="i-box-173d70b0" id="recipeNameInput">
+          <cl:formdata std:sid="f-data-6d76a58e" row="0" col="1" rowspan="1" colspan="3"/>
+        </cl:inputbox>
+        <cl:textarea std:sid="t-area-4dd93bb8" id="recipeSummaryInput">
+          <cl:formdata std:sid="f-data-7395f5d3" row="1" col="1" rowspan="1" colspan="3"/>
+        </cl:textarea>
+        <cl:combobox std:sid="c-box-8fe80709" id="typeCategorySelect" placeholder="종류별">
+          <cl:formdata std:sid="f-data-0eaa1a40" row="2" col="1"/>
+        </cl:combobox>
+        <cl:combobox std:sid="c-box-ca4227b9" id="situationCategorySelect" placeholder="상황별">
+          <cl:formdata std:sid="f-data-11b291ee" row="2" col="2"/>
+        </cl:combobox>
+        <cl:combobox std:sid="c-box-9914106e" id="methodCategorySelect" placeholder="방법별">
+          <cl:formdata std:sid="f-data-9c39fc0b" row="2" col="3"/>
+        </cl:combobox>
+        <cl:fileinput std:sid="f-input-1ad5ebaf" id="recipeImg">
+          <cl:formdata std:sid="f-data-f3c38ff3" row="3" col="1" rowspan="1" colspan="3"/>
+        </cl:fileinput>
+        <cl:combobox std:sid="c-box-7b8f306e" id="difficultySelect" placeholder="난이도">
+          <cl:formdata std:sid="f-data-5ab5117e" row="4" col="2"/>
+        </cl:combobox>
+        <cl:combobox std:sid="c-box-f05f400d" id="cookingTimeSelect" placeholder="소요시간">
+          <cl:formdata std:sid="f-data-862e95aa" row="4" col="3"/>
+        </cl:combobox>
+        <cl:inputbox std:sid="i-box-99d84e80" id="caloriesInput">
+          <cl:formdata std:sid="f-data-cd482bbc" row="5" col="1" rowspan="1" colspan="3"/>
+        </cl:inputbox>
+        <cl:inputbox std:sid="i-box-2e83fd70" id="servingsInput" placeholder="몇인분" inputmode="numeric">
+          <cl:formdata std:sid="f-data-6ced7336" row="4" col="1"/>
+        </cl:inputbox>
+        <cl:formlayout std:sid="f-layout-791c7bdc" scrollable="false" hspace="0px" vspace="20px" top-margin="0px" right-margin="0px" bottom-margin="0px" left-margin="0px">
+          <cl:rows length="25" unit="PIXEL"/>
+          <cl:rows length="25" unit="PIXEL"/>
+          <cl:rows length="25" unit="PIXEL"/>
+          <cl:rows length="25" unit="PIXEL"/>
+          <cl:rows length="25" unit="PIXEL" shadetype="NONE" shadecolor="transparent"/>
+          <cl:rows length="25" unit="PIXEL" shadetype="NONE" shadecolor="transparent"/>
+          <cl:columns length="100" unit="PIXEL"/>
+          <cl:columns length="1" unit="FRACTION" shadetype="NONE" shadecolor="transparent"/>
+          <cl:columns length="1" unit="FRACTION"/>
+          <cl:columns length="1" unit="FRACTION"/>
+        </cl:formlayout>
+      </cl:group>
+      <cl:verticallayout std:sid="v-layout-96f7df8d" spacing="20" leftmargin="10" rightmargin="10" topmargin="20" bottommargin="20"/>
+    </cl:group>
+    <cl:group std:sid="group-3436a3af" style="background-color:#FBF3EB;">
+      <cl:verticaldata std:sid="v-data-091093eb" width="600px" height="250px" autosize="height"/>
+      <cl:udc std:sid="ud-control-57a5c0f4" type="udc.recipe.group_subtitle">
+        <cl:verticaldata std:sid="v-data-30ac855c" width="599px" height="20px"/>
+        <cl:property name="value" value="재료" type="string"/>
+      </cl:udc>
+      <cl:group std:sid="group-290a527b" id="ingredientCreateGroup">
+        <cl:verticaldata std:sid="v-data-a52ee847" width="100%" height="135px" autosize="height"/>
+        <cl:udc std:sid="ud-control-00f6d007" id="ingredientCreateForm" type="udc.recipe.ingredient_create">
+          <cl:listener std:sid="listener-61f77461" name="delete" handler="onIngredientCreateFormDelete"/>
+          <cl:verticaldata std:sid="v-data-40ca19c4" width="580px" height="115px" autosize="height"/>
+        </cl:udc>
+        <cl:verticallayout std:sid="v-layout-761594d3" spacing="20"/>
+      </cl:group>
+      <cl:button std:sid="button-dbce99a4" value="재료 그룹 추가하기">
+        <cl:listener std:sid="listener-1e145111" name="click" handler="onIngredientGroupAdd"/>
+        <cl:verticaldata std:sid="v-data-9e181dd8" width="100px" height="20px"/>
+      </cl:button>
+      <cl:verticallayout std:sid="v-layout-a82a7a26" spacing="20" leftmargin="10" rightmargin="10" topmargin="20" bottommargin="20"/>
+    </cl:group>
+    <cl:group std:sid="group-11768261" style="background-color:#E5E6C7;">
+      <cl:verticaldata std:sid="v-data-f1d7e4fc" width="600px" height="200px" autosize="height"/>
+      <cl:udc std:sid="ud-control-8f724ac3" type="udc.recipe.group_subtitle">
+        <cl:verticaldata std:sid="v-data-0bf2df52" width="599px" height="20px"/>
+        <cl:property name="value" value="요리 과정" type="string"/>
+      </cl:udc>
+      <cl:group std:sid="group-c6b506c5" id="cookingProcessCreateGroup">
+        <cl:verticaldata std:sid="v-data-3ace81a5" width="100%" height="80px" autosize="height"/>
+        <cl:udc std:sid="ud-control-f0c2b31d" type="udc.recipe.cooking_process_create">
+          <cl:verticaldata std:sid="v-data-376e0d1d" width="580px" height="80px" autosize="none"/>
+          <cl:property name="seq" value="1." type="string"/>
+        </cl:udc>
+        <cl:verticallayout std:sid="v-layout-7ee8889a" spacing="10"/>
+      </cl:group>
+      <cl:button std:sid="button-b875a5b2" value="과정 추가하기">
+        <cl:listener std:sid="listener-43eac984" name="click" handler="onCookingProcessAdd"/>
+        <cl:verticaldata std:sid="v-data-a7808d1c" width="100px" height="20px"/>
+      </cl:button>
+      <cl:verticallayout std:sid="v-layout-f3cd3489" spacing="20" leftmargin="10" rightmargin="10" topmargin="20" bottommargin="20"/>
+    </cl:group>
+    <cl:button std:sid="button-67ec2fd5" value="등록하기">
+      <cl:listener std:sid="listener-e302bf73" name="click" handler="onButtonClick"/>
+      <cl:verticaldata std:sid="v-data-6642110e" width="600px" height="20px"/>
+    </cl:button>
+    <cl:verticallayout std:sid="v-layout-8cb2a10e" spacing="20"/>
+  </body>
+  <std:studiosetting>
+    <std:hruler/>
+    <std:vruler>
+      <std:guide position="49"/>
+    </std:vruler>
+  </std:studiosetting>
+</html>

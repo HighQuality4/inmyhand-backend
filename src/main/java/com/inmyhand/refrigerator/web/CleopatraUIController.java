@@ -25,7 +25,7 @@ public class CleopatraUIController {
         return new UIView();
     }
 
-    @GetMapping(value = {"/{path:[^\\.]*}","/**/{path:[^\\.]*}"})
+    @GetMapping(value = {"/","/{path:[^\\.]*}","/**/{path:[^\\.]*}"})
     public String forwardToLayout() {
         return "/app/layout/layout";
     }
