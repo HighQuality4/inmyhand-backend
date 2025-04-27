@@ -54,4 +54,4 @@ jobs:
             ./gradlew clean build -x test
             echo "${{ secrets.LINUX_PWD }}" | sudo -S fuser -k -n tcp 7009 || true
             nohup java -jar build/libs/*SNAPSHOT.jar > ./output.log 2>&1 &
-# ^^__
+# ^^__하... 이미지..
