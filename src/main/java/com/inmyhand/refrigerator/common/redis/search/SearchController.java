@@ -36,7 +36,7 @@ public class SearchController {
     @GetMapping("/popular")
     public ResponseEntity<?> getPopularSearches() {
         List<PopularSearchDto> popularSearches = popularSearchService.getPopularSearches();
-        log.info("Popular searches: {}", Map.of("PopularSearch", popularSearches.toString()));
+//        log.info("Popular searches: {}", Map.of("PopularSearch", popularSearches.toString()));
         return ResponseEntity.ok(Map.of("popularSearch", popularSearches));
     }
     
