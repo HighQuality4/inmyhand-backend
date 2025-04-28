@@ -8,7 +8,7 @@
     <screen std:sid="screen-0517a9d5" id="tablet" name="tablet" width="500px" height="667px"/>
     <screen std:sid="screen-2d71a432" id="mobile" name="mobile" width="350px" height="525px"/>
     <cl:model std:sid="model-8c0085f3">
-      <cl:dataset std:sid="d-set-d42282a0" id="ingredientGridDs">
+      <cl:dataset std:sid="d-set-d42282a0" id="ingredientGridDs" altercolumnlayout="server">
         <cl:datacolumnlist>
           <cl:datacolumn std:sid="d-column-181ee14f" name="ingredientName" datatype="string"/>
           <cl:datacolumn std:sid="d-column-24d76b54" name="ingredientGroup"/>
@@ -43,7 +43,7 @@
       </cl:inputbox>
       <cl:xylayout std:sid="xylayout-3a092401"/>
     </cl:group>
-    <cl:grid std:sid="grid-f74c5352" id="ingredientGrid" datasetid="ingredientGridDs">
+    <cl:grid std:sid="grid-f74c5352" id="ingredientGrid" datasetid="ingredientGridDs" showdeletedrow="false" rowindexerstartnum="0">
       <cl:verticaldata std:sid="v-data-1a212a94" width="400px" height="50px" autosize="height"/>
       <cl:gridcolumn std:sid="g-column-1f437bcd" visible="false"/>
       <cl:gridcolumn std:sid="g-column-b2a0ed5f"/>
