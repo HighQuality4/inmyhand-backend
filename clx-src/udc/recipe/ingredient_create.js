@@ -5,6 +5,9 @@
  * @author gyrud
  ************************************************/
 
+const isLastPathSegmentNumberMd = cpr.core.Module.require("module/common/isLastPathSegmentNumber");
+const isLastPathSegmentNumber = isLastPathSegmentNumberMd.isLastPathSegmentNumber();
+
 /**
  * UDC 컨트롤이 그리드의 뷰 모드에서 표시할 텍스트를 반환합니다.
  */
@@ -19,8 +22,10 @@ exports.getText = function(){
  */
 function onBodyLoad(e){
 	/** @type cpr.controls.Grid */
-	const ingredientGrid = app.lookup("ingredientGrid");
-	ingredientGrid.insertRow(0, true);
+	if (!isLastPathSegmentNumber[0]) {
+		const ingredientGrid = app.lookup("ingredientGrid");
+		ingredientGrid.insertRow(0, true);	
+	}
 }
 
 /*
@@ -65,7 +70,7 @@ function onGroupDeleteButtonClick(e){
 	const deleteEvent = new cpr.events.CMouseEvent("delete");
 	app.dispatchEvent(deleteEvent);
 }
-
+	
 exports.getIngredientsList=()=>{
 	const ingredientGroupValue = app.lookup("ingredientGroupValue");
 	const ingredientGrid = app.lookup("ingredientGrid");
@@ -77,9 +82,7 @@ exports.getIngredientsList=()=>{
 	for(let i=0; i<ingredientsList.length; i++){
 		ingredientsList[i].push(group);
 	}
-	
-	console.log(ingredientsList);
-	
+		
 	const ingredientsResult = ingredientsList.map(item => ({
 		ingredientName: item[1],
 	    ingredientQuantity: item[2],
@@ -88,4 +91,28 @@ exports.getIngredientsList=()=>{
 	}));
 	
 	return ingredientsResult;
+}
+
+exports.setIngredientsList=(data)=>{
+	const ingredientGroupValue = app.lookup("ingredientGroupValue");
+	const ingredientGrid = app.lookup("ingredientGrid");
+
+	const groupName = Object.keys(data)[0];
+	ingredientGroupValue.value = groupName;
+	
+	const ingredients = data[groupName]; 
+	
+	for (let i = 0; i < ingredients.length; i++) {
+		let rowData = {
+			"ingredientName" :ingredients[i].ingredientName,
+			"ingredientQuantity": ingredients[i].ingredientQuantity,
+			"ingredientUnit": ingredients[i].ingredientUnit
+		}
+		
+		// 그리드의 신규 행을 추가
+		let insertRow = ingredientGrid.insertRow(i, true);
+
+		// 신규행의 데이터 갱신
+		ingredientGrid.updateRow(insertRow.getIndex(), rowData);
+    }
 }

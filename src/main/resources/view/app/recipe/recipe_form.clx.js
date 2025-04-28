@@ -27,11 +27,15 @@
 			const difficultyItems = recipeInfoSelectItemsModule.difficulty;
 			const cookingTimeItems = recipeInfoSelectItemsModule.cookingTime;
 
+			const isLastPathSegmentNumberMd = cpr.core.Module.require("module/common/isLastPathSegmentNumber");
+			const isLastPathSegmentNumber = isLastPathSegmentNumberMd.isLastPathSegmentNumber();
+
 			/*
-			 * 루트 컨테이너에서 load 이벤트 발생 시 호출.
-			 * 앱이 최초 구성된후 최초 랜더링 직후에 발생하는 이벤트 입니다.
+			 * 루트 컨테이너에서 init 이벤트 발생 시 호출.
+			 * 앱이 최초 구성될 때 발생하는 이벤트 입니다.
 			 */
-			function onBodyLoad(e){
+			function onBodyInit(e){
+				// 카테고리 아이템 지정
 				const typeCategorySelect = app.lookup("typeCategorySelect");
 				const situationCategorySelet = app.lookup("situationCategorySelect");
 				const methodCategorySelect = app.lookup("methodCategorySelect");
@@ -57,6 +61,30 @@
 				for (let i=0; i<cookingTimeItems.length; i++){
 					cookingTimeSelect.addItem(new cpr.controls.Item(cookingTimeItems[i], cookingTimeItems[i]));	
 				}
+				
+				// 레시피 form 타이틀 수정
+				const isNumber = isLastPathSegmentNumber;
+				console.log(isNumber);
+				if(isNumber[0]){
+					const formTitle = app.lookup("formTitle");
+					formTitle.value = "레시피 수정";
+					
+				}
+			}
+
+
+			/*
+			 * 루트 컨테이너에서 load 이벤트 발생 시 호출.
+			 * 앱이 최초 구성된후 최초 랜더링 직후에 발생하는 이벤트 입니다.
+			 */
+			function onBodyLoad(e){
+				const isNumber = isLastPathSegmentNumber;
+				if(isNumber[0]){
+				    const recipeInfoSms = app.lookup("recipeInfoSms");
+				    
+				    recipeInfoSms.setRequestActionUrl(recipeInfoSms.action + "/" + isNumber[1]);
+				    recipeInfoSms.send();
+				}
 			}
 
 			/*
@@ -72,9 +100,9 @@
 				const servings = app.lookup("servingsInput").value;
 				const difficulty = app.lookup("difficultySelect").value;
 				const cookingTime = app.lookup("cookingTimeSelect").value;
-				const calories = app.lookup("caloriesInput").value;	
+				const calories = app.lookup("caloriesInput").value;
 				
-				// 완성사진
+				// TODO: 완성사진
 				const files = ["https://mybucket.s3.amazonaws.com/images/recipe1.jpg"];
 				
 				// 카테고리
@@ -184,6 +212,114 @@
 					  width: "100%",
 					  height: "80px",
 				});	
+			}
+
+			/*
+			 * 서브미션에서 submit-success 이벤트 발생 시 호출.
+			 * 통신이 성공하면 발생합니다.
+			 */
+			function onRecipeInfoSmsSubmitSuccess(e){
+				var recipeInfoSms = e.control;
+				
+				const result = recipeInfoSms.xhr.responseText;
+				const resultJson = JSON.parse(result);
+				
+				// 기본 정보
+				const recipeName = app.lookup("recipeNameInput");
+				const receipSummary = app.lookup("recipeSummaryInput");
+				const servings = app.lookup("servingsInput");
+				const difficulty = app.lookup("difficultySelect");
+				const cookingTime = app.lookup("cookingTimeSelect");
+				const calories = app.lookup("caloriesInput");
+				
+				recipeName.value = resultJson.recipeName;
+				receipSummary.value = resultJson.summary;
+				servings.value = resultJson.servings;
+				difficulty.value = resultJson.difficulty;
+				cookingTime.value = resultJson.cookingTime;
+				calories.value = resultJson.calories;
+				
+				// TODO: 완성사진
+				
+				
+				// 카테고리
+				const typeCategory = app.lookup("typeCategorySelect");
+				const situationCategory = app.lookup("situationCategorySelect");
+				const methodCategory = app.lookup("methodCategorySelect");
+				
+				const categories = resultJson.categories;
+				for (let j = 0; j < categories.length; j++) {
+				  const category = categories[j];
+				  const categoryType = category.recipeCategoryType;
+				  switch (categoryType) {
+				    case "종류별":
+			      	  typeCategory.value = category.recipeCategoryName;	
+				      break;
+				    case "상황별":
+				      situationCategory.value = category.recipeCategoryName;
+				      break;
+				    case "방법별":
+				      methodCategory.value = category.recipeCategoryName;
+				      break;
+				    default:
+				      break;
+				  }
+				}
+				
+				// 재료
+				const ingredientCreateGroup = app.lookup("ingredientCreateGroup");
+				ingredientCreateGroup.removeAllChildren();
+				
+				// 1. ingredientGroup별로 묶기
+				const groupedIngredients = {};
+				
+				for (let i = 0; i < resultJson.ingredients.length; i++) {
+				  const ing = resultJson.ingredients[i];
+				  const groupName = ing.ingredientGroup || "재료";
+				
+				  if (!groupedIngredients[groupName]) {
+				    groupedIngredients[groupName] = [];
+				  }
+				
+				  groupedIngredients[groupName].push({
+				  	id: ing.id,
+				    ingredientName: ing.ingredientName,
+				    ingredientQuantity: ing.ingredientQuantity,
+				    ingredientUnit: ing.ingredientUnit
+				  });
+				}
+				
+				const groupCount = Object.keys(groupedIngredients).length;
+				console.log(groupedIngredients);
+				
+				// 재료 넣기
+				for(let i=0; i<groupCount; i++){
+					const ingredientForm = new udc.recipe.ingredient_create();
+					ingredientForm.setIngredientsList(groupedIngredients);
+					ingredientForm.addEventListener("delete", onIngredientCreateFormDelete);
+					ingredientCreateGroup.addChild(ingredientForm, {
+						  width: "100%",
+						  height: "auto",
+					});		
+				}
+				
+				// 요리 과정
+				const cookingProcessCreateGroup = app.lookup("cookingProcessCreateGroup");
+				cookingProcessCreateGroup.removeAllChildren();
+				for (let i = 0; i < resultJson.steps.length; i++) {
+					const step = resultJson.steps[i];
+					const cookingProcessForm = new udc.recipe.cooking_process_create();
+					cookingProcessForm.seq = step.stepNumber;
+					cookingProcessForm.explanation = step.stepDescription;
+					cookingProcessForm.img = step.fileUrl; 
+							
+					cookingProcessCreateGroup.addChild(cookingProcessForm, {
+					  width: "100%",
+					  height: "80px",
+				});	
+				}
+				
+				
 			};
 			// End - User Script
 			
@@ -217,59 +353,6 @@
 				]
 			});
 			app.register(dataSet_3);
-			var matrixSubmission_1 = new cpr.protocols.MatrixSubmission("recipeCreatesSms");
-			matrixSubmission_1.async = true;
-			matrixSubmission_1.withCredentials = false;
-			matrixSubmission_1.method = "post";
-			matrixSubmission_1.action = "/api/recipes/create";
-			matrixSubmission_1.setMatrix({
-				"request": {
-					"format": "object",
-					"data": {
-						"userId": {"format": "simple", "path": "@userId"},
-						"parentRecipeId": {"format": "simple", "path": "@parentRecipeId"},
-						"recipeName": {"format": "simple", "path": "@recipeName"},
-						"cookingTime": {"format": "simple", "path": "@cookingTime"},
-						"difficulty": {"format": "simple", "path": "@difficulty"},
-						"calories": {"format": "simple", "path": "@calories"},
-						"summary": {"format": "simple", "path": "@summary"},
-						"servings": {"format": "simple", "path": "@servings"},
-						"ingredients": {
-							"format": "array",
-							"dataControl": dataSet_1,
-							"data": {
-								"ingredientName": {"format": "simple", "path": "@ingredientName"},
-								"ingredientGroup": {"format": "simple", "path": "@ingredientGroup"},
-								"ingredientQuantity": {"format": "simple", "path": "@ingredientQuantity"},
-								"ingredientUnit": {"format": "simple", "path": "@ingredientUnit"}
-							}
-						},
-						"steps": {
-							"format": "array",
-							"dataControl": dataSet_2,
-							"data": {
-								"stepNumber": {"format": "simple", "path": "@stepNumber"},
-								"file": {"format": "simple", "path": "@file"},
-								"stepDescription": {"format": "simple", "path": "@stepDescription"}
-							}
-						},
-						"categories": {
-							"format": "array",
-							"dataControl": dataSet_3,
-							"data": {
-								"recipeCategoryName": {"format": "simple", "path": "@recipeCategoryName"},
-								"recipeCategoryType": {"format": "simple", "path": "@recipeCategoryType"}
-							}
-						}
-					}
-				},
-				"response": {
-					"format": "object",
-					"data": {}
-				}
-			});
-			app.register(matrixSubmission_1);
-			
 			var submission_1 = new cpr.protocols.Submission("recipeCreateSms");
 			submission_1.action = "/api/recipes/create";
 			submission_1.mediaType = "application/json";
@@ -277,6 +360,13 @@
 				submission_1.addEventListener("before-submit", onRecipeCreateSmsBeforeSubmit);
 			}
 			app.register(submission_1);
+			
+			var submission_2 = new cpr.protocols.Submission("recipeInfoSms");
+			submission_2.action = "/api/recipes";
+			if(typeof onRecipeInfoSmsSubmitSuccess == "function") {
+				submission_2.addEventListener("submit-success", onRecipeInfoSmsSubmitSuccess);
+			}
+			app.register(submission_2);
 			app.supportMedia("all and (min-width: 1024px)", "default");
 			app.supportMedia("all and (min-width: 500px) and (max-width: 1023.984px)", "tablet");
 			app.supportMedia("all and (max-width: 499.984px)", "mobile");
@@ -296,7 +386,7 @@
 			container.setLayout(verticalLayout_1);
 			
 			// UI Configuration
-			var output_1 = new cpr.controls.Output();
+			var output_1 = new cpr.controls.Output("formTitle");
 			output_1.value = "레시피 등록";
 			output_1.style.css({
 				"font-weight" : "bold",
@@ -309,7 +399,8 @@
 			
 			var group_1 = new cpr.controls.Container();
 			group_1.style.css({
-				"background-color" : "#EAF1F3"
+				"background-color" : "#EAF1F3",
+				"border-radius" : "5px"
 			});
 			var verticalLayout_2 = new cpr.controls.layouts.VerticalLayout();
 			verticalLayout_2.spacing = 20;
@@ -453,7 +544,8 @@
 			
 			var group_3 = new cpr.controls.Container();
 			group_3.style.css({
-				"background-color" : "#FBF3EB"
+				"background-color" : "#FBF3EB",
+				"border-radius" : "5px"
 			});
 			var verticalLayout_3 = new cpr.controls.layouts.VerticalLayout();
 			verticalLayout_3.spacing = 20;
@@ -507,7 +599,8 @@
 			
 			var group_5 = new cpr.controls.Container();
 			group_5.style.css({
-				"background-color" : "#E5E6C7"
+				"background-color" : "#E5E6C7",
+				"border-radius" : "5px"
 			});
 			var verticalLayout_5 = new cpr.controls.layouts.VerticalLayout();
 			verticalLayout_5.spacing = 20;
@@ -568,6 +661,9 @@
 			});
 			if(typeof onBodyLoad == "function"){
 				app.addEventListener("load", onBodyLoad);
+			}
+			if(typeof onBodyInit == "function"){
+				app.addEventListener("init", onBodyInit);
 			}
 		}
 	});

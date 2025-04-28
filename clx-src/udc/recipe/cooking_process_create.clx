@@ -10,13 +10,17 @@
     <cl:model std:sid="model-689ea2ab"/>
     <cl:appspec>
       <cl:property name="seq" type="string"/>
+      <cl:property name="explanation" type="string"/>
+      <cl:property name="img" type="string"/>
     </cl:appspec>
   </head>
   <body std:sid="body-3314d67f" style="top:0px; left:0px; width:500px; height:80px;">
     <cl:fileinput std:sid="f-input-7ce00bd9" id="fileUrl" placeholder="사진 업로드">
+      <cl:apppropbind property="value" category="PROPERTY" app-property="img"/>
       <cl:formdata std:sid="f-data-e12970dd" row="0" col="1"/>
     </cl:fileinput>
     <cl:textarea std:sid="t-area-4c609d14" id="stepDescription" placeholder="예) 스팸을 한입에 먹기 좋게 깍뚝 썰어주세요">
+      <cl:apppropbind property="value" category="PROPERTY" app-property="explanation"/>
       <cl:formdata std:sid="f-data-c578198a" row="0" col="3"/>
     </cl:textarea>
     <cl:output std:sid="output-83ea9381" id="stepNumber">

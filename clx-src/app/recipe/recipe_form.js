@@ -14,11 +14,15 @@ const recipeInfoSelectItemsModule = cpr.core.Module.require("data/recipeInfoSele
 const difficultyItems = recipeInfoSelectItemsModule.difficulty;
 const cookingTimeItems = recipeInfoSelectItemsModule.cookingTime;
 
+const isLastPathSegmentNumberMd = cpr.core.Module.require("module/common/isLastPathSegmentNumber");
+const isLastPathSegmentNumber = isLastPathSegmentNumberMd.isLastPathSegmentNumber();
+
 /*
- * 루트 컨테이너에서 load 이벤트 발생 시 호출.
- * 앱이 최초 구성된후 최초 랜더링 직후에 발생하는 이벤트 입니다.
+ * 루트 컨테이너에서 init 이벤트 발생 시 호출.
+ * 앱이 최초 구성될 때 발생하는 이벤트 입니다.
  */
-function onBodyLoad(e){
+function onBodyInit(e){
+	// 카테고리 아이템 지정
 	const typeCategorySelect = app.lookup("typeCategorySelect");
 	const situationCategorySelet = app.lookup("situationCategorySelect");
 	const methodCategorySelect = app.lookup("methodCategorySelect");
@@ -44,6 +48,30 @@ function onBodyLoad(e){
 	for (let i=0; i<cookingTimeItems.length; i++){
 		cookingTimeSelect.addItem(new cpr.controls.Item(cookingTimeItems[i], cookingTimeItems[i]));	
 	}
+	
+	// 레시피 form 타이틀 수정
+	const isNumber = isLastPathSegmentNumber;
+	console.log(isNumber);
+	if(isNumber[0]){
+		const formTitle = app.lookup("formTitle");
+		formTitle.value = "레시피 수정";
+		
+	}
+}
+
+
+/*
+ * 루트 컨테이너에서 load 이벤트 발생 시 호출.
+ * 앱이 최초 구성된후 최초 랜더링 직후에 발생하는 이벤트 입니다.
+ */
+function onBodyLoad(e){
+	const isNumber = isLastPathSegmentNumber;
+	if(isNumber[0]){
+	    const recipeInfoSms = app.lookup("recipeInfoSms");
+	    
+	    recipeInfoSms.setRequestActionUrl(recipeInfoSms.action + "/" + isNumber[1]);
+	    recipeInfoSms.send();
+	}
 }
 
 /*
@@ -59,9 +87,9 @@ function onRecipeCreateSmsBeforeSubmit(e){
 	const servings = app.lookup("servingsInput").value;
 	const difficulty = app.lookup("difficultySelect").value;
 	const cookingTime = app.lookup("cookingTimeSelect").value;
-	const calories = app.lookup("caloriesInput").value;	
+	const calories = app.lookup("caloriesInput").value;
 	
-	// 완성사진
+	// TODO: 완성사진
 	const files = ["https://mybucket.s3.amazonaws.com/images/recipe1.jpg"];
 	
 	// 카테고리
@@ -171,4 +199,112 @@ function onCookingProcessAdd(e){
 		  width: "100%",
 		  height: "80px",
 	});	
+}
+
+/*
+ * 서브미션에서 submit-success 이벤트 발생 시 호출.
+ * 통신이 성공하면 발생합니다.
+ */
+function onRecipeInfoSmsSubmitSuccess(e){
+	var recipeInfoSms = e.control;
+	
+	const result = recipeInfoSms.xhr.responseText;
+	const resultJson = JSON.parse(result);
+	
+	// 기본 정보
+	const recipeName = app.lookup("recipeNameInput");
+	const receipSummary = app.lookup("recipeSummaryInput");
+	const servings = app.lookup("servingsInput");
+	const difficulty = app.lookup("difficultySelect");
+	const cookingTime = app.lookup("cookingTimeSelect");
+	const calories = app.lookup("caloriesInput");
+	
+	recipeName.value = resultJson.recipeName;
+	receipSummary.value = resultJson.summary;
+	servings.value = resultJson.servings;
+	difficulty.value = resultJson.difficulty;
+	cookingTime.value = resultJson.cookingTime;
+	calories.value = resultJson.calories;
+	
+	// TODO: 완성사진
+	
+	
+	// 카테고리
+	const typeCategory = app.lookup("typeCategorySelect");
+	const situationCategory = app.lookup("situationCategorySelect");
+	const methodCategory = app.lookup("methodCategorySelect");
+	
+	const categories = resultJson.categories;
+	for (let j = 0; j < categories.length; j++) {
+	  const category = categories[j];
+	  const categoryType = category.recipeCategoryType;
+	  switch (categoryType) {
+	    case "종류별":
+      	  typeCategory.value = category.recipeCategoryName;	
+	      break;
+	    case "상황별":
+	      situationCategory.value = category.recipeCategoryName;
+	      break;
+	    case "방법별":
+	      methodCategory.value = category.recipeCategoryName;
+	      break;
+	    default:
+	      break;
+	  }
+	}
+	
+	// 재료
+	const ingredientCreateGroup = app.lookup("ingredientCreateGroup");
+	ingredientCreateGroup.removeAllChildren();
+	
+	// 1. ingredientGroup별로 묶기
+	const groupedIngredients = {};
+	
+	for (let i = 0; i < resultJson.ingredients.length; i++) {
+	  const ing = resultJson.ingredients[i];
+	  const groupName = ing.ingredientGroup || "재료";
+	
+	  if (!groupedIngredients[groupName]) {
+	    groupedIngredients[groupName] = [];
+	  }
+	
+	  groupedIngredients[groupName].push({
+	  	id: ing.id,
+	    ingredientName: ing.ingredientName,
+	    ingredientQuantity: ing.ingredientQuantity,
+	    ingredientUnit: ing.ingredientUnit
+	  });
+	}
+	
+	const groupCount = Object.keys(groupedIngredients).length;
+	console.log(groupedIngredients);
+	
+	// 재료 넣기
+	for(let i=0; i<groupCount; i++){
+		const ingredientForm = new udc.recipe.ingredient_create();
+		ingredientForm.setIngredientsList(groupedIngredients);
+		ingredientForm.addEventListener("delete", onIngredientCreateFormDelete);
+		ingredientCreateGroup.addChild(ingredientForm, {
+			  width: "100%",
+			  height: "auto",
+		});		
+	}
+	
+	// 요리 과정
+	const cookingProcessCreateGroup = app.lookup("cookingProcessCreateGroup");
+	cookingProcessCreateGroup.removeAllChildren();
+	for (let i = 0; i < resultJson.steps.length; i++) {
+		const step = resultJson.steps[i];
+		const cookingProcessForm = new udc.recipe.cooking_process_create();
+		cookingProcessForm.seq = step.stepNumber;
+		cookingProcessForm.explanation = step.stepDescription;
+		cookingProcessForm.img = step.fileUrl; 
+				
+		cookingProcessCreateGroup.addChild(cookingProcessForm, {
+		  width: "100%",
+		  height: "80px",
+	});	
+	}
+	
+	
 }
