@@ -84,10 +84,10 @@ exports.getIngredientsList=()=>{
 	}
 		
 	const ingredientsResult = ingredientsList.map(item => ({
-		ingredientName: item[1],
-	    ingredientQuantity: item[2],
-	    ingredientUnit: item[3],
-	    ingredientGroup: item[4]
+		ingredientName: item[0],
+	    ingredientQuantity: item[1],
+	    ingredientUnit: item[2],
+	    ingredientGroup: item[3]
 	}));
 	
 	return ingredientsResult;

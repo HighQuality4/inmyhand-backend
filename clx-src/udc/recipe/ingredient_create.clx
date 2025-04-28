@@ -11,9 +11,9 @@
       <cl:dataset std:sid="d-set-d42282a0" id="ingredientGridDs" altercolumnlayout="server">
         <cl:datacolumnlist>
           <cl:datacolumn std:sid="d-column-181ee14f" name="ingredientName" datatype="string"/>
-          <cl:datacolumn std:sid="d-column-24d76b54" name="ingredientGroup"/>
           <cl:datacolumn std:sid="d-column-33a72286" name="ingredientQuantity" datatype="number"/>
           <cl:datacolumn std:sid="d-column-bd2b0bdd" name="ingredientUnit"/>
+          <cl:datacolumn std:sid="d-column-24d76b54" name="ingredientGroup"/>
           <cl:datacolumn std:sid="d-column-1690bbb4" name="id" datatype="number"/>
         </cl:datacolumnlist>
       </cl:dataset>
@@ -38,40 +38,36 @@
         <cl:xylayoutdata std:sid="xyl-data-5dede53d" top="0px" right="400px" bottom="0px" left="0px" horizontalAnchor="BOTH" verticalAnchor="BOTH"/>
       </cl:output>
       <cl:inputbox std:sid="i-box-c3f39f8b" id="ingredientGroupValue" placeholder="예) 양념, 주재료, 소스">
-        <cl:datasetbind property="value" datacontrolid="ingredientGridDs" columnname="ingredientGroup" rowindex="0"/>
         <cl:xylayoutdata std:sid="xyl-data-e9d3c9da" top="0px" right="0px" bottom="0px" left="100px" horizontalAnchor="BOTH" verticalAnchor="BOTH"/>
       </cl:inputbox>
       <cl:xylayout std:sid="xylayout-3a092401"/>
     </cl:group>
-    <cl:grid std:sid="grid-f74c5352" id="ingredientGrid" datasetid="ingredientGridDs" showdeletedrow="false" rowindexerstartnum="0">
+    <cl:grid std:sid="grid-f74c5352" id="ingredientGrid" datasetid="ingredientGridDs">
       <cl:verticaldata std:sid="v-data-1a212a94" width="400px" height="50px" autosize="height"/>
-      <cl:gridcolumn std:sid="g-column-1f437bcd" visible="false"/>
-      <cl:gridcolumn std:sid="g-column-b2a0ed5f"/>
-      <cl:gridcolumn std:sid="g-column-b548b65e"/>
-      <cl:gridcolumn std:sid="g-column-b998b39c"/>
-      <cl:gridheader std:sid="gh-band-274e638c">
-        <cl:gridrow std:sid="g-row-5cd5a3c5" height="24px"/>
-        <cl:gridcell std:sid="gh-cell-2d6771bc" rowindex="0" colindex="0" targetcolumnname="id" sortable="false" filterable="false" text="순서"/>
-        <cl:gridcell std:sid="gh-cell-84d0f778" rowindex="0" colindex="1" targetcolumnname="ingredientName" sortable="false" filterable="false" text="재료명"/>
-        <cl:gridcell std:sid="gh-cell-4de97c77" rowindex="0" colindex="2" targetcolumnname="ingredientQuantity" sortable="false" filterable="false" text="수량"/>
-        <cl:gridcell std:sid="gh-cell-f636b2b6" rowindex="0" colindex="3" targetcolumnname="ingredientUnit" sortable="false" filterable="false" text="단위"/>
+      <cl:gridcolumn std:sid="g-column-4f197fcb"/>
+      <cl:gridcolumn std:sid="g-column-358f0580"/>
+      <cl:gridcolumn std:sid="g-column-9cbba321"/>
+      <cl:gridheader std:sid="gh-band-7fee863b">
+        <cl:gridrow std:sid="g-row-864e4856" height="24px"/>
+        <cl:gridcell std:sid="gh-cell-1943c213" rowindex="0" colindex="0" targetcolumnname="ingredientName" sortable="false" filterable="false" text="재료"/>
+        <cl:gridcell std:sid="gh-cell-8275ff4a" rowindex="0" colindex="1" targetcolumnname="ingredientQuantity" sortable="false" filterable="false" text="수량"/>
+        <cl:gridcell std:sid="gh-cell-e1983076" rowindex="0" colindex="2" targetcolumnname="ingredientUnit" sortable="false" filterable="false" text="단위"/>
       </cl:gridheader>
-      <cl:griddetail std:sid="gd-band-997022a0">
-        <cl:gridrow std:sid="g-row-bb1b39a0" height="24px"/>
-        <cl:gridcell std:sid="gd-cell-897565e4" rowindex="0" colindex="0" columnname="id"/>
-        <cl:gridcell std:sid="gd-cell-1a7b0973" rowindex="0" colindex="1" columnname="ingredientName">
-          <cl:inputbox std:sid="i-box-95d77c94" id="ipb2">
-            <cl:celldata std:sid="c-data-af541c82"/>
+      <cl:griddetail std:sid="gd-band-3cfd7f86">
+        <cl:gridrow std:sid="g-row-08ba5bbf" height="24px"/>
+        <cl:gridcell std:sid="gd-cell-d383cf6f" rowindex="0" colindex="0" columnname="ingredientName">
+          <cl:inputbox std:sid="i-box-7fac565d" id="ipb1">
+            <cl:celldata std:sid="c-data-f6be6555"/>
           </cl:inputbox>
         </cl:gridcell>
-        <cl:gridcell std:sid="gd-cell-69c70c7f" rowindex="0" colindex="2" columnname="ingredientQuantity">
-          <cl:inputbox std:sid="i-box-251b30d8" id="ipb3">
-            <cl:celldata std:sid="c-data-cfaf0e7c"/>
+        <cl:gridcell std:sid="gd-cell-21ce40ca" rowindex="0" colindex="1" columnname="ingredientQuantity">
+          <cl:inputbox std:sid="i-box-3471bcef" id="ipb2">
+            <cl:celldata std:sid="c-data-c472e5ff"/>
           </cl:inputbox>
         </cl:gridcell>
-        <cl:gridcell std:sid="gd-cell-8f639ad9" rowindex="0" colindex="3" columnname="ingredientUnit">
-          <cl:inputbox std:sid="i-box-1ba9744b" id="ipb4">
-            <cl:celldata std:sid="c-data-d954052d"/>
+        <cl:gridcell std:sid="gd-cell-ef0e7185" rowindex="0" colindex="2" columnname="ingredientUnit">
+          <cl:inputbox std:sid="i-box-72ad9e95" id="ipb3">
+            <cl:celldata std:sid="c-data-9ab6e680"/>
           </cl:inputbox>
         </cl:gridcell>
       </cl:griddetail>

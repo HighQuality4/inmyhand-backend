@@ -105,8 +105,14 @@ public class RecipeController {
     // 레시피 수정
     @PutMapping("/{recipeId}")
     public ResponseEntity<String> updateRecipe(
-            @PathVariable Long recipeId,
-            @RequestBody RecipeRequestDTO dto) {
+            @PathVariable("recipeId") Long recipeId,
+            @RequestBody Map<String, Object> body) {
+        Map<String, Object> param = (Map<String, Object>) body.get("param");
+        List<Map<String, Object>> paramList = (List<Map<String, Object>>) param.get("param");
+
+        Map<String, Object> recipeMap = paramList.get(0);
+
+        RecipeRequestDTO dto = objectMapper.convertValue(recipeMap, RecipeRequestDTO.class);
         recipeCommandService.updateRecipe(recipeId, dto);
         return ResponseEntity.ok("레시피가 성공적으로 수정되었습니다.");
     }
