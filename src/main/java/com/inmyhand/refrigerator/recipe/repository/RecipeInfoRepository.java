@@ -40,5 +40,13 @@ public interface RecipeInfoRepository extends JpaRepository<RecipeInfoEntity, Lo
     Page<AdminRecipeInfoDto> findAdminRecipeInfoUser(@Param("id") Long id, Pageable pageable);
 
     Optional<RecipeInfoEntity> findFirstByRecipeName(String keyword);
+
+
+    @Query("SELECT r FROM RecipeInfoEntity r JOIN FETCH r.filesEntities")
+    List<RecipeInfoEntity> similarFindAll();
+
+    // findById 대체 메서드
+    @Query("SELECT r FROM RecipeInfoEntity r JOIN FETCH r.filesEntities WHERE r.id = :id")
+    Optional<RecipeInfoEntity> similarFindById(Long id);
 }
 

@@ -133,7 +133,7 @@ public class SimilarRecipeLogic {
         // 캐시가 없는 경우 새로 조회
         if (allRecipesCache == null) {
             try {
-                allRecipesCache = recipeInfoRepository.findAll();
+                allRecipesCache = recipeInfoRepository.similarFindAll();
                 lastRecipesUpdateTime = currentTime;
                 log.info("레시피 캐시가 갱신되었습니다. 총 " + allRecipesCache.size() + "개의 레시피");
             } catch (Exception e) {
@@ -472,7 +472,7 @@ public class SimilarRecipeLogic {
         if (limit <= 0) limit = 5; // 기본값 설정
 
         try {
-            RecipeInfoEntity targetRecipe = recipeInfoRepository.findById(recipeId)
+            RecipeInfoEntity targetRecipe = recipeInfoRepository.similarFindById(recipeId)
                     .orElseThrow(() -> new IllegalArgumentException("레시피를 찾을 수 없습니다: " + recipeId));
 
             // 모든 레시피 가져오기 (캐싱 적용)
@@ -536,9 +536,9 @@ public class SimilarRecipeLogic {
      */
     @Transactional(readOnly = true)
     public List<SimilarRecipeDTO> getSimilarRecipes(Long recipeId) {
-        return getSimilarRecipes(recipeId, 5).stream()
+        return getSimilarRecipes(recipeId, 3).stream()
                 .limit(3)
-                .map(i -> new SimilarRecipeDTO(i.getId(), i.getRecipeName()))
+                .map(i -> new SimilarRecipeDTO(i.getId(), i.getRecipeName(), i.getFilesEntities().get(0).getFileUrl()))
                 .toList();
 
 //        return recipes.stream()

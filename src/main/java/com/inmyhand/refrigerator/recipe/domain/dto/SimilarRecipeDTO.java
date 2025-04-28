@@ -11,6 +11,6 @@ public class SimilarRecipeDTO {
 
     private Long id;
     private String recipeName;
-//    private String fileUrl;
+    private String fileUrl;
 
 }

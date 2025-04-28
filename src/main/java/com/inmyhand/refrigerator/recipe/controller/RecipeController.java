@@ -4,8 +4,12 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.inmyhand.refrigerator.recipe.domain.dto.RecipeDetailDTO;
 import com.inmyhand.refrigerator.recipe.domain.dto.RecipeRequestDTO;
 import com.inmyhand.refrigerator.recipe.domain.dto.RecipeSummaryDTO;
+import com.inmyhand.refrigerator.recipe.domain.dto.SimilarRecipeDTO;
 import com.inmyhand.refrigerator.recipe.service.RecipeCommandService;
 import com.inmyhand.refrigerator.recipe.service.RecipeQueryService;
+import com.inmyhand.refrigerator.recipe.service.engine.SimilarRecipeLogic;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -18,13 +22,16 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("/api/recipes")
+@RequiredArgsConstructor
+@Slf4j
 public class RecipeController {
-    @Autowired
-    private RecipeQueryService recipeQueryService;
-    @Autowired
-    private RecipeCommandService recipeCommandService;
-    @Autowired
-    private ObjectMapper objectMapper;
+
+    private final RecipeQueryService recipeQueryService;
+    private final RecipeCommandService recipeCommandService;
+    private final ObjectMapper objectMapper;
+    private final SimilarRecipeLogic similarRecipeLogic;
+
+
 
 
     // 전체 레시피 목록 조회 - 페이징
@@ -67,6 +74,12 @@ public class RecipeController {
     @PostMapping("/{id}")
     public RecipeDetailDTO getRecipeDetail(@PathVariable("id") Long recipeId) {
         return recipeQueryService.getRecipeDetail(recipeId);
+    }
+
+    // 추천 레시피 3개
+    @PostMapping("/similar/{id}")
+    public ResponseEntity<?> getSimilarRecipes(@PathVariable("id") Long recipeId) {
+        return ResponseEntity.ok(Map.of("similar", similarRecipeLogic.getSimilarRecipes(recipeId)));
     }
 
     // 레시피 검색
