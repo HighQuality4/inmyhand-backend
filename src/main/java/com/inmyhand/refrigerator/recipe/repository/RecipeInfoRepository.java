@@ -38,5 +38,7 @@ public interface RecipeInfoRepository extends JpaRepository<RecipeInfoEntity, Lo
             "WHERE r.memberEntity.id = :id " +
             "ORDER BY r.createdAt ASC")
     Page<AdminRecipeInfoDto> findAdminRecipeInfoUser(@Param("id") Long id, Pageable pageable);
+
+    Optional<RecipeInfoEntity> findFirstByRecipeName(String keyword);
 }
 
