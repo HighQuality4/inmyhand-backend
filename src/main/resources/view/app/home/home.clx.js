@@ -41,6 +41,7 @@
 			function onBodyLoad(e){
 				const popularRecipeListSms = app.lookup("popularRecipeListSms");
 				popularRecipeListSms.send();
+				app.lookup("popularSearchSms").send();
 			}
 
 			/*
@@ -72,16 +73,98 @@
 				slide.start();
 
 				recipeContainer.redraw();
+			}
+
+			// 데이터셋의 모든 행을 순회하며 아웃풋 컨트롤에 값 할당하기
+			function setDataToOutputs() {
+			    // 데이터셋 객체 참조
+			    var ds = app.lookup("popularSearch");  // 사용하려는 데이터셋 ID로 변경
+			    
+			    // 데이터셋의 행 수 확인
+			    var rowCount = ds.getRowCount();
+			    console.log("Row Count: " + rowCount);
+			    
+			    // 출력할 컨트롤들이 있는 배열 또는 컨트롤 ID 패턴 정의
+			    var outputPrefix = "out";
+			    
+			    // 데이터셋의 각 행을 순회하며 해당 컨트롤에 값 할당
+			    for(var i = 0; i < rowCount; i++) {
+			        // 키워드와 recipeId 값 가져오기 (id 대신 recipeId 사용)
+			        var keyword = ds.getValue(i, "keyword");
+			        var recipeId = ds.getValue(i, "recipeId");  // 컬럼명 수정
+			        
+			        // 해당 값을 i번째 아웃풋 컨트롤에 설정
+			        var outputId = outputPrefix + (i + 1);
+			        let outputControl = app.lookup(outputId);
+			        
+			        if (outputControl) {
+			            // 값 설정 (순위 표시 추가)
+			            outputControl.value = (i + 1) + ". " + keyword;
+			            
+			            // 사용자 데이터에 recipeId 저장
+			            outputControl.userData("recipeId", recipeId);
+			            
+			            // 클릭 이벤트 핸들러 추가
+			            outputControl.removeEventListeners("click");
+			            outputControl.addEventListener("click", function(e) {
+			                var control = e.control;
+			                var recipeId = control.userData("recipeId");
+			                
+			                if (recipeId) {
+
+			                   window.location.href = "/recipe/" + recipeId;
+			                    console.log("이동: /recipe/" + recipeId);
+			                }
+			            });
+			            
+			            // 클릭 가능함을 시각적으로 표시
+			            outputControl.style.css({
+			                "cursor": "pointer",
+			                "text-decoration": "underline"
+			            });
+			        }
+			    }
+			}
+
+
+
+
+			/*
+			 * 서브미션에서 submit-success 이벤트 발생 시 호출.
+			 * 통신이 성공하면 발생합니다.
+			 */
+			function onPopularSearchSmsSubmitSuccess(e){
+				var popularSearchSms = e.control;
+				setDataToOutputs();
+				app.lookup("popularSearchBoard").redraw();
 			};
 			// End - User Script
 			
 			// Header
+			var dataSet_1 = new cpr.data.DataSet("popularSearch");
+			dataSet_1.parseData({
+				"columns" : [
+					{"name": "keyword"},
+					{"name": "count"},
+					{"name": "recipeId"}
+				]
+			});
+			app.register(dataSet_1);
 			var submission_1 = new cpr.protocols.Submission("popularRecipeListSms");
 			submission_1.action = "/api/recipes/popular";
 			if(typeof onPopularRecipeListSmsSubmitSuccess == "function") {
 				submission_1.addEventListener("submit-success", onPopularRecipeListSmsSubmitSuccess);
 			}
 			app.register(submission_1);
+			
+			var submission_2 = new cpr.protocols.Submission("popularSearchSms");
+			submission_2.method = "get";
+			submission_2.action = "/api/recipe/search/popular";
+			submission_2.addResponseData(dataSet_1, false);
+			if(typeof onPopularSearchSmsSubmitSuccess == "function") {
+				submission_2.addEventListener("submit-success", onPopularSearchSmsSubmitSuccess);
+			}
+			app.register(submission_2);
 			app.supportMedia("all and (min-width: 1024px)", "default");
 			app.supportMedia("all and (min-width: 500px) and (max-width: 1023.984px)", "tablet");
 			app.supportMedia("all and (max-width: 499.984px)", "mobile");
@@ -151,7 +234,7 @@
 				]
 			});
 			
-			var group_2 = new cpr.controls.Container();
+			var group_2 = new cpr.controls.Container("popularSearchBoard");
 			group_2.style.css({
 				"background-color" : "#FBDBCF",
 				"border-radius" : "5px"
@@ -176,6 +259,60 @@
 					"width": "100px",
 					"height": "30px"
 				});
+				var output_2 = new cpr.controls.Output("out1");
+				output_2.value = "Output";
+				output_2.style.css({
+					"font-weight" : "bold",
+					"font-size" : "16px"
+				});
+				container.addChild(output_2, {
+					"width": "487px",
+					"height": "25px"
+				});
+				var output_3 = new cpr.controls.Output("out2");
+				output_3.value = "Output";
+				output_3.style.css({
+					"font-weight" : "bold",
+					"font-size" : "16px"
+				});
+				container.addChild(output_3, {
+					"autoSize": "none",
+					"width": "560px",
+					"height": "25px"
+				});
+				var output_4 = new cpr.controls.Output("out3");
+				output_4.value = "Output";
+				output_4.style.css({
+					"font-weight" : "bold",
+					"font-size" : "16px"
+				});
+				container.addChild(output_4, {
+					"autoSize": "none",
+					"width": "560px",
+					"height": "25px"
+				});
+				var output_5 = new cpr.controls.Output("out4");
+				output_5.value = "Output";
+				output_5.style.css({
+					"font-weight" : "bold",
+					"font-size" : "16px"
+				});
+				container.addChild(output_5, {
+					"autoSize": "none",
+					"width": "560px",
+					"height": "25px"
+				});
+				var output_6 = new cpr.controls.Output("out5");
+				output_6.value = "Output";
+				output_6.style.css({
+					"font-weight" : "bold",
+					"font-size" : "16px"
+				});
+				container.addChild(output_6, {
+					"autoSize": "none",
+					"width": "560px",
+					"height": "25px"
+				});
 			})(group_2);
 			container.addChild(group_2, {
 				positions: [
@@ -184,21 +321,21 @@
 						"top": "340px",
 						"right": "0px",
 						"left": "0px",
-						"height": "200px"
+						"height": "300px"
 					}, 
 					{
 						"media": "all and (min-width: 500px) and (max-width: 1023.984px)",
 						"top": "340px",
 						"right": "0px",
 						"left": "0px",
-						"height": "200px"
+						"height": "300px"
 					}, 
 					{
 						"media": "all and (max-width: 499.984px)",
 						"top": "340px",
 						"right": "0px",
 						"left": "0px",
-						"height": "200px"
+						"height": "300px"
 					}
 				]
 			});
@@ -259,21 +396,21 @@
 				positions: [
 					{
 						"media": "all and (min-width: 1024px)",
-						"top": "600px",
+						"top": "670px",
 						"right": "0px",
 						"left": "0px",
 						"height": "500px"
 					}, 
 					{
 						"media": "all and (min-width: 500px) and (max-width: 1023.984px)",
-						"top": "600px",
+						"top": "670px",
 						"right": "0px",
 						"left": "0px",
 						"height": "500px"
 					}, 
 					{
 						"media": "all and (max-width: 499.984px)",
-						"top": "600px",
+						"top": "670px",
 						"right": "0px",
 						"left": "0px",
 						"height": "500px"

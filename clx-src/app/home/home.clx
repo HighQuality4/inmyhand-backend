@@ -8,8 +8,19 @@
     <screen std:sid="screen-24f4c312" id="tablet" name="tablet" width="500px" height="667px"/>
     <screen std:sid="screen-895d7299" id="mobile" name="mobile" width="350px" height="525px"/>
     <cl:model std:sid="model-c2e79a6e">
+      <cl:dataset std:sid="d-set-6d9fffa8" id="popularSearch">
+        <cl:datacolumnlist>
+          <cl:datacolumn std:sid="d-column-f0042459" name="keyword"/>
+          <cl:datacolumn std:sid="d-column-10391256" name="count"/>
+          <cl:datacolumn std:sid="d-column-822668b7" name="recipeId"/>
+        </cl:datacolumnlist>
+      </cl:dataset>
       <cl:submission std:sid="submission-fedf4426" id="popularRecipeListSms" action="/api/recipes/popular">
         <cl:listener std:sid="listener-732342ec" name="submit-success" handler="onPopularRecipeListSmsSubmitSuccess"/>
+      </cl:submission>
+      <cl:submission std:sid="submission-2cb9c70a" id="popularSearchSms" method="get" action="/api/recipe/search/popular">
+        <cl:listener std:sid="listener-07c7aebb" name="submit-success" handler="onPopularSearchSmsSubmitSuccess"/>
+        <cl:responsedata dataid="popularSearch"/>
       </cl:submission>
     </cl:model>
     <cl:appspec/>
@@ -31,18 +42,33 @@
       </cl:img>
       <cl:flowlayout std:sid="f-layout-8f2ae446"/>
     </cl:group>
-    <cl:group std:sid="group-bc0cdddc" style="background-color:#FBDBCF; border-radius:5px;">
+    <cl:group std:sid="group-bc0cdddc" id="popularSearchBoard" style="background-color:#FBDBCF; border-radius:5px;">
       <cl:responsivexylayoutdata std:sid="rxyl-data-3c2adba0">
-        <cl:xylayoutdata std:sid="sxyl-data-7d2217b1" top="340px" right="0px" left="0px" height="200px" horizontalAnchor="BOTH" verticalAnchor="TOP" screenid="default"/>
+        <cl:xylayoutdata std:sid="sxyl-data-7d2217b1" top="340px" right="0px" left="0px" height="300px" horizontalAnchor="BOTH" verticalAnchor="TOP" screenid="default"/>
       </cl:responsivexylayoutdata>
       <cl:output std:sid="output-86ab009d" style="color:#856C66; font-weight:bold; font-size:20px; text-align:center;" value="실시간 레시피 인기 검색어">
         <cl:verticaldata std:sid="v-data-9492a6cc" width="100px" height="30px"/>
+      </cl:output>
+      <cl:output std:sid="output-3a55cb8f" id="out1" style="font-weight:bold; font-size:16px;" value="Output">
+        <cl:verticaldata std:sid="v-data-61cd3ca7" width="487px" height="25px"/>
+      </cl:output>
+      <cl:output std:sid="output-8db2f4ee" id="out2" style="font-weight:bold; font-size:16px;" value="Output">
+        <cl:verticaldata std:sid="v-data-3a4f014d" width="560px" height="25px" autosize="none"/>
+      </cl:output>
+      <cl:output std:sid="output-1d775977" id="out3" style="font-weight:bold; font-size:16px;" value="Output">
+        <cl:verticaldata std:sid="v-data-e829800c" width="560px" height="25px" autosize="none"/>
+      </cl:output>
+      <cl:output std:sid="output-5d3dd694" id="out4" style="font-weight:bold; font-size:16px;" value="Output">
+        <cl:verticaldata std:sid="v-data-a3431fed" width="560px" height="25px" autosize="none"/>
+      </cl:output>
+      <cl:output std:sid="output-40b9da58" id="out5" style="font-weight:bold; font-size:16px;" value="Output">
+        <cl:verticaldata std:sid="v-data-cd9e55a7" width="560px" height="25px" autosize="none"/>
       </cl:output>
       <cl:verticallayout std:sid="v-layout-c877bbf0" spacing="20" leftmargin="20" rightmargin="20" topmargin="20" bottommargin="20"/>
     </cl:group>
     <cl:group std:sid="group-ee34f8b7">
       <cl:responsivexylayoutdata std:sid="rxyl-data-667b3997">
-        <cl:xylayoutdata std:sid="sxyl-data-ed98b2a0" top="600px" right="0px" left="0px" height="500px" horizontalAnchor="BOTH" verticalAnchor="TOP" screenid="default"/>
+        <cl:xylayoutdata std:sid="sxyl-data-ed98b2a0" top="670px" right="0px" left="0px" height="500px" horizontalAnchor="BOTH" verticalAnchor="TOP" screenid="default"/>
       </cl:responsivexylayoutdata>
       <cl:group std:sid="group-936fc3f4">
         <cl:verticaldata std:sid="v-data-2ed23d1f" width="400px" height="30px" autosize="height"/>
