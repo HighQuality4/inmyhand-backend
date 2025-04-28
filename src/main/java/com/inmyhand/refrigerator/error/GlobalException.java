@@ -1,6 +1,7 @@
 package com.inmyhand.refrigerator.error;
 
 import com.inmyhand.refrigerator.error.exception.ParamGroupIsNullException;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -27,6 +28,15 @@ public class GlobalException {
 
     @ExceptionHandler(EnumConstantNotPresentException.class)
     public ResponseEntity<Map<String, Object>> enumConstantNotPresentException(EnumConstantNotPresentException ex) {
+        Map<String, Object> errorResponse = new HashMap<>();
+        errorResponse.put("timestamp", LocalDateTime.now().format(DateTimeFormatter.ISO_DATE_TIME));
+        errorResponse.put("message", ex.getMessage());
+        errorResponse.put("status", HttpStatus.INTERNAL_SERVER_ERROR.value());
+        return new ResponseEntity<>(errorResponse, HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+
+    @ExceptionHandler(EntityNotFoundException.class)
+    public ResponseEntity<Map<String, Object>> entityNotFoundException(EntityNotFoundException ex) {
         Map<String, Object> errorResponse = new HashMap<>();
         errorResponse.put("timestamp", LocalDateTime.now().format(DateTimeFormatter.ISO_DATE_TIME));
         errorResponse.put("message", ex.getMessage());
