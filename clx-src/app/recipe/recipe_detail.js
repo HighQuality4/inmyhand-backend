@@ -17,6 +17,10 @@ function onBodyLoad(e){
 	
 	recipeDetailSms.setRequestActionUrl(recipeDetailSms.action+"/"+recipeId);
 	recipeDetailSms.send();
+	
+	const similarSms = app.lookup("similarSms");
+	similarSms.setRequestActionUrl(similarSms.action+"/"+recipeId);
+	similarSms.send();
 }
 
 /*
@@ -147,6 +151,80 @@ function onRecipeDetailSmsSubmitSuccess(e){
 		  height: "100px",
 		});	
 	}
-	
-	
+}
+
+function similar() {
+    var ds = app.lookup("similar");
+    var rowCount = ds.getRowCount();
+    var outputPrefix = "out";
+    var outextPrefix = "outext";
+    
+    // 데이터셋의 각 행을 순회하며 해당 컨트롤에 값 할당
+    for(var i = 0; i < rowCount; i++) {
+        
+        var recipeName = ds.getValue(i, "recipeName");
+        var recipeId = ds.getValue(i, "id");
+        var fileUrl = ds.getValue(i, "fileUrl");
+        
+        var outputId = outputPrefix + (i + 1);
+        var outextId = outextPrefix + (i + 1);
+        let outputControl = app.lookup(outputId);
+        let outextControl = app.lookup(outextId);
+
+
+        if (outputControl) {
+            outputControl.value = ""; 
+            outputControl.userData("id", recipeId);
+            outputControl.style.css({
+                "cursor": "pointer",
+                "background-image": "url(" + fileUrl + ")",
+                "background-position": "center",
+                "background-repeat": "no-repeat",
+                "background-size": "cover",
+                "width": "100%",
+                "height": "100%"
+            });
+            outputControl.removeEventListeners("click");
+            outputControl.addEventListener("click", function(e) {
+                var control = e.control;
+                var recipeId = control.userData("id");
+                if (recipeId) {
+                    window.location.href = "/recipe/" + recipeId;
+                    console.log("이동: /recipe/" + recipeId);
+                }
+            });
+        }
+
+
+        if (outextControl) {
+            outextControl.value = recipeName;
+            outextControl.userData("id", recipeId);
+            outextControl.style.css({
+                "cursor": "pointer",
+                "text-decoration": "underline",
+                "background-image": "none",
+                
+            });
+            outextControl.removeEventListeners("click");
+            outextControl.addEventListener("click", function(e) {
+                var control = e.control;
+                var recipeId = control.userData("id");
+                if (recipeId) {
+                    window.location.href = "/recipe/" + recipeId;
+                    console.log("이동: /recipe/" + recipeId);
+                }
+            });
+        }
+    }
+}
+
+
+/*
+ * 서브미션에서 submit-success 이벤트 발생 시 호출.
+ * 통신이 성공하면 발생합니다.
+ */
+function onSimilarSmsSubmitSuccess(e){
+	var similarSms = e.control;
+	similar();
+	app.lookup("grb9").redraw();
 }

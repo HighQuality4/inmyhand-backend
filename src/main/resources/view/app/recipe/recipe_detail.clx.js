@@ -30,6 +30,10 @@
 				
 				recipeDetailSms.setRequestActionUrl(recipeDetailSms.action+"/"+recipeId);
 				recipeDetailSms.send();
+				
+				const similarSms = app.lookup("similarSms");
+				similarSms.setRequestActionUrl(similarSms.action+"/"+recipeId);
+				similarSms.send();
 			}
 
 			/*
@@ -160,18 +164,109 @@
 					  height: "100px",
 					});	
 				}
-				
-				
+			}
+
+			function similar() {
+			    var ds = app.lookup("similar");
+			    var rowCount = ds.getRowCount();
+			    var outputPrefix = "out";
+			    var outextPrefix = "outext";
+			    
+			    // 데이터셋의 각 행을 순회하며 해당 컨트롤에 값 할당
+			    for(var i = 0; i < rowCount; i++) {
+			        
+			        var recipeName = ds.getValue(i, "recipeName");
+			        var recipeId = ds.getValue(i, "id");
+			        var fileUrl = ds.getValue(i, "fileUrl");
+			        
+			        var outputId = outputPrefix + (i + 1);
+			        var outextId = outextPrefix + (i + 1);
+			        let outputControl = app.lookup(outputId);
+			        let outextControl = app.lookup(outextId);
+
+
+			        if (outputControl) {
+			            outputControl.value = ""; 
+			            outputControl.userData("id", recipeId);
+			            outputControl.style.css({
+			                "cursor": "pointer",
+			                "background-image": "url(" + fileUrl + ")",
+			                "background-position": "center",
+			                "background-repeat": "no-repeat",
+			                "background-size": "cover",
+			                "width": "100%",
+			                "height": "100%"
+			            });
+			            outputControl.removeEventListeners("click");
+			            outputControl.addEventListener("click", function(e) {
+			                var control = e.control;
+			                var recipeId = control.userData("id");
+			                if (recipeId) {
+			                    window.location.href = "/recipe/" + recipeId;
+			                    console.log("이동: /recipe/" + recipeId);
+			                }
+			            });
+			        }
+
+
+			        if (outextControl) {
+			            outextControl.value = recipeName;
+			            outextControl.userData("id", recipeId);
+			            outextControl.style.css({
+			                "cursor": "pointer",
+			                "text-decoration": "underline",
+			                "background-image": "none",
+			                
+			            });
+			            outextControl.removeEventListeners("click");
+			            outextControl.addEventListener("click", function(e) {
+			                var control = e.control;
+			                var recipeId = control.userData("id");
+			                if (recipeId) {
+			                    window.location.href = "/recipe/" + recipeId;
+			                    console.log("이동: /recipe/" + recipeId);
+			                }
+			            });
+			        }
+			    }
+			}
+
+
+			/*
+			 * 서브미션에서 submit-success 이벤트 발생 시 호출.
+			 * 통신이 성공하면 발생합니다.
+			 */
+			function onSimilarSmsSubmitSuccess(e){
+				var similarSms = e.control;
+				similar();
+				app.lookup("grb9").redraw();
 			};
 			// End - User Script
 			
 			// Header
+			var dataSet_1 = new cpr.data.DataSet("similar");
+			dataSet_1.parseData({
+				"columns" : [
+					{"name": "id"},
+					{"name": "recipeName"},
+					{"name": "fileUrl"}
+				]
+			});
+			app.register(dataSet_1);
 			var submission_1 = new cpr.protocols.Submission("recipeDetailSms");
 			submission_1.action = "/api/recipes";
 			if(typeof onRecipeDetailSmsSubmitSuccess == "function") {
 				submission_1.addEventListener("submit-success", onRecipeDetailSmsSubmitSuccess);
 			}
 			app.register(submission_1);
+			
+			var submission_2 = new cpr.protocols.Submission("similarSms");
+			submission_2.action = "/api/recipes/similar";
+			submission_2.addResponseData(dataSet_1, false);
+			if(typeof onSimilarSmsSubmitSuccess == "function") {
+				submission_2.addEventListener("submit-success", onSimilarSmsSubmitSuccess);
+			}
+			app.register(submission_2);
 			app.supportMedia("all and (min-width: 1024px)", "default");
 			app.supportMedia("all and (min-width: 500px) and (max-width: 1023.984px)", "tablet");
 			app.supportMedia("all and (max-width: 499.984px)", "mobile");
@@ -719,6 +814,118 @@
 					"autoSize": "height",
 					"width": "600px",
 					"height": "200px"
+				});
+				var group_25 = new cpr.controls.Container("grb9");
+				var xYLayout_6 = new cpr.controls.layouts.XYLayout();
+				group_25.setLayout(xYLayout_6);
+				(function(container){
+					var group_26 = new cpr.controls.Container();
+					group_26.style.css({
+						"background-color" : "#e9edf2",
+						"background-image" : "none"
+					});
+					var xYLayout_7 = new cpr.controls.layouts.XYLayout();
+					group_26.setLayout(xYLayout_7);
+					(function(container){
+						var output_18 = new cpr.controls.Output("out1");
+						output_18.value = "Output";
+						output_18.style.css({
+							"border-radius" : "5px",
+							"font-weight" : "bold",
+							"font-size" : "16px",
+							"text-align" : "center"
+						});
+						container.addChild(output_18, {
+							"top": "60px",
+							"left": "20px",
+							"width": "120px",
+							"height": "120px"
+						});
+						var output_19 = new cpr.controls.Output("out2");
+						output_19.value = "Output";
+						output_19.style.css({
+							"border-radius" : "5px",
+							"font-weight" : "bold",
+							"font-size" : "16px",
+							"text-align" : "center"
+						});
+						container.addChild(output_19, {
+							"top": "60px",
+							"left": "190px",
+							"width": "120px",
+							"height": "120px"
+						});
+						var output_20 = new cpr.controls.Output("out3");
+						output_20.value = "Output";
+						output_20.style.css({
+							"border-radius" : "5px",
+							"font-weight" : "bold",
+							"font-size" : "16px",
+							"text-align" : "center"
+						});
+						container.addChild(output_20, {
+							"top": "60px",
+							"right": "20px",
+							"width": "120px",
+							"height": "120px"
+						});
+						var output_21 = new cpr.controls.Output();
+						output_21.value = "이 레시피를 좋아하신다면...";
+						output_21.style.css({
+							"color" : "#856C66",
+							"font-weight" : "bold",
+							"font-size" : "20px"
+						});
+						container.addChild(output_21, {
+							"top": "20px",
+							"right": "20px",
+							"left": "20px",
+							"height": "30px"
+						});
+						var output_22 = new cpr.controls.Output("outext1");
+						output_22.value = "Output";
+						output_22.style.css({
+							"text-align" : "center"
+						});
+						container.addChild(output_22, {
+							"top": "179px",
+							"left": "20px",
+							"width": "120px",
+							"height": "20px"
+						});
+						var output_23 = new cpr.controls.Output("outext2");
+						output_23.value = "Output";
+						output_23.style.css({
+							"text-align" : "center"
+						});
+						container.addChild(output_23, {
+							"top": "179px",
+							"left": "190px",
+							"width": "120px",
+							"height": "20px"
+						});
+						var output_24 = new cpr.controls.Output("outext3");
+						output_24.value = "Output";
+						output_24.style.css({
+							"text-align" : "center"
+						});
+						container.addChild(output_24, {
+							"top": "179px",
+							"right": "20px",
+							"width": "120px",
+							"height": "20px"
+						});
+					})(group_26);
+					container.addChild(group_26, {
+						"top": "10px",
+						"right": "0px",
+						"bottom": "10px",
+						"left": "0px"
+					});
+				})(group_25);
+				container.addChild(group_25, {
+					"width": "400px",
+					"height": "240px"
 				});
 			})(group_1);
 			container.addChild(group_1, {
