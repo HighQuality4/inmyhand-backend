@@ -17,7 +17,7 @@ public interface RecipeQueryService {
 
     public RecipeDetailDTO getRecipeDetail(Long recipeId);
 
-    public List<RecipeSummaryDTO> getSearchRecipeList(String keyword);
+    public Page<RecipeSummaryDTO> getSearchRecipeList(String keyword, int page, int size);
 
     public List<RecipeSummaryDTO> getMyRecipeList(Long userId);
 
