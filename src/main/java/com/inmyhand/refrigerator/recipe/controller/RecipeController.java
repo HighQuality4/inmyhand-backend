@@ -4,13 +4,11 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.inmyhand.refrigerator.recipe.domain.dto.RecipeDetailDTO;
 import com.inmyhand.refrigerator.recipe.domain.dto.RecipeRequestDTO;
 import com.inmyhand.refrigerator.recipe.domain.dto.RecipeSummaryDTO;
-import com.inmyhand.refrigerator.recipe.domain.dto.SimilarRecipeDTO;
 import com.inmyhand.refrigerator.recipe.service.RecipeCommandService;
 import com.inmyhand.refrigerator.recipe.service.RecipeQueryService;
 import com.inmyhand.refrigerator.recipe.service.engine.SimilarRecipeLogic;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -25,14 +23,10 @@ import java.util.Map;
 @RequiredArgsConstructor
 @Slf4j
 public class RecipeController {
-
     private final RecipeQueryService recipeQueryService;
     private final RecipeCommandService recipeCommandService;
     private final ObjectMapper objectMapper;
     private final SimilarRecipeLogic similarRecipeLogic;
-
-
-
 
     // 전체 레시피 목록 조회 - 페이징
     @PostMapping
@@ -83,9 +77,12 @@ public class RecipeController {
     }
 
     // 레시피 검색
-    @GetMapping("/search")
-    public List<RecipeSummaryDTO> getSearchRecipeList(@RequestParam("keyword") String keyword) {
-        return recipeQueryService.getSearchRecipeList(keyword);
+    @PostMapping("/search")
+    public Page<RecipeSummaryDTO> getSearchRecipeList(@RequestParam("keyword") String keyword,
+                                                      @RequestParam(name = "page", required = false, defaultValue = "0") int page,
+                                                      @RequestParam(name = "size", required = false, defaultValue = "6") int size) {
+        System.out.println(size);
+        return recipeQueryService.getSearchRecipeList(keyword, page, size);
     }
 
     // 레시피 생성

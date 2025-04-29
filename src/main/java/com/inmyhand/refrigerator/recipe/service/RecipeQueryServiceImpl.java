@@ -69,9 +69,10 @@ public class RecipeQueryServiceImpl implements RecipeQueryService {
     }
 
     // 레시피 검색
-    public List<RecipeSummaryDTO> getSearchRecipeList(String keyword) {
-        List<RecipeInfoEntity> recipes = infoRepository.findByRecipeNameContaining(keyword);
-        return summaryMapper.toDtoList(recipes);
+    public Page<RecipeSummaryDTO> getSearchRecipeList(String keyword, int page, int size) {
+        Pageable pageable = PageRequest.of(page, size);
+        Page<RecipeInfoEntity> recipes = infoRepository.findByRecipeNameContaining(keyword, pageable);
+        return recipes.map(summaryMapper::toDto);
     }
 
     // TODO : 내가 등록한 레시피 조회
