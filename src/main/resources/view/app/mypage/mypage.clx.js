@@ -17,16 +17,6 @@
 			 *
 			 * @author gyrud
 			 ************************************************/
-			//로그아웃 처리하는 메서드가 인자로 액세스 토큰 값을 받는데 js에선 그걸 못하니까 유저 아이디 값을 로컬 스토리지에 저장.
-
-
-			function getCookieValue(name) {
-			   const cookie = document.cookie
-			        .split('; ')
-			        .find(row => row.indexOf(name + '=') === 0);
-			    
-			    return cookie ? cookie.split('=')[1] : null;
-			}
 
 			/*
 			 * "로그아웃" 버튼에서 click 이벤트 발생 시 호출.
@@ -36,15 +26,6 @@
 				
 				var btn = e.control;
 				
-				const userId = localStorage.getItem("userId") || getCookieValue("userId");
-				
-				if (!userId) {
-			        alert("로그인 정보가 없습니다. (401 Unauthorized)");
-			        return;
-			    }
-				
-			    var dm = app.lookup("dmLogout");
-			    dm.setValue("userId", userId);
 			    app.lookup("smsLogout").send(); // 서버 전송
 			    
 			}
@@ -59,25 +40,39 @@
 			    console.log("✅ userId 삭제됨");
 
 			    // 원하는 경로로 이동
-			    location.href = "/users/login";
+			    location.href = "/auth/login";
+			}
+
+			/*
+			 * 서브미션에서 receive 이벤트 발생 시 호출.
+			 * 서버로 부터 데이터를 모두 전송받았을 때 발생합니다.
+			 */
+			function onSmsLogoutReceive(e){
+				var smsLogout = e.control;
+				
+				var xhr = smsLogout.xhr;
+				var res = JSON.parse(xhr.responseText);
+				console.log(res);
+				if (res === true) {
+					alert("로그아웃 되었습니다.!");
+				} else {
+					alert("로그아웃에 실패하였습니다!");
+					e.preventDefault();
+				}
+				
 			};
 			// End - User Script
 			
 			// Header
-			var dataMap_1 = new cpr.data.DataMap("dmLogout");
-			dataMap_1.parseData({
-				"columns" : [{
-					"name": "userId",
-					"dataType": "number"
-				}]
-			});
-			app.register(dataMap_1);
 			var submission_1 = new cpr.protocols.Submission("smsLogout");
+			submission_1.withCredentials = true;
 			submission_1.action = "http://localhost:7079/api/users/logout";
 			submission_1.mediaType = "application/json";
-			submission_1.addRequestData(dataMap_1);
 			if(typeof onSmsLogoutSubmitSuccess == "function") {
 				submission_1.addEventListener("submit-success", onSmsLogoutSubmitSuccess);
+			}
+			if(typeof onSmsLogoutReceive == "function") {
+				submission_1.addEventListener("receive", onSmsLogoutReceive);
 			}
 			app.register(submission_1);
 			app.supportMedia("all and (min-width: 1024px)", "default");
