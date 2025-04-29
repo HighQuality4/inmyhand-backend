@@ -1,31 +1,35 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:cl="http://tomatosystem.co.kr/cleopatra" xmlns:std="http://tomatosystem.co.kr/cleopatra/studio" std:sid="html-1c9bb534" version="1.0.5545">
   <head std:sid="head-0f618d8f">
-    <screen std:sid="screen-de1bb98d" id="default" name="default" width="1024px" height="768px"/>
-    <screen std:sid="screen-38a04a06" id="tablet" name="tablet" width="500px" height="667px"/>
-    <screen std:sid="screen-692eb90a" id="mobile" name="mobile" width="350px" height="525px"/>
+    <screen std:sid="screen-91fd255d" id="default" name="default" width="1024px" height="768px" customHeight="600" customWidth="800" active="true"/>
+    <screen std:sid="screen-1df44ed8" id="tablet" name="tablet" width="500px" height="667px"/>
+    <screen std:sid="screen-33f8f233" id="mobile" name="mobile" width="350px" height="525px"/>
     <cl:model std:sid="model-c08488ca"/>
     <cl:appspec/>
   </head>
-  <body std:sid="body-f218bef3" style="top:0px; left:0px; width:460px; height:74px;">
-    <cl:group std:sid="group-e07c17bc" style="border-radius:5px; background-color:#FFFFFF;">
-      <cl:xylayoutdata std:sid="xyl-data-da19d34d" top="0px" left="1px" width="460px" height="74px" horizontalAnchor="LEFT" verticalAnchor="TOP"/>
-      <cl:group std:sid="group-1d3b34ce">
-        <cl:xylayoutdata std:sid="xyl-data-91cb2b19" top="10px" left="10px" width="460px" height="54px" horizontalAnchor="LEFT" verticalAnchor="TOP"/>
-        <cl:xylayout std:sid="xylayout-ffb8601e"/>
+  <body std:sid="body-f218bef3" style="border-radius:5px; top:0px; color:#FFFFFF; left:0px; width:460px; vertical-align:middle; height:85px; text-align:center;">
+    <cl:listener std:sid="listener-219f3a76" name="load" handler="onBodyLoad"/>
+    <cl:group std:sid="group-f2dc7cd7" style="border-radius:5px; background-color:#FFFFFF; color:#FFFFFF;">
+      <cl:xylayoutdata std:sid="xyl-data-5954c625" top="0px" left="0px" width="460px" height="80px" horizontalAnchor="LEFT" verticalAnchor="TOP"/>
+      <cl:group std:sid="group-e07c17bc" id="tagGroup" style="border-radius:5px; background-color:#FFFFFF; color:#FFFFFF; vertical-align:middle;">
+        <cl:xylayoutdata std:sid="xyl-data-ff436f6d" top="0px" left="99px" width="360px" height="80px" horizontalAnchor="LEFT" verticalAnchor="TOP"/>
+        <cl:inputbox std:sid="i-box-b4670385" id="ipbFirst" style="background-position:top left; text-align:center;" value="">
+          <cl:listener std:sid="listener-87235463" name="select" handler="onIpbFirstSelect"/>
+          <cl:listener std:sid="listener-70e40990" name="keydown" handler="onIpbFirstKeydown2"/>
+          <cl:attribute name="submit-action" value="/healthInfo/api/search/health_interest"/>
+          <cl:attribute name="showAssist" value="Y"/>
+          <cl:attribute name="ATTR_USE_ASSIST" value="Y"/>
+          <cl:flowlayoutdata std:sid="f-data-3ff1d775" width="203px" height="20px" autosize="none"/>
+        </cl:inputbox>
+        <cl:group std:sid="group-1d3b34ce" id="tagArea" style="color:#FFFFFF; vertical-align:middle; text-align:center;">
+          <cl:flowlayoutdata std:sid="f-data-eb7fb368" width="100%" height="auto"/>
+          <cl:flowlayout std:sid="f-layout-1dfa2800"/>
+        </cl:group>
+        <cl:flowlayout std:sid="f-layout-8bbd3967" scrollable="false"/>
       </cl:group>
-      <cl:xylayout std:sid="xylayout-6b3131ec"/>
+      <cl:xylayout std:sid="xylayout-4b37a49e"/>
     </cl:group>
-    <cl:output std:sid="output-0ef6f2d3" style="text-align:center;" value="Output">
-      <cl:xylayoutdata std:sid="xyl-data-58ce8cfe" top="137px" left="35px" width="65px" height="54px" horizontalAnchor="LEFT" verticalAnchor="TOP"/>
-    </cl:output>
-    <cl:inputbox std:sid="i-box-b4670385" id="ipb1">
-      <cl:xylayoutdata std:sid="xyl-data-1123ff43" top="154px" left="146px" width="93px" height="20px" horizontalAnchor="LEFT" verticalAnchor="TOP"/>
-    </cl:inputbox>
-    <cl:button std:sid="button-558f4d62" style="border-radius:100px; text-align:center;" value="+">
-      <cl:xylayoutdata std:sid="xyl-data-ab358a20" top="154px" left="417px" width="20px" height="20px" horizontalAnchor="LEFT" verticalAnchor="TOP"/>
-    </cl:button>
-    <cl:xylayout std:sid="xylayout-8f4c1950"/>
+    <cl:xylayout std:sid="xylayout-8f4c1950" scrollable="false"/>
   </body>
   <std:studiosetting>
     <std:hruler/>

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:cl="http://tomatosystem.co.kr/cleopatra" xmlns:std="http://tomatosystem.co.kr/cleopatra/studio" std:sid="html-c1bb6428" version="1.0.5545">
+  <head std:sid="head-e512c96a">
+    <screen std:sid="screen-78cfe1ba" id="default" name="default" width="1024px" height="768px"/>
+    <screen std:sid="screen-80a11875" id="tablet" name="tablet" width="500px" height="667px"/>
+    <screen std:sid="screen-5c0e35ea" id="mobile" name="mobile" width="350px" height="525px"/>
+    <cl:model std:sid="model-2aa01652"/>
+    <cl:appspec/>
+  </head>
+  <body std:sid="body-0f2550c6" style="top:0px; left:0px; width:520px; height:440px;">
+    <cl:group std:sid="group-71972767" style="border-radius:5px; background-color:#EAF1F3;">
+      <cl:xylayoutdata std:sid="xyl-data-db1aef79" top="0px" left="0px" width="520px" height="440px" horizontalAnchor="LEFT" verticalAnchor="TOP"/>
+      <cl:output std:sid="output-45aab41d" id="title" style="color:#856C66; font-weight:bold; font-size:20px; text-align:center;" value="내 식재료 유통기한">
+        <cl:listener std:sid="listener-694007bb" name="value-change" handler="onTitleValueChange"/>
+        <cl:xylayoutdata std:sid="xyl-data-504387a3" top="20px" width="215px" height="26px" horizontalAnchor="CENTER" verticalAnchor="TOP"/>
+      </cl:output>
+      <cl:xylayout std:sid="xylayout-f366a95e"/>
+    </cl:group>
+    <cl:xylayout std:sid="xylayout-1577e53b"/>
+  </body>
+  <std:studiosetting>
+    <std:hruler/>
+    <std:vruler/>
+  </std:studiosetting>
+</html>

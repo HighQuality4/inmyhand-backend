@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:cl="http://tomatosystem.co.kr/cleopatra" xmlns:std="http://tomatosystem.co.kr/cleopatra/studio" std:sid="html-c8f848b3" version="1.0.5545">
+  <head std:sid="head-9adbde5c">
+    <std:metadata>
+      <std:property key="template-file" value="templates/contents_container.clx"/>
+    </std:metadata>
+    <screen std:sid="screen-7fe7b6b2" id="default" name="default" width="1024px" height="768px"/>
+    <screen std:sid="screen-fcd3b68a" id="tablet" name="tablet" width="500px" height="667px"/>
+    <screen std:sid="screen-7bc529fc" id="mobile" name="mobile" width="350px" height="525px"/>
+    <cl:model std:sid="model-a9824b1f">
+      <cl:dataset std:sid="d-set-8f4ae8a6" id="ds2">
+        <cl:datacolumnlist>
+          <cl:datacolumn std:sid="d-column-41a52e34" name="contents"/>
+        </cl:datacolumnlist>
+        <cl:datarowlist>
+          <cl:datarow>
+            <cl:datavalue columnname="contents"><![CDATA[contents]]></cl:datavalue>
+          </cl:datarow>
+        </cl:datarowlist>
+      </cl:dataset>
+      <cl:dataset std:sid="d-set-1b4fd915" id="ds1"/>
+      <cl:datamap std:sid="d-map-4e391d67" id="dm1">
+        <cl:datacolumnlist>
+          <cl:datacolumn std:sid="d-column-829120c8" name="contents"/>
+        </cl:datacolumnlist>
+      </cl:datamap>
+    </cl:model>
+    <cl:appspec>
+      <cl:event name="event11" type="cpr.events.CAppEvent"/>
+    </cl:appspec>
+  </head>
+  <body std:sid="body-a538f2ac" style="border-radius:5px; top:0px; left:0px; width:520px; height:190px;">
+    <cl:group std:sid="group-42179c00">
+      <cl:xylayoutdata std:sid="xyl-data-7c837f5e" width="520px" height="190px" horizontalAnchor="CENTER" verticalAnchor="CENTER"/>
+      <cl:grid std:sid="grid-56074c42" id="grdInfoList" style="border-radius:5px;" datasetid="ds2">
+        <cl:xylayoutdata std:sid="xyl-data-62fd1dde" top="49px" left="20px" width="480px" height="121px" horizontalAnchor="LEFT" verticalAnchor="TOP"/>
+        <cl:gridcolumn std:sid="g-column-66930b2e"/>
+        <cl:gridheader std:sid="gh-band-4c31c0c2"/>
+      </cl:grid>
+      <cl:button std:sid="button-5056d65f" id="add" value="+">
+        <cl:listener std:sid="listener-683f029a" name="click" handler="onAddClick"/>
+        <cl:xylayoutdata std:sid="xyl-data-40f91beb" top="15px" left="431px" width="24px" height="24px" horizontalAnchor="LEFT" verticalAnchor="TOP"/>
+      </cl:button>
+      <cl:button std:sid="button-939d3621" id="delete" value="-">
+        <cl:listener std:sid="listener-1d7642a1" name="click" handler="onDeleteClick"/>
+        <cl:xylayoutdata std:sid="xyl-data-e721ffd7" top="15px" left="465px" width="24px" height="24px" horizontalAnchor="LEFT" verticalAnchor="TOP"/>
+      </cl:button>
+      <cl:xylayout std:sid="xylayout-c4a1ae85"/>
+    </cl:group>
+    <cl:xylayout std:sid="xylayout-ce482dd4"/>
+  </body>
+  <std:studiosetting>
+    <std:hruler/>
+    <std:vruler/>
+  </std:studiosetting>
+</html>
