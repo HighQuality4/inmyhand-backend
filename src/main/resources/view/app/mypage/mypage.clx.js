@@ -72,6 +72,10 @@
 				}]
 			});
 			app.register(dataMap_1);
+			
+			var dataMap_2 = new cpr.data.DataMap("dmHealthInfo");
+			dataMap_2.parseData({});
+			app.register(dataMap_2);
 			var submission_1 = new cpr.protocols.Submission("smsLogout");
 			submission_1.action = "http://localhost:7079/api/users/logout";
 			submission_1.mediaType = "application/json";
@@ -120,6 +124,220 @@
 						"top": "50px",
 						"width": "178px",
 						"height": "124px",
+						"left": "calc(50% - 89px)"
+					}
+				]
+			});
+			
+			var userDefinedControl_2 = new udc.mypage.infoHealth();
+			container.addChild(userDefinedControl_2, {
+				positions: [
+					{
+						"media": "all and (min-width: 1024px)",
+						"top": "633px",
+						"width": "520px",
+						"height": "440px",
+						"left": "calc(50% - 260px)"
+					}, 
+					{
+						"media": "all and (min-width: 500px) and (max-width: 1023.984px)",
+						"top": "633px",
+						"width": "254px",
+						"height": "440px",
+						"left": "calc(50% - 127px)"
+					}, 
+					{
+						"media": "all and (max-width: 499.984px)",
+						"top": "633px",
+						"width": "178px",
+						"height": "440px",
+						"left": "calc(50% - 89px)"
+					}
+				]
+			});
+			
+			var userDefinedControl_3 = new udc.mypage.infoExpired();
+			container.addChild(userDefinedControl_3, {
+				positions: [
+					{
+						"media": "all and (min-width: 1024px)",
+						"top": "183px",
+						"width": "520px",
+						"height": "440px",
+						"left": "calc(50% - 260px)"
+					}, 
+					{
+						"media": "all and (min-width: 500px) and (max-width: 1023.984px)",
+						"top": "183px",
+						"width": "254px",
+						"height": "440px",
+						"left": "calc(50% - 127px)"
+					}, 
+					{
+						"media": "all and (max-width: 499.984px)",
+						"top": "183px",
+						"width": "178px",
+						"height": "440px",
+						"left": "calc(50% - 89px)"
+					}
+				]
+			});
+			
+			var button_1 = new cpr.controls.Button();
+			button_1.value = "Button";
+			container.addChild(button_1, {
+				positions: [
+					{
+						"media": "all and (min-width: 1024px)",
+						"top": "1106px",
+						"width": "0px",
+						"height": "66px",
+						"left": "calc(50% - 0px)"
+					}, 
+					{
+						"media": "all and (min-width: 500px) and (max-width: 1023.984px)",
+						"top": "1106px",
+						"width": "0px",
+						"height": "66px",
+						"left": "calc(50% - 0px)"
+					}, 
+					{
+						"media": "all and (max-width: 499.984px)",
+						"top": "1106px",
+						"width": "0px",
+						"height": "66px",
+						"left": "calc(50% - 0px)"
+					}
+				]
+			});
+			
+			var button_2 = new cpr.controls.Button();
+			button_2.value = "좋아요 레시피 모음";
+			container.addChild(button_2, {
+				positions: [
+					{
+						"media": "all and (min-width: 1024px)",
+						"top": "1207px",
+						"width": "520px",
+						"height": "66px",
+						"left": "calc(50% - 260px)"
+					}, 
+					{
+						"media": "all and (min-width: 500px) and (max-width: 1023.984px)",
+						"top": "1207px",
+						"width": "254px",
+						"height": "66px",
+						"left": "calc(50% - 127px)"
+					}, 
+					{
+						"media": "all and (max-width: 499.984px)",
+						"top": "1207px",
+						"width": "178px",
+						"height": "66px",
+						"left": "calc(50% - 89px)"
+					}
+				]
+			});
+			
+			var button_3 = new cpr.controls.Button();
+			button_3.value = "구독 및 결제 관리";
+			container.addChild(button_3, {
+				positions: [
+					{
+						"media": "all and (min-width: 1024px)",
+						"top": "1297px",
+						"width": "520px",
+						"height": "66px",
+						"left": "calc(50% - 260px)"
+					}, 
+					{
+						"media": "all and (min-width: 500px) and (max-width: 1023.984px)",
+						"top": "1297px",
+						"width": "254px",
+						"height": "66px",
+						"left": "calc(50% - 127px)"
+					}, 
+					{
+						"media": "all and (max-width: 499.984px)",
+						"top": "1297px",
+						"width": "178px",
+						"height": "66px",
+						"left": "calc(50% - 89px)"
+					}
+				]
+			});
+			
+			var button_4 = new cpr.controls.Button();
+			button_4.value = "계정 정보 관리";
+			container.addChild(button_4, {
+				positions: [
+					{
+						"media": "all and (min-width: 1024px)",
+						"top": "1387px",
+						"width": "520px",
+						"height": "66px",
+						"left": "calc(50% - 260px)"
+					}, 
+					{
+						"media": "all and (min-width: 500px) and (max-width: 1023.984px)",
+						"top": "1387px",
+						"width": "254px",
+						"height": "66px",
+						"left": "calc(50% - 127px)"
+					}, 
+					{
+						"media": "all and (max-width: 499.984px)",
+						"top": "1387px",
+						"width": "178px",
+						"height": "66px",
+						"left": "calc(50% - 89px)"
+					}
+				]
+			});
+			
+			var group_1 = new cpr.controls.Container();
+			var xYLayout_1 = new cpr.controls.layouts.XYLayout();
+			xYLayout_1.scrollable = false;
+			group_1.setLayout(xYLayout_1);
+			(function(container){
+				var button_5 = new cpr.controls.Button();
+				button_5.value = "내 레시피";
+				container.addChild(button_5, {
+					"top": "20px",
+					"right": "10px",
+					"width": "230px",
+					"height": "74px"
+				});
+				var button_6 = new cpr.controls.Button();
+				button_6.value = "내 댓글";
+				container.addChild(button_6, {
+					"top": "20px",
+					"left": "10px",
+					"width": "230px",
+					"height": "74px"
+				});
+			})(group_1);
+			container.addChild(group_1, {
+				positions: [
+					{
+						"media": "all and (min-width: 1024px)",
+						"top": "1083px",
+						"width": "520px",
+						"height": "114px",
+						"left": "calc(50% - 260px)"
+					}, 
+					{
+						"media": "all and (min-width: 500px) and (max-width: 1023.984px)",
+						"top": "1083px",
+						"width": "254px",
+						"height": "114px",
+						"left": "calc(50% - 127px)"
+					}, 
+					{
+						"media": "all and (max-width: 499.984px)",
+						"top": "1083px",
+						"width": "178px",
+						"height": "114px",
 						"left": "calc(50% - 89px)"
 					}
 				]
