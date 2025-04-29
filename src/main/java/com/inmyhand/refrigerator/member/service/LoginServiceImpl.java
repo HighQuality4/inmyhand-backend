@@ -41,13 +41,17 @@ public class LoginServiceImpl implements LoginService {
     @Override
     public boolean login(LoginRequestDTO loginRequestDTO, HttpServletResponse response) {
 
-        MemberEntity member = loginRepository.findByEmail(loginRequestDTO.getEmail())
-                .orElseThrow(()->new EntityNotFoundException("이메일이나 비밀번호가 일치하지 않습니다"));
-
-        //해시 암호화된 비밀번호 매칭
-        if (!passwordEncoder.matches(loginRequestDTO.getPassword(), member.getPassword())) {
-            throw new NotMatchPasswordException("이메일이나 비밀번호가 일치하지 않습니다");
+        Optional<MemberEntity> optionalMember = loginRepository.findByEmail(loginRequestDTO.getEmail());
+        if (optionalMember.isEmpty()) {
+            return false;
         }
+
+        MemberEntity member = optionalMember.get();
+
+        if (!passwordEncoder.matches(loginRequestDTO.getPassword(), member.getPassword())) {
+            return false;
+        }
+
 
         String accessToken = jwtTokenUtil.generateAccessToken(member);
         String refreshToken = jwtTokenUtil.generateRefreshToken(member);
@@ -88,15 +92,6 @@ public class LoginServiceImpl implements LoginService {
                 .build();
 
         response.addHeader("Set-Cookie", accessCookie.toString());
-
-        ResponseCookie userIdCookie = ResponseCookie.from("userId", String.valueOf(member.getId()))
-                .httpOnly(false) //JS에서 접근 가능
-                .sameSite("Lax")
-                .path("/")
-                .maxAge(Duration.ofDays(7))
-                .build();
-
-        response.addHeader("Set-Cookie", userIdCookie.toString());
 
         return true;
     }

@@ -10,10 +10,8 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
 import javax.crypto.SecretKey;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Component
 public class JwtTokenUtil {
@@ -31,6 +29,10 @@ public class JwtTokenUtil {
         Map<String, Object> claims = new HashMap<>();
         claims.put("userId", member.getId());
         claims.put("nickname", member.getNickname());
+        List<String> roles = member.getMemberRoleList().stream()
+                .map(roleEntity -> roleEntity.getUserRole().name()) // 또는 getRoleName()
+                .collect(Collectors.toList());
+        claims.put("roles", roles);
         // 추가 클레임 설정 가능
         return createToken(claims, member.getEmail(), access_expiration);
     }
@@ -39,6 +41,10 @@ public class JwtTokenUtil {
         Map<String, Object> claims = new HashMap<>();
         claims.put("userId", member.getId());
         claims.put("nickname", member.getNickname());
+        List<String> roles = member.getMemberRoleList().stream()
+                .map(roleEntity -> roleEntity.getUserRole().name()) // 또는 getRoleName()
+                .collect(Collectors.toList());
+        claims.put("roles", roles);
         return createToken(claims, member.getEmail(), refresh_expiration);
     }
 
@@ -73,6 +79,31 @@ public class JwtTokenUtil {
                 .parseSignedClaims(token)
                 .getPayload()
                 .get("userId", Long.class);
+    }
+
+    private Claims extractAllClaims(String token) {
+        return Jwts.parser()
+                .verifyWith(getSigningKey())
+                .build()
+                .parseSignedClaims(token)
+                .getBody();
+    }
+
+    // 토큰에서 roles를 String List로 추출
+    public List<String> getRoleListFromToken(String token) {
+        Claims claims = extractAllClaims(token);
+
+        Object rolesObject = claims.get("roles");
+
+        if (rolesObject instanceof List<?>) {
+            @SuppressWarnings("unchecked")
+            List<Object> roles = (List<Object>) rolesObject;
+            return roles.stream()
+                    .map(Object::toString)
+                    .collect(Collectors.toList());
+        }
+
+        return List.of(); // roles 클레임 없으면 빈 리스트
     }
 
     // 토큰에서 남은 시간 정보 추출

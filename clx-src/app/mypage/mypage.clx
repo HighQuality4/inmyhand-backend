@@ -8,14 +8,9 @@
     <screen std:sid="screen-d184c9ef" id="tablet" name="tablet" width="500px" height="667px"/>
     <screen std:sid="screen-dfce70c5" id="mobile" name="mobile" width="350px" height="525px"/>
     <cl:model std:sid="model-c2e79a6e">
-      <cl:datamap std:sid="d-map-11107245" id="dmLogout">
-        <cl:datacolumnlist>
-          <cl:datacolumn std:sid="d-column-723fcce8" name="userId" datatype="number"/>
-        </cl:datacolumnlist>
-      </cl:datamap>
-      <cl:submission std:sid="submission-29d5f379" id="smsLogout" action="http://localhost:7079/api/users/logout" mediatype="application/json">
+      <cl:submission std:sid="submission-29d5f379" id="smsLogout" withCredentials="true" action="http://localhost:7079/api/users/logout" mediatype="application/json">
         <cl:listener std:sid="listener-55b37218" name="submit-success" handler="onSmsLogoutSubmitSuccess"/>
-        <cl:requestdata dataid="dmLogout"/>
+        <cl:listener std:sid="listener-7b5176a7" name="receive" handler="onSmsLogoutReceive"/>
       </cl:submission>
     </cl:model>
     <cl:appspec/>
