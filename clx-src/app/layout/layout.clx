@@ -30,6 +30,7 @@
           <cl:formdata std:sid="f-data-0931ddfe" row="1" col="1" rowspan="1" colspan="1"/>
         </cl:output>
         <cl:group std:sid="group-331ea24d" id="recipeRegistration">
+          <cl:listener std:sid="listener-3c20c838" name="click" handler="onRecipeRegistrationClick"/>
           <cl:formdata std:sid="f-data-0252dad1" width="100" height="9" row="1" col="5" rowspan="1" colspan="1"/>
           <cl:img std:sid="image-fe397534" src="../../theme/images/recipe_registration.svg">
             <cl:formdata std:sid="f-data-54f2a24f" row="0" col="0"/>
@@ -77,7 +78,9 @@
       </cl:embeddedapp>
       <cl:group std:sid="group-ac7cc0a8" id="footer" style="background-color:#FFFFFF;" class="page-nav">
         <cl:verticaldata std:sid="v-data-2f8d8f61" width="600px" height="70px" autosize="width"/>
-        <cl:group std:sid="group-7d23e362">
+        <cl:group std:sid="group-7d23e362" id="home">
+          <cl:listener std:sid="listener-2b086b9f" name="dblclick" handler="onHomeDblclick"/>
+          <cl:listener std:sid="listener-6107b815" name="click" handler="onHomeClick"/>
           <cl:formdata std:sid="f-data-202cd3d0" row="1" col="1"/>
           <cl:output std:sid="output-fb5110e5" class="page-nav" value="홈">
             <cl:formdata std:sid="f-data-d5133a57" row="1" col="0"/>
@@ -91,7 +94,8 @@
             <cl:columns length="1" unit="FRACTION"/>
           </cl:formlayout>
         </cl:group>
-        <cl:group std:sid="group-fc6a12c1">
+        <cl:group std:sid="group-fc6a12c1" id="fridge">
+          <cl:listener std:sid="listener-5692f530" name="click" handler="onFridgeClick"/>
           <cl:formdata std:sid="f-data-cbe8fefc" row="1" col="3"/>
           <cl:output std:sid="output-16ca9855" class="page-nav" value="냉장고">
             <cl:formdata std:sid="f-data-a67c9362" row="1" col="0"/>
@@ -105,7 +109,8 @@
             <cl:columns length="1" unit="FRACTION"/>
           </cl:formlayout>
         </cl:group>
-        <cl:group std:sid="group-b176307a">
+        <cl:group std:sid="group-b176307a" id="recipe">
+          <cl:listener std:sid="listener-fa7f3f8d" name="click" handler="onRecipeClick"/>
           <cl:formdata std:sid="f-data-c843dcc0" row="1" col="5"/>
           <cl:output std:sid="output-bf9b9f5d" class="page-nav" value="레시피">
             <cl:formdata std:sid="f-data-dde24b2b" row="1" col="0"/>
@@ -119,7 +124,8 @@
             <cl:columns length="1" unit="FRACTION"/>
           </cl:formlayout>
         </cl:group>
-        <cl:group std:sid="group-50ac48b6">
+        <cl:group std:sid="group-50ac48b6" id="auth">
+          <cl:listener std:sid="listener-a97bea5f" name="click" handler="onAuthClick"/>
           <cl:formdata std:sid="f-data-3c4fcb69" row="1" col="7"/>
           <cl:output std:sid="output-44a72287" class="page-nav" value="로그인">
             <cl:formdata std:sid="f-data-4e99effe" row="1" col="0"/>

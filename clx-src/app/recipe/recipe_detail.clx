@@ -8,8 +8,19 @@
     <screen std:sid="screen-d184c9ef" id="tablet" name="tablet" width="500px" height="667px"/>
     <screen std:sid="screen-dfce70c5" id="mobile" name="mobile" width="350px" height="525px"/>
     <cl:model std:sid="model-c2e79a6e">
+      <cl:dataset std:sid="d-set-f6971a5a" id="similar">
+        <cl:datacolumnlist>
+          <cl:datacolumn std:sid="d-column-3bdb187d" name="id"/>
+          <cl:datacolumn std:sid="d-column-65883a3f" name="recipeName"/>
+          <cl:datacolumn std:sid="d-column-2e885504" name="fileUrl"/>
+        </cl:datacolumnlist>
+      </cl:dataset>
       <cl:submission std:sid="submission-bd4706b7" id="recipeDetailSms" action="/api/recipes">
         <cl:listener std:sid="listener-87d087a9" name="submit-success" handler="onRecipeDetailSmsSubmitSuccess"/>
+      </cl:submission>
+      <cl:submission std:sid="submission-3acf6590" id="similarSms" action="/api/recipes/similar">
+        <cl:listener std:sid="listener-4ccd8e23" name="submit-success" handler="onSimilarSmsSubmitSuccess"/>
+        <cl:responsedata dataid="similar"/>
       </cl:submission>
     </cl:model>
     <cl:appspec/>
@@ -246,6 +257,35 @@
           <cl:verticallayout std:sid="v-layout-97b5b764"/>
         </cl:group>
         <cl:xylayout std:sid="xylayout-d99413c0"/>
+      </cl:group>
+      <cl:group std:sid="group-33453daf" id="grb9">
+        <cl:verticaldata std:sid="v-data-15a870b4" width="400px" height="240px"/>
+        <cl:group std:sid="group-102f7227" style="background-color:#e9edf2; background-image:none;">
+          <cl:xylayoutdata std:sid="xyl-data-ef55e0d1" top="10px" right="0px" bottom="10px" left="0px" horizontalAnchor="BOTH" verticalAnchor="BOTH"/>
+          <cl:output std:sid="output-848712cd" id="out1" style="border-radius:5px; font-weight:bold; font-size:16px; text-align:center;" value="Output">
+            <cl:xylayoutdata std:sid="xyl-data-c6db8d04" top="60px" left="20px" width="120px" height="120px" horizontalAnchor="LEFT" verticalAnchor="TOP"/>
+          </cl:output>
+          <cl:output std:sid="output-942f5096" id="out2" style="border-radius:5px; font-weight:bold; font-size:16px; text-align:center;" value="Output">
+            <cl:xylayoutdata std:sid="xyl-data-82cb2dc1" top="60px" left="190px" width="120px" height="120px" horizontalAnchor="LEFT" verticalAnchor="TOP"/>
+          </cl:output>
+          <cl:output std:sid="output-11ed59ee" id="out3" style="border-radius:5px; font-weight:bold; font-size:16px; text-align:center;" value="Output">
+            <cl:xylayoutdata std:sid="xyl-data-e024c866" top="60px" right="20px" width="120px" height="120px" horizontalAnchor="RIGHT" verticalAnchor="TOP"/>
+          </cl:output>
+          <cl:output std:sid="output-aee315db" style="color:#856C66; font-weight:bold; font-size:20px;" value="이 레시피를 좋아하신다면...">
+            <cl:xylayoutdata std:sid="xyl-data-5c0698ae" top="20px" right="20px" left="20px" height="30px" horizontalAnchor="BOTH" verticalAnchor="TOP"/>
+          </cl:output>
+          <cl:output std:sid="output-35e77d7c" id="outext1" style="text-align:center;" value="Output">
+            <cl:xylayoutdata std:sid="xyl-data-fe7a3926" top="179px" left="20px" width="120px" height="20px" horizontalAnchor="LEFT" verticalAnchor="TOP"/>
+          </cl:output>
+          <cl:output std:sid="output-6258d7f2" id="outext2" style="text-align:center;" value="Output">
+            <cl:xylayoutdata std:sid="xyl-data-8a817d25" top="179px" left="190px" width="120px" height="20px" horizontalAnchor="LEFT" verticalAnchor="TOP"/>
+          </cl:output>
+          <cl:output std:sid="output-da08db6e" id="outext3" style="text-align:center;" value="Output">
+            <cl:xylayoutdata std:sid="xyl-data-e2fb5bd4" top="179px" right="20px" width="120px" height="20px" horizontalAnchor="RIGHT" verticalAnchor="TOP"/>
+          </cl:output>
+          <cl:xylayout std:sid="xylayout-462f2308"/>
+        </cl:group>
+        <cl:xylayout std:sid="xylayout-6bf91c12"/>
       </cl:group>
       <cl:verticallayout std:sid="v-layout-ef275fcc" spacing="20"/>
     </cl:group>

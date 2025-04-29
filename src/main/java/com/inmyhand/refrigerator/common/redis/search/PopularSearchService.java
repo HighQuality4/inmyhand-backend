@@ -29,7 +29,7 @@ public class PopularSearchService {
     private final RedisKeyManager redisKeyManager;
 
     private  String POPULAR_SEARCH_KEY;
-    private static final int POPULAR_SEARCH_SIZE = 10;
+    private static final int POPULAR_SEARCH_SIZE = 5;
     private static final int EXPIRATION_HOURS = 120;
 
     @PostConstruct
@@ -83,8 +83,13 @@ public class PopularSearchService {
             String keyword = (String) tuple.getValue();
             Double score = tuple.getScore();
 
-            // 해당 키워드와 일치하는 레시피 찾기
-            Optional<RecipeInfoEntity> recipeInfo = recipeInfoRepository.findByRecipeName(keyword);
+            // 해당 키워드와 일치하는 첫 번째 레시피만 찾기
+            Optional<RecipeInfoEntity> recipeInfo = recipeInfoRepository.findFirstByRecipeName(keyword);
+
+//             또는 리스트로 받아서 첫 번째 항목 사용
+//             List<RecipeInfoEntity> recipeInfoList = recipeInfoRepository.findByRecipeName(keyword);
+//             Optional<RecipeInfoEntity> recipeInfo = recipeInfoList.isEmpty() ?
+//                                                  Optional.empty() : Optional.of(recipeInfoList.get(0));
 
             PopularSearchDto dto = PopularSearchDto.builder()
                     .keyword(keyword)
@@ -97,6 +102,7 @@ public class PopularSearchService {
 
         return popularSearches;
     }
+
 
     /**
      * 특정 날짜의 인기 검색어 조회

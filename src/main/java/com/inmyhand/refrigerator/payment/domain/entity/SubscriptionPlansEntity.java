@@ -1,4 +1,4 @@
-package com.inmyhand.refrigerator.subscription.domain.entity;
+package com.inmyhand.refrigerator.payment.domain.entity;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;

@@ -17,8 +17,10 @@ public class LogoutServiceImpl implements LogoutService {
 
     @Override
     @Transactional
-    public void logout(Long userId) {
+    public Boolean logout(Long userId) {
         refreshTokenRepository.deleteByMemberEntityId(userId);
         redisUtil.delete(redisKeyManager.getLoginKey(userId));
+
+        return true;
     }
 }

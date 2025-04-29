@@ -21,11 +21,8 @@
 
 			const embeddedRoutesModule = cpr.core.Module.require("data/embeddedRoutes");
 			const embeddedRoutes = embeddedRoutesModule.embeddedRoutes;
-			/*
-			 * 루트 컨테이너에서 load 이벤트 발생 시 호출.
-			 * 앱이 최초 구성된후 최초 랜더링 직후에 발생하는 이벤트 입니다.
-			 */
-			function onBodyLoad(e){ //여기에 로그인 여부 판단해서 버튼 교체 로직 넣을 것
+
+			const embeddedAppChange = () => {
 				const pathName = window.location.pathname;
 				
 				const match = embeddedRoutes.find(route => {
@@ -42,14 +39,67 @@
 					const vcEmb = app.lookup("ea1");
 					
 					cpr.core.App.load(vsAppId, function(loadedApp){ 
-						if(loadedApp){
-							vcEmb.app = loadedApp; 
-						} 
+						vcEmb.app = loadedApp; 
 					});
 					
-					app.getContainer().redraw();	
+					app.getContainer().redraw();
 				}
+			}
+
+			/*
+			 * 루트 컨테이너에서 load 이벤트 발생 시 호출.
+			 * 앱이 최초 구성된후 최초 랜더링 직후에 발생하는 이벤트 입니다.
+			 */
+			function onBodyLoad(e){ 
+				embeddedAppChange();
+				
+				//TODO: 로그인 여부 판단해서 버튼 교체 로직 넣을 것
+			}
+
+			/* nav바 버튼 클릭 시 화면 이동 */
+			function onHomeClick(e){history.pushState({}, '', `/`);}
+			function onFridgeClick(e){history.pushState({}, '', `/fridge`);}
+			function onRecipeClick(e){history.pushState({}, '', `/recipe`);}
+			function onAuthClick(e){history.pushState({}, '', `/users/login`);}
+
+			// URL 변경 감지
+			(function(history) {
+			    var pushState = history.pushState;
+			    var replaceState = history.replaceState;
+
+			    history.pushState = function(state) {
+			        var result = pushState.apply(history, arguments);
+			        if (typeof history.onpushstate == "function") {
+			            history.onpushstate({state: state});
+			        }
+			        return result;
+			    };
+
+			    history.replaceState = function(state) {
+			        var result = replaceState.apply(history, arguments);
+			        if (typeof history.onreplacestate == "function") {
+			            history.onreplacestate({state: state});
+			        }
+			        return result;
+			    };
+			})(window.history);
+
+			// pushState 감지
+			history.onpushstate = function(e) {
+			    embeddedAppChange();
 			};
+
+			// replaceState 감지
+			history.onreplacestate = function(e) {
+			    embeddedAppChange();
+			};
+
+
+			// 뒤로 가기, 앞으로 가기 감지
+			window.addEventListener('popstate', function(event) {
+			    console.log("popstate triggered", location.pathname, event.state);
+			    embeddedAppChange();
+			});;
 			// End - User Script
 			
 			// Header
@@ -155,6 +205,9 @@
 							"rowIndex": 2
 						});
 					})(group_3);
+					if(typeof onRecipeRegistrationClick == "function") {
+						group_3.addEventListener("click", onRecipeRegistrationClick);
+					}
 					container.addChild(group_3, {
 						"colIndex": 5,
 						"rowIndex": 1,
@@ -225,7 +278,7 @@
 				formLayout_4.setRows(["10px", "50px", "10px"]);
 				group_5.setLayout(formLayout_4);
 				(function(container){
-					var group_6 = new cpr.controls.Container();
+					var group_6 = new cpr.controls.Container("home");
 					var formLayout_5 = new cpr.controls.layouts.FormLayout();
 					formLayout_5.scrollable = false;
 					formLayout_5.horizontalSpacing = "0px";
@@ -252,11 +305,17 @@
 							"rowIndex": 0
 						});
 					})(group_6);
+					if(typeof onHomeDblclick == "function") {
+						group_6.addEventListener("dblclick", onHomeDblclick);
+					}
+					if(typeof onHomeClick == "function") {
+						group_6.addEventListener("click", onHomeClick);
+					}
 					container.addChild(group_6, {
 						"colIndex": 1,
 						"rowIndex": 1
 					});
-					var group_7 = new cpr.controls.Container();
+					var group_7 = new cpr.controls.Container("fridge");
 					var formLayout_6 = new cpr.controls.layouts.FormLayout();
 					formLayout_6.scrollable = false;
 					formLayout_6.horizontalSpacing = "0px";
@@ -283,11 +342,14 @@
 							"rowIndex": 0
 						});
 					})(group_7);
+					if(typeof onFridgeClick == "function") {
+						group_7.addEventListener("click", onFridgeClick);
+					}
 					container.addChild(group_7, {
 						"colIndex": 3,
 						"rowIndex": 1
 					});
-					var group_8 = new cpr.controls.Container();
+					var group_8 = new cpr.controls.Container("recipe");
 					var formLayout_7 = new cpr.controls.layouts.FormLayout();
 					formLayout_7.scrollable = false;
 					formLayout_7.horizontalSpacing = "0px";
@@ -314,11 +376,14 @@
 							"rowIndex": 0
 						});
 					})(group_8);
+					if(typeof onRecipeClick == "function") {
+						group_8.addEventListener("click", onRecipeClick);
+					}
 					container.addChild(group_8, {
 						"colIndex": 5,
 						"rowIndex": 1
 					});
-					var group_9 = new cpr.controls.Container();
+					var group_9 = new cpr.controls.Container("auth");
 					var formLayout_8 = new cpr.controls.layouts.FormLayout();
 					formLayout_8.scrollable = false;
 					formLayout_8.horizontalSpacing = "0px";
@@ -345,6 +410,9 @@
 							"rowIndex": 0
 						});
 					})(group_9);
+					if(typeof onAuthClick == "function") {
+						group_9.addEventListener("click", onAuthClick);
+					}
 					container.addChild(group_9, {
 						"colIndex": 7,
 						"rowIndex": 1

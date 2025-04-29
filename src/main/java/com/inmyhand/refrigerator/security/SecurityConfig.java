@@ -51,9 +51,14 @@ public class SecurityConfig {
                 .csrf(AbstractHttpConfigurer::disable)
                 .sessionManagement(session -> session
                         .sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-                .authorizeHttpRequests(auth -> auth.anyRequest().permitAll()) //나중에 수정
+                .authorizeHttpRequests(auth -> auth
+                        .requestMatchers("/admin/**").hasRole("ADMIN") // 어드민 전용
+                        .requestMatchers("/user/**").hasAnyRole("USER", "ADMIN") // 유저 또는 어드민
+                        .anyRequest().permitAll()
+                )
                 .httpBasic(AbstractHttpConfigurer::disable)
                 .oauth2Login(oauth2 -> oauth2
+                        .loginPage("/auth/login")
                         .authorizationEndpoint(endpoint -> endpoint
                                 .authorizationRequestResolver(customAuthorizationRequestResolver(clientRegistrationRepository))
                         )
@@ -62,7 +67,9 @@ public class SecurityConfig {
                         )
                         .successHandler(customOAuth2SuccessHandler)
                 )
-                .formLogin(AbstractHttpConfigurer::disable)
+                .formLogin(form -> form
+                        .loginPage("/auth/login")
+                )
                 .requestCache(RequestCacheConfigurer::disable)
                 //.formLogin(withDefaults()) //테스트 용도
 //                .headers(headers -> headers

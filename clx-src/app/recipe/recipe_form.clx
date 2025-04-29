@@ -8,109 +8,27 @@
     <screen std:sid="screen-d184c9ef" id="tablet" name="tablet" width="500px" height="667px"/>
     <screen std:sid="screen-dfce70c5" id="mobile" name="mobile" width="350px" height="525px"/>
     <cl:model std:sid="model-c2e79a6e">
-      <cl:dataset std:sid="d-set-07579d9b" id="ingredients">
-        <cl:datacolumnlist>
-          <cl:datacolumn std:sid="d-column-ca05f011" name="ingredientName"/>
-          <cl:datacolumn std:sid="d-column-cac43839" name="ingredientGroup"/>
-          <cl:datacolumn std:sid="d-column-f8cd9e53" name="ingredientQuantity"/>
-          <cl:datacolumn std:sid="d-column-282a9882" name="ingredientUnit"/>
-        </cl:datacolumnlist>
-      </cl:dataset>
-      <cl:dataset std:sid="d-set-8bab1272" id="steps">
-        <cl:datacolumnlist>
-          <cl:datacolumn std:sid="d-column-eb6f2e00" name="stepNumber"/>
-          <cl:datacolumn std:sid="d-column-219e85a4" name="stepDescription"/>
-          <cl:datacolumn std:sid="d-column-b807ec8b" name="file"/>
-        </cl:datacolumnlist>
-      </cl:dataset>
-      <cl:dataset std:sid="d-set-8d230ffb" id="categories">
-        <cl:datacolumnlist>
-          <cl:datacolumn std:sid="d-column-04c8cb05" name="recipeCategoryName"/>
-          <cl:datacolumn std:sid="d-column-ec2f0c39" name="recipeCategoryType"/>
-        </cl:datacolumnlist>
-      </cl:dataset>
-      <cl:matrix-submission std:sid="m-submission-e12e021c" id="recipeCreatesSms" async="true" withCredentials="false" method="post" action="/api/recipes/create">
-        <cl:matrix>
-          <cl:request type="object">
-            <cl:data key="userId">
-              <cl:pathref columnName="userId"/>
-            </cl:data>
-            <cl:data key="parentRecipeId">
-              <cl:pathref columnName="parentRecipeId"/>
-            </cl:data>
-            <cl:data key="recipeName">
-              <cl:pathref columnName="recipeName"/>
-            </cl:data>
-            <cl:data key="cookingTime">
-              <cl:pathref columnName="cookingTime"/>
-            </cl:data>
-            <cl:data key="difficulty">
-              <cl:pathref columnName="difficulty"/>
-            </cl:data>
-            <cl:data key="calories">
-              <cl:pathref columnName="calories"/>
-            </cl:data>
-            <cl:data key="summary">
-              <cl:pathref columnName="summary"/>
-            </cl:data>
-            <cl:data key="servings">
-              <cl:pathref columnName="servings"/>
-            </cl:data>
-            <cl:data key="ingredients">
-              <cl:complex dataControl="ingredients" type="array">
-                <cl:data key="ingredientName">
-                  <cl:pathref columnName="ingredientName"/>
-                </cl:data>
-                <cl:data key="ingredientGroup">
-                  <cl:pathref columnName="ingredientGroup"/>
-                </cl:data>
-                <cl:data key="ingredientQuantity">
-                  <cl:pathref columnName="ingredientQuantity"/>
-                </cl:data>
-                <cl:data key="ingredientUnit">
-                  <cl:pathref columnName="ingredientUnit"/>
-                </cl:data>
-              </cl:complex>
-            </cl:data>
-            <cl:data key="steps">
-              <cl:complex dataControl="steps" type="array">
-                <cl:data key="stepNumber">
-                  <cl:pathref columnName="stepNumber"/>
-                </cl:data>
-                <cl:data key="file">
-                  <cl:pathref columnName="file"/>
-                </cl:data>
-                <cl:data key="stepDescription">
-                  <cl:pathref columnName="stepDescription"/>
-                </cl:data>
-              </cl:complex>
-            </cl:data>
-            <cl:data key="categories">
-              <cl:complex dataControl="categories" type="array">
-                <cl:data key="recipeCategoryName">
-                  <cl:pathref columnName="recipeCategoryName"/>
-                </cl:data>
-                <cl:data key="recipeCategoryType">
-                  <cl:pathref columnName="recipeCategoryType"/>
-                </cl:data>
-              </cl:complex>
-            </cl:data>
-          </cl:request>
-          <cl:response type="object"/>
-        </cl:matrix>
-      </cl:matrix-submission>
       <cl:submission std:sid="submission-c9b6b0c7" id="recipeCreateSms" action="/api/recipes/create" mediatype="application/json">
         <cl:listener std:sid="listener-db503dcb" name="before-submit" handler="onRecipeCreateSmsBeforeSubmit"/>
+        <cl:listener std:sid="listener-6947c102" name="submit-success" handler="onRecipeCreateSmsSubmitSuccess"/>
+      </cl:submission>
+      <cl:submission std:sid="submission-bd4706b7" id="recipeInfoSms" action="/api/recipes">
+        <cl:listener std:sid="listener-a42caa81" name="submit-success" handler="onRecipeInfoSmsSubmitSuccess"/>
+      </cl:submission>
+      <cl:submission std:sid="submission-fdff8019" id="recipeUpdateSms" method="put" action="/api/recipes" mediatype="application/json">
+        <cl:listener std:sid="listener-83346fef" name="before-submit" handler="onRecipeUpdateSmsBeforeSubmit"/>
+        <cl:listener std:sid="listener-49e65aad" name="submit-success" handler="onRecipeUpdateSmsSubmitSuccess"/>
       </cl:submission>
     </cl:model>
     <cl:appspec/>
   </head>
   <body std:sid="body-c43e6d9f" style="background-color:#FFFFFF;" class="contents-container">
     <cl:listener std:sid="listener-67fc3b38" name="load" handler="onBodyLoad"/>
-    <cl:output std:sid="output-0480b386" style="font-weight:bold; font-size:20px;" value="레시피 등록">
+    <cl:listener std:sid="listener-f0f5ccbc" name="init" handler="onBodyInit"/>
+    <cl:output std:sid="output-0480b386" id="formTitle" style="font-weight:bold; font-size:20px;" value="레시피 등록">
       <cl:verticaldata std:sid="v-data-beeca65a" width="600px" height="30px"/>
     </cl:output>
-    <cl:group std:sid="group-8ca413f6" style="background-color:#EAF1F3;">
+    <cl:group std:sid="group-8ca413f6" style="background-color:#EAF1F3; border-radius:5px;">
       <cl:verticaldata std:sid="v-data-657f8301" width="600px" height="330px"/>
       <cl:udc std:sid="ud-control-2f47cf14" type="udc.recipe.group_subtitle">
         <cl:verticaldata std:sid="v-data-c9030110" width="599px" height="20px"/>
@@ -181,7 +99,7 @@
       </cl:group>
       <cl:verticallayout std:sid="v-layout-96f7df8d" spacing="20" leftmargin="10" rightmargin="10" topmargin="20" bottommargin="20"/>
     </cl:group>
-    <cl:group std:sid="group-3436a3af" style="background-color:#FBF3EB;">
+    <cl:group std:sid="group-3436a3af" style="background-color:#FBF3EB; border-radius:5px;">
       <cl:verticaldata std:sid="v-data-091093eb" width="600px" height="250px" autosize="height"/>
       <cl:udc std:sid="ud-control-57a5c0f4" type="udc.recipe.group_subtitle">
         <cl:verticaldata std:sid="v-data-30ac855c" width="599px" height="20px"/>
@@ -201,7 +119,7 @@
       </cl:button>
       <cl:verticallayout std:sid="v-layout-a82a7a26" spacing="20" leftmargin="10" rightmargin="10" topmargin="20" bottommargin="20"/>
     </cl:group>
-    <cl:group std:sid="group-11768261" style="background-color:#E5E6C7;">
+    <cl:group std:sid="group-11768261" style="background-color:#E5E6C7; border-radius:5px;">
       <cl:verticaldata std:sid="v-data-f1d7e4fc" width="600px" height="200px" autosize="height"/>
       <cl:udc std:sid="ud-control-8f724ac3" type="udc.recipe.group_subtitle">
         <cl:verticaldata std:sid="v-data-0bf2df52" width="599px" height="20px"/>
@@ -221,7 +139,7 @@
       </cl:button>
       <cl:verticallayout std:sid="v-layout-f3cd3489" spacing="20" leftmargin="10" rightmargin="10" topmargin="20" bottommargin="20"/>
     </cl:group>
-    <cl:button std:sid="button-67ec2fd5" value="등록하기">
+    <cl:button std:sid="button-67ec2fd5" id="submitBtn" value="등록하기">
       <cl:listener std:sid="listener-e302bf73" name="click" handler="onButtonClick"/>
       <cl:verticaldata std:sid="v-data-6642110e" width="600px" height="20px"/>
     </cl:button>

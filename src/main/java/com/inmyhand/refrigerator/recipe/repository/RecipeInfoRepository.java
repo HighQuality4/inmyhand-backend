@@ -1,16 +1,15 @@
 package com.inmyhand.refrigerator.recipe.repository;
 
-import java.util.List;
-import java.util.Optional;
-
+import com.inmyhand.refrigerator.admin.dto.AdminRecipeInfoDto;
+import com.inmyhand.refrigerator.recipe.domain.entity.RecipeInfoEntity;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
-import com.inmyhand.refrigerator.admin.dto.AdminRecipeInfoDto;
-import com.inmyhand.refrigerator.recipe.domain.entity.RecipeInfoEntity;
+import java.util.List;
+import java.util.Optional;
 
 
 
@@ -25,6 +24,9 @@ public interface RecipeInfoRepository extends JpaRepository<RecipeInfoEntity, Lo
     // 내가 등록한 레시피 조회
     List<RecipeInfoEntity> findByMemberEntityId(Long memberEntityId);
 
+    // 레시피 검색 조회 - 페이징
+    Page<RecipeInfoEntity> findByRecipeNameContaining(String keyword, Pageable pageable);
+
     // 레시피 이름 관련 모두 찾기
     List<RecipeInfoEntity> findByRecipeNameContaining(String keyword);
 
@@ -38,5 +40,15 @@ public interface RecipeInfoRepository extends JpaRepository<RecipeInfoEntity, Lo
             "WHERE r.memberEntity.id = :id " +
             "ORDER BY r.createdAt ASC")
     Page<AdminRecipeInfoDto> findAdminRecipeInfoUser(@Param("id") Long id, Pageable pageable);
+
+    Optional<RecipeInfoEntity> findFirstByRecipeName(String keyword);
+
+
+    @Query("SELECT r FROM RecipeInfoEntity r JOIN FETCH r.filesEntities")
+    List<RecipeInfoEntity> similarFindAll();
+
+    // findById 대체 메서드
+    @Query("SELECT r FROM RecipeInfoEntity r JOIN FETCH r.filesEntities WHERE r.id = :id")
+    Optional<RecipeInfoEntity> similarFindById(Long id);
 }
 

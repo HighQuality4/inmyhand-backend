@@ -1,6 +1,6 @@
 //package com.inmyhand.refrigerator.subscription.repository;
 //
-//import com.inmyhand.refrigerator.subscription.domain.dto.SubscriptionDetailDTO;
+//import com.inmyhand.refrigerator.payment.domain.dto.SubscriptionDetailDTO;
 //import org.junit.jupiter.api.Test;
 //import org.springframework.beans.factory.annotation.Autowired;
 //import org.springframework.boot.test.context.SpringBootTest;
