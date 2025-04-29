@@ -25,12 +25,10 @@ const embeddedAppChange = () => {
 		const vcEmb = app.lookup("ea1");
 		
 		cpr.core.App.load(vsAppId, function(loadedApp){ 
-			if(loadedApp){
-				vcEmb.app = loadedApp; 
-			} 
+			vcEmb.app = loadedApp; 
 		});
 		
-		app.getContainer().redraw();	
+		app.getContainer().redraw();
 	}
 }
 
