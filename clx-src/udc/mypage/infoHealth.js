@@ -12,4 +12,3 @@ exports.getText = function(){
 	// TODO: 그리드의 뷰 모드에서 표시할 텍스트를 반환하는 하는 코드를 작성해야 합니다.
 	return "";
 };
-
