@@ -1,8 +1,7 @@
-package com.inmyhand.refrigerator.subscription.domain.entity;
+package com.inmyhand.refrigerator.payment.domain.entity;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.inmyhand.refrigerator.payment.domain.entity.PaymentEntity;
 import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -17,8 +16,9 @@ import java.util.List;
 @Getter
 @Setter
 @NoArgsConstructor
+@Builder
 @AllArgsConstructor
-@ToString(exclude = {"subscriptionPlansEntity", "memberEntity"})
+@ToString(exclude = {"subscriptionPlansEntity", "paymentList"})
 public class SubscriptionEntity {
 
     @Id
@@ -47,6 +47,9 @@ public class SubscriptionEntity {
     protected void onCreate() {
         if (this.regdate == null) {
             this.regdate = new Date();
+        }
+        if(this.startDate == null) {
+            this.startDate = new Timestamp(this.regdate.getTime());
         }
     }
 
