@@ -20,6 +20,8 @@
 
 			const createRecipeCardModule = cpr.core.Module.require("module/recipe/createRecipeCard");
 			const createRecipeCard = createRecipeCardModule.createRecipeCard;
+			const setRecipeListModule = cpr.core.Module.require("module/recipe/setRecipeList");
+			const setRecipeList = setRecipeListModule.setRecipeList;
 
 			let sortBy = null;
 			let sortType = null;
@@ -101,8 +103,12 @@
 			 */
 			function onAllRecipeListSmsSubmitSuccess(e){
 				const allRecipeListSms = e.control;
+				
+				const recipeContainer = app.lookup("allRecipeList");
+				const recipeGroup = app.lookup("allRecipeListPageGroup");
+				const pageIndexer = app.lookup("allRecipePageIndexer");
 
-				setRecipeList(allRecipeListSms);
+				setRecipeList(allRecipeListSms, recipeContainer, recipeGroup, pageIndexer);
 			}
 
 			/*
@@ -112,7 +118,11 @@
 			function onSortRecipeListSmsSubmitSuccess(e){
 				const sortRecipeListSms = e.control;
 				
-				setRecipeList(sortRecipeListSms);
+				const recipeContainer = app.lookup("allRecipeList");
+				const recipeGroup = app.lookup("allRecipeListPageGroup");
+				const pageIndexer = app.lookup("allRecipePageIndexer");
+				
+				setRecipeList(sortRecipeListSms, recipeContainer, recipeGroup, pageIndexer);
 			}
 
 			/*
