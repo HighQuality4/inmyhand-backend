@@ -26,6 +26,12 @@ public class HealthInfoServiceImpl implements HealthInfoService {
         return healthInfoRepository.findInterestInfoByMemberId(memberId);
     }
 
+    public List<String> getAllInterestInfoCategory() {
+        return healthInfoRepository.findAllInterestInfoCategory();
+    }
 
+    public List<String> getAllRecipeIngredientCategory() {
+        return healthInfoRepository.findAllFoodInfoCategory();
+    }
 
 }
