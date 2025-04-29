@@ -153,6 +153,7 @@
 			var container = app.getContainer();
 			container.style.setClasses(["contents-container"]);
 			container.style.css({
+				"background-image" : "none",
 				"background-color" : "#FFFFFF",
 				"width" : "100%",
 				"height" : "100%"
@@ -194,7 +195,8 @@
 				var button_1 = new cpr.controls.Button("email_submit");
 				button_1.value = "이메일 인증";
 				button_1.style.css({
-					"border-radius" : "5px"
+					"border-radius" : "5px",
+					"color" : "#000000"
 				});
 				if(typeof onEmail_submitClick == "function") {
 					button_1.addEventListener("click", onEmail_submitClick);
