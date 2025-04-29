@@ -1,4 +1,4 @@
-package com.inmyhand.refrigerator.subscription.domain.dto;
+package com.inmyhand.refrigerator.payment.domain.dto;
 
 import lombok.*;
 

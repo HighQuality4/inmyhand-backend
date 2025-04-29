@@ -24,7 +24,7 @@
     <cl:listener std:sid="listener-1662a3eb" name="load" handler="onBodyLoad"/>
     <cl:group std:sid="group-d128c392" id="popluarRecipeContainer" clipcontent="false">
       <cl:responsivexylayoutdata std:sid="rxyl-data-1f782cb2">
-        <cl:xylayoutdata std:sid="sxyl-data-b7beb9cb" top="0px" right="0px" left="0px" height="450px" horizontalAnchor="BOTH" verticalAnchor="TOP" screenid="default"/>
+        <cl:xylayoutdata std:sid="sxyl-data-b7beb9cb" top="75px" right="0px" left="0px" height="450px" horizontalAnchor="BOTH" verticalAnchor="TOP" screenid="default"/>
       </cl:responsivexylayoutdata>
       <cl:udc std:sid="ud-control-4ace6599" id="popluarRecipeTitle" type="udc.recipe.recipe_title">
         <cl:verticaldata std:sid="v-data-7a314836" width="600px" height="30px" autosize="none"/>
@@ -39,7 +39,7 @@
     </cl:group>
     <cl:group std:sid="group-bda12d96" id="allRecipeContainer">
       <cl:responsivexylayoutdata std:sid="rxyl-data-93eba8a2">
-        <cl:xylayoutdata std:sid="sxyl-data-a6f77cb8" top="500px" right="0px" left="0px" height="1400px" horizontalAnchor="BOTH" verticalAnchor="TOP" screenid="default"/>
+        <cl:xylayoutdata std:sid="sxyl-data-a6f77cb8" top="565px" right="0px" left="0px" height="1400px" horizontalAnchor="BOTH" verticalAnchor="TOP" screenid="default"/>
       </cl:responsivexylayoutdata>
       <cl:udc std:sid="ud-control-3a763b65" id="allRecipeTitle" type="udc.recipe.recipe_title">
         <cl:verticaldata std:sid="v-data-bc912e61" width="600px" height="30px"/>
@@ -64,6 +64,11 @@
       </cl:group>
       <cl:verticallayout std:sid="v-layout-fed91775" spacing="20"/>
     </cl:group>
+    <cl:udc std:sid="ud-control-a3a59209" type="udc.recipe.recipe_search_form">
+      <cl:responsivexylayoutdata std:sid="rxyl-data-005f0294">
+        <cl:xylayoutdata std:sid="sxyl-data-070eeedd" top="0px" right="0px" left="0px" height="55px" horizontalAnchor="BOTH" verticalAnchor="TOP" screenid="default"/>
+      </cl:responsivexylayoutdata>
+    </cl:udc>
     <cl:responsivexylayout std:sid="r-xylayout-3e5555da" scrollable="true"/>
   </body>
   <std:studiosetting>

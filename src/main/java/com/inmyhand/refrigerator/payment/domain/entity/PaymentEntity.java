@@ -3,7 +3,6 @@ package com.inmyhand.refrigerator.payment.domain.entity;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.inmyhand.refrigerator.member.domain.entity.MemberEntity;
-import com.inmyhand.refrigerator.subscription.domain.entity.SubscriptionEntity;
 import jakarta.persistence.*;
 import org.springframework.format.annotation.DateTimeFormat;
 import lombok.*;
@@ -81,7 +80,7 @@ public class PaymentEntity {
     private MemberEntity memberEntity;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "fk_sub_id", nullable = false)
+    @JoinColumn(name = "fk_sub_id")
     @JsonIgnoreProperties("paymentList")
     private SubscriptionEntity subscriptionEntity;
 }
