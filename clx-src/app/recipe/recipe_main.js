@@ -7,6 +7,8 @@
 
 const createRecipeCardModule = cpr.core.Module.require("module/recipe/createRecipeCard");
 const createRecipeCard = createRecipeCardModule.createRecipeCard;
+const setRecipeListModule = cpr.core.Module.require("module/recipe/setRecipeList");
+const setRecipeList = setRecipeListModule.setRecipeList;
 
 let sortBy = null;
 let sortType = null;
@@ -21,27 +23,6 @@ const onSortRecipeListSmsSubmit=(page)=>{
 	sortRecipeListSms.addParameter("sortType", sortType);
 	sortRecipeListSms.send();
 	sortRecipeListSms.removeAllParameters();
-}
-
-// 레시피 목록 화면 변경
-const setRecipeList=(submission)=> {
-	const recipeContainer = app.lookup("allRecipeList");
-	
-	if(recipeContainer.getChildrenCount()){
-		recipeContainer.removeAllChildren();
-	}
-	
-	const recipeGroup = app.lookup("allRecipeListPageGroup");
-	const pageIndexer = app.lookup("allRecipePageIndexer");
-	
-	const result = submission.xhr.responseText;
-	const resultJson = JSON.parse(result);
-	
-	createRecipeCard(resultJson.content, recipeContainer);
-	
-	pageIndexer.init(resultJson.totalElements, resultJson.size, (resultJson.number)+1);
-		
-	recipeGroup.redraw();
 }
 
 // 레시피 목록 조회 초기화
@@ -88,8 +69,12 @@ function onPopularRecipeListSmsSubmitSuccess(e){
  */
 function onAllRecipeListSmsSubmitSuccess(e){
 	const allRecipeListSms = e.control;
+	
+	const recipeContainer = app.lookup("allRecipeList");
+	const recipeGroup = app.lookup("allRecipeListPageGroup");
+	const pageIndexer = app.lookup("allRecipePageIndexer");
 
-	setRecipeList(allRecipeListSms);
+	setRecipeList(allRecipeListSms, recipeContainer, recipeGroup, pageIndexer);
 }
 
 /*
@@ -99,7 +84,11 @@ function onAllRecipeListSmsSubmitSuccess(e){
 function onSortRecipeListSmsSubmitSuccess(e){
 	const sortRecipeListSms = e.control;
 	
-	setRecipeList(sortRecipeListSms);
+	const recipeContainer = app.lookup("allRecipeList");
+	const recipeGroup = app.lookup("allRecipeListPageGroup");
+	const pageIndexer = app.lookup("allRecipePageIndexer");
+	
+	setRecipeList(sortRecipeListSms, recipeContainer, recipeGroup, pageIndexer);
 }
 
 /*
