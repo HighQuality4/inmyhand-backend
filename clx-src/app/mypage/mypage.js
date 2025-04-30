@@ -12,7 +12,6 @@
 function onButtonClick(e) {
 	
 	var btn = e.control;
-	
     app.lookup("smsLogout").send(); // 서버 전송
     
 }
@@ -48,3 +47,5 @@ function onSmsLogoutReceive(e){
 	}
 	
 }
+
+

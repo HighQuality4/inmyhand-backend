@@ -69,6 +69,12 @@
       </cl:button>
       <cl:xylayout std:sid="xylayout-fb875f05" scrollable="false"/>
     </cl:group>
+    <cl:button std:sid="button-b65466f7" style="border-radius:5px;" value="로그아웃">
+      <cl:listener std:sid="listener-e84014d6" name="click" handler="onButtonClick"/>
+      <cl:responsivexylayoutdata std:sid="rxyl-data-c0e8a017">
+        <cl:xylayoutdata std:sid="sxyl-data-63493164" top="70px" left="451px" width="100px" height="20px" horizontalAnchor="LEFT" verticalAnchor="TOP" screenid="default"/>
+      </cl:responsivexylayoutdata>
+    </cl:button>
     <cl:responsivexylayout std:sid="r-xylayout-3e5555da"/>
   </body>
   <std:studiosetting>

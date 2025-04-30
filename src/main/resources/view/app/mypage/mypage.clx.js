@@ -341,9 +341,42 @@
 					}
 				]
 			});
+			
+			var button_7 = new cpr.controls.Button();
+			button_7.value = "로그아웃";
+			button_7.style.css({
+				"border-radius" : "5px"
+			});
+			if(typeof onButtonClick == "function") {
+				button_7.addEventListener("click", onButtonClick);
+			}
+			container.addChild(button_7, {
+				positions: [
+					{
+						"media": "all and (min-width: 1024px)",
+						"top": "70px",
+						"left": "451px",
+						"width": "100px",
+						"height": "20px"
+					}, 
+					{
+						"media": "all and (min-width: 500px) and (max-width: 1023.984px)",
+						"top": "70px",
+						"left": "220px",
+						"width": "49px",
+						"height": "20px"
+					}, 
+					{
+						"media": "all and (max-width: 499.984px)",
+						"top": "70px",
+						"left": "154px",
+						"width": "34px",
+						"height": "20px"
+					}
+				]
+			});
 		}
 	});
 	app.title = "mypage";
 	cpr.core.Platform.INSTANCE.register(app);
 })();
-
