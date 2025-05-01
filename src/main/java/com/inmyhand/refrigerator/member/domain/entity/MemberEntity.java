@@ -17,6 +17,7 @@ import com.inmyhand.refrigerator.recipe.domain.entity.RecipeLikesEntity;
 import com.inmyhand.refrigerator.recipe.domain.entity.RecipeViewsEntity;
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.BatchSize;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.util.ArrayList;
@@ -78,18 +79,22 @@ public class MemberEntity {
 
     @OneToMany(mappedBy = "memberEntity", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonIgnoreProperties("memberEntity")
+    @BatchSize(size = 10)
     private List<MemberAllergyEntity> memberAllergyList = new ArrayList<>();
 
     @OneToMany(mappedBy = "memberEntity", cascade = CascadeType.ALL, orphanRemoval = true)
+    @BatchSize(size = 10)
     @JsonIgnoreProperties("memberEntity")
     private List<HateFoodEntity> hateFoodList = new ArrayList<>();
 
     @OneToMany(mappedBy = "memberEntity", cascade = CascadeType.ALL, orphanRemoval = true)
+    @BatchSize(size = 10)
     @JsonIgnoreProperties("memberEntity")
     private List<HealthInterestEntity> healthInterestList = new ArrayList<>();
 
     @Builder.Default
     @OneToMany(mappedBy = "memberEntity", cascade = CascadeType.ALL, orphanRemoval = true)
+    @BatchSize(size = 10)
     @JsonIgnoreProperties("memberEntity")
     private List<MemberRoleEntity> memberRoleList = new ArrayList<>();
 
@@ -97,34 +102,36 @@ public class MemberEntity {
     @JsonIgnoreProperties("memberEntity")
     private RefreshTokenEntity refreshTokenEntity;
 
-//    @OneToMany(mappedBy = "memberEntity", cascade = CascadeType.ALL, orphanRemoval = true)
-//    @JsonIgnoreProperties("memberEntity")
-//    private List<SubscriptionEntity> subscriptionList = new ArrayList<>();
-
     @OneToMany(mappedBy = "memberEntity", cascade = CascadeType.ALL, orphanRemoval = true)
+    @BatchSize(size = 10)
     @JsonIgnoreProperties("memberEntity")
     private List<PaymentEntity> paymentList = new ArrayList<>();
 
     @OneToMany(mappedBy = "memberEntity", cascade = {CascadeType.PERSIST,CascadeType.MERGE})
 //    @JsonIgnore
     //TODO N+1 발생
+    @BatchSize(size = 10)
     @JsonIgnoreProperties("memberEntity")
     private List<FridgeMemberEntity> fridgeMemberList = new ArrayList<>();
 
     @OneToMany(mappedBy = "memberEntity", cascade = CascadeType.ALL, orphanRemoval = true)
+    @BatchSize(size = 10)
     @JsonIgnoreProperties("memberEntity")
     private List<RecipeInfoEntity> recipeInfoList = new ArrayList<>();
 
     @OneToMany(mappedBy = "memberEntity", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
 //    @JsonIgnore
+    @BatchSize(size = 10)
     @JsonIgnoreProperties("memberEntity")
     private List<RecipeCommentEntity> recipeCommentList = new ArrayList<>();
 
     @OneToMany(mappedBy = "memberEntity", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @BatchSize(size = 10)
     @JsonIgnoreProperties("memberEntity")
     private List<RecipeLikesEntity> recipeLikesList = new ArrayList<>();
 
     @OneToMany(mappedBy = "memberEntity", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @BatchSize(size = 10)
     @JsonIgnoreProperties("memberEntity")
     private List<RecipeViewsEntity> recipeViewsList = new ArrayList<>();
 
