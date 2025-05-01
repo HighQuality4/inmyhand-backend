@@ -113,15 +113,19 @@ public class RecipeController {
     @PutMapping("/{recipeId}")
     public ResponseEntity<String> updateRecipe(
             @PathVariable("recipeId") Long recipeId,
-            @RequestBody Map<String, Object> body) {
-        Map<String, Object> param = (Map<String, Object>) body.get("param");
-        List<Map<String, Object>> paramList = (List<Map<String, Object>>) param.get("param");
-
-        Map<String, Object> recipeMap = paramList.get(0);
-
-        RecipeRequestDTO dto = objectMapper.convertValue(recipeMap, RecipeRequestDTO.class);
-        recipeCommandService.updateRecipe(recipeId, dto);
-        return ResponseEntity.ok("레시피가 성공적으로 수정되었습니다.");
+            @RequestPart("param") String body,
+            @RequestPart(value = "files", required = false) MultipartFile files,
+            @RequestPart(value = "stepFiles", required = false) List<MultipartFile> stepFiles) {
+        try { // JSON 문자열을 Map으로 파싱
+            Map<String, Object> parsedBody = objectMapper.readValue(body, new TypeReference<>() {});
+            List<Map<String, Object>> paramList = (List<Map<String, Object>>) parsedBody.get("param");
+            Map<String, Object> recipeMap = paramList.get(0);
+            RecipeRequestDTO dto = objectMapper.convertValue(recipeMap, RecipeRequestDTO.class);
+            recipeCommandService.updateRecipe(recipeId, dto, files, stepFiles);
+            return ResponseEntity.ok("레시피가 성공적으로 수정되었습니다.");
+        } catch (IOException e) {
+            return ResponseEntity.badRequest().build();
+        }
     }
 
     // 레시피 삭제

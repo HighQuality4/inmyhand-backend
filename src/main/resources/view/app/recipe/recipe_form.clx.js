@@ -30,7 +30,7 @@
 			const isLastPathSegmentNumberMd = cpr.core.Module.require("module/common/isLastPathSegmentNumber");
 			const isLastPathSegmentNumber = isLastPathSegmentNumberMd.isLastPathSegmentNumber();
 
-			function requestEncoder(api, data) {
+			const requestEncoder=(api, data)=> {
 				/**
 				 * @type cpr.protocols.Submission
 				 */
@@ -53,10 +53,8 @@
 				const cookingTime = app.lookup("cookingTimeSelect").value;
 				const calories = app.lookup("caloriesInput").value;
 				
-				// 완성사진
-			//	const files = ["https://mybucket.s3.amazonaws.com/images/recipe1.jpg"];
+				// 대표사진
 				const recipeImg = app.lookup("recipeImg").file;
-			//	const recipeImg = app.lookup("recipeImg");
 				
 				// 카테고리
 				const typeCategory = app.lookup("typeCategorySelect").value;
@@ -89,7 +87,7 @@
 				
 				// 과정 및 단계 이미지 파일 추출 
 				const cookingProcessGroup = app.lookup("cookingProcessCreateGroup"); 
-				const cookingProcessForm = cookingProcessGroup.getChildren(); 
+				const cookingProcessForm = cookingProcessGroup.getChildren();
 				const steps = []; 
 				const stepFiles = [];
 
@@ -393,7 +391,7 @@
 				var recipeUpdateSms = e.control;
 				// TODO: 마이페이지의 내가 등록한 레시피로 이동
 				alert("레시피 수정이 완료되었습니다");
-				history.pushState({}, '', `/auth/mypage`);
+			//	history.pushState({}, '', `/auth/mypage`);
 			};
 			// End - User Script
 			
