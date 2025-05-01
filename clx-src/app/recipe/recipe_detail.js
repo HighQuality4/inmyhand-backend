@@ -70,7 +70,7 @@ function onRecipeDetailSmsSubmitSuccess(e){
 	      break;
 	  }
 	}
-	recipeImg.src = resultJson.fileUrl[0];
+	recipeImg.src = resultJson.fileUrl;
 	if(resultJson.summary!=null) {
 		recipeSummary.value = resultJson.summary;
 	} else {

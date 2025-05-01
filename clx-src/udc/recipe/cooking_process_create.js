@@ -16,7 +16,34 @@ exports.getText = function(){
 
 exports.getCookingProcessValue=()=>{
 	const stepDescriptionValue = app.lookup("stepDescription").value;
-	const fileUrl = "http://www.foodsafetykorea.go.kr/uploadimg/cook/20_00574_1.png";
+	const stepFile = app.lookup("fileUrl").file;
 	
-	return {stepDescription:stepDescriptionValue, fileUrl:fileUrl};
+	return {stepDescription:stepDescriptionValue, fileUrl:stepFile};
+}
+
+function getImage() {
+	var vcFit = app.lookup("fileUrl");
+	
+	//필요에 따라 파일인풋의 선택된 파일이 이미지인 경우에만 다음의 동작을 수행합니다.
+	var vsFtype = vcFit.file.type;
+	console.log(vsFtype);
+	if (vsFtype.split("/")[0] == "image") {
+		var voReader = new FileReader();
+		voReader.onload = function(event) {
+			console.log(vcFit.file);
+			vcFit.style.css({
+				"backgroundImage": `url(event.target.result)`,
+			})
+		}
+		voReader.readAsDataURL(vcFit.file);	
+	}
+}
+
+/*
+ * 파일 인풋에서 value-change 이벤트 발생 시 호출.
+ * FileInput의 value를 변경하여 변경된 값이 저장된 후에 발생하는 이벤트.
+ */
+function onFileUrlValueChange(e){
+	var fileUrl = e.control;
+	getImage();
 }

@@ -17,6 +17,18 @@ const cookingTimeItems = recipeInfoSelectItemsModule.cookingTime;
 const isLastPathSegmentNumberMd = cpr.core.Module.require("module/common/isLastPathSegmentNumber");
 const isLastPathSegmentNumber = isLastPathSegmentNumberMd.isLastPathSegmentNumber();
 
+function requestEncoder(api, data) {
+	/**
+	 * @type cpr.protocols.Submission
+	 */
+	const submission = api;
+
+	return 	{
+		key : "param" , //content에 해당하는 키값 설정
+		content: data["param"]	//보낼 데이터
+	}
+}
+
 
 // input 값 추출 및 json 파싱
 const setRecipeRequestParam =(sms)=>{
@@ -28,8 +40,10 @@ const setRecipeRequestParam =(sms)=>{
 	const cookingTime = app.lookup("cookingTimeSelect").value;
 	const calories = app.lookup("caloriesInput").value;
 	
-	// TODO: 완성사진
-	const files = ["https://mybucket.s3.amazonaws.com/images/recipe1.jpg"];
+	// 완성사진
+//	const files = ["https://mybucket.s3.amazonaws.com/images/recipe1.jpg"];
+	const recipeImg = app.lookup("recipeImg").file;
+//	const recipeImg = app.lookup("recipeImg");
 	
 	// 카테고리
 	const typeCategory = app.lookup("typeCategorySelect").value;
@@ -60,16 +74,27 @@ const setRecipeRequestParam =(sms)=>{
 		ingredients.push(...ingredientResult);
 	}
 	
-	// 과정
-	const cookingProcessGroup = app.lookup("cookingProcessCreateGroup");
-	const cookingProcessForm = cookingProcessGroup.getChildren();
-	let steps = []; // 결과
-	
-	for(let i=0; i<cookingProcessForm.length; i++){
-		const cookingProcessResult = cookingProcessForm[i].getCookingProcessValue();
-		const cookingProcessObj = {...cookingProcessResult, stepNumber:i+1};
-		steps.push(cookingProcessObj);
+	// 과정 및 단계 이미지 파일 추출 
+	const cookingProcessGroup = app.lookup("cookingProcessCreateGroup"); 
+	const cookingProcessForm = cookingProcessGroup.getChildren(); 
+	const steps = []; 
+	const stepFiles = [];
+
+	for (let i = 0; i < cookingProcessForm.length; i++) { 
+		const form = cookingProcessForm[i]; 
+		const stepData = form.getCookingProcessValue(); // { stepDescription, fileUrl (File) }
+		const stepObj = {
+  			stepDescription: stepData.stepDescription,
+  			stepNumber: i + 1
+		};
+
+		steps.push(stepObj);
+
+		if (stepData.fileUrl) {
+  			stepFiles.push(stepData.fileUrl); // fileUrl이 실제 파일 객체여야 함
+		}
 	}
+	console.log(stepFiles);
 	
 	const requestData = {
 						    userId: 1,
@@ -80,13 +105,18 @@ const setRecipeRequestParam =(sms)=>{
 						    calories: calories,
 						    summary: receipSummary,
 						    servings: servings,
-						    files,
 						    ingredients,
 						    steps,
 						    categories
 						  };					  
-  	 					  
+  	 
+  	 sms.setRequestEncoder(requestEncoder);
 	 sms.addParameter("param", requestData);
+	 sms.addFileParameter("files", recipeImg);
+	 // 여러 개의 stepFiles를 반복적으로 추가 
+	 for (let i = 0; i < stepFiles.length; i++) { 
+	 	sms.addFileParameter("stepFiles", stepFiles[i]); 
+	 }
 }
 
 /*
@@ -249,7 +279,8 @@ function onRecipeInfoSmsSubmitSuccess(e){
 	calories.value = resultJson.calories;
 	
 	// TODO: 완성사진
-	
+	const recipeImg = app.lookup("recipeImg");
+	recipeImg.value = resultJson.fileUrl;
 	
 	// 카테고리
 	const typeCategory = app.lookup("typeCategorySelect");
@@ -338,7 +369,7 @@ function onRecipeInfoSmsSubmitSuccess(e){
 function onRecipeCreateSmsSubmitSuccess(e){
 	var recipeCreateSms = e.control;
 	alert("레시피 등록이 완료되었습니다");
-	window.location.href="/recipe";
+	history.pushState({}, '', `/recipe`);
 }
 
 /*
@@ -349,5 +380,5 @@ function onRecipeUpdateSmsSubmitSuccess(e){
 	var recipeUpdateSms = e.control;
 	// TODO: 마이페이지의 내가 등록한 레시피로 이동
 	alert("레시피 수정이 완료되었습니다");
-	window.location.href="/users/mypage";
+	history.pushState({}, '', `/auth/mypage`);
 }
