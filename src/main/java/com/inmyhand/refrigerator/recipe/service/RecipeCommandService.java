@@ -1,6 +1,10 @@
 package com.inmyhand.refrigerator.recipe.service;
 
+import com.inmyhand.refrigerator.files.domain.entity.FileUploadRequest;
+import com.inmyhand.refrigerator.files.domain.entity.FileUploadResponse;
 import com.inmyhand.refrigerator.files.domain.entity.FilesEntity;
+import com.inmyhand.refrigerator.files.repository.FilesRepository;
+import com.inmyhand.refrigerator.files.service.FileUploadService;
 import com.inmyhand.refrigerator.member.domain.entity.MemberEntity;
 import com.inmyhand.refrigerator.member.repository.MemberRepository;
 import com.inmyhand.refrigerator.recipe.domain.dto.RecipeCategoryEntityDto;
@@ -13,12 +17,15 @@ import com.inmyhand.refrigerator.recipe.domain.entity.RecipeIngredientEntity;
 import com.inmyhand.refrigerator.recipe.domain.entity.RecipeStepsEntity;
 import com.inmyhand.refrigerator.recipe.domain.enums.CookingTimeEnum;
 import com.inmyhand.refrigerator.recipe.repository.RecipeInfoRepository;
+import com.inmyhand.refrigerator.recipe.repository.RecipeStepRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.Date;
+import java.util.List;
 
 // 레시피 생성, 수정, 삭제 담당
 @Service
@@ -28,11 +35,19 @@ public class RecipeCommandService {
     @Autowired
     private final RecipeInfoRepository infoRepository;
     @Autowired
+    private final RecipeStepRepository stepRepository;
+    @Autowired
     private final MemberRepository memberRepository;
+    @Autowired
+    private final FilesRepository filesRepository;
+    @Autowired
+    private FileUploadService fileUploadService;
 
     // 레시피 생성
     @Transactional
-    public void createRecipe(RecipeRequestDTO dto) {
+    public void createRecipe(RecipeRequestDTO dto, MultipartFile file,
+                              List<MultipartFile>stepFiles
+    ) {
 
         MemberEntity member = memberRepository.findById(dto.getUserId())
                 .orElseThrow(() -> new RuntimeException("사용자 정보를 찾을 수 없습니다."));
@@ -47,34 +62,6 @@ public class RecipeCommandService {
                 .recipeDepth(1)
                 .memberEntity(member)
                 .build();
-
-        // 파일 추가
-        if (dto.getFiles() != null) {
-            for (String url : dto.getFiles()) {
-                FilesEntity file = new FilesEntity();
-                file.setFileUrl(url);
-                file.setRecipeInfoEntity(recipe);
-                recipe.addFilesEntity(file);
-            }
-        }
-
-        // 단계 추가
-        if (dto.getSteps() != null) {
-            for (RecipeStepsEntityDto stepDto : dto.getSteps()) {
-                RecipeStepsEntity step = new RecipeStepsEntity();
-                step.setStepNumber(stepDto.getStepNumber());
-                step.setStepDescription(stepDto.getStepDescription());
-                step.setRecipeInfoEntity(recipe);
-
-                if (stepDto.getFileUrl() != null && !stepDto.getFileUrl().isBlank()) {
-                    FilesEntity stepFile = new FilesEntity();
-                    stepFile.setFileUrl(stepDto.getFileUrl());
-                    stepFile.setRecipeStepEntity(step);
-                    step.setFilesEntity(stepFile);
-                }
-                recipe.addRecipeStep(step);
-            }
-        }
 
         // 재료 추가
         if (dto.getIngredients() != null) {
@@ -98,8 +85,50 @@ public class RecipeCommandService {
             }
         }
 
-        infoRepository.save(recipe);
+        RecipeInfoEntity savedRecipe = infoRepository.save(recipe);
+
+        // 대표 이미지 저장
+        if (file != null && !file.isEmpty()) {
+            FileUploadRequest uploadReq = new FileUploadRequest(file, null, savedRecipe.getId(), null);
+            FileUploadResponse res = fileUploadService.uploadByType(uploadReq);
+
+            FilesEntity fileEntity = filesRepository.findByFileUrl(res.getFileUrl())
+                    .orElseThrow(() -> new RuntimeException("대표 이미지 저장 실패"));
+
+            fileEntity.setRecipeInfoEntity(savedRecipe); // 연관 설정만
+            savedRecipe.addFilesEntity(fileEntity);
+        }
+
+        // 단계 추가
+        if (dto.getSteps() != null) {
+            for (int i = 0; i < dto.getSteps().size(); i++) {
+                RecipeStepsEntityDto stepDto = dto.getSteps().get(i);
+                RecipeStepsEntity step = new RecipeStepsEntity();
+                step.setStepNumber(stepDto.getStepNumber());
+                step.setStepDescription(stepDto.getStepDescription());
+                step.setRecipeInfoEntity(savedRecipe);
+
+                RecipeStepsEntity savedStep = stepRepository.save(step);
+
+                // 단계 이미지 저장
+                if (stepFiles != null && i < stepFiles.size()) {
+                    MultipartFile stepFile = stepFiles.get(i);
+                    if (!stepFile.isEmpty()) {
+                        FileUploadRequest uploadReq = new FileUploadRequest(stepFile, null, null, savedStep.getId());
+                        FileUploadResponse res = fileUploadService.uploadByType(uploadReq);
+
+                        FilesEntity stepImg = filesRepository.findByFileUrl(res.getFileUrl())
+                                .orElseThrow(() -> new RuntimeException("단계 이미지 저장 실패"));
+
+                        stepImg.setRecipeStepEntity(savedStep);
+                        savedStep.setFilesEntity(stepImg);
+                    }
+                }
+                savedRecipe.addRecipeStep(savedStep);
+            }
+        }
     }
+
     // 레시피 수정
     @Transactional
     public void updateRecipe(Long recipeId, RecipeRequestDTO dto) {

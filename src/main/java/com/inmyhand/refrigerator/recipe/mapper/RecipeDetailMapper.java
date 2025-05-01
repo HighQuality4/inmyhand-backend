@@ -84,12 +84,10 @@ public class RecipeDetailMapper {
         }
         
         // 이미지 URL 매핑
-        if (entity.getFilesEntities() != null) {
-            dto.setFileUrl(entity.getFilesEntities().stream()
-                    .map(FilesEntity::getFileUrl)
-                    .collect(Collectors.toList()));
+        if (entity.getFilesEntities() != null && !entity.getFilesEntities().isEmpty()) {
+            dto.setFileUrl(entity.getFilesEntities().get(0).getFileUrl());
         } else {
-            dto.setFileUrl(Collections.emptyList());
+            dto.setFileUrl(null);
         }
         
         // 재료 매핑

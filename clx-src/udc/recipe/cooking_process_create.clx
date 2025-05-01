@@ -16,6 +16,7 @@
   </head>
   <body std:sid="body-3314d67f" style="top:0px; left:0px; width:500px; height:80px;">
     <cl:fileinput std:sid="f-input-7ce00bd9" id="fileUrl" placeholder="사진 업로드">
+      <cl:listener std:sid="listener-1e1cd6e0" name="value-change" handler="onFileUrlValueChange"/>
       <cl:apppropbind property="value" category="PROPERTY" app-property="img"/>
       <cl:formdata std:sid="f-data-e12970dd" row="0" col="1"/>
     </cl:fileinput>
