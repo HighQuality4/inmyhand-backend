@@ -68,8 +68,6 @@
 				createRecipeCard(resultJson, recipeContainer);
 				
 				const slide = slidify(recipeContainer);
-				
-				slide.autoPlay(true);
 				slide.start();
 
 				recipeContainer.redraw();
