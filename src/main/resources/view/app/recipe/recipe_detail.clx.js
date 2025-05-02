@@ -228,6 +228,8 @@
 				}
 			}
 
+
+			// 유사한 레시피 3개 추출 및 표시 함수
 			function similar() {
 			    var ds = app.lookup("similar");
 			    var rowCount = ds.getRowCount();
@@ -264,7 +266,11 @@
 			                var control = e.control;
 			                var recipeId = control.userData("id");
 			                if (recipeId) {
-			                    window.location.href = "/recipe/" + recipeId;
+			                    // SPA 방식으로 URL 변경
+			//                    history.pushState({}, '', `/recipe/${recipeId}`);
+			                    // 세션 스토리지에 저장
+			//                    sessionStorage.setItem('currentRecipeId', recipeId);
+			    window.location.href = `/recipe/${recipeId}`;
 			                    console.log("이동: /recipe/" + recipeId);
 			                }
 			            });
@@ -285,13 +291,20 @@
 			                var control = e.control;
 			                var recipeId = control.userData("id");
 			                if (recipeId) {
-			                    window.location.href = "/recipe/" + recipeId;
+			                    // SPA 방식으로 URL 변경
+			//                    history.pushState({}, '', `/recipe/${recipeId}`);
+			                   	history.replaceState({}, '', `/recipe/${recipeId}`);
+			                    // 세션 스토리지에 저장
+			//                    sessionStorage.setItem('currentRecipeId', recipeId);
+			                    // 이동
+			                    window.location.href = `/recipe/${recipeId}`;
 			                    console.log("이동: /recipe/" + recipeId);
-			                }
+			                }                       
 			            });
 			        }
 			    }
 			}
+
 
 
 			/*
@@ -301,7 +314,7 @@
 			function onSimilarSmsSubmitSuccess(e){
 				var similarSms = e.control;
 				similar();
-				app.lookup("grb9").redraw();
+				app.getContainer().redraw();
 			}
 
 			/*

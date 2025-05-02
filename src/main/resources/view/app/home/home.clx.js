@@ -109,8 +109,12 @@
 			                var recipeId = control.userData("recipeId");
 			                
 			                if (recipeId) {
-
-			                   window.location.href = "/recipe/" + recipeId;
+			                    // 수정된 부분: history.pushState 사용하여 SPA 방식으로 이동
+			                    history.pushState({}, '', `/recipe/${recipeId}`);
+			                    
+			                    // 필요한 경우 세션 스토리지에 레시피 ID 저장 (선택사항)
+			                    sessionStorage.setItem('currentRecipeId', recipeId);
+			                    
 			                    console.log("이동: /recipe/" + recipeId);
 			                }
 			            });
@@ -123,6 +127,7 @@
 			        }
 			    }
 			}
+
 
 
 
