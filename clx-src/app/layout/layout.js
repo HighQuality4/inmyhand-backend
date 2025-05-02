@@ -20,15 +20,21 @@ const embeddedAppChange = () => {
 	  return false;
 	});
 	
+	
 	if (match != null) {
 		const vsAppId = match.loadApp;
 		const vcEmb = app.lookup("ea1");
 		
+		const oldAppInstance = vcEmb.getEmbeddedAppInstance();
+		if(oldAppInstance) {
+			oldAppInstance.dispose();
+		}
+		
 		cpr.core.App.load(vsAppId, function(loadedApp){ 
-			vcEmb.app = loadedApp; 
+			vcEmb.app = loadedApp;
 		});
 		
-		app.getContainer().redraw();
+		app.getContainer().redraw(); 
 	}
 }
 
@@ -80,9 +86,7 @@ history.onreplacestate = function(e) {
     embeddedAppChange();
 };
 
-
 // 뒤로 가기, 앞으로 가기 감지
 window.addEventListener('popstate', function(event) {
-    console.log("popstate triggered", location.pathname, event.state);
     embeddedAppChange();
 });
