@@ -296,7 +296,6 @@ function _createAssist (poApp) {
 				{"name": "value"}
 			],
 			// FIXME 서브미션 연동 시 row 삭제
-			"rows": []
 		});
 		console.log("mcDataset: ", mcDataset);
 		poApp.register(mcDataset);
