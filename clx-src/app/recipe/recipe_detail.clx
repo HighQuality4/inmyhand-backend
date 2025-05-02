@@ -143,6 +143,7 @@
           <cl:verticallayout std:sid="v-layout-2860ca8b" spacing="10"/>
         </cl:group>
         <cl:group std:sid="group-a88b65ae" id="shareGroup">
+          <cl:listener std:sid="listener-302a7658" name="click" handler="onShareGroupClick"/>
           <cl:formdata std:sid="f-data-7e9e3bb7" row="0" col="2"/>
           <cl:img std:sid="image-0dce6800" id="shareImg" src="../../theme/images/share.svg">
             <cl:verticaldata std:sid="v-data-7d379ebf" width="70px" height="70px"/>
