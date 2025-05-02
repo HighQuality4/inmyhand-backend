@@ -93,7 +93,7 @@
 				}
 				difficultyValue.value = resultJson.difficulty;
 				cookingTimeValue.value = resultJson.cookingTime;
-				caloriesValue.value = resultJson.calories;
+				caloriesValue.value = `${resultJson.calories}kcal`;
 				recipeAuthorImg.src = resultJson.userProfileImageUrl;
 				recipeAuthorName.value = resultJson.userNickname;
 				likeCountValue.value = "좋아요 "+resultJson.likeCount+"개";
@@ -101,18 +101,73 @@
 				
 				// 재료
 				const ingredientGroup = app.lookup("ingredientGroup");
-				for (let i = 0; i < resultJson.ingredients.length; i++) {
-					const ingredients = resultJson.ingredients[i];
-					const ingredientUDC = new udc.recipe.recipe_ingredient();
-					ingredientUDC.ingredientName = ingredients.ingredientName;
-					ingredientUDC.ingredientCount = ingredients.ingredientQuantity + ingredients.ingredientUnit;
-					
-					ingredientGroup.addChild(ingredientUDC, {
-					  width: "100%",
-					  height: "30px",
-					});	
-				}
 				
+				const ingredients = resultJson.ingredients;
+				const allGroupsAreNull = ingredients.every(item => item.ingredientGroup == null);
+				
+				if (allGroupsAreNull) {
+					for (let i = 0; i < ingredients.length; i++) {
+						const ingredients = resultJson.ingredients[i];
+						const ingredientUDC = new udc.recipe.recipe_ingredient();
+						ingredientUDC.ingredientName = ingredients.ingredientName;
+						ingredientUDC.ingredientCount = ingredients.ingredientQuantity + ingredients.ingredientUnit;
+						
+						ingredientGroup.addChild(ingredientUDC, {
+						  width: "100%",
+						  height: "30px",
+						});	
+					}
+				} else {
+					const groupMap = ingredients.reduce((acc, item) => {
+					    const group = item.ingredientGroup || '기타';
+					    if (!acc[group]) acc[group] = [];
+					    acc[group].push(item);
+					    return acc;
+				    }, {});
+				    Object.entries(groupMap).map(([group, items]) => ({
+					    ingredientGroup: group,
+					    ingredients: items
+				    }));
+
+				  const groupKeys = Object.keys(groupMap);
+				  
+				  for (let i = 0; i < groupKeys.length; i++) {
+					  const group = groupKeys[i];
+					  const ingredientsArray = groupMap[group];
+					
+					  const groupName = new cpr.controls.Output("groupName");
+					  groupName.value = `[${group}]`;
+					  groupName.style.css({
+					    "font-weight": "bold"
+					  });
+					
+					  ingredientGroup.addChild(groupName, {
+					    width: "100%",
+					    height: "30px",
+					  });
+					
+					  for (let j = 0; j < ingredientsArray.length; j++) {
+					    const ingredient = ingredientsArray[j];
+					    const ingredientUDC = new udc.recipe.recipe_ingredient();
+					    ingredientUDC.ingredientName = ingredient.ingredientName;
+					    ingredientUDC.ingredientCount = ingredient.ingredientQuantity + ingredient.ingredientUnit;
+					
+					    ingredientGroup.addChild(ingredientUDC, {
+					      width: "100%",
+					      height: "30px",
+					    });
+					  }
+					
+					  if (i < groupKeys.length - 1) {
+					    const gap = new cpr.controls.Output("gap");
+					    ingredientGroup.addChild(gap, {
+					      width: "100%",
+					      height: "30px",
+					    });
+					  }
+					}
+				}
+
 				// 요리 과정
 				const cookingProcessGroup = app.lookup("cookingProcessGroup");
 				for (let i = 0; i < resultJson.steps.length; i++) {
@@ -295,680 +350,725 @@
 			});
 			
 			// Layout
-			var responsiveXYLayout_1 = new cpr.controls.layouts.ResponsiveXYLayout();
-			container.setLayout(responsiveXYLayout_1);
+			var verticalLayout_1 = new cpr.controls.layouts.VerticalLayout();
+			verticalLayout_1.spacing = 20;
+			container.setLayout(verticalLayout_1);
 			
 			// UI Configuration
 			var group_1 = new cpr.controls.Container();
-			var verticalLayout_1 = new cpr.controls.layouts.VerticalLayout();
-			verticalLayout_1.spacing = 20;
-			group_1.setLayout(verticalLayout_1);
+			var formLayout_1 = new cpr.controls.layouts.FormLayout();
+			formLayout_1.scrollable = false;
+			formLayout_1.horizontalSpacing = "0px";
+			formLayout_1.verticalSpacing = "0px";
+			formLayout_1.topMargin = "0px";
+			formLayout_1.rightMargin = "0px";
+			formLayout_1.bottomMargin = "0px";
+			formLayout_1.leftMargin = "0px";
+			formLayout_1.setColumns(["1fr", "1fr"]);
+			formLayout_1.setRows(["30px"]);
+			group_1.setLayout(formLayout_1);
 			(function(container){
-				var group_2 = new cpr.controls.Container();
-				var xYLayout_1 = new cpr.controls.layouts.XYLayout();
-				group_2.setLayout(xYLayout_1);
+				var output_1 = new cpr.controls.Output("recipeTitle");
+				output_1.value = "Output";
+				output_1.style.css({
+					"font-weight" : "bold",
+					"font-size" : "16px"
+				});
+				container.addChild(output_1, {
+					"colIndex": 0,
+					"rowIndex": 0,
+					"horizontalAlign": "left",
+					"verticalAlign": "center"
+				});
+				var group_2 = new cpr.controls.Container("recipeCategorys");
+				var flowLayout_1 = new cpr.controls.layouts.FlowLayout();
+				flowLayout_1.horizontalSpacing = 10;
+				flowLayout_1.verticalSpacing = 0;
+				flowLayout_1.horizontalAlign = "right";
+				group_2.setLayout(flowLayout_1);
 				(function(container){
-					var output_1 = new cpr.controls.Output("recipeTitle");
-					output_1.value = "Output";
-					container.addChild(output_1, {
-						"top": "0px",
-						"bottom": "0px",
-						"left": "0px",
-						"width": "100px"
+					var output_2 = new cpr.controls.Output("typeCategory");
+					output_2.visible = false;
+					output_2.value = "Output";
+					container.addChild(output_2, {
+						"autoSize": "width",
+						"width": "100px",
+						"height": "30px"
 					});
-					var group_3 = new cpr.controls.Container("recipeCategorys");
-					var formLayout_1 = new cpr.controls.layouts.FormLayout();
-					formLayout_1.scrollable = false;
-					formLayout_1.horizontalSpacing = "10px";
-					formLayout_1.verticalSpacing = "0px";
-					formLayout_1.topMargin = "0px";
-					formLayout_1.rightMargin = "0px";
-					formLayout_1.bottomMargin = "0px";
-					formLayout_1.leftMargin = "0px";
-					formLayout_1.setColumns(["100px", "100px", "100px"]);
-					formLayout_1.setColumnAutoSizing(0, true);
-					formLayout_1.setColumnAutoSizing(1, true);
-					formLayout_1.setColumnAutoSizing(2, true);
-					formLayout_1.setRows(["1fr"]);
-					group_3.setLayout(formLayout_1);
-					(function(container){
-						var output_2 = new cpr.controls.Output("typeCategory");
-						output_2.visible = false;
-						output_2.value = "Output";
-						container.addChild(output_2, {
-							"colIndex": 0,
-							"rowIndex": 0
-						});
-						var output_3 = new cpr.controls.Output("situationCategory");
-						output_3.visible = false;
-						output_3.value = "Output";
-						container.addChild(output_3, {
-							"colIndex": 1,
-							"rowIndex": 0
-						});
-						var output_4 = new cpr.controls.Output("methodCategory");
-						output_4.visible = false;
-						output_4.value = "Output";
-						container.addChild(output_4, {
-							"colIndex": 2,
-							"rowIndex": 0
-						});
-					})(group_3);
-					container.addChild(group_3, {
-						"top": "0px",
-						"right": "0px",
-						"bottom": "0px",
-						"width": "320px"
+					var output_3 = new cpr.controls.Output("situationCategory");
+					output_3.visible = false;
+					output_3.value = "Output";
+					container.addChild(output_3, {
+						"autoSize": "width",
+						"width": "100px",
+						"height": "30px"
+					});
+					var output_4 = new cpr.controls.Output("methodCategory");
+					output_4.visible = false;
+					output_4.value = "Output";
+					container.addChild(output_4, {
+						"autoSize": "width",
+						"width": "100px",
+						"height": "30px"
 					});
 				})(group_2);
 				container.addChild(group_2, {
-					"autoSize": "height",
-					"width": "100%",
-					"height": "30px"
+					"colIndex": 1,
+					"rowIndex": 0,
+					"horizontalAlign": "right",
+					"verticalAlign": "center",
+					"width": 350,
+					"height": 30
 				});
-				var image_1 = new cpr.controls.Image("recipeImg");
-				container.addChild(image_1, {
-					"autoSize": "height",
-					"width": "100%",
-					"height": "520px"
-				});
-				var output_5 = new cpr.controls.Output("recipeSummary");
-				output_5.value = "Output";
-				container.addChild(output_5, {
-					"width": "100%",
-					"height": "20px"
-				});
-				var group_4 = new cpr.controls.Container();
-				var xYLayout_2 = new cpr.controls.layouts.XYLayout();
-				group_4.setLayout(xYLayout_2);
+			})(group_1);
+			container.addChild(group_1, {
+				"autoSize": "height",
+				"width": "600px",
+				"height": "30px"
+			});
+			
+			var image_1 = new cpr.controls.Image("recipeImg");
+			image_1.style.css({
+				"border-radius" : "5px"
+			});
+			container.addChild(image_1, {
+				"autoSize": "height",
+				"width": "600px",
+				"height": "520px"
+			});
+			
+			var output_5 = new cpr.controls.Output("recipeSummary");
+			output_5.value = "Output";
+			container.addChild(output_5, {
+				"autoSize": "none",
+				"width": "600px",
+				"height": "20px"
+			});
+			
+			var group_3 = new cpr.controls.Container();
+			var formLayout_2 = new cpr.controls.layouts.FormLayout();
+			formLayout_2.scrollable = false;
+			formLayout_2.horizontalSpacing = "0px";
+			formLayout_2.verticalSpacing = "0px";
+			formLayout_2.topMargin = "0px";
+			formLayout_2.rightMargin = "0px";
+			formLayout_2.bottomMargin = "0px";
+			formLayout_2.leftMargin = "0px";
+			formLayout_2.setColumns(["1fr", "105px"]);
+			formLayout_2.setColumnMinWidth(0, 350);
+			formLayout_2.setRows(["30px"]);
+			group_3.setLayout(formLayout_2);
+			(function(container){
+				var group_4 = new cpr.controls.Container("recipeInfo");
+				var flowLayout_2 = new cpr.controls.layouts.FlowLayout();
+				flowLayout_2.scrollable = false;
+				flowLayout_2.verticalSpacing = 0;
+				flowLayout_2.lineWrap = false;
+				group_4.setLayout(flowLayout_2);
 				(function(container){
-					var group_5 = new cpr.controls.Container("recipeInfo");
-					var formLayout_2 = new cpr.controls.layouts.FormLayout();
-					formLayout_2.scrollable = false;
-					formLayout_2.horizontalSpacing = "10px";
-					formLayout_2.verticalSpacing = "0px";
-					formLayout_2.topMargin = "0px";
-					formLayout_2.rightMargin = "0px";
-					formLayout_2.bottomMargin = "0px";
-					formLayout_2.leftMargin = "0px";
-					formLayout_2.setColumns(["15px", "100px", "20px", "100px", "30px", "100px"]);
-					formLayout_2.setColumnAutoSizing(1, true);
-					formLayout_2.setColumnAutoSizing(3, true);
-					formLayout_2.setColumnAutoSizing(5, true);
-					formLayout_2.setRows(["1fr"]);
-					group_5.setLayout(formLayout_2);
-					(function(container){
-						var output_6 = new cpr.controls.Output("difficultyValue");
-						output_6.value = "Output";
-						container.addChild(output_6, {
-							"colIndex": 1,
-							"rowIndex": 0
-						});
-						var output_7 = new cpr.controls.Output("cookingTimeValue");
-						output_7.value = "Output";
-						container.addChild(output_7, {
-							"colIndex": 3,
-							"rowIndex": 0
-						});
-						var output_8 = new cpr.controls.Output("caloriesValue");
-						output_8.value = "Output";
-						container.addChild(output_8, {
-							"colIndex": 5,
-							"rowIndex": 0
-						});
-						var image_2 = new cpr.controls.Image("difficultyImg");
-						image_2.src = "theme/images/difficullty.svg";
-						container.addChild(image_2, {
-							"colIndex": 0,
-							"rowIndex": 0
-						});
-						var image_3 = new cpr.controls.Image("cookingTimeImg");
-						image_3.src = "theme/images/clock.svg";
-						container.addChild(image_3, {
-							"colIndex": 2,
-							"rowIndex": 0
-						});
-						var image_4 = new cpr.controls.Image("caloriesImg");
-						image_4.src = "theme/images/calories.svg";
-						container.addChild(image_4, {
-							"colIndex": 4,
-							"rowIndex": 0
-						});
-					})(group_5);
-					container.addChild(group_5, {
-						"top": "0px",
-						"bottom": "0px",
-						"left": "0px",
-						"width": "400px"
+					var image_2 = new cpr.controls.Image("difficultyImg");
+					image_2.src = "theme/images/difficullty.svg";
+					container.addChild(image_2, {
+						"width": "15px",
+						"height": "30px"
 					});
-					var group_6 = new cpr.controls.Container("recipeAuthor");
-					var formLayout_3 = new cpr.controls.layouts.FormLayout();
-					formLayout_3.scrollable = false;
-					formLayout_3.horizontalSpacing = "0px";
-					formLayout_3.verticalSpacing = "0px";
-					formLayout_3.topMargin = "0px";
-					formLayout_3.rightMargin = "0px";
-					formLayout_3.bottomMargin = "0px";
-					formLayout_3.leftMargin = "0px";
-					formLayout_3.setColumns(["30px", "100px"]);
-					formLayout_3.setColumnAutoSizing(1, true);
-					formLayout_3.setRows(["1fr"]);
-					group_6.setLayout(formLayout_3);
-					(function(container){
-						var image_5 = new cpr.controls.Image("recipeAuthorImg");
-						container.addChild(image_5, {
-							"colIndex": 0,
-							"rowIndex": 0
-						});
-						var output_9 = new cpr.controls.Output("recipeAuthorName");
-						output_9.value = "Output";
-						container.addChild(output_9, {
-							"colIndex": 1,
-							"rowIndex": 0
-						});
-					})(group_6);
-					container.addChild(group_6, {
-						"top": "0px",
-						"right": "0px",
-						"bottom": "0px",
-						"width": "130px"
+					var output_6 = new cpr.controls.Output("difficultyValue");
+					output_6.value = "Output";
+					container.addChild(output_6, {
+						"autoSize": "width",
+						"width": "100px",
+						"height": "30px"
+					});
+					var image_3 = new cpr.controls.Image("cookingTimeImg");
+					image_3.src = "theme/images/clock.svg";
+					container.addChild(image_3, {
+						"width": "20px",
+						"height": "30px"
+					});
+					var output_7 = new cpr.controls.Output("cookingTimeValue");
+					output_7.value = "Output";
+					container.addChild(output_7, {
+						"autoSize": "width",
+						"width": "100px",
+						"height": "30px"
+					});
+					var image_4 = new cpr.controls.Image("caloriesImg");
+					image_4.src = "theme/images/calories.svg";
+					container.addChild(image_4, {
+						"width": "30px",
+						"height": "30px"
+					});
+					var output_8 = new cpr.controls.Output("caloriesValue");
+					output_8.value = "Output";
+					container.addChild(output_8, {
+						"autoSize": "width",
+						"width": "100px",
+						"height": "30px"
 					});
 				})(group_4);
 				container.addChild(group_4, {
-					"width": "100%",
-					"height": "30px"
+					"colIndex": 0,
+					"rowIndex": 0,
+					"horizontalAlign": "left",
+					"verticalAlign": "center",
+					"width": 400,
+					"height": 30
 				});
-				var group_7 = new cpr.controls.Container("InteractionBtnGroup");
-				var formLayout_4 = new cpr.controls.layouts.FormLayout();
-				formLayout_4.scrollable = false;
-				formLayout_4.horizontalSpacing = "40px";
-				formLayout_4.verticalSpacing = "0px";
-				formLayout_4.topMargin = "0px";
-				formLayout_4.rightMargin = "0px";
-				formLayout_4.bottomMargin = "0px";
-				formLayout_4.leftMargin = "0px";
-				formLayout_4.setColumns(["1fr", "1fr", "1fr", "1fr"]);
-				formLayout_4.setColumnMinWidth(0, 100);
-				formLayout_4.setColumnMinWidth(1, 100);
-				formLayout_4.setColumnMinWidth(2, 100);
-				formLayout_4.setColumnMinWidth(3, 100);
-				formLayout_4.setRows(["1fr"]);
-				formLayout_4.setRowMinHeight(0, 100);
-				group_7.setLayout(formLayout_4);
+				var group_5 = new cpr.controls.Container("recipeAuthor");
+				var flowLayout_3 = new cpr.controls.layouts.FlowLayout();
+				flowLayout_3.scrollable = false;
+				flowLayout_3.verticalSpacing = 0;
+				flowLayout_3.horizontalAlign = "right";
+				flowLayout_3.lineWrap = false;
+				group_5.setLayout(flowLayout_3);
 				(function(container){
-					var group_8 = new cpr.controls.Container("likeCountGroup");
-					var verticalLayout_2 = new cpr.controls.layouts.VerticalLayout();
-					verticalLayout_2.spacing = 10;
-					group_8.setLayout(verticalLayout_2);
-					(function(container){
-						var image_6 = new cpr.controls.Image("likeCountImg");
-						image_6.src = "theme/images/heart_empty.svg";
-						container.addChild(image_6, {
-							"width": "70px",
-							"height": "70px"
-						});
-						var output_10 = new cpr.controls.Output("likeCountValue");
-						output_10.value = "Output";
-						output_10.style.css({
-							"text-align" : "center"
-						});
-						container.addChild(output_10, {
-							"width": "100px",
-							"height": "20px"
-						});
-					})(group_8);
-					container.addChild(group_8, {
-						"colIndex": 0,
-						"rowIndex": 0,
-						"horizontalAlign": "center",
-						"verticalAlign": "fill"
+					var image_5 = new cpr.controls.Image("recipeAuthorImg");
+					container.addChild(image_5, {
+						"autoSize": "none",
+						"width": "30px",
+						"height": "30px"
 					});
-					var group_9 = new cpr.controls.Container("viewCountGroup");
-					var verticalLayout_3 = new cpr.controls.layouts.VerticalLayout();
-					verticalLayout_3.spacing = 10;
-					group_9.setLayout(verticalLayout_3);
-					(function(container){
-						var image_7 = new cpr.controls.Image("viewCountImg");
-						image_7.src = "theme/images/view.svg";
-						container.addChild(image_7, {
-							"width": "70px",
-							"height": "70px"
-						});
-						var output_11 = new cpr.controls.Output("viewCountValue");
-						output_11.value = "Output";
-						output_11.style.css({
-							"text-align" : "center"
-						});
-						container.addChild(output_11, {
-							"width": "100px",
-							"height": "20px"
-						});
-					})(group_9);
-					container.addChild(group_9, {
-						"colIndex": 1,
-						"rowIndex": 0
+					var output_9 = new cpr.controls.Output("recipeAuthorName");
+					output_9.value = "Output";
+					container.addChild(output_9, {
+						"autoSize": "width",
+						"width": "70px",
+						"height": "30px"
 					});
-					var group_10 = new cpr.controls.Container("applicationGroup");
-					var verticalLayout_4 = new cpr.controls.layouts.VerticalLayout();
-					verticalLayout_4.spacing = 10;
-					group_10.setLayout(verticalLayout_4);
-					(function(container){
-						var image_8 = new cpr.controls.Image("applicationImg");
-						image_8.src = "theme/images/write.svg";
-						container.addChild(image_8, {
-							"width": "70px",
-							"height": "70px"
-						});
-						var output_12 = new cpr.controls.Output("applicationValue");
-						output_12.value = "레시피 응용하기";
-						output_12.style.css({
-							"text-align" : "center"
-						});
-						container.addChild(output_12, {
-							"width": "100px",
-							"height": "20px"
-						});
-					})(group_10);
-					container.addChild(group_10, {
-						"colIndex": 3,
-						"rowIndex": 0
+				})(group_5);
+				container.addChild(group_5, {
+					"colIndex": 1,
+					"rowIndex": 0,
+					"horizontalAlign": "right",
+					"verticalAlign": "center",
+					"width": 105,
+					"height": 30
+				});
+			})(group_3);
+			container.addChild(group_3, {
+				"autoSize": "height",
+				"width": "600px",
+				"height": "30px"
+			});
+			
+			var group_6 = new cpr.controls.Container("InteractionBtnGroup");
+			var formLayout_3 = new cpr.controls.layouts.FormLayout();
+			formLayout_3.scrollable = false;
+			formLayout_3.horizontalSpacing = "30px";
+			formLayout_3.verticalSpacing = "0px";
+			formLayout_3.topMargin = "0px";
+			formLayout_3.rightMargin = "0px";
+			formLayout_3.bottomMargin = "0px";
+			formLayout_3.leftMargin = "0px";
+			formLayout_3.setColumns(["1fr", "1fr", "1fr", "1fr"]);
+			formLayout_3.setColumnMinWidth(0, 100);
+			formLayout_3.setColumnMinWidth(1, 100);
+			formLayout_3.setColumnMinWidth(2, 100);
+			formLayout_3.setColumnMinWidth(3, 100);
+			formLayout_3.setRows(["1fr"]);
+			formLayout_3.setRowMinHeight(0, 100);
+			group_6.setLayout(formLayout_3);
+			(function(container){
+				var group_7 = new cpr.controls.Container("likeCountGroup");
+				group_7.style.css({
+					"background-color" : "#FBDBCF",
+					"border-radius" : "5px"
+				});
+				var verticalLayout_2 = new cpr.controls.layouts.VerticalLayout();
+				verticalLayout_2.spacing = 10;
+				verticalLayout_2.leftMargin = 5;
+				verticalLayout_2.rightMargin = 5;
+				verticalLayout_2.topMargin = 5;
+				verticalLayout_2.bottomMargin = 5;
+				group_7.setLayout(verticalLayout_2);
+				(function(container){
+					var image_6 = new cpr.controls.Image("likeCountImg");
+					image_6.src = "theme/images/heart_empty.svg";
+					container.addChild(image_6, {
+						"width": "70px",
+						"height": "70px"
 					});
-					var group_11 = new cpr.controls.Container("shareGroup");
-					var verticalLayout_5 = new cpr.controls.layouts.VerticalLayout();
-					verticalLayout_5.spacing = 10;
-					group_11.setLayout(verticalLayout_5);
-					(function(container){
-						var image_9 = new cpr.controls.Image("shareImg");
-						image_9.src = "theme/images/share.svg";
-						container.addChild(image_9, {
-							"width": "70px",
-							"height": "70px"
-						});
-						var output_13 = new cpr.controls.Output("shareValue");
-						output_13.value = "공유하기";
-						output_13.style.css({
-							"text-align" : "center"
-						});
-						container.addChild(output_13, {
-							"width": "100px",
-							"height": "20px"
-						});
-					})(group_11);
-					if(typeof onShareGroupClick == "function") {
-						group_11.addEventListener("click", onShareGroupClick);
-					}
-					container.addChild(group_11, {
-						"colIndex": 2,
-						"rowIndex": 0
+					var output_10 = new cpr.controls.Output("likeCountValue");
+					output_10.value = "Output";
+					output_10.style.css({
+						"text-align" : "center"
+					});
+					container.addChild(output_10, {
+						"width": "100px",
+						"height": "20px"
 					});
 				})(group_7);
 				container.addChild(group_7, {
-					"width": "400px",
-					"height": "100px"
+					"colIndex": 0,
+					"rowIndex": 0,
+					"horizontalAlign": "center",
+					"verticalAlign": "fill",
+					"height": 25
 				});
-				var group_12 = new cpr.controls.Container();
-				group_12.style.css({
-					"border-radius" : "5px",
-					"background-color" : "#FBF3EB"
+				var group_8 = new cpr.controls.Container("viewCountGroup");
+				group_8.style.css({
+					"background-color" : "#EAF1F3",
+					"border-radius" : "5px"
 				});
-				var xYLayout_3 = new cpr.controls.layouts.XYLayout();
-				group_12.setLayout(xYLayout_3);
+				var verticalLayout_3 = new cpr.controls.layouts.VerticalLayout();
+				verticalLayout_3.spacing = 10;
+				verticalLayout_3.leftMargin = 5;
+				verticalLayout_3.rightMargin = 5;
+				verticalLayout_3.topMargin = 5;
+				verticalLayout_3.bottomMargin = 5;
+				group_8.setLayout(verticalLayout_3);
 				(function(container){
-					var group_13 = new cpr.controls.Container();
-					var verticalLayout_6 = new cpr.controls.layouts.VerticalLayout();
-					group_13.setLayout(verticalLayout_6);
-					(function(container){
-						var userDefinedControl_1 = new udc.recipe.group_subtitle();
-						userDefinedControl_1.value = "재료";
-						container.addChild(userDefinedControl_1, {
-							"width": "580px",
-							"height": "20px"
-						});
-						var group_14 = new cpr.controls.Container("ingredientGroup");
-						var flowLayout_1 = new cpr.controls.layouts.FlowLayout();
-						group_14.setLayout(flowLayout_1);
-						container.addChild(group_14, {
-							"autoSize": "height",
-							"width": "500px",
-							"height": "200px"
-						});
-					})(group_13);
+					var image_7 = new cpr.controls.Image("viewCountImg");
+					image_7.src = "theme/images/view.svg";
+					container.addChild(image_7, {
+						"width": "70px",
+						"height": "70px"
+					});
+					var output_11 = new cpr.controls.Output("viewCountValue");
+					output_11.value = "Output";
+					output_11.style.css({
+						"text-align" : "center"
+					});
+					container.addChild(output_11, {
+						"width": "100px",
+						"height": "20px"
+					});
+				})(group_8);
+				container.addChild(group_8, {
+					"colIndex": 1,
+					"rowIndex": 0,
+					"height": 25
+				});
+				var group_9 = new cpr.controls.Container("applicationGroup");
+				group_9.style.css({
+					"background-color" : "#EFE4D3",
+					"border-radius" : "5px"
+				});
+				var verticalLayout_4 = new cpr.controls.layouts.VerticalLayout();
+				verticalLayout_4.spacing = 10;
+				verticalLayout_4.leftMargin = 5;
+				verticalLayout_4.rightMargin = 5;
+				verticalLayout_4.topMargin = 5;
+				verticalLayout_4.bottomMargin = 5;
+				group_9.setLayout(verticalLayout_4);
+				(function(container){
+					var image_8 = new cpr.controls.Image("applicationImg");
+					image_8.src = "theme/images/write.svg";
+					container.addChild(image_8, {
+						"width": "70px",
+						"height": "70px"
+					});
+					var output_12 = new cpr.controls.Output("applicationValue");
+					output_12.value = "레시피 응용하기";
+					output_12.style.css({
+						"text-align" : "center"
+					});
+					container.addChild(output_12, {
+						"width": "100px",
+						"height": "20px"
+					});
+				})(group_9);
+				container.addChild(group_9, {
+					"colIndex": 3,
+					"rowIndex": 0,
+					"height": 25
+				});
+				var group_10 = new cpr.controls.Container("shareGroup");
+				group_10.style.css({
+					"background-color" : "#E5E6C7",
+					"border-radius" : "5px"
+				});
+				var verticalLayout_5 = new cpr.controls.layouts.VerticalLayout();
+				verticalLayout_5.spacing = 10;
+				verticalLayout_5.leftMargin = 5;
+				verticalLayout_5.rightMargin = 5;
+				verticalLayout_5.topMargin = 5;
+				verticalLayout_5.bottomMargin = 5;
+				group_10.setLayout(verticalLayout_5);
+				(function(container){
+					var image_9 = new cpr.controls.Image("shareImg");
+					image_9.src = "theme/images/share.svg";
+					container.addChild(image_9, {
+						"width": "70px",
+						"height": "70px"
+					});
+					var output_13 = new cpr.controls.Output("shareValue");
+					output_13.value = "공유하기";
+					output_13.style.css({
+						"text-align" : "center"
+					});
+					container.addChild(output_13, {
+						"width": "100px",
+						"height": "20px"
+					});
+				})(group_10);
+				if(typeof onShareGroupClick == "function") {
+					group_10.addEventListener("click", onShareGroupClick);
+				}
+				container.addChild(group_10, {
+					"colIndex": 2,
+					"rowIndex": 0,
+					"height": 25
+				});
+			})(group_6);
+			container.addChild(group_6, {
+				"autoSize": "height",
+				"width": "600px",
+				"height": "100px"
+			});
+			
+			var group_11 = new cpr.controls.Container();
+			group_11.style.css({
+				"border-radius" : "5px",
+				"background-color" : "#FBF3EB"
+			});
+			var verticalLayout_6 = new cpr.controls.layouts.VerticalLayout();
+			verticalLayout_6.leftMargin = 10;
+			verticalLayout_6.rightMargin = 10;
+			verticalLayout_6.topMargin = 20;
+			verticalLayout_6.bottomMargin = 20;
+			group_11.setLayout(verticalLayout_6);
+			(function(container){
+				var group_12 = new cpr.controls.Container();
+				var verticalLayout_7 = new cpr.controls.layouts.VerticalLayout();
+				group_12.setLayout(verticalLayout_7);
+				(function(container){
+					var userDefinedControl_1 = new udc.recipe.group_subtitle();
+					userDefinedControl_1.value = "재료";
+					container.addChild(userDefinedControl_1, {
+						"width": "580px",
+						"height": "20px"
+					});
+					var group_13 = new cpr.controls.Container("ingredientGroup");
+					var verticalLayout_8 = new cpr.controls.layouts.VerticalLayout();
+					group_13.setLayout(verticalLayout_8);
 					container.addChild(group_13, {
-						"top": "20px",
-						"right": "10px",
-						"bottom": "20px",
-						"left": "10px"
+						"autoSize": "height",
+						"width": "100%",
+						"height": "200px"
 					});
 				})(group_12);
 				container.addChild(group_12, {
-					"width": "400px",
-					"height": "200px"
+					"autoSize": "height",
+					"width": "580px",
+					"height": "160px"
 				});
+			})(group_11);
+			container.addChild(group_11, {
+				"autoSize": "height",
+				"width": "600px",
+				"height": "200px"
+			});
+			
+			var group_14 = new cpr.controls.Container();
+			group_14.style.css({
+				"background-color" : "#E5E6C7",
+				"border-radius" : "5px"
+			});
+			var verticalLayout_9 = new cpr.controls.layouts.VerticalLayout();
+			verticalLayout_9.leftMargin = 10;
+			verticalLayout_9.rightMargin = 10;
+			verticalLayout_9.topMargin = 20;
+			verticalLayout_9.bottomMargin = 20;
+			group_14.setLayout(verticalLayout_9);
+			(function(container){
 				var group_15 = new cpr.controls.Container();
-				group_15.style.css({
-					"background-color" : "#E5E6C7"
-				});
-				var verticalLayout_7 = new cpr.controls.layouts.VerticalLayout();
-				group_15.setLayout(verticalLayout_7);
+				var verticalLayout_10 = new cpr.controls.layouts.VerticalLayout();
+				group_15.setLayout(verticalLayout_10);
 				(function(container){
-					var group_16 = new cpr.controls.Container();
-					var verticalLayout_8 = new cpr.controls.layouts.VerticalLayout();
-					verticalLayout_8.leftMargin = 10;
-					verticalLayout_8.rightMargin = 10;
-					verticalLayout_8.topMargin = 20;
-					verticalLayout_8.bottomMargin = 20;
-					group_16.setLayout(verticalLayout_8);
-					(function(container){
-						var userDefinedControl_2 = new udc.recipe.group_subtitle();
-						userDefinedControl_2.value = "요리 과정";
-						container.addChild(userDefinedControl_2, {
-							"width": "580px",
-							"height": "20px"
-						});
-						var group_17 = new cpr.controls.Container("cookingProcessGroup");
-						var verticalLayout_9 = new cpr.controls.layouts.VerticalLayout();
-						group_17.setLayout(verticalLayout_9);
-						container.addChild(group_17, {
-							"autoSize": "height",
-							"width": "100%",
-							"height": "100px"
-						});
-					})(group_16);
+					var userDefinedControl_2 = new udc.recipe.group_subtitle();
+					userDefinedControl_2.value = "요리 과정";
+					container.addChild(userDefinedControl_2, {
+						"width": "580px",
+						"height": "20px"
+					});
+					var group_16 = new cpr.controls.Container("cookingProcessGroup");
+					var verticalLayout_11 = new cpr.controls.layouts.VerticalLayout();
+					group_16.setLayout(verticalLayout_11);
 					container.addChild(group_16, {
 						"autoSize": "height",
-						"width": "580px",
-						"height": "180px"
+						"width": "100%",
+						"height": "100px"
 					});
 				})(group_15);
 				container.addChild(group_15, {
 					"autoSize": "height",
-					"width": "400px",
-					"height": "200px"
+					"width": "580px",
+					"height": "180px"
 				});
-				var group_18 = new cpr.controls.Container();
-				var formLayout_5 = new cpr.controls.layouts.FormLayout();
-				formLayout_5.scrollable = false;
-				formLayout_5.horizontalSpacing = "0px";
-				formLayout_5.verticalSpacing = "0px";
-				formLayout_5.topMargin = "0px";
-				formLayout_5.rightMargin = "0px";
-				formLayout_5.bottomMargin = "0px";
-				formLayout_5.leftMargin = "0px";
-				formLayout_5.setColumns(["50px", "100px", "50px", "100px", "1fr"]);
-				formLayout_5.setRows(["25px"]);
-				group_18.setLayout(formLayout_5);
-				(function(container){
-					var output_14 = new cpr.controls.Output();
-					output_14.value = "등록일";
-					container.addChild(output_14, {
-						"colIndex": 0,
-						"rowIndex": 0,
-						"verticalAlign": "fill"
-					});
-					var output_15 = new cpr.controls.Output("updatedAtLabel");
-					output_15.visible = false;
-					output_15.value = "수정일";
-					container.addChild(output_15, {
-						"colIndex": 2,
-						"rowIndex": 0,
-						"verticalAlign": "fill"
-					});
-					var output_16 = new cpr.controls.Output("createdAt");
-					output_16.value = "Output";
-					container.addChild(output_16, {
-						"colIndex": 1,
-						"rowIndex": 0
-					});
-					var output_17 = new cpr.controls.Output("updatedAt");
-					output_17.visible = false;
-					output_17.value = "Output";
-					container.addChild(output_17, {
-						"colIndex": 3,
-						"rowIndex": 0
-					});
-				})(group_18);
-				container.addChild(group_18, {
-					"width": "400px",
-					"height": "25px"
+			})(group_14);
+			container.addChild(group_14, {
+				"autoSize": "height",
+				"width": "600px",
+				"height": "200px"
+			});
+			
+			var group_17 = new cpr.controls.Container();
+			var formLayout_4 = new cpr.controls.layouts.FormLayout();
+			formLayout_4.scrollable = false;
+			formLayout_4.horizontalSpacing = "0px";
+			formLayout_4.verticalSpacing = "0px";
+			formLayout_4.topMargin = "0px";
+			formLayout_4.rightMargin = "0px";
+			formLayout_4.bottomMargin = "0px";
+			formLayout_4.leftMargin = "0px";
+			formLayout_4.setColumns(["50px", "100px", "50px", "100px", "1fr"]);
+			formLayout_4.setRows(["25px"]);
+			group_17.setLayout(formLayout_4);
+			(function(container){
+				var output_14 = new cpr.controls.Output();
+				output_14.value = "등록일";
+				container.addChild(output_14, {
+					"colIndex": 0,
+					"rowIndex": 0,
+					"verticalAlign": "fill"
 				});
+				var output_15 = new cpr.controls.Output("updatedAtLabel");
+				output_15.visible = false;
+				output_15.value = "수정일";
+				container.addChild(output_15, {
+					"colIndex": 2,
+					"rowIndex": 0,
+					"verticalAlign": "fill"
+				});
+				var output_16 = new cpr.controls.Output("createdAt");
+				output_16.value = "Output";
+				container.addChild(output_16, {
+					"colIndex": 1,
+					"rowIndex": 0
+				});
+				var output_17 = new cpr.controls.Output("updatedAt");
+				output_17.visible = false;
+				output_17.value = "Output";
+				container.addChild(output_17, {
+					"colIndex": 3,
+					"rowIndex": 0
+				});
+			})(group_17);
+			container.addChild(group_17, {
+				"autoSize": "none",
+				"width": "600px",
+				"height": "25px"
+			});
+			
+			var group_18 = new cpr.controls.Container();
+			group_18.visible = false;
+			group_18.style.css({
+				"background-color" : "#fbdbcf",
+				"border-radius" : "5px",
+				"background-image" : "none"
+			});
+			var xYLayout_1 = new cpr.controls.layouts.XYLayout();
+			group_18.setLayout(xYLayout_1);
+			(function(container){
 				var group_19 = new cpr.controls.Container();
-				group_19.visible = false;
-				group_19.style.css({
-					"background-color" : "#fbdbcf",
-					"background-image" : "none"
-				});
-				var xYLayout_4 = new cpr.controls.layouts.XYLayout();
-				group_19.setLayout(xYLayout_4);
+				var verticalLayout_12 = new cpr.controls.layouts.VerticalLayout();
+				group_19.setLayout(verticalLayout_12);
 				(function(container){
-					var group_20 = new cpr.controls.Container();
-					var verticalLayout_10 = new cpr.controls.layouts.VerticalLayout();
-					group_20.setLayout(verticalLayout_10);
-					(function(container){
-						var userDefinedControl_3 = new udc.recipe.group_subtitle();
-						userDefinedControl_3.value = "영양소 분석결과";
-						container.addChild(userDefinedControl_3, {
-							"width": "580px",
-							"height": "20px"
-						});
-					})(group_20);
-					container.addChild(group_20, {
-						"top": "10px",
-						"right": "10px",
-						"bottom": "30px",
-						"left": "10px"
+					var userDefinedControl_3 = new udc.recipe.group_subtitle();
+					userDefinedControl_3.value = "영양소 분석결과";
+					container.addChild(userDefinedControl_3, {
+						"width": "580px",
+						"height": "20px"
 					});
 				})(group_19);
 				container.addChild(group_19, {
-					"autoSize": "height",
-					"width": "600px",
-					"height": "200px"
+					"top": "10px",
+					"right": "10px",
+					"bottom": "30px",
+					"left": "10px"
 				});
+			})(group_18);
+			container.addChild(group_18, {
+				"autoSize": "height",
+				"width": "600px",
+				"height": "200px"
+			});
+			
+			var group_20 = new cpr.controls.Container();
+			group_20.style.css({
+				"background-color" : "#eaf1f3",
+				"border-radius" : "5px",
+				"background-image" : "none"
+			});
+			var xYLayout_2 = new cpr.controls.layouts.XYLayout();
+			group_20.setLayout(xYLayout_2);
+			(function(container){
 				var group_21 = new cpr.controls.Container();
-				group_21.style.css({
-					"background-color" : "#eaf1f3",
-					"background-image" : "none"
-				});
-				var xYLayout_5 = new cpr.controls.layouts.XYLayout();
-				group_21.setLayout(xYLayout_5);
+				var verticalLayout_13 = new cpr.controls.layouts.VerticalLayout();
+				group_21.setLayout(verticalLayout_13);
 				(function(container){
-					var group_22 = new cpr.controls.Container();
-					var verticalLayout_11 = new cpr.controls.layouts.VerticalLayout();
-					group_22.setLayout(verticalLayout_11);
-					(function(container){
-						var userDefinedControl_4 = new udc.recipe.group_subtitle();
-						userDefinedControl_4.value = "댓글";
-						container.addChild(userDefinedControl_4, {
-							"width": "580px",
-							"height": "20px"
-						});
-						var group_23 = new cpr.controls.Container("commentList");
-						var verticalLayout_12 = new cpr.controls.layouts.VerticalLayout();
-						group_23.setLayout(verticalLayout_12);
-						container.addChild(group_23, {
-							"autoSize": "height",
-							"width": "400px",
-							"height": "10px"
-						});
-						var group_24 = new cpr.controls.Container();
-						var formLayout_6 = new cpr.controls.layouts.FormLayout();
-						formLayout_6.scrollable = false;
-						formLayout_6.horizontalSpacing = "0px";
-						formLayout_6.verticalSpacing = "0px";
-						formLayout_6.topMargin = "0px";
-						formLayout_6.rightMargin = "0px";
-						formLayout_6.bottomMargin = "0px";
-						formLayout_6.leftMargin = "0px";
-						formLayout_6.setColumns(["1fr", "10px", "50px"]);
-						formLayout_6.setRows(["30px"]);
-						group_24.setLayout(formLayout_6);
-						(function(container){
-							var inputBox_1 = new cpr.controls.InputBox("ipb1");
-							inputBox_1.placeholder = "레시피에 대한 의견을 남겨보세요!";
-							container.addChild(inputBox_1, {
-								"colIndex": 0,
-								"rowIndex": 0
-							});
-							var button_1 = new cpr.controls.Button();
-							button_1.value = "등록";
-							container.addChild(button_1, {
-								"colIndex": 2,
-								"rowIndex": 0
-							});
-						})(group_24);
-						container.addChild(group_24, {
-							"width": "400px",
-							"height": "30px"
-						});
-					})(group_22);
+					var userDefinedControl_4 = new udc.recipe.group_subtitle();
+					userDefinedControl_4.value = "댓글";
+					container.addChild(userDefinedControl_4, {
+						"width": "580px",
+						"height": "20px"
+					});
+					var group_22 = new cpr.controls.Container("commentList");
+					var verticalLayout_14 = new cpr.controls.layouts.VerticalLayout();
+					group_22.setLayout(verticalLayout_14);
 					container.addChild(group_22, {
-						"top": "10px",
-						"right": "10px",
-						"bottom": "30px",
-						"left": "10px"
+						"autoSize": "height",
+						"width": "400px",
+						"height": "10px"
+					});
+					var group_23 = new cpr.controls.Container();
+					var formLayout_5 = new cpr.controls.layouts.FormLayout();
+					formLayout_5.scrollable = false;
+					formLayout_5.horizontalSpacing = "0px";
+					formLayout_5.verticalSpacing = "0px";
+					formLayout_5.topMargin = "0px";
+					formLayout_5.rightMargin = "0px";
+					formLayout_5.bottomMargin = "0px";
+					formLayout_5.leftMargin = "0px";
+					formLayout_5.setColumns(["1fr", "10px", "50px"]);
+					formLayout_5.setRows(["30px"]);
+					group_23.setLayout(formLayout_5);
+					(function(container){
+						var inputBox_1 = new cpr.controls.InputBox("ipb1");
+						inputBox_1.placeholder = "레시피에 대한 의견을 남겨보세요!";
+						container.addChild(inputBox_1, {
+							"colIndex": 0,
+							"rowIndex": 0
+						});
+						var button_1 = new cpr.controls.Button();
+						button_1.value = "등록";
+						container.addChild(button_1, {
+							"colIndex": 2,
+							"rowIndex": 0
+						});
+					})(group_23);
+					container.addChild(group_23, {
+						"width": "400px",
+						"height": "30px"
 					});
 				})(group_21);
 				container.addChild(group_21, {
-					"autoSize": "height",
-					"width": "600px",
-					"height": "200px"
+					"top": "10px",
+					"right": "10px",
+					"bottom": "30px",
+					"left": "10px"
 				});
-				var group_25 = new cpr.controls.Container("grb9");
-				var xYLayout_6 = new cpr.controls.layouts.XYLayout();
-				group_25.setLayout(xYLayout_6);
+			})(group_20);
+			container.addChild(group_20, {
+				"autoSize": "height",
+				"width": "600px",
+				"height": "200px"
+			});
+			
+			var group_24 = new cpr.controls.Container("grb9");
+			var xYLayout_3 = new cpr.controls.layouts.XYLayout();
+			group_24.setLayout(xYLayout_3);
+			(function(container){
+				var group_25 = new cpr.controls.Container();
+				group_25.style.css({
+					"background-color" : "#e9edf2",
+					"border-radius" : "5px",
+					"background-image" : "none"
+				});
+				var xYLayout_4 = new cpr.controls.layouts.XYLayout();
+				group_25.setLayout(xYLayout_4);
 				(function(container){
-					var group_26 = new cpr.controls.Container();
-					group_26.style.css({
-						"background-color" : "#e9edf2",
-						"background-image" : "none"
+					var output_18 = new cpr.controls.Output("out1");
+					output_18.value = "Output";
+					output_18.style.css({
+						"border-radius" : "5px",
+						"font-weight" : "bold",
+						"font-size" : "16px",
+						"text-align" : "center"
 					});
-					var xYLayout_7 = new cpr.controls.layouts.XYLayout();
-					group_26.setLayout(xYLayout_7);
-					(function(container){
-						var output_18 = new cpr.controls.Output("out1");
-						output_18.value = "Output";
-						output_18.style.css({
-							"border-radius" : "5px",
-							"font-weight" : "bold",
-							"font-size" : "16px",
-							"text-align" : "center"
-						});
-						container.addChild(output_18, {
-							"top": "60px",
-							"left": "20px",
-							"width": "120px",
-							"height": "120px"
-						});
-						var output_19 = new cpr.controls.Output("out2");
-						output_19.value = "Output";
-						output_19.style.css({
-							"border-radius" : "5px",
-							"font-weight" : "bold",
-							"font-size" : "16px",
-							"text-align" : "center"
-						});
-						container.addChild(output_19, {
-							"top": "60px",
-							"left": "190px",
-							"width": "120px",
-							"height": "120px"
-						});
-						var output_20 = new cpr.controls.Output("out3");
-						output_20.value = "Output";
-						output_20.style.css({
-							"border-radius" : "5px",
-							"font-weight" : "bold",
-							"font-size" : "16px",
-							"text-align" : "center"
-						});
-						container.addChild(output_20, {
-							"top": "60px",
-							"right": "20px",
-							"width": "120px",
-							"height": "120px"
-						});
-						var output_21 = new cpr.controls.Output();
-						output_21.value = "이 레시피를 좋아하신다면...";
-						output_21.style.css({
-							"color" : "#856C66",
-							"font-weight" : "bold",
-							"font-size" : "20px"
-						});
-						container.addChild(output_21, {
-							"top": "20px",
-							"right": "20px",
-							"left": "20px",
-							"height": "30px"
-						});
-						var output_22 = new cpr.controls.Output("outext1");
-						output_22.value = "Output";
-						output_22.style.css({
-							"text-align" : "center"
-						});
-						container.addChild(output_22, {
-							"top": "179px",
-							"left": "20px",
-							"width": "120px",
-							"height": "20px"
-						});
-						var output_23 = new cpr.controls.Output("outext2");
-						output_23.value = "Output";
-						output_23.style.css({
-							"text-align" : "center"
-						});
-						container.addChild(output_23, {
-							"top": "179px",
-							"left": "190px",
-							"width": "120px",
-							"height": "20px"
-						});
-						var output_24 = new cpr.controls.Output("outext3");
-						output_24.value = "Output";
-						output_24.style.css({
-							"text-align" : "center"
-						});
-						container.addChild(output_24, {
-							"top": "179px",
-							"right": "20px",
-							"width": "120px",
-							"height": "20px"
-						});
-					})(group_26);
-					container.addChild(group_26, {
-						"top": "10px",
-						"right": "0px",
-						"bottom": "10px",
-						"left": "0px"
+					container.addChild(output_18, {
+						"top": "60px",
+						"left": "20px",
+						"width": "120px",
+						"height": "120px"
+					});
+					var output_19 = new cpr.controls.Output("out2");
+					output_19.value = "Output";
+					output_19.style.css({
+						"border-radius" : "5px",
+						"font-weight" : "bold",
+						"font-size" : "16px",
+						"text-align" : "center"
+					});
+					container.addChild(output_19, {
+						"top": "60px",
+						"left": "190px",
+						"width": "120px",
+						"height": "120px"
+					});
+					var output_20 = new cpr.controls.Output("out3");
+					output_20.value = "Output";
+					output_20.style.css({
+						"border-radius" : "5px",
+						"font-weight" : "bold",
+						"font-size" : "16px",
+						"text-align" : "center"
+					});
+					container.addChild(output_20, {
+						"top": "60px",
+						"right": "20px",
+						"width": "120px",
+						"height": "120px"
+					});
+					var output_21 = new cpr.controls.Output();
+					output_21.value = "이 레시피를 좋아하신다면...";
+					output_21.style.css({
+						"color" : "#856C66",
+						"font-weight" : "bold",
+						"font-size" : "20px"
+					});
+					container.addChild(output_21, {
+						"top": "20px",
+						"right": "20px",
+						"left": "20px",
+						"height": "30px"
+					});
+					var output_22 = new cpr.controls.Output("outext1");
+					output_22.value = "Output";
+					output_22.style.css({
+						"text-align" : "center"
+					});
+					container.addChild(output_22, {
+						"top": "179px",
+						"left": "20px",
+						"width": "120px",
+						"height": "20px"
+					});
+					var output_23 = new cpr.controls.Output("outext2");
+					output_23.value = "Output";
+					output_23.style.css({
+						"text-align" : "center"
+					});
+					container.addChild(output_23, {
+						"top": "179px",
+						"left": "190px",
+						"width": "120px",
+						"height": "20px"
+					});
+					var output_24 = new cpr.controls.Output("outext3");
+					output_24.value = "Output";
+					output_24.style.css({
+						"text-align" : "center"
+					});
+					container.addChild(output_24, {
+						"top": "179px",
+						"right": "20px",
+						"width": "120px",
+						"height": "20px"
 					});
 				})(group_25);
 				container.addChild(group_25, {
-					"width": "400px",
-					"height": "240px"
+					"top": "10px",
+					"right": "0px",
+					"bottom": "10px",
+					"left": "0px"
 				});
-			})(group_1);
-			container.addChild(group_1, {
-				positions: [
-					{
-						"media": "all and (min-width: 1024px)",
-						"top": "0px",
-						"right": "0px",
-						"left": "0px",
-						"height": "2000px"
-					}, 
-					{
-						"media": "all and (min-width: 500px) and (max-width: 1023.984px)",
-						"top": "0px",
-						"right": "0px",
-						"left": "0px",
-						"height": "2000px"
-					}, 
-					{
-						"media": "all and (max-width: 499.984px)",
-						"top": "0px",
-						"right": "0px",
-						"left": "0px",
-						"height": "2000px"
-					}
-				]
+			})(group_24);
+			container.addChild(group_24, {
+				"autoSize": "none",
+				"width": "600px",
+				"height": "240px"
 			});
 			if(typeof onBodyLoad == "function"){
 				app.addEventListener("load", onBodyLoad);

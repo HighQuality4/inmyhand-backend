@@ -80,7 +80,7 @@ function onRecipeDetailSmsSubmitSuccess(e){
 	}
 	difficultyValue.value = resultJson.difficulty;
 	cookingTimeValue.value = resultJson.cookingTime;
-	caloriesValue.value = resultJson.calories;
+	caloriesValue.value = `${resultJson.calories}kcal`;
 	recipeAuthorImg.src = resultJson.userProfileImageUrl;
 	recipeAuthorName.value = resultJson.userNickname;
 	likeCountValue.value = "좋아요 "+resultJson.likeCount+"개";
@@ -88,18 +88,73 @@ function onRecipeDetailSmsSubmitSuccess(e){
 	
 	// 재료
 	const ingredientGroup = app.lookup("ingredientGroup");
-	for (let i = 0; i < resultJson.ingredients.length; i++) {
-		const ingredients = resultJson.ingredients[i];
-		const ingredientUDC = new udc.recipe.recipe_ingredient();
-		ingredientUDC.ingredientName = ingredients.ingredientName;
-		ingredientUDC.ingredientCount = ingredients.ingredientQuantity + ingredients.ingredientUnit;
-		
-		ingredientGroup.addChild(ingredientUDC, {
-		  width: "100%",
-		  height: "30px",
-		});	
-	}
 	
+	const ingredients = resultJson.ingredients;
+	const allGroupsAreNull = ingredients.every(item => item.ingredientGroup == null);
+	
+	if (allGroupsAreNull) {
+		for (let i = 0; i < ingredients.length; i++) {
+			const ingredients = resultJson.ingredients[i];
+			const ingredientUDC = new udc.recipe.recipe_ingredient();
+			ingredientUDC.ingredientName = ingredients.ingredientName;
+			ingredientUDC.ingredientCount = ingredients.ingredientQuantity + ingredients.ingredientUnit;
+			
+			ingredientGroup.addChild(ingredientUDC, {
+			  width: "100%",
+			  height: "30px",
+			});	
+		}
+	} else {
+		const groupMap = ingredients.reduce((acc, item) => {
+		    const group = item.ingredientGroup || '기타';
+		    if (!acc[group]) acc[group] = [];
+		    acc[group].push(item);
+		    return acc;
+	    }, {});
+	    Object.entries(groupMap).map(([group, items]) => ({
+		    ingredientGroup: group,
+		    ingredients: items
+	    }));
+
+	  const groupKeys = Object.keys(groupMap);
+	  
+	  for (let i = 0; i < groupKeys.length; i++) {
+		  const group = groupKeys[i];
+		  const ingredientsArray = groupMap[group];
+		
+		  const groupName = new cpr.controls.Output("groupName");
+		  groupName.value = `[${group}]`;
+		  groupName.style.css({
+		    "font-weight": "bold"
+		  });
+		
+		  ingredientGroup.addChild(groupName, {
+		    width: "100%",
+		    height: "30px",
+		  });
+		
+		  for (let j = 0; j < ingredientsArray.length; j++) {
+		    const ingredient = ingredientsArray[j];
+		    const ingredientUDC = new udc.recipe.recipe_ingredient();
+		    ingredientUDC.ingredientName = ingredient.ingredientName;
+		    ingredientUDC.ingredientCount = ingredient.ingredientQuantity + ingredient.ingredientUnit;
+		
+		    ingredientGroup.addChild(ingredientUDC, {
+		      width: "100%",
+		      height: "30px",
+		    });
+		  }
+		
+		  if (i < groupKeys.length - 1) {
+		    const gap = new cpr.controls.Output("gap");
+		    ingredientGroup.addChild(gap, {
+		      width: "100%",
+		      height: "30px",
+		    });
+		  }
+		}
+	}
+
 	// 요리 과정
 	const cookingProcessGroup = app.lookup("cookingProcessGroup");
 	for (let i = 0; i < resultJson.steps.length; i++) {
