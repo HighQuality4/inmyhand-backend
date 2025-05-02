@@ -20,6 +20,7 @@
 
 			const showToastModule = cpr.core.Module.require("module/common/showToast");
 
+
 			/*
 			 * 루트 컨테이너에서 load 이벤트 발생 시 호출.
 			 * 앱이 최초 구성된후 최초 랜더링 직후에 발생하는 이벤트 입니다.
@@ -36,6 +37,10 @@
 				const similarSms = app.lookup("similarSms");
 				similarSms.setRequestActionUrl(similarSms.action+"/"+recipeId);
 				similarSms.send();
+				
+				const recipeViewSms = app.lookup("recipeViewSms");
+				recipeViewSms.setRequestActionUrl(recipeViewSms.action+recipeId);
+				recipeViewSms.send();	
 			}
 
 			/*
@@ -336,6 +341,10 @@
 				submission_2.addEventListener("submit-success", onSimilarSmsSubmitSuccess);
 			}
 			app.register(submission_2);
+			
+			var submission_3 = new cpr.protocols.Submission("recipeViewSms");
+			submission_3.action = "/api/recipes/views/";
+			app.register(submission_3);
 			app.supportMedia("all and (min-width: 1024px)", "default");
 			app.supportMedia("all and (min-width: 500px) and (max-width: 1023.984px)", "tablet");
 			app.supportMedia("all and (max-width: 499.984px)", "mobile");

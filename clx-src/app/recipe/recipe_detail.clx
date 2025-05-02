@@ -22,6 +22,7 @@
         <cl:listener std:sid="listener-4ccd8e23" name="submit-success" handler="onSimilarSmsSubmitSuccess"/>
         <cl:responsedata dataid="similar"/>
       </cl:submission>
+      <cl:submission std:sid="submission-ad70acb9" id="recipeViewSms" action="/api/recipes/views/"/>
     </cl:model>
     <cl:appspec/>
   </head>
