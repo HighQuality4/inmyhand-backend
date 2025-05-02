@@ -4,13 +4,10 @@ import com.inmyhand.refrigerator.member.domain.entity.MemberEntity;
 import com.inmyhand.refrigerator.member.repository.LoginRepository;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.User;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -40,8 +37,12 @@ public class CustomUserDetailsService implements UserDetailsService {
 
         // 2. 테스트 목적으로 임시 사용자 정보 반환 (실제 구현 시 수정 필요)
         return CustomUserDetails.builder()
-                .username(email)
+                .userId(memberEntity.getId())
+                .nickname(memberEntity.getNickname())
+                .username(memberEntity.getMemberName())
+                .email(memberEntity.getEmail())
                 .password(memberEntity.getPassword())
+                .regdate(memberEntity.getRegdate())
                 .authorities(authorities)  // ✅ 여기 수정!
                 .build();
     }
