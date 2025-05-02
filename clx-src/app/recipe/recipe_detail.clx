@@ -22,7 +22,13 @@
         <cl:listener std:sid="listener-4ccd8e23" name="submit-success" handler="onSimilarSmsSubmitSuccess"/>
         <cl:responsedata dataid="similar"/>
       </cl:submission>
-      <cl:submission std:sid="submission-ad70acb9" id="recipeViewSms" action="/api/recipes/views/"/>
+      <cl:submission std:sid="submission-ad70acb9" id="recipeViewCreateSms" action="/api/recipes/views/"/>
+      <cl:submission std:sid="submission-b4f81f9c" id="checkLikeStatusSms" action="/api/recipes/likes/check/">
+        <cl:listener std:sid="listener-0507eb1e" name="submit-success" handler="onCheckLikeStatusSmsSubmitSuccess"/>
+      </cl:submission>
+      <cl:submission std:sid="submission-47e192bb" id="recipeLikeToggleSms" action="/api/recipes/likes/">
+        <cl:listener std:sid="listener-ec21708e" name="submit-success" handler="onRecipeLikeToggleSmsSubmitSuccess"/>
+      </cl:submission>
     </cl:model>
     <cl:appspec/>
   </head>
@@ -101,6 +107,7 @@
     <cl:group std:sid="group-e6d2b973" id="InteractionBtnGroup">
       <cl:verticaldata std:sid="v-data-b35d4b4c" width="600px" height="100px" autosize="height"/>
       <cl:group std:sid="group-a59d241e" id="likeCountGroup" style="background-color:#FBDBCF; border-radius:5px;">
+        <cl:listener std:sid="listener-a3bfa1ae" name="click" handler="onLikeCountGroupClick"/>
         <cl:formdata std:sid="f-data-49614497" halign="CENTER" valign="FILL" height="25" row="0" col="0"/>
         <cl:img std:sid="image-a297af26" id="likeCountImg" src="../../theme/images/heart_empty.svg">
           <cl:verticaldata std:sid="v-data-940fe9db" width="70px" height="70px"/>
@@ -252,6 +259,7 @@
       <cl:group std:sid="group-102f7227" style="background-color:#e9edf2; border-radius:5px; background-image:none;">
         <cl:xylayoutdata std:sid="xyl-data-ef55e0d1" top="10px" right="0px" bottom="10px" left="0px" horizontalAnchor="BOTH" verticalAnchor="BOTH"/>
         <cl:output std:sid="output-848712cd" id="out1" style="border-radius:5px; font-weight:bold; font-size:16px; text-align:center;" value="Output">
+          <cl:listener std:sid="listener-108cbccf" name="click" handler="onOut1Click"/>
           <cl:xylayoutdata std:sid="xyl-data-c6db8d04" top="60px" left="20px" width="120px" height="120px" horizontalAnchor="LEFT" verticalAnchor="TOP"/>
         </cl:output>
         <cl:output std:sid="output-942f5096" id="out2" style="border-radius:5px; font-weight:bold; font-size:16px; text-align:center;" value="Output">

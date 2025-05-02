@@ -20,14 +20,17 @@
 
 			const showToastModule = cpr.core.Module.require("module/common/showToast");
 
+			const getRecipeId=()=> {
+				const pathName = window.location.pathname;
+				return  pathName.split("/").pop();
+			}
 
 			/*
 			 * 루트 컨테이너에서 load 이벤트 발생 시 호출.
 			 * 앱이 최초 구성된후 최초 랜더링 직후에 발생하는 이벤트 입니다.
 			 */
 			function onBodyLoad(e){
-				const pathName = window.location.pathname;
-				const recipeId = pathName.split("/").pop();
+				const recipeId = getRecipeId();
 					
 				const recipeDetailSms = app.lookup("recipeDetailSms");
 				
@@ -38,7 +41,7 @@
 				similarSms.setRequestActionUrl(similarSms.action+"/"+recipeId);
 				similarSms.send();
 				
-				const recipeViewSms = app.lookup("recipeViewSms");
+				const recipeViewSms = app.lookup("recipeViewCreateSms");
 				recipeViewSms.setRequestActionUrl(recipeViewSms.action+recipeId);
 				recipeViewSms.send();	
 			}
@@ -299,7 +302,7 @@
 			                    // 이동
 			                    window.location.href = `/recipe/${recipeId}`;
 			                    console.log("이동: /recipe/" + recipeId);
-			                }                       
+			                }
 			            });
 			        }
 			    }
@@ -327,6 +330,58 @@
 			  	navigator.clipboard.writeText(url).then(() => {
 			      showToastModule.showToast("레시피 URL이 복사되었습니다!");
 			    });
+			}
+
+			/*
+			 * 서브미션에서 submit-success 이벤트 발생 시 호출.
+			 * 통신이 성공하면 발생합니다.
+			 */
+			function onCheckLikeStatusSmsSubmitSuccess(e){
+				const checkLikeStatusSms = e.control;
+
+				const result = checkLikeStatusSms.xhr.responseText;
+				const resultJson = JSON.parse(result);
+
+				if(resultJson) {
+					const likeCountImg = app.lookup("likeCountImg");
+					likeCountImg.src = "../../theme/images/heart.svg";
+				}
+			}
+
+			/*
+			 * 그룹에서 click 이벤트 발생 시 호출.
+			 * 사용자가 컨트롤을 클릭할 때 발생하는 이벤트.
+			 */
+			function onLikeCountGroupClick(e){
+				const recipeId = getRecipeId();
+				
+				const recipeLikeToggleSms = app.lookup("recipeLikeToggleSms");
+				recipeLikeToggleSms.setRequestActionUrl(recipeLikeToggleSms.action+recipeId);
+				recipeLikeToggleSms.send();
+			}
+
+			/*
+			 * 서브미션에서 submit-success 이벤트 발생 시 호출.
+			 * 통신이 성공하면 발생합니다.
+			 */
+			function onRecipeLikeToggleSmsSubmitSuccess(e){
+				var recipeLikeToggleSms = e.control;
+				const result = recipeLikeToggleSms.xhr.responseText;
+				const resultJson = JSON.parse(result);
+				const likeCountImg = app.lookup("likeCountImg");
+				const likeCountValue = app.lookup("likeCountValue");
+				const match = likeCountValue.value.match(/\d+/);
+				const likeCountNumber = match ? parseInt(match[0], 10) : null;
+				
+				if(resultJson.message.liked) {
+					likeCountImg.src = "theme/images/heart.svg";
+					likeCountValue.value = `좋아요 ${likeCountNumber+1}개`;
+				} else {
+					likeCountImg.src = "theme/images/heart_empty.svg";
+					likeCountValue.value = `좋아요 ${likeCountNumber-1}개`;
+				}
+				
+				showToastModule.showToast(resultJson.message.message);
 			};
 			// End - User Script
 			
@@ -355,9 +410,23 @@
 			}
 			app.register(submission_2);
 			
-			var submission_3 = new cpr.protocols.Submission("recipeViewSms");
+			var submission_3 = new cpr.protocols.Submission("recipeViewCreateSms");
 			submission_3.action = "/api/recipes/views/";
 			app.register(submission_3);
+			
+			var submission_4 = new cpr.protocols.Submission("checkLikeStatusSms");
+			submission_4.action = "/api/recipes/likes/check/";
+			if(typeof onCheckLikeStatusSmsSubmitSuccess == "function") {
+				submission_4.addEventListener("submit-success", onCheckLikeStatusSmsSubmitSuccess);
+			}
+			app.register(submission_4);
+			
+			var submission_5 = new cpr.protocols.Submission("recipeLikeToggleSms");
+			submission_5.action = "/api/recipes/likes/";
+			if(typeof onRecipeLikeToggleSmsSubmitSuccess == "function") {
+				submission_5.addEventListener("submit-success", onRecipeLikeToggleSmsSubmitSuccess);
+			}
+			app.register(submission_5);
 			app.supportMedia("all and (min-width: 1024px)", "default");
 			app.supportMedia("all and (min-width: 500px) and (max-width: 1023.984px)", "tablet");
 			app.supportMedia("all and (max-width: 499.984px)", "mobile");
@@ -620,6 +689,9 @@
 						"height": "20px"
 					});
 				})(group_7);
+				if(typeof onLikeCountGroupClick == "function") {
+					group_7.addEventListener("click", onLikeCountGroupClick);
+				}
 				container.addChild(group_7, {
 					"colIndex": 0,
 					"rowIndex": 0,
@@ -999,6 +1071,9 @@
 						"font-size" : "16px",
 						"text-align" : "center"
 					});
+					if(typeof onOut1Click == "function") {
+						output_18.addEventListener("click", onOut1Click);
+					}
 					container.addChild(output_18, {
 						"top": "60px",
 						"left": "20px",
