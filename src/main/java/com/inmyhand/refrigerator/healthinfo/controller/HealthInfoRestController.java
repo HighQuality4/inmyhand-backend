@@ -2,21 +2,24 @@ package com.inmyhand.refrigerator.healthinfo.controller;
 
 
 import com.cleopatra.protocol.data.DataRequest;
+import com.cleopatra.spring.JSONDataView;
 import com.inmyhand.refrigerator.healthinfo.domain.dto.HealthInfoDTO;
 import com.inmyhand.refrigerator.healthinfo.service.HealthInfoServiceImpl;
-import com.inmyhand.refrigerator.member.domain.dto.LoginRequestDTO;
+import com.inmyhand.refrigerator.security.CustomUserDetails;
 import com.inmyhand.refrigerator.util.ConverterClassUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.repository.query.Param;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.View;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 @RestController
 @RequiredArgsConstructor
@@ -45,51 +48,59 @@ public class HealthInfoRestController {
     }
 
     @PostMapping("/api/search/health_interest")
-    public ResponseEntity<Map<String, Object>> searchHealthInfo(DataRequest dataRequest) {
+    public View searchHealthInfo(DataRequest dataRequest) throws IOException {
 
-        System.out.println(dataRequest);
         List<String> HEALTH_CATEGORIES = healthInfoService.getAllInterestInfoCategory();
-
-        System.out.println(HEALTH_CATEGORIES.toString());
-
-        String keyword = dataRequest.getParameter("filter");
-        System.out.println(keyword);
-
-        List<List<String>> rows = HEALTH_CATEGORIES.stream()
-                .filter(category -> category.contains(keyword))
+        List<Map<String, Object>> categoryList = new ArrayList<>();
+        HEALTH_CATEGORIES.stream()
                 .limit(5)
-                .map(item -> List.of(item, item))  // ["label값", "value값"]
-                .collect(Collectors.toList());
+                .forEach(item -> {
+                    Map<String, Object> rowData = new HashMap<>();
+                    rowData.put("label", item);
+                    rowData.put("value", item);
+                    categoryList.add(rowData);
+                });
 
-        // columns 고정
-        List<Map<String, String>> columns = List.of(
-                Map.of("name", "label"),
-                Map.of("name", "value")
-        );
+        Map<String, Object> meta = new HashMap<String, Object>();
+        dataRequest.setMetadata(true, meta);
+        dataRequest.setResponse("dsQuickSearch", categoryList);
 
-        // 최종 결과 만들기
-        Map<String, Object> result = new HashMap<>();
-        result.put("columns", columns);
-        result.put("rows", rows);
-
-        return ResponseEntity.ok(result);
+        return new JSONDataView();
     }
 
     @PostMapping("/api/search/ingredients")
-    public List<Map<String, String>> searchIngredients(@RequestParam("keyword") String keyword) {
+    public View searchIngredients(DataRequest dataRequest) {
 
         List<String> INGREDIENT_CATEGORIES = healthInfoService.getAllRecipeIngredientCategory();
-
-        return INGREDIENT_CATEGORIES.stream().filter(category -> category.contains(keyword))
+        List<Map<String, Object>> categoryList = new ArrayList<>();
+        INGREDIENT_CATEGORIES.stream()
                 .limit(5)
-                .map(item -> {
-                    Map<String, String> map = new HashMap<>();
-                    map.put("label", item);
-                    map.put("value", item);
-                    System.out.println(map);
-                    return map;
-                })
-                .collect(Collectors.toList());
+                .forEach(item -> {
+                    Map<String, Object> rowData = new HashMap<>();
+                    rowData.put("label", item);
+                    rowData.put("value", item);
+                    categoryList.add(rowData);
+                });
+
+        Map<String, Object> meta = new HashMap<String, Object>();
+        dataRequest.setMetadata(true, meta);
+        dataRequest.setResponse("dsQuickSearch", categoryList);
+
+        return new JSONDataView();
+    }
+
+    @PostMapping("/api/save")
+    public ResponseEntity<?> ctlSaveHealthInfo(@AuthenticationPrincipal CustomUserDetails custom, DataRequest dataRequest) {
+        HealthInfoDTO health = ConverterClassUtil.getSingleClass(dataRequest, "dmHealthInfo", HealthInfoDTO.class);
+        System.out.println(dataRequest.toString());
+        System.out.println(health.getAllergy());
+        System.out.println(health.getHateFood());
+        System.out.println(health.getInterestInfo());
+
+        System.out.println(custom.getUserId());
+        healthInfoService.saveHealthInfo(custom.getUserId(), health);
+
+        return ResponseEntity.ok("dd");
     }
 
 }
