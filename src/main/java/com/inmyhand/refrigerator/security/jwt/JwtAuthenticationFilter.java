@@ -3,8 +3,10 @@ package com.inmyhand.refrigerator.security.jwt;
 import com.inmyhand.refrigerator.common.redis.RedisKeyManager;
 import com.inmyhand.refrigerator.common.redis.RedisUtil;
 import com.inmyhand.refrigerator.security.CustomUserDetails;
+import com.inmyhand.refrigerator.security.CustomUserDetailsService;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
+import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
@@ -30,24 +32,36 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     private final JwtTokenUtil jwtTokenUtil;
     private final RedisUtil redisUtil;
     private final RedisKeyManager redisKeyManager;
-    private final UserDetailsService userDetailsService;
+    private final CustomUserDetailsService customUserDetailsService;
 
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
             throws ServletException, IOException {
 
-        // 요청에서 Authorization 헤더 가져오기
-        String authHeader = request.getHeader("Authorization");
+        String token = null;
 
-        // 토큰이 없거나 Bearer 형식이 아니면 다음 필터로
-        if (authHeader == null || !authHeader.startsWith("Bearer ")) {
+// 1. 먼저 Authorization 헤더에서 꺼내기
+        String authHeader = request.getHeader("Authorization");
+        if (authHeader != null && authHeader.startsWith("Bearer ")) {
+            token = authHeader.substring(7);
+        }
+
+// 2. Authorization 헤더가 없으면 쿠키에서 access_token 찾아보기
+        if (token == null && request.getCookies() != null) {
+            for (Cookie cookie : request.getCookies()) {
+                if ("access_token".equals(cookie.getName())) {
+                    token = cookie.getValue();
+                    break;
+                }
+            }
+        }
+
+// 3. 토큰이 여전히 없다면 그냥 필터 통과
+        if (token == null) {
             filterChain.doFilter(request, response);
             return;
         }
-
-        // Bearer 제거 후 JWT 토큰만 추출
-        String token = authHeader.substring(7);
 
         try {
             // 토큰 유효성 검증
@@ -67,7 +81,11 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                 }
 
                 // UserDetails 객체 가져오기
-                UserDetails userDetails = userDetailsService.loadUserByUsername(username);
+                log.warn("🎯 username from token: {}", username);
+                CustomUserDetails userDetails = customUserDetailsService.loadUserByUsername(username);
+
+                log.info(userDetails.getUsername());
+                log.info("" + userDetails.getUserId());
 
                 // 인증 객체 생성
                 UsernamePasswordAuthenticationToken authentication =

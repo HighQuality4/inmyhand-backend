@@ -42,5 +42,15 @@ public class HealthInfoQueryRepositoryImpl implements HealthInfoRepository {
                 .setParameter("memberId", memberId)
                 .getResultList();
     }
-}
 
+    @Override
+    public List<String> findAllInterestInfoCategory() {
+        return em.createQuery("SELECT h.healthInterestCategoryName FROM HealthInterestCategoryEntity h", String.class).getResultList();
+    }
+
+    @Override
+    public List<String> findAllFoodInfoCategory() {
+        return em.createQuery("SELECT r.ingredientName FROM RecipeIngredientEntity r", String.class).getResultList();
+    }
+
+}

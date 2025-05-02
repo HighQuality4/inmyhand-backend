@@ -36,7 +36,7 @@
     </cl:model>
     <cl:appspec/>
   </head>
-  <body std:sid="body-c43e6d9f" style="background-color:#FFFFFF;" class="contents-container">
+  <body std:sid="body-c43e6d9f" style="background-color:#FFFFFF; background-image:none;" class="contents-container">
     <cl:output std:sid="output-970e83fe" style="color:#000000; font-weight:bold; font-size:24px; font-family:Kim jung chul Myungjo Regular;" value="회원가입 페이지">
       <cl:verticaldata std:sid="v-data-3c06f567" width="520px" height="74px"/>
     </cl:output>
@@ -45,7 +45,7 @@
       <cl:inputbox std:sid="i-box-8d2a7e82" id="email_input" style="border-radius:5px; text-align:center;" placeholder="이메일 입력">
         <cl:verticaldata std:sid="v-data-275730b7" width="600px" height="52px"/>
       </cl:inputbox>
-      <cl:button std:sid="button-d3e8f948" id="email_submit" style="border-radius:5px;" value="이메일 인증">
+      <cl:button std:sid="button-d3e8f948" id="email_submit" style="border-radius:5px; color:#000000;" value="이메일 인증">
         <cl:listener std:sid="listener-a3d58699" name="click" handler="onEmail_submitClick"/>
         <cl:verticaldata std:sid="v-data-bc848166" width="600px" height="52px"/>
       </cl:button>

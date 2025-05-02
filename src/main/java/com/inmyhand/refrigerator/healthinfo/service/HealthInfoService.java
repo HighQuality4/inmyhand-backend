@@ -12,4 +12,8 @@ public interface HealthInfoService {
     public List<HealthInfoDTO> getHateFoodInfo(@Param("memberId") Long memberId);
 
     public List<HealthInfoDTO> getHealthInterest(@Param("memberId") Long memberId);
+
+    public List<String> getAllInterestInfoCategory();
+
+    public List<String> getAllRecipeIngredientCategory();
 }

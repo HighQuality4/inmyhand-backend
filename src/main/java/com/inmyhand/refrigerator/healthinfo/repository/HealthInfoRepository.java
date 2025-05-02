@@ -11,4 +11,8 @@ public interface HealthInfoRepository {
     List<HealthInfoDTO> findHateFoodByMemberId(Long memberId);
 
     List<HealthInfoDTO> findInterestInfoByMemberId(Long memberId);
+
+    List<String> findAllInterestInfoCategory();
+
+    List<String> findAllFoodInfoCategory();
 }

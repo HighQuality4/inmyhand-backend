@@ -4,22 +4,75 @@
     <std:metadata>
       <std:property key="template-file" value="templates/contents_container.clx"/>
     </std:metadata>
-    <screen std:sid="screen-00315057" id="default" name="default" width="1024px" height="768px" useCustomWidth="true" useCustomHeight="true" customHeight="1000" customWidth="600" active="true"/>
-    <screen std:sid="screen-d184c9ef" id="tablet" name="tablet" width="500px" height="667px"/>
-    <screen std:sid="screen-dfce70c5" id="mobile" name="mobile" width="350px" height="525px"/>
+    <screen std:sid="screen-beb0b890" id="default" name="default" width="1024px" height="768px" useCustomWidth="true" useCustomHeight="true" customHeight="1500" customWidth="600" active="true"/>
+    <screen std:sid="screen-c27a4041" id="tablet" name="tablet" width="500px" height="667px"/>
+    <screen std:sid="screen-89dc750a" id="mobile" name="mobile" width="350px" height="525px"/>
     <cl:model std:sid="model-c2e79a6e">
+      <cl:datamap std:sid="d-map-11107245" id="dmLogout">
+        <cl:datacolumnlist>
+          <cl:datacolumn std:sid="d-column-723fcce8" name="userId" datatype="number"/>
+        </cl:datacolumnlist>
+      </cl:datamap>
+      <cl:datamap std:sid="d-map-1ca76b2d" id="dmHealthInfo"/>
       <cl:submission std:sid="submission-29d5f379" id="smsLogout" withCredentials="true" action="http://localhost:7079/api/users/logout" mediatype="application/json">
         <cl:listener std:sid="listener-55b37218" name="submit-success" handler="onSmsLogoutSubmitSuccess"/>
-        <cl:listener std:sid="listener-7b5176a7" name="receive" handler="onSmsLogoutReceive"/>
+        <cl:requestdata dataid="dmLogout"/>
       </cl:submission>
     </cl:model>
     <cl:appspec/>
   </head>
   <body std:sid="body-c43e6d9f" style="background-color:#FFFFFF;" class="contents-container">
-    <cl:button std:sid="button-4f17afba" value="로그아웃">
-      <cl:listener std:sid="listener-30660249" name="click" handler="onButtonClick"/>
-      <cl:responsivexylayoutdata std:sid="rxyl-data-3a8f11da">
-        <cl:xylayoutdata std:sid="sxyl-data-1745eb05" top="68px" left="453px" width="100px" height="20px" horizontalAnchor="LEFT" verticalAnchor="TOP" screenid="default"/>
+    <cl:udc std:sid="ud-control-cf1083d1" id="profile" type="udc.mypage.profile">
+      <cl:responsivexylayoutdata std:sid="rxyl-data-975432c5">
+        <cl:xylayoutdata std:sid="sxyl-data-65bdba25" top="50px" width="520px" height="124px" horizontalAnchor="CENTER" verticalAnchor="TOP" screenid="default"/>
+      </cl:responsivexylayoutdata>
+    </cl:udc>
+    <cl:udc std:sid="ud-control-1e4fa5da" type="udc.mypage.infoHealth">
+      <cl:responsivexylayoutdata std:sid="rxyl-data-b787d643">
+        <cl:xylayoutdata std:sid="sxyl-data-d83a891c" top="633px" width="520px" height="440px" horizontalAnchor="CENTER" verticalAnchor="TOP" screenid="default"/>
+      </cl:responsivexylayoutdata>
+    </cl:udc>
+    <cl:udc std:sid="ud-control-df1a6adb" type="udc.mypage.infoExpired">
+      <cl:responsivexylayoutdata std:sid="rxyl-data-fa4ffb86">
+        <cl:xylayoutdata std:sid="sxyl-data-aebf3490" top="183px" width="520px" height="440px" horizontalAnchor="CENTER" verticalAnchor="TOP" screenid="default"/>
+      </cl:responsivexylayoutdata>
+    </cl:udc>
+    <cl:button std:sid="button-afca849a" value="Button">
+      <cl:responsivexylayoutdata std:sid="rxyl-data-be416af4">
+        <cl:xylayoutdata std:sid="sxyl-data-38dc5c4a" top="1106px" width="0px" height="66px" horizontalAnchor="CENTER" verticalAnchor="TOP" screenid="default"/>
+      </cl:responsivexylayoutdata>
+    </cl:button>
+    <cl:button std:sid="button-ed9992bc" value="좋아요 레시피 모음">
+      <cl:responsivexylayoutdata std:sid="rxyl-data-a33f94b6">
+        <cl:xylayoutdata std:sid="sxyl-data-c8bcb053" top="1207px" width="520px" height="66px" horizontalAnchor="CENTER" verticalAnchor="TOP" screenid="default"/>
+      </cl:responsivexylayoutdata>
+    </cl:button>
+    <cl:button std:sid="button-b21fc41a" value="구독 및 결제 관리">
+      <cl:responsivexylayoutdata std:sid="rxyl-data-ed090986">
+        <cl:xylayoutdata std:sid="sxyl-data-d97b4811" top="1297px" width="520px" height="66px" horizontalAnchor="CENTER" verticalAnchor="TOP" screenid="default"/>
+      </cl:responsivexylayoutdata>
+    </cl:button>
+    <cl:button std:sid="button-61799079" value="계정 정보 관리">
+      <cl:responsivexylayoutdata std:sid="rxyl-data-4446533c">
+        <cl:xylayoutdata std:sid="sxyl-data-58f3c1f8" top="1387px" width="520px" height="66px" horizontalAnchor="CENTER" verticalAnchor="TOP" screenid="default"/>
+      </cl:responsivexylayoutdata>
+    </cl:button>
+    <cl:group std:sid="group-8f618bd9">
+      <cl:responsivexylayoutdata std:sid="rxyl-data-9abf8aac">
+        <cl:xylayoutdata std:sid="sxyl-data-4c3ef8fe" top="1083px" width="520px" height="114px" horizontalAnchor="CENTER" verticalAnchor="TOP" screenid="default"/>
+      </cl:responsivexylayoutdata>
+      <cl:button std:sid="button-d596288b" value="내 레시피">
+        <cl:xylayoutdata std:sid="xyl-data-5b704a65" top="20px" right="10px" width="230px" height="74px" horizontalAnchor="RIGHT" verticalAnchor="TOP"/>
+      </cl:button>
+      <cl:button std:sid="button-ada4c2a3" value="내 댓글">
+        <cl:xylayoutdata std:sid="xyl-data-7515d0f3" top="20px" left="10px" width="230px" height="74px" horizontalAnchor="LEFT" verticalAnchor="TOP"/>
+      </cl:button>
+      <cl:xylayout std:sid="xylayout-fb875f05" scrollable="false"/>
+    </cl:group>
+    <cl:button std:sid="button-b65466f7" style="border-radius:5px;" value="로그아웃">
+      <cl:listener std:sid="listener-e84014d6" name="click" handler="onButtonClick"/>
+      <cl:responsivexylayoutdata std:sid="rxyl-data-c0e8a017">
+        <cl:xylayoutdata std:sid="sxyl-data-63493164" top="70px" left="451px" width="100px" height="20px" horizontalAnchor="LEFT" verticalAnchor="TOP" screenid="default"/>
       </cl:responsivexylayoutdata>
     </cl:button>
     <cl:responsivexylayout std:sid="r-xylayout-3e5555da"/>

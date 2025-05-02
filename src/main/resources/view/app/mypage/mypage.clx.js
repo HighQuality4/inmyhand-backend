@@ -25,7 +25,6 @@
 			function onButtonClick(e) {
 				
 				var btn = e.control;
-				
 			    app.lookup("smsLogout").send(); // 서버 전송
 			    
 			}
@@ -36,9 +35,6 @@
 			 */
 			function onSmsLogoutSubmitSuccess(e){
 				var smsLogout = e.control;
-				localStorage.removeItem("userId");
-			    console.log("✅ userId 삭제됨");
-
 			    // 원하는 경로로 이동
 			    location.href = "/auth/login";
 			}
@@ -54,7 +50,7 @@
 				var res = JSON.parse(xhr.responseText);
 				console.log(res);
 				if (res === true) {
-					alert("로그아웃 되었습니다.!");
+					alert("로그아웃 되었습니다!");
 				} else {
 					alert("로그아웃에 실패하였습니다!");
 					e.preventDefault();
@@ -64,15 +60,25 @@
 			// End - User Script
 			
 			// Header
+			var dataMap_1 = new cpr.data.DataMap("dmLogout");
+			dataMap_1.parseData({
+				"columns" : [{
+					"name": "userId",
+					"dataType": "number"
+				}]
+			});
+			app.register(dataMap_1);
+			
+			var dataMap_2 = new cpr.data.DataMap("dmHealthInfo");
+			dataMap_2.parseData({});
+			app.register(dataMap_2);
 			var submission_1 = new cpr.protocols.Submission("smsLogout");
 			submission_1.withCredentials = true;
 			submission_1.action = "http://localhost:7079/api/users/logout";
 			submission_1.mediaType = "application/json";
+			submission_1.addRequestData(dataMap_1);
 			if(typeof onSmsLogoutSubmitSuccess == "function") {
 				submission_1.addEventListener("submit-success", onSmsLogoutSubmitSuccess);
-			}
-			if(typeof onSmsLogoutReceive == "function") {
-				submission_1.addEventListener("receive", onSmsLogoutReceive);
 			}
 			app.register(submission_1);
 			app.supportMedia("all and (min-width: 1024px)", "default");
@@ -93,31 +99,275 @@
 			container.setLayout(responsiveXYLayout_1);
 			
 			// UI Configuration
+			var userDefinedControl_1 = new udc.mypage.profile("profile");
+			container.addChild(userDefinedControl_1, {
+				positions: [
+					{
+						"media": "all and (min-width: 1024px)",
+						"top": "50px",
+						"width": "520px",
+						"height": "124px",
+						"left": "calc(50% - 260px)"
+					}, 
+					{
+						"media": "all and (min-width: 500px) and (max-width: 1023.984px)",
+						"top": "50px",
+						"width": "254px",
+						"height": "124px",
+						"left": "calc(50% - 127px)"
+					}, 
+					{
+						"media": "all and (max-width: 499.984px)",
+						"top": "50px",
+						"width": "178px",
+						"height": "124px",
+						"left": "calc(50% - 89px)"
+					}
+				]
+			});
+			
+			var userDefinedControl_2 = new udc.mypage.infoHealth();
+			container.addChild(userDefinedControl_2, {
+				positions: [
+					{
+						"media": "all and (min-width: 1024px)",
+						"top": "633px",
+						"width": "520px",
+						"height": "440px",
+						"left": "calc(50% - 260px)"
+					}, 
+					{
+						"media": "all and (min-width: 500px) and (max-width: 1023.984px)",
+						"top": "633px",
+						"width": "254px",
+						"height": "440px",
+						"left": "calc(50% - 127px)"
+					}, 
+					{
+						"media": "all and (max-width: 499.984px)",
+						"top": "633px",
+						"width": "178px",
+						"height": "440px",
+						"left": "calc(50% - 89px)"
+					}
+				]
+			});
+			
+			var userDefinedControl_3 = new udc.mypage.infoExpired();
+			container.addChild(userDefinedControl_3, {
+				positions: [
+					{
+						"media": "all and (min-width: 1024px)",
+						"top": "183px",
+						"width": "520px",
+						"height": "440px",
+						"left": "calc(50% - 260px)"
+					}, 
+					{
+						"media": "all and (min-width: 500px) and (max-width: 1023.984px)",
+						"top": "183px",
+						"width": "254px",
+						"height": "440px",
+						"left": "calc(50% - 127px)"
+					}, 
+					{
+						"media": "all and (max-width: 499.984px)",
+						"top": "183px",
+						"width": "178px",
+						"height": "440px",
+						"left": "calc(50% - 89px)"
+					}
+				]
+			});
+			
 			var button_1 = new cpr.controls.Button();
-			button_1.value = "로그아웃";
-			if(typeof onButtonClick == "function") {
-				button_1.addEventListener("click", onButtonClick);
-			}
+			button_1.value = "Button";
 			container.addChild(button_1, {
 				positions: [
 					{
 						"media": "all and (min-width: 1024px)",
-						"top": "68px",
-						"left": "453px",
+						"top": "1106px",
+						"width": "0px",
+						"height": "66px",
+						"left": "calc(50% - 0px)"
+					}, 
+					{
+						"media": "all and (min-width: 500px) and (max-width: 1023.984px)",
+						"top": "1106px",
+						"width": "0px",
+						"height": "66px",
+						"left": "calc(50% - 0px)"
+					}, 
+					{
+						"media": "all and (max-width: 499.984px)",
+						"top": "1106px",
+						"width": "0px",
+						"height": "66px",
+						"left": "calc(50% - 0px)"
+					}
+				]
+			});
+			
+			var button_2 = new cpr.controls.Button();
+			button_2.value = "좋아요 레시피 모음";
+			container.addChild(button_2, {
+				positions: [
+					{
+						"media": "all and (min-width: 1024px)",
+						"top": "1207px",
+						"width": "520px",
+						"height": "66px",
+						"left": "calc(50% - 260px)"
+					}, 
+					{
+						"media": "all and (min-width: 500px) and (max-width: 1023.984px)",
+						"top": "1207px",
+						"width": "254px",
+						"height": "66px",
+						"left": "calc(50% - 127px)"
+					}, 
+					{
+						"media": "all and (max-width: 499.984px)",
+						"top": "1207px",
+						"width": "178px",
+						"height": "66px",
+						"left": "calc(50% - 89px)"
+					}
+				]
+			});
+			
+			var button_3 = new cpr.controls.Button();
+			button_3.value = "구독 및 결제 관리";
+			container.addChild(button_3, {
+				positions: [
+					{
+						"media": "all and (min-width: 1024px)",
+						"top": "1297px",
+						"width": "520px",
+						"height": "66px",
+						"left": "calc(50% - 260px)"
+					}, 
+					{
+						"media": "all and (min-width: 500px) and (max-width: 1023.984px)",
+						"top": "1297px",
+						"width": "254px",
+						"height": "66px",
+						"left": "calc(50% - 127px)"
+					}, 
+					{
+						"media": "all and (max-width: 499.984px)",
+						"top": "1297px",
+						"width": "178px",
+						"height": "66px",
+						"left": "calc(50% - 89px)"
+					}
+				]
+			});
+			
+			var button_4 = new cpr.controls.Button();
+			button_4.value = "계정 정보 관리";
+			container.addChild(button_4, {
+				positions: [
+					{
+						"media": "all and (min-width: 1024px)",
+						"top": "1387px",
+						"width": "520px",
+						"height": "66px",
+						"left": "calc(50% - 260px)"
+					}, 
+					{
+						"media": "all and (min-width: 500px) and (max-width: 1023.984px)",
+						"top": "1387px",
+						"width": "254px",
+						"height": "66px",
+						"left": "calc(50% - 127px)"
+					}, 
+					{
+						"media": "all and (max-width: 499.984px)",
+						"top": "1387px",
+						"width": "178px",
+						"height": "66px",
+						"left": "calc(50% - 89px)"
+					}
+				]
+			});
+			
+			var group_1 = new cpr.controls.Container();
+			var xYLayout_1 = new cpr.controls.layouts.XYLayout();
+			xYLayout_1.scrollable = false;
+			group_1.setLayout(xYLayout_1);
+			(function(container){
+				var button_5 = new cpr.controls.Button();
+				button_5.value = "내 레시피";
+				container.addChild(button_5, {
+					"top": "20px",
+					"right": "10px",
+					"width": "230px",
+					"height": "74px"
+				});
+				var button_6 = new cpr.controls.Button();
+				button_6.value = "내 댓글";
+				container.addChild(button_6, {
+					"top": "20px",
+					"left": "10px",
+					"width": "230px",
+					"height": "74px"
+				});
+			})(group_1);
+			container.addChild(group_1, {
+				positions: [
+					{
+						"media": "all and (min-width: 1024px)",
+						"top": "1083px",
+						"width": "520px",
+						"height": "114px",
+						"left": "calc(50% - 260px)"
+					}, 
+					{
+						"media": "all and (min-width: 500px) and (max-width: 1023.984px)",
+						"top": "1083px",
+						"width": "254px",
+						"height": "114px",
+						"left": "calc(50% - 127px)"
+					}, 
+					{
+						"media": "all and (max-width: 499.984px)",
+						"top": "1083px",
+						"width": "178px",
+						"height": "114px",
+						"left": "calc(50% - 89px)"
+					}
+				]
+			});
+			
+			var button_7 = new cpr.controls.Button();
+			button_7.value = "로그아웃";
+			button_7.style.css({
+				"border-radius" : "5px"
+			});
+			if(typeof onButtonClick == "function") {
+				button_7.addEventListener("click", onButtonClick);
+			}
+			container.addChild(button_7, {
+				positions: [
+					{
+						"media": "all and (min-width: 1024px)",
+						"top": "70px",
+						"left": "451px",
 						"width": "100px",
 						"height": "20px"
 					}, 
 					{
 						"media": "all and (min-width: 500px) and (max-width: 1023.984px)",
-						"top": "68px",
-						"left": "221px",
+						"top": "70px",
+						"left": "220px",
 						"width": "49px",
 						"height": "20px"
 					}, 
 					{
 						"media": "all and (max-width: 499.984px)",
-						"top": "68px",
-						"left": "155px",
+						"top": "70px",
+						"left": "154px",
 						"width": "34px",
 						"height": "20px"
 					}

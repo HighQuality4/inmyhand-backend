@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:cl="http://tomatosystem.co.kr/cleopatra" xmlns:std="http://tomatosystem.co.kr/cleopatra/studio" std:sid="html-70e43c2d" version="1.0.5545">
+  <head std:sid="head-61be6b3e">
+    <screen std:sid="screen-bfe43a94" id="default" name="default" width="1024px" height="768px"/>
+    <screen std:sid="screen-df902413" id="tablet" name="tablet" width="500px" height="667px"/>
+    <screen std:sid="screen-a5a65f0d" id="mobile" name="mobile" width="350px" height="525px"/>
+    <cl:model std:sid="model-89cfabd6">
+      <cl:datamap std:sid="d-map-53b8dd60" id="dmProfile">
+        <cl:datacolumnlist>
+          <cl:datacolumn std:sid="d-column-9453011a" name="nickname"/>
+          <cl:datacolumn std:sid="d-column-77d2231c" name="createdAt"/>
+        </cl:datacolumnlist>
+      </cl:datamap>
+      <cl:submission std:sid="submission-89c7006e" id="smsProfile" withCredentials="true" action="/mypage/api/profile">
+        <cl:responsedata dataid="dmProfile"/>
+      </cl:submission>
+    </cl:model>
+    <cl:appspec/>
+  </head>
+  <body std:sid="body-600a4e2f" style="border-right-style:none; top:0px; left:0px; border-left-style:none; width:520px; border-bottom-style:none; border-top-style:none; height:124px;">
+    <cl:listener std:sid="listener-87c118bf" name="load" handler="onBodyLoad"/>
+    <cl:group std:sid="group-fe7672b7" style="border-radius:5px; background-color:#FBDBCF;">
+      <cl:verticaldata std:sid="v-data-7dbf38a1" width="520px" height="124px"/>
+      <cl:output std:sid="output-97f40f7e" style="font-weight:bold; font-size:16px; font-family:@Kim jung chul Myungjo Bold;" value="닉네임:">
+        <cl:responsivexylayoutdata std:sid="rxyl-data-2a6b749e">
+          <cl:xylayoutdata std:sid="sxyl-data-dbb3ec55" top="20px" left="144px" width="100px" height="27px" horizontalAnchor="LEFT" verticalAnchor="TOP" screenid="default"/>
+        </cl:responsivexylayoutdata>
+      </cl:output>
+      <cl:output std:sid="output-210878a7" style="font-weight:bold; font-size:16px;" value="가입일:">
+        <cl:responsivexylayoutdata std:sid="rxyl-data-56dc5c8e">
+          <cl:xylayoutdata std:sid="sxyl-data-85004988" top="79px" left="144px" width="100px" height="30px" horizontalAnchor="LEFT" verticalAnchor="TOP" screenid="default"/>
+        </cl:responsivexylayoutdata>
+      </cl:output>
+      <cl:output std:sid="output-18eccfc4" id="nickname" style="background-color:#FFFFFF; border-radius:5px; text-align:center;">
+        <cl:datamapbind property="value" category="PROPERTY" datacontrolid="dmProfile" columnname="nickname"/>
+        <cl:responsivexylayoutdata std:sid="rxyl-data-30790060">
+          <cl:xylayoutdata std:sid="sxyl-data-78bd6039" top="20px" left="279px" width="120px" height="40px" horizontalAnchor="LEFT" verticalAnchor="TOP" screenid="default"/>
+        </cl:responsivexylayoutdata>
+      </cl:output>
+      <cl:output std:sid="output-c62e021b" id="createdAt" style="background-color:#FFFFFF; border-radius:5px; text-align:center;">
+        <cl:datamapbind property="value" category="PROPERTY" datacontrolid="dmProfile" columnname="createdAt"/>
+        <cl:responsivexylayoutdata std:sid="rxyl-data-e4ebc193">
+          <cl:xylayoutdata std:sid="sxyl-data-d17374eb" top="69px" left="279px" width="120px" height="40px" horizontalAnchor="LEFT" verticalAnchor="TOP" screenid="default"/>
+        </cl:responsivexylayoutdata>
+      </cl:output>
+      <cl:img std:sid="image-beeb3805" style="border-right-style:solid; border-top-width:5px; border-bottom-color:#eaf1f3; border-right-width:5px; border-left-color:#eaf1f3; border-right-color:#eaf1f3; border-left-width:5px; border-top-style:solid; border-radius:100%; border-left-style:solid; border-bottom-width:5px; border-top-color:#eaf1f3; border-bottom-style:solid;" src="../../theme/images/빗살문희토기.jpg">
+        <cl:responsivexylayoutdata std:sid="rxyl-data-246d2b81">
+          <cl:xylayoutdata std:sid="sxyl-data-58828f2f" top="12px" left="20px" width="100px" height="100px" horizontalAnchor="LEFT" verticalAnchor="TOP" screenid="default"/>
+        </cl:responsivexylayoutdata>
+      </cl:img>
+      <cl:responsivexylayout std:sid="r-xylayout-dd430fcd"/>
+    </cl:group>
+    <cl:verticallayout std:sid="v-layout-4c3c592d"/>
+  </body>
+  <std:studiosetting>
+    <std:hruler/>
+    <std:vruler/>
+  </std:studiosetting>
+</html>
