@@ -7,6 +7,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
+import java.util.Date;
 import java.util.List;
 
 @Getter
@@ -19,6 +20,7 @@ public class CustomUserDetails implements UserDetails {
     private final String password;
     private final String nickname;
     private final String email;
+    private final Date regdate;
     private final List<? extends GrantedAuthority> authorities;
 
     @Override
