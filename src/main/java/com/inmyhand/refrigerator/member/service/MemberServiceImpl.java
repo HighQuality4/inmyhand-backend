@@ -9,10 +9,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.awt.print.Pageable;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
-import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -44,7 +42,7 @@ public class MemberServiceImpl implements MemberService {
     }
 
  	@Override
-	public List<MyFoodInfoDTO> MyRefreInfo(Long userId, Pageable pageable) {
+	public List<MyFoodInfoDTO> MyRefreInfo(Long userId) {
 
 		List<MyFoodInfoDTO> myFoodInfoDTOList = memberRepository.findMyRefreInfo(userId);
 

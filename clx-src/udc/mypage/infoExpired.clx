@@ -31,7 +31,7 @@
         <cl:listener std:sid="listener-694007bb" name="value-change" handler="onTitleValueChange"/>
         <cl:xylayoutdata std:sid="xyl-data-504387a3" top="20px" width="215px" height="26px" horizontalAnchor="CENTER" verticalAnchor="TOP"/>
       </cl:output>
-      <cl:group std:sid="group-f9b746c5">
+      <cl:group std:sid="group-f9b746c5" id="refInfoGroup">
         <cl:xylayoutdata std:sid="xyl-data-766f1f0b" top="72px" width="480px" height="275px" horizontalAnchor="CENTER" verticalAnchor="TOP"/>
         <cl:verticallayout std:sid="v-layout-5879c8df"/>
       </cl:group>

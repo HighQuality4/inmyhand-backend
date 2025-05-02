@@ -2,8 +2,6 @@ package com.inmyhand.refrigerator.member.controller;
 
 import com.cleopatra.protocol.data.DataRequest;
 import com.inmyhand.refrigerator.member.domain.dto.LoginRequestDTO;
-import com.inmyhand.refrigerator.member.domain.dto.LoginResponseDTO;
-import com.inmyhand.refrigerator.member.domain.dto.LogoutRequestDTO;
 import com.inmyhand.refrigerator.member.service.LoginServiceImpl;
 import com.inmyhand.refrigerator.member.service.LogoutServiceImpl;
 import com.inmyhand.refrigerator.security.jwt.JwtTokenUtil;
