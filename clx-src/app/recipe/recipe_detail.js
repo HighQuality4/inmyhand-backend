@@ -5,6 +5,8 @@
  * @author gyrud
  ************************************************/
 
+const showToastModule = cpr.core.Module.require("module/common/showToast");
+
 /*
  * 루트 컨테이너에서 load 이벤트 발생 시 호출.
  * 앱이 최초 구성된후 최초 랜더링 직후에 발생하는 이벤트 입니다.
@@ -70,7 +72,7 @@ function onRecipeDetailSmsSubmitSuccess(e){
 	      break;
 	  }
 	}
-	recipeImg.src = resultJson.fileUrl[0];
+	recipeImg.src = resultJson.fileUrl;
 	if(resultJson.summary!=null) {
 		recipeSummary.value = resultJson.summary;
 	} else {
@@ -78,7 +80,7 @@ function onRecipeDetailSmsSubmitSuccess(e){
 	}
 	difficultyValue.value = resultJson.difficulty;
 	cookingTimeValue.value = resultJson.cookingTime;
-	caloriesValue.value = resultJson.calories;
+	caloriesValue.value = `${resultJson.calories}kcal`;
 	recipeAuthorImg.src = resultJson.userProfileImageUrl;
 	recipeAuthorName.value = resultJson.userNickname;
 	likeCountValue.value = "좋아요 "+resultJson.likeCount+"개";
@@ -86,18 +88,73 @@ function onRecipeDetailSmsSubmitSuccess(e){
 	
 	// 재료
 	const ingredientGroup = app.lookup("ingredientGroup");
-	for (let i = 0; i < resultJson.ingredients.length; i++) {
-		const ingredients = resultJson.ingredients[i];
-		const ingredientUDC = new udc.recipe.recipe_ingredient();
-		ingredientUDC.ingredientName = ingredients.ingredientName;
-		ingredientUDC.ingredientCount = ingredients.ingredientQuantity + ingredients.ingredientUnit;
-		
-		ingredientGroup.addChild(ingredientUDC, {
-		  width: "100%",
-		  height: "30px",
-		});	
-	}
 	
+	const ingredients = resultJson.ingredients;
+	const allGroupsAreNull = ingredients.every(item => item.ingredientGroup == null);
+	
+	if (allGroupsAreNull) {
+		for (let i = 0; i < ingredients.length; i++) {
+			const ingredients = resultJson.ingredients[i];
+			const ingredientUDC = new udc.recipe.recipe_ingredient();
+			ingredientUDC.ingredientName = ingredients.ingredientName;
+			ingredientUDC.ingredientCount = ingredients.ingredientQuantity + ingredients.ingredientUnit;
+			
+			ingredientGroup.addChild(ingredientUDC, {
+			  width: "100%",
+			  height: "30px",
+			});	
+		}
+	} else {
+		const groupMap = ingredients.reduce((acc, item) => {
+		    const group = item.ingredientGroup || '기타';
+		    if (!acc[group]) acc[group] = [];
+		    acc[group].push(item);
+		    return acc;
+	    }, {});
+	    Object.entries(groupMap).map(([group, items]) => ({
+		    ingredientGroup: group,
+		    ingredients: items
+	    }));
+
+	  const groupKeys = Object.keys(groupMap);
+	  
+	  for (let i = 0; i < groupKeys.length; i++) {
+		  const group = groupKeys[i];
+		  const ingredientsArray = groupMap[group];
+		
+		  const groupName = new cpr.controls.Output("groupName");
+		  groupName.value = `[${group}]`;
+		  groupName.style.css({
+		    "font-weight": "bold"
+		  });
+		
+		  ingredientGroup.addChild(groupName, {
+		    width: "100%",
+		    height: "30px",
+		  });
+		
+		  for (let j = 0; j < ingredientsArray.length; j++) {
+		    const ingredient = ingredientsArray[j];
+		    const ingredientUDC = new udc.recipe.recipe_ingredient();
+		    ingredientUDC.ingredientName = ingredient.ingredientName;
+		    ingredientUDC.ingredientCount = ingredient.ingredientQuantity + ingredient.ingredientUnit;
+		
+		    ingredientGroup.addChild(ingredientUDC, {
+		      width: "100%",
+		      height: "30px",
+		    });
+		  }
+		
+		  if (i < groupKeys.length - 1) {
+		    const gap = new cpr.controls.Output("gap");
+		    ingredientGroup.addChild(gap, {
+		      width: "100%",
+		      height: "30px",
+		    });
+		  }
+		}
+	}
+
 	// 요리 과정
 	const cookingProcessGroup = app.lookup("cookingProcessGroup");
 	for (let i = 0; i < resultJson.steps.length; i++) {
@@ -227,4 +284,16 @@ function onSimilarSmsSubmitSuccess(e){
 	var similarSms = e.control;
 	similar();
 	app.lookup("grb9").redraw();
+}
+
+/*
+ * 공유하기 버튼 click 이벤트 발생 시 호출.
+ * 사용자가 컨트롤을 클릭할 때 발생하는 이벤트.
+ */
+function onShareGroupClick(e){
+	const shareBtn = e.control;
+	const url = window.location.href;
+  	navigator.clipboard.writeText(url).then(() => {
+      showToastModule.showToast("레시피 URL이 복사되었습니다!");
+    });
 }

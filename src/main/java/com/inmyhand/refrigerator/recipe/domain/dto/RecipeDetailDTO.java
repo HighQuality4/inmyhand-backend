@@ -35,7 +35,7 @@ public class RecipeDetailDTO implements Serializable {
     private Long viewCount;
 
     private List<RecipeCategoryEntityDto> categories;
-    private List<String> fileUrl;
+    private String fileUrl;
     private List<RecipeIngredientEntityDto> ingredients;
     private List<RecipeStepsEntityDto> steps;
     private List<RecipeCommentEntityDto> comments;

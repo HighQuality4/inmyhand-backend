@@ -25,7 +25,7 @@ public class RecipeRequestDTO {
     private String summary;
     private Integer servings;
 
-    private List<String> files;
+    private String file;
     private List<RecipeIngredientEntityDto> ingredients;
     private List<RecipeStepsEntityDto> steps;
     private List<RecipeCategoryEntityDto> categories;

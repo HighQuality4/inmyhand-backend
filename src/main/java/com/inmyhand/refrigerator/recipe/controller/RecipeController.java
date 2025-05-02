@@ -1,5 +1,6 @@
 package com.inmyhand.refrigerator.recipe.controller;
 
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.inmyhand.refrigerator.recipe.domain.dto.RecipeDetailDTO;
 import com.inmyhand.refrigerator.recipe.domain.dto.RecipeRequestDTO;
@@ -12,9 +13,12 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 
@@ -86,32 +90,42 @@ public class RecipeController {
     }
 
     // 레시피 생성
-    @PostMapping("/create")
-    public ResponseEntity<Void> createRecipe(@RequestBody Map<String, Object> body) {
-        Map<String, Object> param = (Map<String, Object>) body.get("param");
-        List<Map<String, Object>> paramList = (List<Map<String, Object>>) param.get("param");
+    @PostMapping(value = "/create", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public ResponseEntity<Void> createRecipe(@RequestPart("param") String body,
+                                             @RequestPart(value = "files", required = false) MultipartFile files,
+                                             @RequestPart(value = "stepFiles", required = false) List<MultipartFile> stepFiles)
+    {
+        try { // JSON 문자열을 Map으로 파싱
+            Map<String, Object> parsedBody = objectMapper.readValue(body, new TypeReference<>() {});
+            List<Map<String, Object>> paramList = (List<Map<String, Object>>) parsedBody.get("param");
+            Map<String, Object> recipeMap = paramList.get(0);
+            RecipeRequestDTO dto = objectMapper.convertValue(recipeMap, RecipeRequestDTO.class);
 
-        Map<String, Object> recipeMap = paramList.get(0);
+            recipeCommandService.createRecipe(dto, files, stepFiles);
+            return ResponseEntity.ok().build();
 
-        RecipeRequestDTO dto = objectMapper.convertValue(recipeMap, RecipeRequestDTO.class);
-
-        recipeCommandService.createRecipe(dto);
-        return ResponseEntity.ok().build();
+        } catch (IOException e) {
+            return ResponseEntity.badRequest().build();
+        }
     }
 
     // 레시피 수정
     @PutMapping("/{recipeId}")
     public ResponseEntity<String> updateRecipe(
             @PathVariable("recipeId") Long recipeId,
-            @RequestBody Map<String, Object> body) {
-        Map<String, Object> param = (Map<String, Object>) body.get("param");
-        List<Map<String, Object>> paramList = (List<Map<String, Object>>) param.get("param");
-
-        Map<String, Object> recipeMap = paramList.get(0);
-
-        RecipeRequestDTO dto = objectMapper.convertValue(recipeMap, RecipeRequestDTO.class);
-        recipeCommandService.updateRecipe(recipeId, dto);
-        return ResponseEntity.ok("레시피가 성공적으로 수정되었습니다.");
+            @RequestPart("param") String body,
+            @RequestPart(value = "files", required = false) MultipartFile files,
+            @RequestPart(value = "stepFiles", required = false) List<MultipartFile> stepFiles) {
+        try { // JSON 문자열을 Map으로 파싱
+            Map<String, Object> parsedBody = objectMapper.readValue(body, new TypeReference<>() {});
+            List<Map<String, Object>> paramList = (List<Map<String, Object>>) parsedBody.get("param");
+            Map<String, Object> recipeMap = paramList.get(0);
+            RecipeRequestDTO dto = objectMapper.convertValue(recipeMap, RecipeRequestDTO.class);
+            recipeCommandService.updateRecipe(recipeId, dto, files, stepFiles);
+            return ResponseEntity.ok("레시피가 성공적으로 수정되었습니다.");
+        } catch (IOException e) {
+            return ResponseEntity.badRequest().build();
+        }
     }
 
     // 레시피 삭제
