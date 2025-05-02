@@ -22,9 +22,6 @@ function onButtonClick(e) {
  */
 function onSmsLogoutSubmitSuccess(e){
 	var smsLogout = e.control;
-	localStorage.removeItem("userId");
-    console.log("✅ userId 삭제됨");
-
     // 원하는 경로로 이동
     location.href = "/auth/login";
 }
@@ -40,12 +37,13 @@ function onSmsLogoutReceive(e){
 	var res = JSON.parse(xhr.responseText);
 	console.log(res);
 	if (res === true) {
-		alert("로그아웃 되었습니다.!");
+		alert("로그아웃 되었습니다!");
 	} else {
 		alert("로그아웃에 실패하였습니다!");
 		e.preventDefault();
 	}
 	
 }
+
 
 

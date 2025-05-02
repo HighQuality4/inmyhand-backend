@@ -35,9 +35,6 @@
 			 */
 			function onSmsLogoutSubmitSuccess(e){
 				var smsLogout = e.control;
-				localStorage.removeItem("userId");
-			    console.log("✅ userId 삭제됨");
-
 			    // 원하는 경로로 이동
 			    location.href = "/auth/login";
 			}
@@ -53,7 +50,7 @@
 				var res = JSON.parse(xhr.responseText);
 				console.log(res);
 				if (res === true) {
-					alert("로그아웃 되었습니다.!");
+					alert("로그아웃 되었습니다!");
 				} else {
 					alert("로그아웃에 실패하였습니다!");
 					e.preventDefault();
@@ -76,6 +73,7 @@
 			dataMap_2.parseData({});
 			app.register(dataMap_2);
 			var submission_1 = new cpr.protocols.Submission("smsLogout");
+			submission_1.withCredentials = true;
 			submission_1.action = "http://localhost:7079/api/users/logout";
 			submission_1.mediaType = "application/json";
 			submission_1.addRequestData(dataMap_1);

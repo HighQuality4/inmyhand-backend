@@ -14,7 +14,7 @@
         </cl:datacolumnlist>
       </cl:datamap>
       <cl:datamap std:sid="d-map-1ca76b2d" id="dmHealthInfo"/>
-      <cl:submission std:sid="submission-29d5f379" id="smsLogout" action="http://localhost:7079/api/users/logout" mediatype="application/json">
+      <cl:submission std:sid="submission-29d5f379" id="smsLogout" withCredentials="true" action="http://localhost:7079/api/users/logout" mediatype="application/json">
         <cl:listener std:sid="listener-55b37218" name="submit-success" handler="onSmsLogoutSubmitSuccess"/>
         <cl:requestdata dataid="dmLogout"/>
       </cl:submission>
