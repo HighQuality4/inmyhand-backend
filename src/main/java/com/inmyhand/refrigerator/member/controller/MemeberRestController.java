@@ -1,33 +1,19 @@
 package com.inmyhand.refrigerator.member.controller;
 
 import com.cleopatra.protocol.data.DataRequest;
-import com.cleopatra.protocol.data.ParameterGroup;
 import com.inmyhand.refrigerator.common.redis.RedisKeyManager;
 import com.inmyhand.refrigerator.common.redis.RedisUtil;
 import com.inmyhand.refrigerator.member.domain.dto.EmailAuthDTO;
-import com.inmyhand.refrigerator.member.domain.dto.LoginRequestDTO;
 import com.inmyhand.refrigerator.member.domain.dto.MemberDTO;
-import com.inmyhand.refrigerator.member.domain.entity.MemberEntity;
 import com.inmyhand.refrigerator.member.service.EmailAuthService;
-import com.inmyhand.refrigerator.member.service.MemberService;
 import com.inmyhand.refrigerator.member.service.MemberServiceImpl;
 import com.inmyhand.refrigerator.util.ConverterClassUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import okhttp3.Response;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseCookie;
 import org.springframework.http.ResponseEntity;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.web.bind.annotation.*;
-
-import java.security.SecureRandom;
-import java.time.Duration;
-import java.util.Map;
-import java.util.UUID;
-import java.util.concurrent.TimeUnit;
 
 @Slf4j
 @RestController

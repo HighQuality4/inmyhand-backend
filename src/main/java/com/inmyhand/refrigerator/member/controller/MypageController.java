@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.awt.print.Pageable;
 import java.text.SimpleDateFormat;
 import java.util.HashMap;
 import java.util.List;
@@ -42,11 +41,11 @@ public class MypageController {
     }
 
     @PostMapping("/api/myrefre")
-    public ResponseEntity<?> getMyRefreInfo(@AuthenticationPrincipal CustomUserDetails userDetails, Pageable pageable) {
+    public ResponseEntity<?> getMyRefreInfo(@AuthenticationPrincipal CustomUserDetails userDetails) {
 
         Long userId = userDetails.getUserId();
 
-        List<MyFoodInfoDTO> flist = memberService.MyRefreInfo(userId, pageable);
+        List<MyFoodInfoDTO> flist = memberService.MyRefreInfo(userId);
         Map<String, Object> result = new HashMap<>();
         result.put("dmMyRef", flist);
 
