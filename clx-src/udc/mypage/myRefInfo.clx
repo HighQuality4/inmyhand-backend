@@ -8,18 +8,22 @@
     <screen std:sid="screen-53d39c96" id="tablet" name="tablet" width="500px" height="667px"/>
     <screen std:sid="screen-374b9d6f" id="mobile" name="mobile" width="350px" height="525px"/>
     <cl:model std:sid="model-601f2e9f"/>
-    <cl:appspec/>
+    <cl:appspec>
+      <cl:property name="num" type="string"/>
+      <cl:property name="foodName" type="string"/>
+      <cl:property name="expdate" type="string"/>
+    </cl:appspec>
   </head>
   <body std:sid="body-b3f01d31" style="border-radius:5px; background-color:#FFFFFF; top:0px; left:0px; width:460px; height:42px;">
-    <cl:group std:sid="group-535258a4">
+    <cl:group std:sid="group-535258a4" id="foodinfogroup">
       <cl:xylayoutdata std:sid="xyl-data-cf7f46ab" top="0px" width="460px" height="42px" horizontalAnchor="CENTER" verticalAnchor="TOP"/>
-      <cl:output std:sid="output-350fef9e" value="Output">
+      <cl:output std:sid="output-350fef9e" id="foodname" value="Output">
         <cl:xylayoutdata std:sid="xyl-data-5ac8729e" top="10px" left="68px" width="244px" height="22px" horizontalAnchor="LEFT" verticalAnchor="TOP"/>
       </cl:output>
-      <cl:output std:sid="output-2b5a5dcd" value="Output">
+      <cl:output std:sid="output-2b5a5dcd" id="num" value="Output">
         <cl:xylayoutdata std:sid="xyl-data-dc62e995" top="10px" left="22px" width="22px" height="22px" horizontalAnchor="LEFT" verticalAnchor="TOP"/>
       </cl:output>
-      <cl:output std:sid="output-5973ee9a" value="Output">
+      <cl:output std:sid="output-5973ee9a" id="expdate" value="Output">
         <cl:xylayoutdata std:sid="xyl-data-fc0bea20" top="10px" left="340px" width="100px" height="22px" horizontalAnchor="LEFT" verticalAnchor="TOP"/>
       </cl:output>
       <cl:xylayout std:sid="xylayout-2e67b30c"/>

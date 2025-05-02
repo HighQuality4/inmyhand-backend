@@ -25,35 +25,32 @@ function onBodyLoad(e){
 
     // ✅ 먼저 이벤트 리스너 등록
     sms.addEventListener("submit-success", function(e) {
-        var foodname = ds.getValue("foodName");
-        var remain = ds.getValue("expdate");
-
-        // UDC 내 children(group) 반복
-	    var groups = app.lookup())
-	
-	    for (var i = 0; i < ds.getRowCount(); i++) {
-	        var foodName = ds.getValue(i, "foodName");
-	        var expdate = ds.getValue(i, "expdate");
-	
-	        var group = groups[i];
-	        if (!group) break;
-	
-	        // 번호 출력 (output-2b5a5dcd)
-	        var outputNum = group.lookup("output-2b5a5dcd");
-	        outputNum.value = (i + 1) + ".";
-	
-	        // 음식 이름 출력 (output-350fef9e)
-	        var outputName = group.lookup("output-350fef9e");
-	        outputName.value = foodName;
-	
-	        // 남은 날짜 출력 (output-5973ee9a)
-	        var outputRemain = group.lookup("output-5973ee9a");
-	        var remainText = Number(expdate) < 0 ? "버리셈" : expdate + "일";
-	        outputRemain.value = remainText;
-	    }
-
-    console.log("✅ 냉장고 식재료 출력 완료");
-    });
+        var ds = app.lookup("dsMyRef");
+		var container = app.lookup("refInfoGroup"); // UDC들이 들어갈 부모 Container
+		
+		container.removeAllChildren(); // 기존 것 제거
+		
+		for (var i = 0; i < ds.getRowCount(); i++) {
+		    const foodName = ds.getValue(i, "foodName");
+		    const expdate = ds.getValue(i, "expdate");
+		
+		    const refUdc = new udc.mypage.myRefInfo();
+		    refUdc.id = "myRefInfo_" + i;
+		
+		    const group = udc.lookup("foodinfogroup");
+		    group.lookup("num").value = (i + 1) + ".";
+		    group.lookup("foodname").value = foodName;
+		    group.lookup("expdate").value = Number(expdate) < 0 ? "버리셈" : expdate + "일";
+		
+		    container.addChild(refUdc, {
+		        top: i * 45 + "px",
+		        left: "0px",
+		        width: "460px",
+		        height: "42px"
+		    });
+		}
+	    console.log("✅ 냉장고 식재료 출력 완료");
+	    });
 
     // ✅ 그 다음 send 호출
     sms.send();
