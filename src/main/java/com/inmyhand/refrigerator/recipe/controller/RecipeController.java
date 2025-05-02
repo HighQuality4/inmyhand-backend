@@ -8,6 +8,7 @@ import com.inmyhand.refrigerator.recipe.domain.dto.RecipeSummaryDTO;
 import com.inmyhand.refrigerator.recipe.service.RecipeCommandService;
 import com.inmyhand.refrigerator.recipe.service.RecipeQueryService;
 import com.inmyhand.refrigerator.recipe.service.engine.SimilarRecipeLogic;
+import com.inmyhand.refrigerator.security.CustomUserDetails;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
@@ -15,6 +16,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -91,7 +93,8 @@ public class RecipeController {
 
     // 레시피 생성
     @PostMapping(value = "/create", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public ResponseEntity<Void> createRecipe(@RequestPart("param") String body,
+    public ResponseEntity<Void> createRecipe(@AuthenticationPrincipal CustomUserDetails userDetails,
+                                             @RequestPart("param") String body,
                                              @RequestPart(value = "files", required = false) MultipartFile files,
                                              @RequestPart(value = "stepFiles", required = false) List<MultipartFile> stepFiles)
     {
@@ -100,10 +103,9 @@ public class RecipeController {
             List<Map<String, Object>> paramList = (List<Map<String, Object>>) parsedBody.get("param");
             Map<String, Object> recipeMap = paramList.get(0);
             RecipeRequestDTO dto = objectMapper.convertValue(recipeMap, RecipeRequestDTO.class);
-
+            dto.setUserId(userDetails.getUserId());
             recipeCommandService.createRecipe(dto, files, stepFiles);
             return ResponseEntity.ok().build();
-
         } catch (IOException e) {
             return ResponseEntity.badRequest().build();
         }

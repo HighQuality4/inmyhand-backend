@@ -108,7 +108,6 @@
 				console.log(stepFiles);
 				
 				const requestData = {
-									    userId: 1,
 									    parentRecipeId: null,
 									    recipeName: recipeName,
 									    cookingTime: cookingTime,
