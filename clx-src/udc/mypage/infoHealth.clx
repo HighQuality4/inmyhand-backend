@@ -4,7 +4,18 @@
     <screen std:sid="screen-81003394" id="default" name="default" width="1024px" height="768px"/>
     <screen std:sid="screen-37038200" id="tablet" name="tablet" width="500px" height="667px"/>
     <screen std:sid="screen-ae6415d5" id="mobile" name="mobile" width="350px" height="525px"/>
-    <cl:model std:sid="model-0eabdfca"/>
+    <cl:model std:sid="model-0eabdfca">
+      <cl:datamap std:sid="d-map-d070b9fd" id="dmHealthInfo">
+        <cl:datacolumnlist>
+          <cl:datacolumn std:sid="d-column-9df6841c" name="allergy" datatype="string"/>
+          <cl:datacolumn std:sid="d-column-cae8432f" name="hateFood"/>
+          <cl:datacolumn std:sid="d-column-50b75d01" name="interestInfo"/>
+        </cl:datacolumnlist>
+      </cl:datamap>
+      <cl:submission std:sid="submission-74df0d62" id="smsHealthInfo" withCredentials="true" action="/healthInfo/api/save">
+        <cl:requestdata dataid="dmHealthInfo"/>
+      </cl:submission>
+    </cl:model>
     <cl:appspec/>
   </head>
   <body std:sid="body-fda733f2" style="top:0px; left:0px; width:520px; height:440px;">
@@ -14,27 +25,28 @@
       <cl:output std:sid="output-45aab41d" id="title" style="color:#856C66; font-weight:bold; font-size:20px; text-align:center;" value="나의 건강 정보">
         <cl:xylayoutdata std:sid="xyl-data-a5940708" top="34px" width="161px" height="26px" horizontalAnchor="CENTER" verticalAnchor="TOP"/>
       </cl:output>
-      <cl:udc std:sid="ud-control-1cad9a9c" id="sec1" type="udc.mypage.info_tag">
-        <cl:xylayoutdata std:sid="xyl-data-dbfb44b7" top="77px" left="31px" width="460px" height="85px" horizontalAnchor="LEFT" verticalAnchor="TOP"/>
-      </cl:udc>
-      <cl:udc std:sid="ud-control-d203f403" id="sec3" type="udc.mypage.info_tag">
-        <cl:xylayoutdata std:sid="xyl-data-fd5d4ee4" top="283px" left="31px" width="460px" height="85px" horizontalAnchor="LEFT" verticalAnchor="TOP"/>
-      </cl:udc>
-      <cl:output std:sid="output-d445095d" style="border-radius:5px; color:#856C66; text-align:center;" value="알러지&#xD;&#xA;정보">
-        <cl:xylayoutdata std:sid="xyl-data-733a18f5" top="80px" left="30px" width="100px" height="74px" horizontalAnchor="LEFT" verticalAnchor="TOP"/>
-      </cl:output>
-      <cl:udc std:sid="ud-control-02eb528d" id="sec2" type="udc.mypage.info_tag">
-        <cl:xylayoutdata std:sid="xyl-data-485a4efd" top="178px" left="31px" width="460px" height="85px" horizontalAnchor="LEFT" verticalAnchor="TOP"/>
-      </cl:udc>
-      <cl:output std:sid="output-fdcedfee" style="border-radius:5px; color:#856C66; text-align:center;" value="싫어하는&#xD;&#xA;음식 정보">
-        <cl:xylayoutdata std:sid="xyl-data-0734be8a" top="178px" left="30px" width="100px" height="74px" horizontalAnchor="LEFT" verticalAnchor="TOP"/>
-      </cl:output>
-      <cl:output std:sid="output-2cbe11f9" style="border-radius:5px; color:#856C66; text-align:center;" value="관심 있는&#xD;&#xA;건강 정보">
-        <cl:xylayoutdata std:sid="xyl-data-685ba4cc" top="283px" left="30px" width="100px" height="74px" horizontalAnchor="LEFT" verticalAnchor="TOP"/>
-      </cl:output>
       <cl:button std:sid="button-2582ed98" id="healthInfo_submit" style="border-radius:5px; background-color:#D9DC7D;" value="내 건강 정보 수정하기">
+        <cl:listener std:sid="listener-df02986a" name="click" handler="onHealthInfo_submitClick"/>
         <cl:xylayoutdata std:sid="xyl-data-410bf7e4" top="373px" width="460px" height="40px" horizontalAnchor="CENTER" verticalAnchor="TOP"/>
       </cl:button>
+      <cl:udc std:sid="ud-control-f8c80fa8" id="healthinterset" type="udc.mypage.info_tag">
+        <cl:xylayoutdata std:sid="xyl-data-ac6000ff" top="277px" left="30px" width="460px" height="85px" horizontalAnchor="LEFT" verticalAnchor="TOP"/>
+      </cl:udc>
+      <cl:output std:sid="output-2cbe11f9" style="border-radius:5px; color:#856C66; text-align:center;" value="관심 있는&#xD;&#xA;건강 정보">
+        <cl:xylayoutdata std:sid="xyl-data-c0b86cfe" top="277px" left="30px" width="100px" height="74px" horizontalAnchor="LEFT" verticalAnchor="TOP"/>
+      </cl:output>
+      <cl:udc std:sid="ud-control-87fa9955" id="hatefood" type="udc.mypage.info_tag2">
+        <cl:xylayoutdata std:sid="xyl-data-a626194a" top="183px" left="31px" width="460px" height="85px" horizontalAnchor="LEFT" verticalAnchor="TOP"/>
+      </cl:udc>
+      <cl:output std:sid="output-fdcedfee" style="border-radius:5px; color:#856C66; text-align:center;" value="싫어하는&#xD;&#xA;음식 정보">
+        <cl:xylayoutdata std:sid="xyl-data-d19a38e6" top="184px" left="30px" width="100px" height="74px" horizontalAnchor="LEFT" verticalAnchor="TOP"/>
+      </cl:output>
+      <cl:udc std:sid="ud-control-f1c880ee" id="allergy" type="udc.mypage.info_tag3">
+        <cl:xylayoutdata std:sid="xyl-data-323f7aa9" top="88px" left="31px" width="460px" height="85px" horizontalAnchor="LEFT" verticalAnchor="TOP"/>
+      </cl:udc>
+      <cl:output std:sid="output-d445095d" style="border-radius:5px; color:#856C66; text-align:center;" value="알러지&#xD;&#xA;정보">
+        <cl:xylayoutdata std:sid="xyl-data-6fe18ed6" top="88px" left="30px" width="100px" height="74px" horizontalAnchor="LEFT" verticalAnchor="TOP"/>
+      </cl:output>
       <cl:xylayout std:sid="xylayout-1287fba4" scrollable="false"/>
     </cl:group>
     <cl:xylayout std:sid="xylayout-da93cec0"/>

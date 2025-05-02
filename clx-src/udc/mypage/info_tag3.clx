@@ -18,7 +18,7 @@
         <cl:inputbox std:sid="i-box-b4670385" id="ipbFirst" style="background-position:top left; text-align:center;" value="">
           <cl:listener std:sid="listener-87235463" name="select" handler="onIpbFirstSelect"/>
           <cl:listener std:sid="listener-70e40990" name="keydown" handler="onIpbFirstKeydown2"/>
-          <cl:attribute name="submit-action" value="../healthInfo/api/search/health_interest"/>
+          <cl:attribute name="submit-action" value="../healthInfo/api/search/ingredients"/>
           <cl:attribute name="showAssist" value="Y"/>
           <cl:flowlayoutdata std:sid="f-data-3ff1d775" width="203px" height="20px" autosize="none"/>
         </cl:inputbox>
