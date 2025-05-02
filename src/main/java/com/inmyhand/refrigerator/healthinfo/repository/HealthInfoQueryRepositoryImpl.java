@@ -52,5 +52,5 @@ public class HealthInfoQueryRepositoryImpl implements HealthInfoRepository {
     public List<String> findAllFoodInfoCategory() {
         return em.createQuery("SELECT r.ingredientName FROM RecipeIngredientEntity r", String.class).getResultList();
     }
-}
 
+}
