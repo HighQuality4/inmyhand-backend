@@ -88,7 +88,7 @@ public class LoginServiceImpl implements LoginService {
                 //.secure(true)             // HTTPS 환경에서만 전송
                 .sameSite("Strict")       // CSRF 방지
                 .path("/")                // 모든 경로에서 접근 가능
-                .maxAge(Duration.ofMinutes(30))
+                .maxAge(Duration.ofMinutes(60))
                 .build();
 
         response.addHeader("Set-Cookie", accessCookie.toString());
