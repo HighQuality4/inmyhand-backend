@@ -20,9 +20,12 @@
       <cl:property name="recipeImg" type="string" default="../../theme/images/recipe.svg"/>
       <cl:property name="authorImg" type="string" default="../../theme/images/user.svg"/>
       <cl:property name="calories" type="string" default="-"/>
+      <cl:property name="recipeId" type="string"/>
     </cl:appspec>
   </head>
   <body std:sid="body-da14761e" style="top:0px; left:0px; width:250px; height:400px;">
+    <cl:listener std:sid="listener-29583e19" name="click" handler="onBodyClick"/>
+    <cl:apppropbind property="fieldLabel" category="PROPERTY" app-property="recipeId"/>
     <cl:img std:sid="image-ab98ea7b" style="border-radius:5px; box-shadow:0 2px 6px rgba(0, 0, 0, 0.1);">
       <cl:apppropbind property="src" category="PROPERTY" app-property="recipeImg"/>
       <cl:responsivexylayoutdata std:sid="rxyl-data-1528b51b">

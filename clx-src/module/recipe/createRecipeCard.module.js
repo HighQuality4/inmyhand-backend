@@ -16,6 +16,7 @@ const createRecipeCard=(resultJson, recipeContainer)=> {
 		recipeCard.recipeImg = resultJson[i].fileUrl;
 		recipeCard.authorImg = resultJson[i].userProfileImageUrl;
 		recipeCard.calories = resultJson[i].calories+"kcal";
+		recipeCard.recipeId = resultJson[i].id;
 		
 		const categories = resultJson[i].categories;
 		for (let j = 0; j < categories.length; j++) {
