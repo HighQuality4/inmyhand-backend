@@ -74,7 +74,7 @@
 			app.register(dataMap_2);
 			var submission_1 = new cpr.protocols.Submission("smsLogout");
 			submission_1.withCredentials = true;
-			submission_1.action = "http://localhost:7079/api/users/logout";
+			submission_1.action = "/api/users/logout";
 			submission_1.mediaType = "application/json";
 			submission_1.addRequestData(dataMap_1);
 			if(typeof onSmsLogoutSubmitSuccess == "function") {

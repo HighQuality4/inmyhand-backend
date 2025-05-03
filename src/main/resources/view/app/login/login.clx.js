@@ -96,7 +96,7 @@
 			submission_1.async = true;
 			submission_1.withCredentials = true;
 			submission_1.method = "post";
-			submission_1.action = "http://localhost:7079/api/users/login";
+			submission_1.action = "/api/users/login";
 			submission_1.mediaType = "application/json";
 			submission_1.responseType = "javascript";
 			submission_1.fallbackContentType = "application/json";
