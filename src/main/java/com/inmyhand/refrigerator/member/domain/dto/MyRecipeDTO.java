@@ -4,7 +4,9 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.checkerframework.checker.units.qual.A;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 @Getter
 @Setter
@@ -15,9 +17,9 @@ public class MyRecipeDTO {
     private String recipeName;
     private String createdAt;
 
-    public MyRecipeDTO(String nickname, String recipeName, String createdAt) {
+    public MyRecipeDTO(String nickname, String recipeName, Date createdAt) {
         this.nickname = nickname;
         this.recipeName = recipeName;
-        this.createdAt = createdAt;
+        this.createdAt = new SimpleDateFormat("yyyy-MM-dd").format(createdAt);
     }
 }

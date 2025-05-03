@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 @Getter
@@ -15,12 +16,12 @@ public class MyLikedRecipeDTO {
     private String recipeId;
     private String nickname;
     private String recipeName;
-    private String createdAt;
+    private String likedAt;
 
-    public MyLikedRecipeDTO(Long recipeId, String nickname, String recipeName, Date createdAt) {
+    public MyLikedRecipeDTO(Long recipeId, String nickname, String recipeName, Date likedAt) {
         this.recipeId = recipeId.toString();
         this.nickname = nickname;
         this.recipeName = recipeName;
-        this.createdAt = createdAt.toString();
+        this.likedAt = new SimpleDateFormat("yyyy-MM-dd").format(likedAt);
     }
 }
