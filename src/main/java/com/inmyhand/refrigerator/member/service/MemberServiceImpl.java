@@ -1,7 +1,6 @@
 package com.inmyhand.refrigerator.member.service;
 
-import com.inmyhand.refrigerator.member.domain.dto.MemberDTO;
-import com.inmyhand.refrigerator.member.domain.dto.MyFoodInfoDTO;
+import com.inmyhand.refrigerator.member.domain.dto.*;
 import com.inmyhand.refrigerator.member.domain.entity.MemberEntity;
 import com.inmyhand.refrigerator.member.domain.enums.MemberStatus;
 import com.inmyhand.refrigerator.member.repository.MemberRepository;
@@ -77,18 +76,18 @@ public class MemberServiceImpl implements MemberService {
 		}).toList();
 	}
 
-	public Page<RecipeInfoEntity> getMyOwnRecipeInfo(Long userId, int page, int size) {
-		Pageable pageable = PageRequest.of(page, size, Sort.by(Sort.Direction.DESC, "createdDate"));
+	public Page<MyRecipeDTO> getMyOwnRecipeInfo(Long userId, int page, int size) {
+		Pageable pageable = PageRequest.of(page, size, Sort.by(Sort.Direction.DESC, "createdAt"));
 		return recipeInfoRepository.findByMemberEntity_Id(userId, pageable);
 	}
 
-	public Page<RecipeLikesEntity> getMyLikeRecipeInfo(Long userId, int page, int size) {
-		Pageable pageable = PageRequest.of(page, size, Sort.by(Sort.Direction.DESC, "createdDate"));
+	public Page<MyLikedRecipeDTO> getMyLikeRecipeInfo(Long userId, int page, int size) {
+		Pageable pageable = PageRequest.of(page, size, Sort.by(Sort.Direction.DESC, "likedAt"));
 		return recipeLikesRepository.findByMemberEntity_Id(userId, pageable);
 	}
 
-	public Page<RecipeCommentEntity> getMyCommentedRecipeInfo(Long userId, int page, int size) {
-		Pageable pageable = PageRequest.of(page, size, Sort.by(Sort.Direction.DESC, "createdDate"));
+	public Page<MyCommentDTO> getMyCommentedRecipeInfo(Long userId, int page, int size) {
+		Pageable pageable = PageRequest.of(page, size, Sort.by(Sort.Direction.DESC, "createdAt"));
 		return recipeCommentRepository.findByMemberEntity_Id(userId, pageable);
 	}
 
