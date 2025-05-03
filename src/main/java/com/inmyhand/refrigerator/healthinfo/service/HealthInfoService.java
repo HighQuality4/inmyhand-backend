@@ -7,11 +7,11 @@ import java.util.List;
 
 public interface HealthInfoService {
 
-    public List<HealthInfoDTO> getAllergyInfo(@Param("memberId") Long memberId);
+    public List<String> getAllergyInfo(Long memberId);
 
-    public List<HealthInfoDTO> getHateFoodInfo(@Param("memberId") Long memberId);
+    public List<String> getHateFoodInfo(Long memberId);
 
-    public List<HealthInfoDTO> getHealthInterest(@Param("memberId") Long memberId);
+    public List<String> getHealthInterest(Long memberId);
 
     public List<String> getAllInterestInfoCategory();
 

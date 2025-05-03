@@ -6,12 +6,6 @@ import java.util.List;
 
 public interface HealthInfoRepository {
 
-    List<HealthInfoDTO> findAllergyByMemberId(Long memberId);
-
-    List<HealthInfoDTO> findHateFoodByMemberId(Long memberId);
-
-    List<HealthInfoDTO> findInterestInfoByMemberId(Long memberId);
-
     List<String> findAllInterestInfoCategory();
 
     List<String> findAllFoodInfoCategory();

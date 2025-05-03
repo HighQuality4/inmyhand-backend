@@ -25,13 +25,13 @@ public interface MemberRepository extends JpaRepository<MemberEntity, Long>, Cus
     List<MemberEntityDto> findAllMemberDto();
 
     @Query(value = """
-    SELECT fd.food_name AS foodName, TO_CHAR(fd.end_date, 'YYYY-MM-DD') AS expdate
-    FROM fridge_member fm
-    JOIN fridge_food fd ON fm.fridge_id = fd.fridge_id
-    WHERE fm.member_id = :memberId
-    ORDER BY fd.end_date ASC
-    LIMIT 5
-""", nativeQuery = true)
-    public List<MyFoodInfoDTO> findMyRefreInfo(@Param("memberId") Long memberId);
+        SELECT fd.food_name AS foodName, TO_CHAR(fd.end_date, 'YYYY-MM-DD') AS expdate
+        FROM fridge_member fm
+        JOIN fridge_food fd ON fm.fridge_id = fd.fridge_id
+        WHERE fm.fridge_member_id = :memberId
+        ORDER BY fd.end_date ASC
+        LIMIT 5
+    """, nativeQuery = true)
+    List<Object[]> findMyRefreInfo(@Param("memberId") Long memberId);
 
 }
