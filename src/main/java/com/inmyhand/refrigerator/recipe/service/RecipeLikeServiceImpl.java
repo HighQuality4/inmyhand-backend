@@ -4,10 +4,8 @@ import com.inmyhand.refrigerator.member.domain.entity.MemberEntity;
 import com.inmyhand.refrigerator.member.repository.MemberRepository;
 import com.inmyhand.refrigerator.recipe.domain.entity.RecipeInfoEntity;
 import com.inmyhand.refrigerator.recipe.domain.entity.RecipeLikesEntity;
-import com.inmyhand.refrigerator.recipe.repository.RecipeCommentRepository;
 import com.inmyhand.refrigerator.recipe.repository.RecipeInfoRepository;
 import com.inmyhand.refrigerator.recipe.repository.RecipeLikesRepository;
-import com.inmyhand.refrigerator.recipe.repository.RecipeViewsRepository;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -24,7 +22,6 @@ public class RecipeLikeServiceImpl implements RecipeLikeService {
     private final MemberRepository memberRepository;
     private final RecipeInfoRepository recipeInfoRepository;
     private final RecipeLikesRepository recipeLikesRepository;
-
 
     /**
      * 레시피 좋아요 토글 (추가/삭제)
@@ -64,4 +61,8 @@ public class RecipeLikeServiceImpl implements RecipeLikeService {
         }
     }
 
+    // 좋아요 조회
+    public boolean isRecipeLikedByMember(Long memberId, Long recipeId) {
+        return recipeLikesRepository.existsByMemberEntityIdAndRecipeInfoEntityId(memberId, recipeId);
+    }
 }

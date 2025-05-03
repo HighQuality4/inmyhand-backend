@@ -18,11 +18,11 @@ public class RecipeCommentEntityDto implements Serializable {
 
     private Long id;
 
+    private String userProfileImageUrl;
     private String nickname;
 
     @NotBlank
     private String commentContents;
 
     private Date createdAt;
-
 }

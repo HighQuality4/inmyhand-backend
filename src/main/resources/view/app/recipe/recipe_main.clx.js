@@ -22,6 +22,7 @@
 			const createRecipeCard = createRecipeCardModule.createRecipeCard;
 			const setRecipeListModule = cpr.core.Module.require("module/recipe/setRecipeList");
 			const setRecipeList = setRecipeListModule.setRecipeList;
+			const slidify = cpr.core.Module.require("module/common/Slidifiy").slidify;
 
 			let sortBy = null;
 			let sortType = null;
@@ -73,6 +74,9 @@
 				
 				createRecipeCard(resultJson, recipeContainer);
 
+				const slide = slidify(recipeContainer);
+				slide.start();
+				
 				recipeContainer.redraw();
 			}
 

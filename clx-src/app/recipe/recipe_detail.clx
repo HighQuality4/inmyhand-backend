@@ -22,6 +22,16 @@
         <cl:listener std:sid="listener-4ccd8e23" name="submit-success" handler="onSimilarSmsSubmitSuccess"/>
         <cl:responsedata dataid="similar"/>
       </cl:submission>
+      <cl:submission std:sid="submission-ad70acb9" id="recipeViewCreateSms" action="/api/recipes/views/"/>
+      <cl:submission std:sid="submission-b4f81f9c" id="checkLikeStatusSms" action="/api/recipes/likes/check/">
+        <cl:listener std:sid="listener-0507eb1e" name="submit-success" handler="onCheckLikeStatusSmsSubmitSuccess"/>
+      </cl:submission>
+      <cl:submission std:sid="submission-47e192bb" id="recipeLikeToggleSms" action="/api/recipes/likes/">
+        <cl:listener std:sid="listener-ec21708e" name="submit-success" handler="onRecipeLikeToggleSmsSubmitSuccess"/>
+      </cl:submission>
+      <cl:submission std:sid="submission-2e2aedfb" id="recipeCommentSubmitSms" action="/api/recipes/comments/" mediatype="application/json">
+        <cl:listener std:sid="listener-47c148f9" name="submit-success" handler="onRecipeCommentSubmitSmsSubmitSuccess"/>
+      </cl:submission>
     </cl:model>
     <cl:appspec/>
   </head>
@@ -30,17 +40,17 @@
     <cl:group std:sid="group-81addd42">
       <cl:verticaldata std:sid="v-data-50134e9f" width="600px" height="30px" autosize="height"/>
       <cl:output std:sid="output-a0d66a1b" id="recipeTitle" style="font-weight:bold; font-size:16px;" value="Output">
-        <cl:formdata std:sid="f-data-41f60e63" halign="LEFT" valign="CENTER" row="0" col="0"/>
+        <cl:formdata std:sid="f-data-41f60e63" halign="FILL" valign="CENTER" row="0" col="0"/>
       </cl:output>
       <cl:group std:sid="group-e883a10e" id="recipeCategorys">
         <cl:formdata std:sid="f-data-fb4d6f12" halign="RIGHT" valign="CENTER" width="350" height="30" row="0" col="1"/>
-        <cl:output std:sid="output-5d6e768d" id="typeCategory" visible="false" value="Output">
+        <cl:output std:sid="output-5d6e768d" id="typeCategory" style="border-right-style:solid; padding-top:3px; border-bottom-color:#856c66; border-top-width:1px; color:#856C66; border-right-width:1px; padding-left:5px; border-left-color:#856c66; padding-bottom:3px; border-right-color:#856c66; border-left-width:1px; border-top-style:solid; border-radius:5px; border-left-style:solid; border-bottom-width:1px; border-top-color:#856c66; border-bottom-style:solid; padding-right:5px;" visible="false" value="Output">
           <cl:flowlayoutdata std:sid="f-data-31a9f5dd" width="100px" height="30px" autosize="width"/>
         </cl:output>
-        <cl:output std:sid="output-7ce1fa9c" id="situationCategory" visible="false" value="Output">
+        <cl:output std:sid="output-7ce1fa9c" id="situationCategory" style="border-right-style:solid; padding-top:3px; border-bottom-color:#856c66; border-top-width:1px; color:#856C66; border-right-width:1px; padding-left:5px; border-left-color:#856c66; padding-bottom:3px; border-right-color:#856c66; border-left-width:1px; border-top-style:solid; border-radius:5px; border-left-style:solid; border-bottom-width:1px; border-top-color:#856c66; border-bottom-style:solid; padding-right:5px;" visible="false" value="Output">
           <cl:flowlayoutdata std:sid="f-data-f60395bd" width="100px" height="30px" autosize="width"/>
         </cl:output>
-        <cl:output std:sid="output-c3741a6d" id="methodCategory" visible="false" value="Output">
+        <cl:output std:sid="output-c3741a6d" id="methodCategory" style="border-right-style:solid; padding-top:3px; border-bottom-color:#856c66; border-top-width:1px; color:#856C66; border-right-width:1px; padding-left:5px; border-left-color:#856c66; padding-bottom:3px; border-right-color:#856c66; border-left-width:1px; border-top-style:solid; border-radius:5px; border-left-style:solid; border-bottom-width:1px; border-top-color:#856c66; border-bottom-style:solid; padding-right:5px;" visible="false" value="Output">
           <cl:flowlayoutdata std:sid="f-data-96946c95" width="100px" height="30px" autosize="width"/>
         </cl:output>
         <cl:flowlayout std:sid="f-layout-8f8516cf" hspacing="10" vspacing="0" halign="right"/>
@@ -100,6 +110,7 @@
     <cl:group std:sid="group-e6d2b973" id="InteractionBtnGroup">
       <cl:verticaldata std:sid="v-data-b35d4b4c" width="600px" height="100px" autosize="height"/>
       <cl:group std:sid="group-a59d241e" id="likeCountGroup" style="background-color:#FBDBCF; border-radius:5px;">
+        <cl:listener std:sid="listener-a3bfa1ae" name="click" handler="onLikeCountGroupClick"/>
         <cl:formdata std:sid="f-data-49614497" halign="CENTER" valign="FILL" height="25" row="0" col="0"/>
         <cl:img std:sid="image-a297af26" id="likeCountImg" src="../../theme/images/heart_empty.svg">
           <cl:verticaldata std:sid="v-data-940fe9db" width="70px" height="70px"/>
@@ -182,16 +193,16 @@
     </cl:group>
     <cl:group std:sid="group-2be67b13">
       <cl:verticaldata std:sid="v-data-1ee09e97" width="600px" height="25px" autosize="none"/>
-      <cl:output std:sid="output-c72ff558" value="등록일">
+      <cl:output std:sid="output-c72ff558" style="color:#856C66; font-weight:bold;" value="등록일">
         <cl:formdata std:sid="f-data-3ef66e2a" valign="FILL" row="0" col="0"/>
       </cl:output>
-      <cl:output std:sid="output-0154cfdd" id="updatedAtLabel" visible="false" value="수정일">
+      <cl:output std:sid="output-0154cfdd" id="updatedAtLabel" style="color:#856C66; font-weight:bold;" visible="false" value="수정일">
         <cl:formdata std:sid="f-data-d50de1b9" valign="FILL" row="0" col="2"/>
       </cl:output>
-      <cl:output std:sid="output-84d8f7d3" id="createdAt" value="Output">
+      <cl:output std:sid="output-84d8f7d3" id="createdAt" style="color:#856C66;" value="Output">
         <cl:formdata std:sid="f-data-80ab0efe" row="0" col="1"/>
       </cl:output>
-      <cl:output std:sid="output-68a9cd86" id="updatedAt" visible="false" value="Output">
+      <cl:output std:sid="output-68a9cd86" id="updatedAt" style="color:#856C66;" visible="false" value="Output">
         <cl:formdata std:sid="f-data-6b0283ca" row="0" col="3"/>
       </cl:output>
       <cl:formlayout std:sid="f-layout-4e5d2f6c" scrollable="false" hspace="0px" vspace="0px" top-margin="0px" right-margin="0px" bottom-margin="0px" left-margin="0px">
@@ -215,42 +226,41 @@
       </cl:group>
       <cl:xylayout std:sid="xylayout-613e1205"/>
     </cl:group>
-    <cl:group std:sid="group-52079b01" style="background-color:#eaf1f3; border-radius:5px; background-image:none;">
-      <cl:verticaldata std:sid="v-data-382ddd68" width="600px" height="200px" autosize="height"/>
-      <cl:group std:sid="group-d706d98b">
-        <cl:xylayoutdata std:sid="xyl-data-8f70f124" top="10px" right="10px" bottom="30px" left="10px" horizontalAnchor="BOTH" verticalAnchor="BOTH"/>
-        <cl:udc std:sid="ud-control-8b7f493e" type="udc.recipe.group_subtitle">
-          <cl:verticaldata std:sid="v-data-f9d3a4a8" width="580px" height="20px"/>
-          <cl:property name="value" value="댓글" type="string"/>
-        </cl:udc>
-        <cl:group std:sid="group-d8347b4f" id="commentList">
-          <cl:verticaldata std:sid="v-data-34ab34aa" width="400px" height="10px" autosize="height"/>
-          <cl:verticallayout std:sid="v-layout-2407ea47"/>
-        </cl:group>
-        <cl:group std:sid="group-a24f4478">
-          <cl:verticaldata std:sid="v-data-873345bd" width="400px" height="30px"/>
-          <cl:inputbox std:sid="i-box-0dca261c" id="ipb1" placeholder="레시피에 대한 의견을 남겨보세요!">
-            <cl:formdata std:sid="f-data-46221dd1" row="0" col="0"/>
-          </cl:inputbox>
-          <cl:button std:sid="button-ee6e6bf2" value="등록">
-            <cl:formdata std:sid="f-data-4cb6175f" row="0" col="2"/>
-          </cl:button>
-          <cl:formlayout std:sid="f-layout-1f12b6d1" scrollable="false" hspace="0px" vspace="0px" top-margin="0px" right-margin="0px" bottom-margin="0px" left-margin="0px">
-            <cl:rows length="30" unit="PIXEL"/>
-            <cl:columns length="1" unit="FRACTION"/>
-            <cl:columns length="10" unit="PIXEL"/>
-            <cl:columns length="50" unit="PIXEL"/>
-          </cl:formlayout>
-        </cl:group>
-        <cl:verticallayout std:sid="v-layout-97b5b764"/>
+    <cl:group std:sid="group-d706d98b" style="background-color:#eaf1f3; border-radius:5px;">
+      <cl:verticaldata std:sid="v-data-ce938380" width="580px" height="160px" autosize="height"/>
+      <cl:udc std:sid="ud-control-8b7f493e" type="udc.recipe.group_subtitle">
+        <cl:verticaldata std:sid="v-data-f9d3a4a8" width="580px" height="20px"/>
+        <cl:property name="value" value="댓글" type="string"/>
+      </cl:udc>
+      <cl:group std:sid="group-d8347b4f" id="commentList">
+        <cl:verticaldata std:sid="v-data-34ab34aa" width="400px" height="10px" autosize="height"/>
+        <cl:verticallayout std:sid="v-layout-2407ea47"/>
       </cl:group>
-      <cl:xylayout std:sid="xylayout-d99413c0"/>
+      <cl:group std:sid="group-a24f4478">
+        <cl:verticaldata std:sid="v-data-873345bd" width="400px" height="30px"/>
+        <cl:inputbox std:sid="i-box-0dca261c" id="commentInput" placeholder="레시피에 대한 의견을 남겨보세요!">
+          <cl:listener std:sid="listener-1b88a0af" name="keydown" handler="onCommentInputKeydown"/>
+          <cl:formdata std:sid="f-data-46221dd1" row="0" col="0"/>
+        </cl:inputbox>
+        <cl:button std:sid="button-ee6e6bf2" id="commentSubmitBtn" value="등록">
+          <cl:listener std:sid="listener-3582e0d2" name="click" handler="onCommentSubmitBtnClick"/>
+          <cl:formdata std:sid="f-data-4cb6175f" row="0" col="2"/>
+        </cl:button>
+        <cl:formlayout std:sid="f-layout-1f12b6d1" scrollable="false" hspace="0px" vspace="0px" top-margin="0px" right-margin="0px" bottom-margin="0px" left-margin="0px">
+          <cl:rows length="30" unit="PIXEL"/>
+          <cl:columns length="1" unit="FRACTION"/>
+          <cl:columns length="10" unit="PIXEL"/>
+          <cl:columns length="50" unit="PIXEL"/>
+        </cl:formlayout>
+      </cl:group>
+      <cl:verticallayout std:sid="v-layout-97b5b764" leftmargin="10" rightmargin="10" topmargin="20" bottommargin="20"/>
     </cl:group>
     <cl:group std:sid="group-33453daf" id="grb9">
       <cl:verticaldata std:sid="v-data-15a870b4" width="600px" height="240px" autosize="none"/>
       <cl:group std:sid="group-102f7227" style="background-color:#e9edf2; border-radius:5px; background-image:none;">
         <cl:xylayoutdata std:sid="xyl-data-ef55e0d1" top="10px" right="0px" bottom="10px" left="0px" horizontalAnchor="BOTH" verticalAnchor="BOTH"/>
         <cl:output std:sid="output-848712cd" id="out1" style="border-radius:5px; font-weight:bold; font-size:16px; text-align:center;" value="Output">
+          <cl:listener std:sid="listener-108cbccf" name="click" handler="onOut1Click"/>
           <cl:xylayoutdata std:sid="xyl-data-c6db8d04" top="60px" left="20px" width="120px" height="120px" horizontalAnchor="LEFT" verticalAnchor="TOP"/>
         </cl:output>
         <cl:output std:sid="output-942f5096" id="out2" style="border-radius:5px; font-weight:bold; font-size:16px; text-align:center;" value="Output">
