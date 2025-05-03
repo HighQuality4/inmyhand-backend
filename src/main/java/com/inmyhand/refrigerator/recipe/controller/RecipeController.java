@@ -2,6 +2,7 @@ package com.inmyhand.refrigerator.recipe.controller;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.inmyhand.refrigerator.common.redis.search.PopularSearchService;
 import com.inmyhand.refrigerator.recipe.domain.dto.RecipeDetailDTO;
 import com.inmyhand.refrigerator.recipe.domain.dto.RecipeRequestDTO;
 import com.inmyhand.refrigerator.recipe.domain.dto.RecipeSummaryDTO;
@@ -33,6 +34,7 @@ public class RecipeController {
     private final RecipeCommandService recipeCommandService;
     private final ObjectMapper objectMapper;
     private final SimilarRecipeLogic similarRecipeLogic;
+    private final PopularSearchService popularSearchService;
 
     // 전체 레시피 목록 조회 - 페이징
     @PostMapping
@@ -87,7 +89,8 @@ public class RecipeController {
     public Page<RecipeSummaryDTO> getSearchRecipeList(@RequestParam("keyword") String keyword,
                                                       @RequestParam(name = "page", required = false, defaultValue = "0") int page,
                                                       @RequestParam(name = "size", required = false, defaultValue = "6") int size) {
-        System.out.println(size);
+//        System.out.println(size);
+        popularSearchService.registerSearchKeyword(keyword);
         return recipeQueryService.getSearchRecipeList(keyword, page, size);
     }
 
