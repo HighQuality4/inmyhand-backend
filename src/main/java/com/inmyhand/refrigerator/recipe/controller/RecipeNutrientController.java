@@ -2,7 +2,9 @@ package com.inmyhand.refrigerator.recipe.controller;
 
 import com.inmyhand.refrigerator.recipe.domain.dto.RecipeNutrientAnalysisEntityDto;
 import com.inmyhand.refrigerator.recipe.service.RecipeNutrientService;
+import com.inmyhand.refrigerator.security.CustomUserDetails;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -14,7 +16,7 @@ public class RecipeNutrientController {
     @PostMapping("/{recipeId}")
     public RecipeNutrientAnalysisEntityDto analyzeNutrition(
             @PathVariable Long recipeId,
-            @RequestParam Long memberId) {
-        return nutrientService.getNutritionAnalysis(recipeId, memberId);
+            @AuthenticationPrincipal CustomUserDetails userDetails) {
+        return nutrientService.getNutritionAnalysis(recipeId, userDetails.getUserId());
     }
 }

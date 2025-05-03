@@ -49,6 +49,10 @@ function onBodyLoad(e){
 	const recipeViewSms = app.lookup("recipeViewCreateSms");
 	recipeViewSms.setRequestActionUrl(recipeViewSms.action+recipeId);
 	recipeViewSms.send();	
+	
+	const recipeNutrientSms = app.lookup("recipeNutrientSms");
+	recipeNutrientSms.setRequestActionUrl(recipeNutrientSms.action+recipeId);
+	recipeNutrientSms.send();
 }
 
 /*
@@ -432,4 +436,181 @@ function onRecipeCommentSubmitSmsSubmitSuccess(e){
 	const commentList = app.lookup("commentList");
 	
 	addCommentUDC(comment, commentList);
+}
+
+
+/**
+ * 외부 라이브러리 'd3'를 통해 Chart를 구성합니다.
+ * @param {cpr.events.CUIEvent} e
+ */
+function shellLoadD3Chart( /* cpr.events.CUIEvent */ e, jsonData) {
+	var xmlns = "http://www.w3.org/2000/svg";
+    var svgElem = document.createElementNS(xmlns, "svg");
+    svgElem.setAttributeNS(null, "width", "100%");
+    svgElem.setAttributeNS(null, "height", "100%");
+    svgElem.setAttribute("id", "svgElem");
+    svgElem.style.display = "block";
+
+    e.content.appendChild(svgElem);
+
+    var width = svgElem.getBoundingClientRect().width;
+    var height = svgElem.getBoundingClientRect().height;
+    var margin = {
+        top: 10,
+        right: 20,
+        left: 20,
+        bottom: 10
+    };
+
+    var svg = d3.select("svg#svgElem")
+        .attr("text-anchor", "middle");
+
+    /* 안쪽, 바깥쪽 반지름 값 설정 */
+    var arc = d3.arc().innerRadius(0).outerRadius(Math.min(width, height) / 2.5);
+
+    /* 차트의 값을 나타낼 위치 설정 */
+    var arcLabel = (function() {
+        var radius = Math.min(width, height) / 2.5 * 0.8;
+        return d3.arc().innerRadius(radius).outerRadius(radius);
+    })();
+
+    /* 파이 차트 구성 */
+    var pie = d3.pie()
+        .sort(null)
+        .value(function(b) {
+            return b.value;
+        });
+
+    var arcs = pie(jsonData);
+
+    var g = svg.append("g")
+        .attr("id", "firstG")
+        .attr("transform", "translate(" + (width / 2) + ", " + (height / 2) + ")");
+
+    /* 파이 차트의 각 영역을 구분하는 선 */
+    g.selectAll("path")
+        .data(arcs)
+        .enter()
+        .append("path")
+        .attr("fill", function(d) {
+            return d.data.color;
+        })
+        .attr("stroke", "white")
+        .attr("d", arc)
+        .text(function(d) {
+            return d.data.name + ": " + d.data.value;
+        });
+
+    /* 파이 차트의 각 영역 별 값을 나타냄 */
+    if (jsonData.length === 1 && jsonData[0].name === '영양소 분석 중') {
+	    g.append("text")
+	        .attr("text-anchor", "middle")
+	        .attr("dy", "0.35em")
+	        .style("font-size", "14px")
+	        .style("fill", "#333")
+	        .text(jsonData[0].label);
+	} else {
+	    var text = g.selectAll("text")
+	        .data(arcs)
+	        .enter()
+	        .append("text")
+	        .attr("transform", function(d) {
+	            return "translate(" + arcLabel.centroid(d) + ")"
+	        })
+	        .attr("dy", "0.35em");
+	
+	    text.append("tspan")
+	        .attr("x", 0)
+	        .attr("y", "-0.7em")
+	        .style("font-weight", "bold")
+	        .text(function(d) {
+	            return d.data.name;
+	        });
+	
+	    text.filter(function(d) {
+	        return d.endAngle - d.startAngle > 0.25;
+	    })
+		    .append("tspan")
+		    .attr("x", 0)
+		    .attr("y", "0.7em")
+		    .attr("fill-opacity", "0.7")
+		    .text(function(d) {
+		        return d.data.label;
+	    	});
+	 }
+	
+}
+
+/*
+ * 쉘에서 load 이벤트 발생 시 호출.
+ * 쉘이 그려진 후 내용을 작성하는 이벤트.
+ */
+function onNutrientGraphLoad(e){
+	const nutrientGraph = e.control;
+	const shlContent = e.content;
+	
+	if(!nutrientGraph.userData("jsonData")) {
+		const loadingData = [{
+		    name: "영양소 분석 중",
+		    value: 100,
+		    label: "AI가 열심히 분석 중이에요!",
+		    color: "#EAF1F3"
+		}];
+		nutrientGraph.userData("jsonData", loadingData);
+	}
+		
+	shellLoadD3Chart(e, nutrientGraph.userData("jsonData"));
+}
+
+/*
+ * 서브미션에서 submit-success 이벤트 발생 시 호출.
+ * 통신이 성공하면 발생합니다.
+ */
+function onRecipeNutrientSmsSubmitSuccess(e){
+	var recipeNutrientSms = e.control;
+	
+	const result = recipeNutrientSms.xhr.responseText;
+	const nutrients = JSON.parse(result);
+	
+	// 영양소 분석 내용
+	const fitnessScore = app.lookup("fitnessScore");
+	const analysisResult = app.lookup("analysisResult");
+	const aiGuide = app.lookup("aiGuide");
+	
+	fitnessScore.value = `건강관심사와의 적합도 ${nutrients.fitnessScore}점`;
+	analysisResult.value = nutrients.analysisResult;
+	aiGuide.value = "※ AI가 분석한 내용으로 일부 정보가 정확하지 않을 수 있어요. 참고용으로만 이용해 주세요.";
+	
+	// 영양소 분석 그래프
+	const nutrientGraph = app.lookup("nutrientGraph");
+	
+	var jsonData = [{
+	    "name": "탄수화물",
+	    "value": Number(nutrients.carbohydrate),
+	    "label": `${nutrients.carbohydrate}%`,
+	    "color": "#EAF1F3",
+	}, {
+	    "name": "단백질",
+	    "value": Number(nutrients.protein),
+	    "label": `${nutrients.protein}%`,
+	    "color": "#E5E6C7",
+	}, {
+	    "name": "지방",
+	    "value": Number(nutrients.fat),
+	    "label": `${nutrients.fat}%`,
+	    "color": "#EFE4D3",
+	}, {
+	    "name": "비타민",
+	    "value": Number(nutrients.vitamin),
+	    "label": `${nutrients.vitamin}%`,
+	    "color": "#EDA9EB",
+	}, {
+	    "name": "무기질",
+	    "value": Number(nutrients.mineral),
+	    "label": `${nutrients.mineral}%`,
+	    "color": "#FFE79B",
+	}];
+	
+	nutrientGraph.userData("jsonData", jsonData);
+	nutrientGraph.redraw();    
 }

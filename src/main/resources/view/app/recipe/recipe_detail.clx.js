@@ -62,6 +62,10 @@
 				const recipeViewSms = app.lookup("recipeViewCreateSms");
 				recipeViewSms.setRequestActionUrl(recipeViewSms.action+recipeId);
 				recipeViewSms.send();	
+				
+				const recipeNutrientSms = app.lookup("recipeNutrientSms");
+				recipeNutrientSms.setRequestActionUrl(recipeNutrientSms.action+recipeId);
+				recipeNutrientSms.send();
 			}
 
 			/*
@@ -445,6 +449,183 @@
 				const commentList = app.lookup("commentList");
 				
 				addCommentUDC(comment, commentList);
+			}
+
+
+			/**
+			 * 외부 라이브러리 'd3'를 통해 Chart를 구성합니다.
+			 * @param {cpr.events.CUIEvent} e
+			 */
+			function shellLoadD3Chart( /* cpr.events.CUIEvent */ e, jsonData) {
+				var xmlns = "http://www.w3.org/2000/svg";
+			    var svgElem = document.createElementNS(xmlns, "svg");
+			    svgElem.setAttributeNS(null, "width", "100%");
+			    svgElem.setAttributeNS(null, "height", "100%");
+			    svgElem.setAttribute("id", "svgElem");
+			    svgElem.style.display = "block";
+
+			    e.content.appendChild(svgElem);
+
+			    var width = svgElem.getBoundingClientRect().width;
+			    var height = svgElem.getBoundingClientRect().height;
+			    var margin = {
+			        top: 10,
+			        right: 20,
+			        left: 20,
+			        bottom: 10
+			    };
+
+			    var svg = d3.select("svg#svgElem")
+			        .attr("text-anchor", "middle");
+
+			    /* 안쪽, 바깥쪽 반지름 값 설정 */
+			    var arc = d3.arc().innerRadius(0).outerRadius(Math.min(width, height) / 2.5);
+
+			    /* 차트의 값을 나타낼 위치 설정 */
+			    var arcLabel = (function() {
+			        var radius = Math.min(width, height) / 2.5 * 0.8;
+			        return d3.arc().innerRadius(radius).outerRadius(radius);
+			    })();
+
+			    /* 파이 차트 구성 */
+			    var pie = d3.pie()
+			        .sort(null)
+			        .value(function(b) {
+			            return b.value;
+			        });
+
+			    var arcs = pie(jsonData);
+
+			    var g = svg.append("g")
+			        .attr("id", "firstG")
+			        .attr("transform", "translate(" + (width / 2) + ", " + (height / 2) + ")");
+
+			    /* 파이 차트의 각 영역을 구분하는 선 */
+			    g.selectAll("path")
+			        .data(arcs)
+			        .enter()
+			        .append("path")
+			        .attr("fill", function(d) {
+			            return d.data.color;
+			        })
+			        .attr("stroke", "white")
+			        .attr("d", arc)
+			        .text(function(d) {
+			            return d.data.name + ": " + d.data.value;
+			        });
+
+			    /* 파이 차트의 각 영역 별 값을 나타냄 */
+			    if (jsonData.length === 1 && jsonData[0].name === '영양소 분석 중') {
+				    g.append("text")
+				        .attr("text-anchor", "middle")
+				        .attr("dy", "0.35em")
+				        .style("font-size", "14px")
+				        .style("fill", "#333")
+				        .text(jsonData[0].label);
+				} else {
+				    var text = g.selectAll("text")
+				        .data(arcs)
+				        .enter()
+				        .append("text")
+				        .attr("transform", function(d) {
+				            return "translate(" + arcLabel.centroid(d) + ")"
+				        })
+				        .attr("dy", "0.35em");
+				
+				    text.append("tspan")
+				        .attr("x", 0)
+				        .attr("y", "-0.7em")
+				        .style("font-weight", "bold")
+				        .text(function(d) {
+				            return d.data.name;
+				        });
+				
+				    text.filter(function(d) {
+				        return d.endAngle - d.startAngle > 0.25;
+				    })
+					    .append("tspan")
+					    .attr("x", 0)
+					    .attr("y", "0.7em")
+					    .attr("fill-opacity", "0.7")
+					    .text(function(d) {
+					        return d.data.label;
+				    	});
+				 }
+				
+			}
+
+			/*
+			 * 쉘에서 load 이벤트 발생 시 호출.
+			 * 쉘이 그려진 후 내용을 작성하는 이벤트.
+			 */
+			function onNutrientGraphLoad(e){
+				const nutrientGraph = e.control;
+				const shlContent = e.content;
+				
+				if(!nutrientGraph.userData("jsonData")) {
+					const loadingData = [{
+					    name: "영양소 분석 중",
+					    value: 100,
+					    label: "AI가 열심히 분석 중이에요!",
+					    color: "#EAF1F3"
+					}];
+					nutrientGraph.userData("jsonData", loadingData);
+				}
+					
+				shellLoadD3Chart(e, nutrientGraph.userData("jsonData"));
+			}
+
+			/*
+			 * 서브미션에서 submit-success 이벤트 발생 시 호출.
+			 * 통신이 성공하면 발생합니다.
+			 */
+			function onRecipeNutrientSmsSubmitSuccess(e){
+				var recipeNutrientSms = e.control;
+				
+				const result = recipeNutrientSms.xhr.responseText;
+				const nutrients = JSON.parse(result);
+				
+				// 영양소 분석 내용
+				const fitnessScore = app.lookup("fitnessScore");
+				const analysisResult = app.lookup("analysisResult");
+				const aiGuide = app.lookup("aiGuide");
+				
+				fitnessScore.value = `건강관심사와의 적합도 ${nutrients.fitnessScore}점`;
+				analysisResult.value = nutrients.analysisResult;
+				aiGuide.value = "※ AI가 분석한 내용으로 일부 정보가 정확하지 않을 수 있어요. 참고용으로만 이용해 주세요.";
+				
+				// 영양소 분석 그래프
+				const nutrientGraph = app.lookup("nutrientGraph");
+				
+				var jsonData = [{
+				    "name": "탄수화물",
+				    "value": Number(nutrients.carbohydrate),
+				    "label": `${nutrients.carbohydrate}%`,
+				    "color": "#EAF1F3",
+				}, {
+				    "name": "단백질",
+				    "value": Number(nutrients.protein),
+				    "label": `${nutrients.protein}%`,
+				    "color": "#E5E6C7",
+				}, {
+				    "name": "지방",
+				    "value": Number(nutrients.fat),
+				    "label": `${nutrients.fat}%`,
+				    "color": "#EFE4D3",
+				}, {
+				    "name": "비타민",
+				    "value": Number(nutrients.vitamin),
+				    "label": `${nutrients.vitamin}%`,
+				    "color": "#EDA9EB",
+				}, {
+				    "name": "무기질",
+				    "value": Number(nutrients.mineral),
+				    "label": `${nutrients.mineral}%`,
+				    "color": "#FFE79B",
+				}];
+				
+				nutrientGraph.userData("jsonData", jsonData);
+				nutrientGraph.redraw();    
 			};
 			// End - User Script
 			
@@ -498,6 +679,13 @@
 				submission_6.addEventListener("submit-success", onRecipeCommentSubmitSmsSubmitSuccess);
 			}
 			app.register(submission_6);
+			
+			var submission_7 = new cpr.protocols.Submission("recipeNutrientSms");
+			submission_7.action = "/api/recipes/nutrient/";
+			if(typeof onRecipeNutrientSmsSubmitSuccess == "function") {
+				submission_7.addEventListener("submit-success", onRecipeNutrientSmsSubmitSuccess);
+			}
+			app.register(submission_7);
 			app.supportMedia("all and (min-width: 1024px)", "default");
 			app.supportMedia("all and (min-width: 500px) and (max-width: 1023.984px)", "tablet");
 			app.supportMedia("all and (max-width: 499.984px)", "mobile");
@@ -782,11 +970,10 @@
 			formLayout_3.rightMargin = "0px";
 			formLayout_3.bottomMargin = "0px";
 			formLayout_3.leftMargin = "0px";
-			formLayout_3.setColumns(["1fr", "1fr", "1fr", "1fr"]);
+			formLayout_3.setColumns(["1fr", "1fr", "1fr"]);
 			formLayout_3.setColumnMinWidth(0, 100);
 			formLayout_3.setColumnMinWidth(1, 100);
 			formLayout_3.setColumnMinWidth(2, 100);
-			formLayout_3.setColumnMinWidth(3, 100);
 			formLayout_3.setRows(["1fr"]);
 			formLayout_3.setRowMinHeight(0, 100);
 			group_6.setLayout(formLayout_3);
@@ -826,7 +1013,7 @@
 				container.addChild(group_7, {
 					"colIndex": 0,
 					"rowIndex": 0,
-					"horizontalAlign": "center",
+					"horizontalAlign": "fill",
 					"verticalAlign": "fill",
 					"height": 25
 				});
@@ -864,9 +1051,9 @@
 					"rowIndex": 0,
 					"height": 25
 				});
-				var group_9 = new cpr.controls.Container("applicationGroup");
+				var group_9 = new cpr.controls.Container("shareGroup");
 				group_9.style.css({
-					"background-color" : "#EFE4D3",
+					"background-color" : "#E5E6C7",
 					"border-radius" : "5px"
 				});
 				var verticalLayout_4 = new cpr.controls.layouts.VerticalLayout();
@@ -877,14 +1064,14 @@
 				verticalLayout_4.bottomMargin = 5;
 				group_9.setLayout(verticalLayout_4);
 				(function(container){
-					var image_8 = new cpr.controls.Image("applicationImg");
-					image_8.src = "theme/images/write.svg";
+					var image_8 = new cpr.controls.Image("shareImg");
+					image_8.src = "theme/images/share.svg";
 					container.addChild(image_8, {
 						"width": "70px",
 						"height": "70px"
 					});
-					var output_12 = new cpr.controls.Output("applicationValue");
-					output_12.value = "레시피 응용하기";
+					var output_12 = new cpr.controls.Output("shareValue");
+					output_12.value = "공유하기";
 					output_12.style.css({
 						"text-align" : "center"
 					});
@@ -893,44 +1080,10 @@
 						"height": "20px"
 					});
 				})(group_9);
-				container.addChild(group_9, {
-					"colIndex": 3,
-					"rowIndex": 0,
-					"height": 25
-				});
-				var group_10 = new cpr.controls.Container("shareGroup");
-				group_10.style.css({
-					"background-color" : "#E5E6C7",
-					"border-radius" : "5px"
-				});
-				var verticalLayout_5 = new cpr.controls.layouts.VerticalLayout();
-				verticalLayout_5.spacing = 10;
-				verticalLayout_5.leftMargin = 5;
-				verticalLayout_5.rightMargin = 5;
-				verticalLayout_5.topMargin = 5;
-				verticalLayout_5.bottomMargin = 5;
-				group_10.setLayout(verticalLayout_5);
-				(function(container){
-					var image_9 = new cpr.controls.Image("shareImg");
-					image_9.src = "theme/images/share.svg";
-					container.addChild(image_9, {
-						"width": "70px",
-						"height": "70px"
-					});
-					var output_13 = new cpr.controls.Output("shareValue");
-					output_13.value = "공유하기";
-					output_13.style.css({
-						"text-align" : "center"
-					});
-					container.addChild(output_13, {
-						"width": "100px",
-						"height": "20px"
-					});
-				})(group_10);
 				if(typeof onShareGroupClick == "function") {
-					group_10.addEventListener("click", onShareGroupClick);
+					group_9.addEventListener("click", onShareGroupClick);
 				}
-				container.addChild(group_10, {
+				container.addChild(group_9, {
 					"colIndex": 2,
 					"rowIndex": 0,
 					"height": 25
@@ -938,25 +1091,25 @@
 			})(group_6);
 			container.addChild(group_6, {
 				"autoSize": "height",
-				"width": "600px",
+				"width": "442px",
 				"height": "100px"
 			});
 			
-			var group_11 = new cpr.controls.Container();
-			group_11.style.css({
+			var group_10 = new cpr.controls.Container();
+			group_10.style.css({
 				"border-radius" : "5px",
 				"background-color" : "#FBF3EB"
 			});
-			var verticalLayout_6 = new cpr.controls.layouts.VerticalLayout();
-			verticalLayout_6.leftMargin = 10;
-			verticalLayout_6.rightMargin = 10;
-			verticalLayout_6.topMargin = 20;
-			verticalLayout_6.bottomMargin = 20;
-			group_11.setLayout(verticalLayout_6);
+			var verticalLayout_5 = new cpr.controls.layouts.VerticalLayout();
+			verticalLayout_5.leftMargin = 10;
+			verticalLayout_5.rightMargin = 10;
+			verticalLayout_5.topMargin = 20;
+			verticalLayout_5.bottomMargin = 20;
+			group_10.setLayout(verticalLayout_5);
 			(function(container){
-				var group_12 = new cpr.controls.Container();
-				var verticalLayout_7 = new cpr.controls.layouts.VerticalLayout();
-				group_12.setLayout(verticalLayout_7);
+				var group_11 = new cpr.controls.Container();
+				var verticalLayout_6 = new cpr.controls.layouts.VerticalLayout();
+				group_11.setLayout(verticalLayout_6);
 				(function(container){
 					var userDefinedControl_1 = new udc.recipe.group_subtitle();
 					userDefinedControl_1.value = "재료";
@@ -964,42 +1117,42 @@
 						"width": "580px",
 						"height": "20px"
 					});
-					var group_13 = new cpr.controls.Container("ingredientGroup");
-					var verticalLayout_8 = new cpr.controls.layouts.VerticalLayout();
-					group_13.setLayout(verticalLayout_8);
-					container.addChild(group_13, {
+					var group_12 = new cpr.controls.Container("ingredientGroup");
+					var verticalLayout_7 = new cpr.controls.layouts.VerticalLayout();
+					group_12.setLayout(verticalLayout_7);
+					container.addChild(group_12, {
 						"autoSize": "height",
 						"width": "100%",
 						"height": "200px"
 					});
-				})(group_12);
-				container.addChild(group_12, {
+				})(group_11);
+				container.addChild(group_11, {
 					"autoSize": "height",
 					"width": "580px",
 					"height": "160px"
 				});
-			})(group_11);
-			container.addChild(group_11, {
+			})(group_10);
+			container.addChild(group_10, {
 				"autoSize": "height",
 				"width": "600px",
 				"height": "200px"
 			});
 			
-			var group_14 = new cpr.controls.Container();
-			group_14.style.css({
+			var group_13 = new cpr.controls.Container();
+			group_13.style.css({
 				"background-color" : "#E5E6C7",
 				"border-radius" : "5px"
 			});
-			var verticalLayout_9 = new cpr.controls.layouts.VerticalLayout();
-			verticalLayout_9.leftMargin = 10;
-			verticalLayout_9.rightMargin = 10;
-			verticalLayout_9.topMargin = 20;
-			verticalLayout_9.bottomMargin = 20;
-			group_14.setLayout(verticalLayout_9);
+			var verticalLayout_8 = new cpr.controls.layouts.VerticalLayout();
+			verticalLayout_8.leftMargin = 10;
+			verticalLayout_8.rightMargin = 10;
+			verticalLayout_8.topMargin = 20;
+			verticalLayout_8.bottomMargin = 20;
+			group_13.setLayout(verticalLayout_8);
 			(function(container){
-				var group_15 = new cpr.controls.Container();
-				var verticalLayout_10 = new cpr.controls.layouts.VerticalLayout();
-				group_15.setLayout(verticalLayout_10);
+				var group_14 = new cpr.controls.Container();
+				var verticalLayout_9 = new cpr.controls.layouts.VerticalLayout();
+				group_14.setLayout(verticalLayout_9);
 				(function(container){
 					var userDefinedControl_2 = new udc.recipe.group_subtitle();
 					userDefinedControl_2.value = "요리 과정";
@@ -1007,28 +1160,28 @@
 						"width": "580px",
 						"height": "20px"
 					});
-					var group_16 = new cpr.controls.Container("cookingProcessGroup");
-					var verticalLayout_11 = new cpr.controls.layouts.VerticalLayout();
-					group_16.setLayout(verticalLayout_11);
-					container.addChild(group_16, {
+					var group_15 = new cpr.controls.Container("cookingProcessGroup");
+					var verticalLayout_10 = new cpr.controls.layouts.VerticalLayout();
+					group_15.setLayout(verticalLayout_10);
+					container.addChild(group_15, {
 						"autoSize": "height",
 						"width": "100%",
 						"height": "100px"
 					});
-				})(group_15);
-				container.addChild(group_15, {
+				})(group_14);
+				container.addChild(group_14, {
 					"autoSize": "height",
 					"width": "580px",
 					"height": "180px"
 				});
-			})(group_14);
-			container.addChild(group_14, {
+			})(group_13);
+			container.addChild(group_13, {
 				"autoSize": "height",
 				"width": "600px",
 				"height": "200px"
 			});
 			
-			var group_17 = new cpr.controls.Container();
+			var group_16 = new cpr.controls.Container();
 			var formLayout_4 = new cpr.controls.layouts.FormLayout();
 			formLayout_4.scrollable = false;
 			formLayout_4.horizontalSpacing = "0px";
@@ -1039,88 +1192,149 @@
 			formLayout_4.leftMargin = "0px";
 			formLayout_4.setColumns(["50px", "100px", "50px", "100px", "1fr"]);
 			formLayout_4.setRows(["25px"]);
-			group_17.setLayout(formLayout_4);
+			group_16.setLayout(formLayout_4);
 			(function(container){
-				var output_14 = new cpr.controls.Output();
-				output_14.value = "등록일";
+				var output_13 = new cpr.controls.Output();
+				output_13.value = "등록일";
+				output_13.style.css({
+					"color" : "#856C66",
+					"font-weight" : "bold"
+				});
+				container.addChild(output_13, {
+					"colIndex": 0,
+					"rowIndex": 0,
+					"verticalAlign": "fill"
+				});
+				var output_14 = new cpr.controls.Output("updatedAtLabel");
+				output_14.visible = false;
+				output_14.value = "수정일";
 				output_14.style.css({
 					"color" : "#856C66",
 					"font-weight" : "bold"
 				});
 				container.addChild(output_14, {
-					"colIndex": 0,
-					"rowIndex": 0,
-					"verticalAlign": "fill"
-				});
-				var output_15 = new cpr.controls.Output("updatedAtLabel");
-				output_15.visible = false;
-				output_15.value = "수정일";
-				output_15.style.css({
-					"color" : "#856C66",
-					"font-weight" : "bold"
-				});
-				container.addChild(output_15, {
 					"colIndex": 2,
 					"rowIndex": 0,
 					"verticalAlign": "fill"
 				});
-				var output_16 = new cpr.controls.Output("createdAt");
+				var output_15 = new cpr.controls.Output("createdAt");
+				output_15.value = "Output";
+				output_15.style.css({
+					"color" : "#856C66"
+				});
+				container.addChild(output_15, {
+					"colIndex": 1,
+					"rowIndex": 0
+				});
+				var output_16 = new cpr.controls.Output("updatedAt");
+				output_16.visible = false;
 				output_16.value = "Output";
 				output_16.style.css({
 					"color" : "#856C66"
 				});
 				container.addChild(output_16, {
-					"colIndex": 1,
-					"rowIndex": 0
-				});
-				var output_17 = new cpr.controls.Output("updatedAt");
-				output_17.visible = false;
-				output_17.value = "Output";
-				output_17.style.css({
-					"color" : "#856C66"
-				});
-				container.addChild(output_17, {
 					"colIndex": 3,
 					"rowIndex": 0
 				});
-			})(group_17);
-			container.addChild(group_17, {
+			})(group_16);
+			container.addChild(group_16, {
 				"autoSize": "none",
 				"width": "600px",
 				"height": "25px"
 			});
 			
-			var group_18 = new cpr.controls.Container();
-			group_18.visible = false;
-			group_18.style.css({
-				"background-color" : "#fbdbcf",
-				"border-radius" : "5px",
-				"background-image" : "none"
+			var group_17 = new cpr.controls.Container();
+			group_17.style.css({
+				"background-color" : "#FBDBCF",
+				"border-radius" : "5px"
 			});
-			var xYLayout_1 = new cpr.controls.layouts.XYLayout();
-			group_18.setLayout(xYLayout_1);
+			var verticalLayout_11 = new cpr.controls.layouts.VerticalLayout();
+			verticalLayout_11.spacing = 15;
+			verticalLayout_11.leftMargin = 10;
+			verticalLayout_11.rightMargin = 10;
+			verticalLayout_11.topMargin = 20;
+			verticalLayout_11.bottomMargin = 20;
+			group_17.setLayout(verticalLayout_11);
 			(function(container){
-				var group_19 = new cpr.controls.Container();
-				var verticalLayout_12 = new cpr.controls.layouts.VerticalLayout();
-				group_19.setLayout(verticalLayout_12);
-				(function(container){
-					var userDefinedControl_3 = new udc.recipe.group_subtitle();
-					userDefinedControl_3.value = "영양소 분석결과";
-					container.addChild(userDefinedControl_3, {
-						"width": "580px",
-						"height": "20px"
-					});
-				})(group_19);
-				container.addChild(group_19, {
-					"top": "10px",
-					"right": "10px",
-					"bottom": "30px",
-					"left": "10px"
+				var userDefinedControl_3 = new udc.recipe.group_subtitle();
+				userDefinedControl_3.value = "영양소 분석결과";
+				container.addChild(userDefinedControl_3, {
+					"width": "580px",
+					"height": "20px"
 				});
-			})(group_18);
-			container.addChild(group_18, {
+				var group_18 = new cpr.controls.Container();
+				var flowLayout_4 = new cpr.controls.layouts.FlowLayout();
+				group_18.setLayout(flowLayout_4);
+				(function(container){
+					var uIControlShell_1 = new cpr.controls.UIControlShell("nutrientGraph");
+					if(typeof onNutrientGraphLoad == "function") {
+						uIControlShell_1.addEventListener("load", onNutrientGraphLoad);
+					}
+					container.addChild(uIControlShell_1, {
+						"autoSize": "height",
+						"width": "250px",
+						"height": "200px",
+						"minHeight": 200
+					});
+					var group_19 = new cpr.controls.Container();
+					group_19.style.css({
+						"text-align" : "center"
+					});
+					var verticalLayout_12 = new cpr.controls.layouts.VerticalLayout();
+					verticalLayout_12.spacing = 20;
+					group_19.setLayout(verticalLayout_12);
+					(function(container){
+						var output_17 = new cpr.controls.Output("fitnessScore");
+						output_17.value = "";
+						output_17.style.css({
+							"font-size" : "16px",
+							"text-align" : "center"
+						});
+						container.addChild(output_17, {
+							"width": "100px",
+							"height": "20px"
+						});
+						var output_18 = new cpr.controls.Output("analysisResult");
+						output_18.value = "AI가 건강관심사와의 적합도 점수를 계산하고 있어요!";
+						output_18.style.css({
+							"white-space" : "nowrap",
+							"vertical-align" : "middle",
+							"text-align" : "center"
+						});
+						container.addChild(output_18, {
+							"autoSize": "height",
+							"width": "100px",
+							"height": "20px"
+						});
+						var output_19 = new cpr.controls.Output("aiGuide");
+						output_19.value = "";
+						output_19.style.css({
+							"color" : "#856C66",
+							"font-size" : "12px"
+						});
+						container.addChild(output_19, {
+							"autoSize": "height",
+							"width": "100px",
+							"height": "30px",
+							"minHeight": 30
+						});
+					})(group_19);
+					container.addChild(group_19, {
+						"autoSize": "height",
+						"width": "45%",
+						"height": "200px",
+						"allowNewLine": false
+					});
+				})(group_18);
+				container.addChild(group_18, {
+					"autoSize": "height",
+					"width": "100%",
+					"height": "200px"
+				});
+			})(group_17);
+			container.addChild(group_17, {
 				"autoSize": "height",
-				"width": "600px",
+				"width": "580px",
 				"height": "200px"
 			});
 			
@@ -1194,8 +1408,8 @@
 			});
 			
 			var group_23 = new cpr.controls.Container("grb9");
-			var xYLayout_2 = new cpr.controls.layouts.XYLayout();
-			group_23.setLayout(xYLayout_2);
+			var xYLayout_1 = new cpr.controls.layouts.XYLayout();
+			group_23.setLayout(xYLayout_1);
 			(function(container){
 				var group_24 = new cpr.controls.Container();
 				group_24.style.css({
@@ -1203,41 +1417,10 @@
 					"border-radius" : "5px",
 					"background-image" : "none"
 				});
-				var xYLayout_3 = new cpr.controls.layouts.XYLayout();
-				group_24.setLayout(xYLayout_3);
+				var xYLayout_2 = new cpr.controls.layouts.XYLayout();
+				group_24.setLayout(xYLayout_2);
 				(function(container){
-					var output_18 = new cpr.controls.Output("out1");
-					output_18.value = "Output";
-					output_18.style.css({
-						"border-radius" : "5px",
-						"font-weight" : "bold",
-						"font-size" : "16px",
-						"text-align" : "center"
-					});
-					if(typeof onOut1Click == "function") {
-						output_18.addEventListener("click", onOut1Click);
-					}
-					container.addChild(output_18, {
-						"top": "60px",
-						"left": "20px",
-						"width": "120px",
-						"height": "120px"
-					});
-					var output_19 = new cpr.controls.Output("out2");
-					output_19.value = "Output";
-					output_19.style.css({
-						"border-radius" : "5px",
-						"font-weight" : "bold",
-						"font-size" : "16px",
-						"text-align" : "center"
-					});
-					container.addChild(output_19, {
-						"top": "60px",
-						"left": "190px",
-						"width": "120px",
-						"height": "120px"
-					});
-					var output_20 = new cpr.controls.Output("out3");
+					var output_20 = new cpr.controls.Output("out1");
 					output_20.value = "Output";
 					output_20.style.css({
 						"border-radius" : "5px",
@@ -1245,53 +1428,84 @@
 						"font-size" : "16px",
 						"text-align" : "center"
 					});
+					if(typeof onOut1Click == "function") {
+						output_20.addEventListener("click", onOut1Click);
+					}
 					container.addChild(output_20, {
+						"top": "60px",
+						"left": "20px",
+						"width": "120px",
+						"height": "120px"
+					});
+					var output_21 = new cpr.controls.Output("out2");
+					output_21.value = "Output";
+					output_21.style.css({
+						"border-radius" : "5px",
+						"font-weight" : "bold",
+						"font-size" : "16px",
+						"text-align" : "center"
+					});
+					container.addChild(output_21, {
+						"top": "60px",
+						"left": "190px",
+						"width": "120px",
+						"height": "120px"
+					});
+					var output_22 = new cpr.controls.Output("out3");
+					output_22.value = "Output";
+					output_22.style.css({
+						"border-radius" : "5px",
+						"font-weight" : "bold",
+						"font-size" : "16px",
+						"text-align" : "center"
+					});
+					container.addChild(output_22, {
 						"top": "60px",
 						"right": "20px",
 						"width": "120px",
 						"height": "120px"
 					});
-					var output_21 = new cpr.controls.Output();
-					output_21.value = "이 레시피를 좋아하신다면...";
-					output_21.style.css({
+					var output_23 = new cpr.controls.Output();
+					output_23.value = "이 레시피를 좋아하신다면...";
+					output_23.style.css({
 						"color" : "#856C66",
 						"font-weight" : "bold",
 						"font-size" : "20px"
 					});
-					container.addChild(output_21, {
+					container.addChild(output_23, {
 						"top": "20px",
 						"right": "20px",
 						"left": "20px",
 						"height": "30px"
 					});
-					var output_22 = new cpr.controls.Output("outext1");
-					output_22.value = "Output";
-					output_22.style.css({
-						"text-align" : "center"
-					});
-					container.addChild(output_22, {
-						"top": "179px",
-						"left": "20px",
-						"width": "120px",
-						"height": "20px"
-					});
-					var output_23 = new cpr.controls.Output("outext2");
-					output_23.value = "Output";
-					output_23.style.css({
-						"text-align" : "center"
-					});
-					container.addChild(output_23, {
-						"top": "179px",
-						"left": "190px",
-						"width": "120px",
-						"height": "20px"
-					});
-					var output_24 = new cpr.controls.Output("outext3");
+					var output_24 = new cpr.controls.Output("outext1");
 					output_24.value = "Output";
 					output_24.style.css({
 						"text-align" : "center"
 					});
 					container.addChild(output_24, {
+						"top": "179px",
+						"left": "20px",
+						"width": "120px",
+						"height": "20px"
+					});
+					var output_25 = new cpr.controls.Output("outext2");
+					output_25.value = "Output";
+					output_25.style.css({
+						"text-align" : "center"
+					});
+					container.addChild(output_25, {
+						"top": "179px",
+						"left": "190px",
+						"width": "120px",
+						"height": "20px"
+					});
+					var output_26 = new cpr.controls.Output("outext3");
+					output_26.value = "Output";
+					output_26.style.css({
+						"text-align" : "center"
+					});
+					container.addChild(output_26, {
 						"top": "179px",
 						"right": "20px",
 						"width": "120px",

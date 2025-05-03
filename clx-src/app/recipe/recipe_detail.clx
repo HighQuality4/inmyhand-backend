@@ -32,6 +32,9 @@
       <cl:submission std:sid="submission-2e2aedfb" id="recipeCommentSubmitSms" action="/api/recipes/comments/" mediatype="application/json">
         <cl:listener std:sid="listener-47c148f9" name="submit-success" handler="onRecipeCommentSubmitSmsSubmitSuccess"/>
       </cl:submission>
+      <cl:submission std:sid="submission-6e4463f8" id="recipeNutrientSms" action="/api/recipes/nutrient/">
+        <cl:listener std:sid="listener-c4f948a3" name="submit-success" handler="onRecipeNutrientSmsSubmitSuccess"/>
+      </cl:submission>
     </cl:model>
     <cl:appspec/>
   </head>
@@ -108,10 +111,10 @@
       </cl:formlayout>
     </cl:group>
     <cl:group std:sid="group-e6d2b973" id="InteractionBtnGroup">
-      <cl:verticaldata std:sid="v-data-b35d4b4c" width="600px" height="100px" autosize="height"/>
+      <cl:verticaldata std:sid="v-data-b35d4b4c" width="442px" height="100px" autosize="height"/>
       <cl:group std:sid="group-a59d241e" id="likeCountGroup" style="background-color:#FBDBCF; border-radius:5px;">
         <cl:listener std:sid="listener-a3bfa1ae" name="click" handler="onLikeCountGroupClick"/>
-        <cl:formdata std:sid="f-data-49614497" halign="CENTER" valign="FILL" height="25" row="0" col="0"/>
+        <cl:formdata std:sid="f-data-49614497" halign="FILL" valign="FILL" height="25" row="0" col="0"/>
         <cl:img std:sid="image-a297af26" id="likeCountImg" src="../../theme/images/heart_empty.svg">
           <cl:verticaldata std:sid="v-data-940fe9db" width="70px" height="70px"/>
         </cl:img>
@@ -130,16 +133,6 @@
         </cl:output>
         <cl:verticallayout std:sid="v-layout-0215e5ce" spacing="10" leftmargin="5" rightmargin="5" topmargin="5" bottommargin="5"/>
       </cl:group>
-      <cl:group std:sid="group-d5d9d1cd" id="applicationGroup" style="background-color:#EFE4D3; border-radius:5px;">
-        <cl:formdata std:sid="f-data-34ae3bda" height="25" row="0" col="3"/>
-        <cl:img std:sid="image-50053735" id="applicationImg" src="../../theme/images/write.svg">
-          <cl:verticaldata std:sid="v-data-816e70e6" width="70px" height="70px"/>
-        </cl:img>
-        <cl:output std:sid="output-9225f4b8" id="applicationValue" style="text-align:center;" value="레시피 응용하기">
-          <cl:verticaldata std:sid="v-data-320a019c" width="100px" height="20px"/>
-        </cl:output>
-        <cl:verticallayout std:sid="v-layout-2860ca8b" spacing="10" leftmargin="5" rightmargin="5" topmargin="5" bottommargin="5"/>
-      </cl:group>
       <cl:group std:sid="group-a88b65ae" id="shareGroup" style="background-color:#E5E6C7; border-radius:5px;">
         <cl:listener std:sid="listener-da4294b7" name="click" handler="onShareGroupClick"/>
         <cl:formdata std:sid="f-data-7e9e3bb7" height="25" row="0" col="2"/>
@@ -153,7 +146,6 @@
       </cl:group>
       <cl:formlayout std:sid="f-layout-2f2f64bf" scrollable="false" hspace="30px" vspace="0px" top-margin="0px" right-margin="0px" bottom-margin="0px" left-margin="0px">
         <cl:rows length="1" unit="FRACTION" shadetype="NONE" shadecolor="transparent" minlength="100"/>
-        <cl:columns length="1" unit="FRACTION" shadetype="NONE" shadecolor="transparent" minlength="100"/>
         <cl:columns length="1" unit="FRACTION" shadetype="NONE" shadecolor="transparent" minlength="100"/>
         <cl:columns length="1" unit="FRACTION" shadetype="NONE" shadecolor="transparent" minlength="100"/>
         <cl:columns length="1" unit="FRACTION" shadetype="NONE" shadecolor="transparent" minlength="100"/>
@@ -214,17 +206,34 @@
         <cl:columns length="1" unit="FRACTION"/>
       </cl:formlayout>
     </cl:group>
-    <cl:group std:sid="group-624c58bb" style="background-color:#fbdbcf; border-radius:5px; background-image:none;" visible="false">
-      <cl:verticaldata std:sid="v-data-c3a288c7" width="600px" height="200px" autosize="height"/>
-      <cl:group std:sid="group-db677bae">
-        <cl:xylayoutdata std:sid="xyl-data-5961a998" top="10px" right="10px" bottom="30px" left="10px" horizontalAnchor="BOTH" verticalAnchor="BOTH"/>
-        <cl:udc std:sid="ud-control-6e299bc8" type="udc.recipe.group_subtitle">
-          <cl:verticaldata std:sid="v-data-7577505c" width="580px" height="20px"/>
-          <cl:property name="value" value="영양소 분석결과" type="string"/>
-        </cl:udc>
-        <cl:verticallayout std:sid="v-layout-a8b89adf"/>
+    <cl:group std:sid="group-db677bae" style="background-color:#FBDBCF; border-radius:5px;">
+      <cl:verticaldata std:sid="v-data-bdd90fbd" width="580px" height="200px" autosize="height"/>
+      <cl:udc std:sid="ud-control-6e299bc8" type="udc.recipe.group_subtitle">
+        <cl:verticaldata std:sid="v-data-7577505c" width="580px" height="20px"/>
+        <cl:property name="value" value="영양소 분석결과" type="string"/>
+      </cl:udc>
+      <cl:group std:sid="group-c8e461b3">
+        <cl:verticaldata std:sid="v-data-d3455d45" width="100%" height="200px" autosize="height"/>
+        <cl:uicontrolshell std:sid="uic-shell-0fdc804e" id="nutrientGraph">
+          <cl:listener std:sid="listener-ab2be0e6" name="load" handler="onNutrientGraphLoad"/>
+          <cl:flowlayoutdata std:sid="f-data-06b745a8" width="250px" height="200px" syncminheight="true" autosize="height"/>
+        </cl:uicontrolshell>
+        <cl:group std:sid="group-cca53ed9" style="text-align:center;">
+          <cl:flowlayoutdata std:sid="f-data-70120df2" width="45%" height="200px" syncminheight="false" autosize="height" allownewline="false"/>
+          <cl:output std:sid="output-77545f3c" id="fitnessScore" style="font-size:16px; text-align:center;" value="">
+            <cl:verticaldata std:sid="v-data-ea3bf7a1" width="100px" height="20px"/>
+          </cl:output>
+          <cl:output std:sid="output-2871d274" id="analysisResult" style="white-space:nowrap; vertical-align:middle; text-align:center;" value="AI가 건강관심사와의 적합도 점수를 계산하고 있어요!">
+            <cl:verticaldata std:sid="v-data-f4b1f6fd" width="100px" height="20px" autosize="height"/>
+          </cl:output>
+          <cl:output std:sid="output-431b8c2a" id="aiGuide" style="color:#856C66; font-size:12px;" value="">
+            <cl:verticaldata std:sid="v-data-1ce3ce54" width="100px" height="30px" syncminheight="true" autosize="height"/>
+          </cl:output>
+          <cl:verticallayout std:sid="v-layout-522d89d3" spacing="20"/>
+        </cl:group>
+        <cl:flowlayout std:sid="f-layout-1f9372ac"/>
       </cl:group>
-      <cl:xylayout std:sid="xylayout-613e1205"/>
+      <cl:verticallayout std:sid="v-layout-a8b89adf" spacing="15" leftmargin="10" rightmargin="10" topmargin="20" bottommargin="20"/>
     </cl:group>
     <cl:group std:sid="group-d706d98b" style="background-color:#eaf1f3; border-radius:5px;">
       <cl:verticaldata std:sid="v-data-ce938380" width="580px" height="160px" autosize="height"/>
