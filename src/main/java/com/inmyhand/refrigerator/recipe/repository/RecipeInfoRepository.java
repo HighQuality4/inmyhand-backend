@@ -1,6 +1,7 @@
 package com.inmyhand.refrigerator.recipe.repository;
 
 import com.inmyhand.refrigerator.admin.dto.AdminRecipeInfoDto;
+import com.inmyhand.refrigerator.member.domain.dto.MyRecipeDTO;
 import com.inmyhand.refrigerator.recipe.domain.entity.RecipeInfoEntity;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -55,12 +56,12 @@ public interface RecipeInfoRepository extends JpaRepository<RecipeInfoEntity, Lo
         SELECT new com.inmyhand.refrigerator.member.domain.dto.MyRecipeDTO(
             m.nickname,
             r.recipeName,
-            FUNCTION('TO_CHAR', r.createdAt, 'YYYY-MM-DD')
+            r.createdAt
         )
         FROM RecipeInfoEntity r
         JOIN r.memberEntity m
         WHERE m.id = :memberId
     """)
-    Page<RecipeInfoEntity> findByMemberEntity_Id(Long memberId, Pageable pageable);
+    Page<MyRecipeDTO> findByMemberEntity_Id(@Param("memberId") Long memberId, Pageable pageable);
 }
 
