@@ -25,6 +25,24 @@
 				return  pathName.split("/").pop();
 			}
 
+			const addCommentUDC=(comment, commentList)=>{
+				const commentUDC = new udc.recipe.recipe_comment();
+						
+				if (!comment.userProfileImageUrl) {
+					commentUDC.userImg = "theme/images/user.svg";
+				} else {
+					commentUDC.userImg = comment.userProfileImageUrl;
+				}
+				commentUDC.userNickName = comment.nickname;
+				commentUDC.createdAt = comment.createdAt;
+				commentUDC.comment = comment.commentContents;
+					
+				commentList.addChild(commentUDC, {
+				  width: "100%",
+				  height: "100px",
+				});	
+			}
+
 			/*
 			 * 루트 컨테이너에서 load 이벤트 발생 시 호출.
 			 * 앱이 최초 구성된후 최초 랜더링 직후에 발생하는 이벤트 입니다.
@@ -102,7 +120,12 @@
 				difficultyValue.value = resultJson.difficulty;
 				cookingTimeValue.value = resultJson.cookingTime;
 				caloriesValue.value = `${resultJson.calories}kcal`;
-				recipeAuthorImg.src = resultJson.userProfileImageUrl;
+				if(!resultJson.userProfileImageUrl){
+					recipeAuthorImg.src = "theme/images/user.svg";
+				} else {
+					recipeAuthorImg.src = resultJson.userProfileImageUrl;	
+				}
+				
 				recipeAuthorName.value = resultJson.userNickname;
 				likeCountValue.value = "좋아요 "+resultJson.likeCount+"개";
 				viewCountValue.value = "조회수 "+resultJson.viewCount+"번";
@@ -210,20 +233,15 @@
 				if (commentsData.length){
 					for (let i = 0; i < commentsData.length; i++) {
 						const comment = commentsData[i];
-						const commentUDC = new udc.recipe.recipe_comment();
-						commentUDC.userImg = comment.userProfileImageUrl;
-						commentUDC.userNickName = comment.nickname;
-						commentUDC.createAt = comment.createAt;
-						commentUDC.comment = comment.commentContents;
-							
-						commentList.addChild(commentUDC, {
-						  width: "100%",
-						  height: "100px",
-						});	
-					}	
+						addCommentUDC(comment, commentList);
+					}
 				} else {
 					const commentNull = new cpr.controls.Output();
 					commentNull.value = "아직 이 레시피에 대한 댓글이 없어요!";
+					commentNull.style.css({
+					  "text-align": "center",
+					  "line-height": "100px"
+					});
 					commentList.addChild(commentNull, {
 					  width: "100%",
 					  height: "100px",
@@ -382,6 +400,51 @@
 				}
 				
 				showToastModule.showToast(resultJson.message.message);
+			}
+
+			/*
+			 * 댓글 input에서 keydown 이벤트 발생 시 호출.
+			 * 사용자가 키를 누를 때 발생하는 이벤트. 키코드 관련 상수는 {@link cpr.events.KeyCode}에서 참조할 수 있습니다.
+			 */
+			function onCommentInputKeydown(e){
+				const commentInput = e.control;
+				// Enter를 눌렀다면 전송 버튼을 클릭한 이벤트를 불러온다
+				if(e.keyCode == cpr.events.KeyCode.ENTER) { 
+				  var vcBtnSend = app.lookup("commentSubmitBtn"); 
+				  vcBtnSend.click(); 
+				}
+			}
+
+			/*
+			 * 댓글 등록 버튼(commentSubmitBtn)에서 click 이벤트 발생 시 호출.
+			 * 사용자가 컨트롤을 클릭할 때 발생하는 이벤트.
+			 */
+			function onCommentSubmitBtnClick(e){
+				const commentSubmitBtn = e.control;
+				const recipeId = getRecipeId();
+				const commentInput = app.lookup("commentInput");
+				const commentContents = commentInput.value;
+				
+				const recipeCommentSubmitSms = app.lookup("recipeCommentSubmitSms");
+				recipeCommentSubmitSms.setRequestActionUrl(recipeCommentSubmitSms.action+recipeId);
+				recipeCommentSubmitSms.addParameter("param", {commentContents:commentContents});
+				recipeCommentSubmitSms.send();
+				recipeCommentSubmitSms.removeAllParameters();
+				commentInput.value = "";
+			}
+
+			/*
+			 * 서브미션에서 submit-success 이벤트 발생 시 호출.
+			 * 통신이 성공하면 발생합니다.
+			 */
+			function onRecipeCommentSubmitSmsSubmitSuccess(e){
+				const recipeCommentSubmitSms = e.control;
+				const result = recipeCommentSubmitSms.xhr.responseText;
+				const comment = JSON.parse(result);
+				
+				const commentList = app.lookup("commentList");
+				
+				addCommentUDC(comment, commentList);
 			};
 			// End - User Script
 			
@@ -427,6 +490,14 @@
 				submission_5.addEventListener("submit-success", onRecipeLikeToggleSmsSubmitSuccess);
 			}
 			app.register(submission_5);
+			
+			var submission_6 = new cpr.protocols.Submission("recipeCommentSubmitSms");
+			submission_6.action = "/api/recipes/comments/";
+			submission_6.mediaType = "application/json";
+			if(typeof onRecipeCommentSubmitSmsSubmitSuccess == "function") {
+				submission_6.addEventListener("submit-success", onRecipeCommentSubmitSmsSubmitSuccess);
+			}
+			app.register(submission_6);
 			app.supportMedia("all and (min-width: 1024px)", "default");
 			app.supportMedia("all and (min-width: 500px) and (max-width: 1023.984px)", "tablet");
 			app.supportMedia("all and (max-width: 499.984px)", "mobile");
@@ -468,7 +539,7 @@
 				container.addChild(output_1, {
 					"colIndex": 0,
 					"rowIndex": 0,
-					"horizontalAlign": "left",
+					"horizontalAlign": "fill",
 					"verticalAlign": "center"
 				});
 				var group_2 = new cpr.controls.Container("recipeCategorys");
@@ -481,6 +552,26 @@
 					var output_2 = new cpr.controls.Output("typeCategory");
 					output_2.visible = false;
 					output_2.value = "Output";
+					output_2.style.css({
+						"border-right-style" : "solid",
+						"padding-top" : "3px",
+						"border-bottom-color" : "#856c66",
+						"border-top-width" : "1px",
+						"color" : "#856C66",
+						"border-right-width" : "1px",
+						"padding-left" : "5px",
+						"border-left-color" : "#856c66",
+						"padding-bottom" : "3px",
+						"border-right-color" : "#856c66",
+						"border-left-width" : "1px",
+						"border-top-style" : "solid",
+						"border-radius" : "5px",
+						"border-left-style" : "solid",
+						"border-bottom-width" : "1px",
+						"border-top-color" : "#856c66",
+						"border-bottom-style" : "solid",
+						"padding-right" : "5px"
+					});
 					container.addChild(output_2, {
 						"autoSize": "width",
 						"width": "100px",
@@ -489,6 +580,26 @@
 					var output_3 = new cpr.controls.Output("situationCategory");
 					output_3.visible = false;
 					output_3.value = "Output";
+					output_3.style.css({
+						"border-right-style" : "solid",
+						"padding-top" : "3px",
+						"border-bottom-color" : "#856c66",
+						"border-top-width" : "1px",
+						"color" : "#856C66",
+						"border-right-width" : "1px",
+						"padding-left" : "5px",
+						"border-left-color" : "#856c66",
+						"padding-bottom" : "3px",
+						"border-right-color" : "#856c66",
+						"border-left-width" : "1px",
+						"border-top-style" : "solid",
+						"border-radius" : "5px",
+						"border-left-style" : "solid",
+						"border-bottom-width" : "1px",
+						"border-top-color" : "#856c66",
+						"border-bottom-style" : "solid",
+						"padding-right" : "5px"
+					});
 					container.addChild(output_3, {
 						"autoSize": "width",
 						"width": "100px",
@@ -497,6 +608,26 @@
 					var output_4 = new cpr.controls.Output("methodCategory");
 					output_4.visible = false;
 					output_4.value = "Output";
+					output_4.style.css({
+						"border-right-style" : "solid",
+						"padding-top" : "3px",
+						"border-bottom-color" : "#856c66",
+						"border-top-width" : "1px",
+						"color" : "#856C66",
+						"border-right-width" : "1px",
+						"padding-left" : "5px",
+						"border-left-color" : "#856c66",
+						"padding-bottom" : "3px",
+						"border-right-color" : "#856c66",
+						"border-left-width" : "1px",
+						"border-top-style" : "solid",
+						"border-radius" : "5px",
+						"border-left-style" : "solid",
+						"border-bottom-width" : "1px",
+						"border-top-color" : "#856c66",
+						"border-bottom-style" : "solid",
+						"padding-right" : "5px"
+					});
 					container.addChild(output_4, {
 						"autoSize": "width",
 						"width": "100px",
@@ -912,6 +1043,10 @@
 			(function(container){
 				var output_14 = new cpr.controls.Output();
 				output_14.value = "등록일";
+				output_14.style.css({
+					"color" : "#856C66",
+					"font-weight" : "bold"
+				});
 				container.addChild(output_14, {
 					"colIndex": 0,
 					"rowIndex": 0,
@@ -920,6 +1055,10 @@
 				var output_15 = new cpr.controls.Output("updatedAtLabel");
 				output_15.visible = false;
 				output_15.value = "수정일";
+				output_15.style.css({
+					"color" : "#856C66",
+					"font-weight" : "bold"
+				});
 				container.addChild(output_15, {
 					"colIndex": 2,
 					"rowIndex": 0,
@@ -927,6 +1066,9 @@
 				});
 				var output_16 = new cpr.controls.Output("createdAt");
 				output_16.value = "Output";
+				output_16.style.css({
+					"color" : "#856C66"
+				});
 				container.addChild(output_16, {
 					"colIndex": 1,
 					"rowIndex": 0
@@ -934,6 +1076,9 @@
 				var output_17 = new cpr.controls.Output("updatedAt");
 				output_17.visible = false;
 				output_17.value = "Output";
+				output_17.style.css({
+					"color" : "#856C66"
+				});
 				container.addChild(output_17, {
 					"colIndex": 3,
 					"rowIndex": 0
@@ -982,86 +1127,84 @@
 			var group_20 = new cpr.controls.Container();
 			group_20.style.css({
 				"background-color" : "#eaf1f3",
-				"border-radius" : "5px",
-				"background-image" : "none"
+				"border-radius" : "5px"
 			});
-			var xYLayout_2 = new cpr.controls.layouts.XYLayout();
-			group_20.setLayout(xYLayout_2);
+			var verticalLayout_13 = new cpr.controls.layouts.VerticalLayout();
+			verticalLayout_13.leftMargin = 10;
+			verticalLayout_13.rightMargin = 10;
+			verticalLayout_13.topMargin = 20;
+			verticalLayout_13.bottomMargin = 20;
+			group_20.setLayout(verticalLayout_13);
 			(function(container){
-				var group_21 = new cpr.controls.Container();
-				var verticalLayout_13 = new cpr.controls.layouts.VerticalLayout();
-				group_21.setLayout(verticalLayout_13);
-				(function(container){
-					var userDefinedControl_4 = new udc.recipe.group_subtitle();
-					userDefinedControl_4.value = "댓글";
-					container.addChild(userDefinedControl_4, {
-						"width": "580px",
-						"height": "20px"
-					});
-					var group_22 = new cpr.controls.Container("commentList");
-					var verticalLayout_14 = new cpr.controls.layouts.VerticalLayout();
-					group_22.setLayout(verticalLayout_14);
-					container.addChild(group_22, {
-						"autoSize": "height",
-						"width": "400px",
-						"height": "10px"
-					});
-					var group_23 = new cpr.controls.Container();
-					var formLayout_5 = new cpr.controls.layouts.FormLayout();
-					formLayout_5.scrollable = false;
-					formLayout_5.horizontalSpacing = "0px";
-					formLayout_5.verticalSpacing = "0px";
-					formLayout_5.topMargin = "0px";
-					formLayout_5.rightMargin = "0px";
-					formLayout_5.bottomMargin = "0px";
-					formLayout_5.leftMargin = "0px";
-					formLayout_5.setColumns(["1fr", "10px", "50px"]);
-					formLayout_5.setRows(["30px"]);
-					group_23.setLayout(formLayout_5);
-					(function(container){
-						var inputBox_1 = new cpr.controls.InputBox("ipb1");
-						inputBox_1.placeholder = "레시피에 대한 의견을 남겨보세요!";
-						container.addChild(inputBox_1, {
-							"colIndex": 0,
-							"rowIndex": 0
-						});
-						var button_1 = new cpr.controls.Button();
-						button_1.value = "등록";
-						container.addChild(button_1, {
-							"colIndex": 2,
-							"rowIndex": 0
-						});
-					})(group_23);
-					container.addChild(group_23, {
-						"width": "400px",
-						"height": "30px"
-					});
-				})(group_21);
+				var userDefinedControl_4 = new udc.recipe.group_subtitle();
+				userDefinedControl_4.value = "댓글";
+				container.addChild(userDefinedControl_4, {
+					"width": "580px",
+					"height": "20px"
+				});
+				var group_21 = new cpr.controls.Container("commentList");
+				var verticalLayout_14 = new cpr.controls.layouts.VerticalLayout();
+				group_21.setLayout(verticalLayout_14);
 				container.addChild(group_21, {
-					"top": "10px",
-					"right": "10px",
-					"bottom": "30px",
-					"left": "10px"
+					"autoSize": "height",
+					"width": "400px",
+					"height": "10px"
+				});
+				var group_22 = new cpr.controls.Container();
+				var formLayout_5 = new cpr.controls.layouts.FormLayout();
+				formLayout_5.scrollable = false;
+				formLayout_5.horizontalSpacing = "0px";
+				formLayout_5.verticalSpacing = "0px";
+				formLayout_5.topMargin = "0px";
+				formLayout_5.rightMargin = "0px";
+				formLayout_5.bottomMargin = "0px";
+				formLayout_5.leftMargin = "0px";
+				formLayout_5.setColumns(["1fr", "10px", "50px"]);
+				formLayout_5.setRows(["30px"]);
+				group_22.setLayout(formLayout_5);
+				(function(container){
+					var inputBox_1 = new cpr.controls.InputBox("commentInput");
+					inputBox_1.placeholder = "레시피에 대한 의견을 남겨보세요!";
+					if(typeof onCommentInputKeydown == "function") {
+						inputBox_1.addEventListener("keydown", onCommentInputKeydown);
+					}
+					container.addChild(inputBox_1, {
+						"colIndex": 0,
+						"rowIndex": 0
+					});
+					var button_1 = new cpr.controls.Button("commentSubmitBtn");
+					button_1.value = "등록";
+					if(typeof onCommentSubmitBtnClick == "function") {
+						button_1.addEventListener("click", onCommentSubmitBtnClick);
+					}
+					container.addChild(button_1, {
+						"colIndex": 2,
+						"rowIndex": 0
+					});
+				})(group_22);
+				container.addChild(group_22, {
+					"width": "400px",
+					"height": "30px"
 				});
 			})(group_20);
 			container.addChild(group_20, {
 				"autoSize": "height",
-				"width": "600px",
-				"height": "200px"
+				"width": "580px",
+				"height": "160px"
 			});
 			
-			var group_24 = new cpr.controls.Container("grb9");
-			var xYLayout_3 = new cpr.controls.layouts.XYLayout();
-			group_24.setLayout(xYLayout_3);
+			var group_23 = new cpr.controls.Container("grb9");
+			var xYLayout_2 = new cpr.controls.layouts.XYLayout();
+			group_23.setLayout(xYLayout_2);
 			(function(container){
-				var group_25 = new cpr.controls.Container();
-				group_25.style.css({
+				var group_24 = new cpr.controls.Container();
+				group_24.style.css({
 					"background-color" : "#e9edf2",
 					"border-radius" : "5px",
 					"background-image" : "none"
 				});
-				var xYLayout_4 = new cpr.controls.layouts.XYLayout();
-				group_25.setLayout(xYLayout_4);
+				var xYLayout_3 = new cpr.controls.layouts.XYLayout();
+				group_24.setLayout(xYLayout_3);
 				(function(container){
 					var output_18 = new cpr.controls.Output("out1");
 					output_18.value = "Output";
@@ -1154,15 +1297,15 @@
 						"width": "120px",
 						"height": "20px"
 					});
-				})(group_25);
-				container.addChild(group_25, {
+				})(group_24);
+				container.addChild(group_24, {
 					"top": "10px",
 					"right": "0px",
 					"bottom": "10px",
 					"left": "0px"
 				});
-			})(group_24);
-			container.addChild(group_24, {
+			})(group_23);
+			container.addChild(group_23, {
 				"autoSize": "none",
 				"width": "600px",
 				"height": "240px"

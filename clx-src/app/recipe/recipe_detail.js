@@ -12,6 +12,24 @@ const getRecipeId=()=> {
 	return  pathName.split("/").pop();
 }
 
+const addCommentUDC=(comment, commentList)=>{
+	const commentUDC = new udc.recipe.recipe_comment();
+			
+	if (!comment.userProfileImageUrl) {
+		commentUDC.userImg = "theme/images/user.svg";
+	} else {
+		commentUDC.userImg = comment.userProfileImageUrl;
+	}
+	commentUDC.userNickName = comment.nickname;
+	commentUDC.createdAt = comment.createdAt;
+	commentUDC.comment = comment.commentContents;
+		
+	commentList.addChild(commentUDC, {
+	  width: "100%",
+	  height: "100px",
+	});	
+}
+
 /*
  * 루트 컨테이너에서 load 이벤트 발생 시 호출.
  * 앱이 최초 구성된후 최초 랜더링 직후에 발생하는 이벤트 입니다.
@@ -89,7 +107,12 @@ function onRecipeDetailSmsSubmitSuccess(e){
 	difficultyValue.value = resultJson.difficulty;
 	cookingTimeValue.value = resultJson.cookingTime;
 	caloriesValue.value = `${resultJson.calories}kcal`;
-	recipeAuthorImg.src = resultJson.userProfileImageUrl;
+	if(!resultJson.userProfileImageUrl){
+		recipeAuthorImg.src = "theme/images/user.svg";
+	} else {
+		recipeAuthorImg.src = resultJson.userProfileImageUrl;	
+	}
+	
 	recipeAuthorName.value = resultJson.userNickname;
 	likeCountValue.value = "좋아요 "+resultJson.likeCount+"개";
 	viewCountValue.value = "조회수 "+resultJson.viewCount+"번";
@@ -197,20 +220,15 @@ function onRecipeDetailSmsSubmitSuccess(e){
 	if (commentsData.length){
 		for (let i = 0; i < commentsData.length; i++) {
 			const comment = commentsData[i];
-			const commentUDC = new udc.recipe.recipe_comment();
-			commentUDC.userImg = comment.userProfileImageUrl;
-			commentUDC.userNickName = comment.nickname;
-			commentUDC.createAt = comment.createAt;
-			commentUDC.comment = comment.commentContents;
-				
-			commentList.addChild(commentUDC, {
-			  width: "100%",
-			  height: "100px",
-			});	
-		}	
+			addCommentUDC(comment, commentList);
+		}
 	} else {
 		const commentNull = new cpr.controls.Output();
 		commentNull.value = "아직 이 레시피에 대한 댓글이 없어요!";
+		commentNull.style.css({
+		  "text-align": "center",
+		  "line-height": "100px"
+		});
 		commentList.addChild(commentNull, {
 		  width: "100%",
 		  height: "100px",
@@ -369,4 +387,49 @@ function onRecipeLikeToggleSmsSubmitSuccess(e){
 	}
 	
 	showToastModule.showToast(resultJson.message.message);
+}
+
+/*
+ * 댓글 input에서 keydown 이벤트 발생 시 호출.
+ * 사용자가 키를 누를 때 발생하는 이벤트. 키코드 관련 상수는 {@link cpr.events.KeyCode}에서 참조할 수 있습니다.
+ */
+function onCommentInputKeydown(e){
+	const commentInput = e.control;
+	// Enter를 눌렀다면 전송 버튼을 클릭한 이벤트를 불러온다
+	if(e.keyCode == cpr.events.KeyCode.ENTER) { 
+	  var vcBtnSend = app.lookup("commentSubmitBtn"); 
+	  vcBtnSend.click(); 
+	}
+}
+
+/*
+ * 댓글 등록 버튼(commentSubmitBtn)에서 click 이벤트 발생 시 호출.
+ * 사용자가 컨트롤을 클릭할 때 발생하는 이벤트.
+ */
+function onCommentSubmitBtnClick(e){
+	const commentSubmitBtn = e.control;
+	const recipeId = getRecipeId();
+	const commentInput = app.lookup("commentInput");
+	const commentContents = commentInput.value;
+	
+	const recipeCommentSubmitSms = app.lookup("recipeCommentSubmitSms");
+	recipeCommentSubmitSms.setRequestActionUrl(recipeCommentSubmitSms.action+recipeId);
+	recipeCommentSubmitSms.addParameter("param", {commentContents:commentContents});
+	recipeCommentSubmitSms.send();
+	recipeCommentSubmitSms.removeAllParameters();
+	commentInput.value = "";
+}
+
+/*
+ * 서브미션에서 submit-success 이벤트 발생 시 호출.
+ * 통신이 성공하면 발생합니다.
+ */
+function onRecipeCommentSubmitSmsSubmitSuccess(e){
+	const recipeCommentSubmitSms = e.control;
+	const result = recipeCommentSubmitSms.xhr.responseText;
+	const comment = JSON.parse(result);
+	
+	const commentList = app.lookup("commentList");
+	
+	addCommentUDC(comment, commentList);
 }

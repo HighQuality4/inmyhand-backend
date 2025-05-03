@@ -2,8 +2,10 @@ package com.inmyhand.refrigerator.recipe.service;
 
 import com.inmyhand.refrigerator.member.domain.entity.MemberEntity;
 import com.inmyhand.refrigerator.member.repository.MemberRepository;
+import com.inmyhand.refrigerator.recipe.domain.dto.RecipeCommentEntityDto;
 import com.inmyhand.refrigerator.recipe.domain.entity.RecipeCommentEntity;
 import com.inmyhand.refrigerator.recipe.domain.entity.RecipeInfoEntity;
+import com.inmyhand.refrigerator.recipe.mapper.RecipeCommentMapper;
 import com.inmyhand.refrigerator.recipe.repository.RecipeCommentRepository;
 import com.inmyhand.refrigerator.recipe.repository.RecipeInfoRepository;
 import jakarta.persistence.EntityNotFoundException;
@@ -18,6 +20,7 @@ public class RecipeCommentServiceImpl implements RecipeCommentService {
     private final RecipeCommentRepository recipeCommentRepository;
     private final MemberRepository memberRepository;
     private final RecipeInfoRepository recipeInfoRepository;
+    private final RecipeCommentMapper recipeCommentMapper;
 
     /**
      * 댓글 추가 메서드
@@ -27,7 +30,7 @@ public class RecipeCommentServiceImpl implements RecipeCommentService {
      */
     @Override
     @Transactional
-    public void addComment(String commentContents, Long memberId, Long recipeId) {
+    public RecipeCommentEntityDto addComment(String commentContents, Long memberId, Long recipeId) {
         // 회원과 레시피 조회
         MemberEntity member = memberRepository.findById(memberId)
                 .orElseThrow(() -> new EntityNotFoundException("회원을 찾을 수 없습니다. ID: " + memberId));
@@ -44,7 +47,9 @@ public class RecipeCommentServiceImpl implements RecipeCommentService {
         comment.setRecipeInfoEntity(recipe);
 
         // 저장
-        recipeCommentRepository.save(comment);
+        RecipeCommentEntity savedComment = recipeCommentRepository.save(comment);
+
+        return recipeCommentMapper.toDto(savedComment);
     }
 
     /**

@@ -1,5 +1,6 @@
 package com.inmyhand.refrigerator.recipe.mapper;
 
+import com.inmyhand.refrigerator.files.domain.entity.FilesEntity;
 import com.inmyhand.refrigerator.recipe.domain.dto.RecipeCommentEntityDto;
 import com.inmyhand.refrigerator.recipe.domain.entity.RecipeCommentEntity;
 import org.springframework.stereotype.Component;
@@ -49,6 +50,12 @@ public class RecipeCommentMapper {
         dto.setCreatedAt(entity.getCreatedAt());
         if(entity.getMemberEntity() != null) {
             dto.setNickname(entity.getMemberEntity().getNickname());
+            String profileUrl = null;
+            FilesEntity profileFile = entity.getMemberEntity().getFilesEntity();
+            if (profileFile != null) {
+                profileUrl = profileFile.getFileUrl();
+                dto.setUserProfileImageUrl(profileUrl);
+            }
         }
 
         return dto;

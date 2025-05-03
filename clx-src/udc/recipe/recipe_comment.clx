@@ -4,44 +4,46 @@
     <std:metadata>
       <std:property key="template-file" value="templates/contents_container.clx"/>
     </std:metadata>
-    <screen std:sid="screen-c2a79191" id="default" name="default" width="1024px" height="768px" customHeight="600" customWidth="800" active="true"/>
-    <screen std:sid="screen-337748bf" id="tablet" name="tablet" width="500px" height="667px"/>
-    <screen std:sid="screen-2568f5e7" id="mobile" name="mobile" width="350px" height="525px"/>
+    <screen std:sid="screen-acf04107" id="default" name="default" width="1024px" height="768px" customHeight="600" customWidth="800" active="true"/>
+    <screen std:sid="screen-a01ac0e4" id="tablet" name="tablet" width="500px" height="667px"/>
+    <screen std:sid="screen-dfb163bb" id="mobile" name="mobile" width="350px" height="525px"/>
     <cl:model std:sid="model-14a97e4b"/>
     <cl:appspec>
       <cl:property name="userImg" type="string"/>
       <cl:property name="userNickName" type="string"/>
-      <cl:property name="createAt" type="string"/>
+      <cl:property name="createdAt" type="string"/>
       <cl:property name="comment" type="string"/>
     </cl:appspec>
   </head>
-  <body std:sid="body-a80910df" style="top:0px; border-bottom-color:#856C66; left:0px; width:500px; border-bottom-width:2px; border-bottom-style:soild; height:75px;">
+  <body std:sid="body-a80910df" style="top:0px; left:0px; width:520px; height:75px;">
     <cl:group std:sid="group-6e52a14b">
-      <cl:verticaldata std:sid="v-data-3206c6d8" width="400px" height="30px"/>
-      <cl:img std:sid="image-28c19de5">
-        <cl:apppropbind property="src" category="PROPERTY" app-property="userImg"/>
-        <cl:formdata std:sid="f-data-43b38863" row="0" col="0"/>
-      </cl:img>
-      <cl:output std:sid="output-0f7a7444">
-        <cl:apppropbind property="value" category="PROPERTY" app-property="userNickName"/>
-        <cl:formdata std:sid="f-data-dc8aaa86" row="0" col="2"/>
+      <cl:verticaldata std:sid="v-data-3206c6d8" width="510px" height="30px"/>
+      <cl:output std:sid="output-80cbada0" style="color:#856c66; text-align:right;">
+        <cl:apppropbind property="value" category="PROPERTY" app-property="createdAt"/>
+        <cl:formdata std:sid="f-data-5b0e1d8c" row="0" col="2"/>
       </cl:output>
-      <cl:output std:sid="output-80cbada0">
-        <cl:apppropbind property="value" category="PROPERTY" app-property="createAt"/>
-        <cl:formdata std:sid="f-data-5b0e1d8c" row="0" col="4"/>
-      </cl:output>
+      <cl:group std:sid="group-bdb92c53">
+        <cl:formdata std:sid="f-data-18a3ca62" halign="FILL" row="0" col="0"/>
+        <cl:img std:sid="image-28c19de5" style="border-radius:100%;">
+          <cl:apppropbind property="src" category="PROPERTY" app-property="userImg"/>
+          <cl:flowlayoutdata std:sid="f-data-d8f0fc97" width="30px" height="30px" autosize="none"/>
+        </cl:img>
+        <cl:output std:sid="output-0f7a7444">
+          <cl:apppropbind property="value" category="PROPERTY" app-property="userNickName"/>
+          <cl:flowlayoutdata std:sid="f-data-f70d6254" width="100px" height="30px" autosize="width"/>
+        </cl:output>
+        <cl:flowlayout std:sid="f-layout-a6bbdb70" scrollable="false" hspacing="10" vspacing="0"/>
+      </cl:group>
       <cl:formlayout std:sid="f-layout-9e71f7b3" scrollable="false" hspace="0px" vspace="0px" top-margin="0px" right-margin="0px" bottom-margin="0px" left-margin="0px">
         <cl:rows length="30" unit="PIXEL"/>
-        <cl:columns length="30" unit="PIXEL"/>
-        <cl:columns length="10" unit="PIXEL" autoSizing="false" shadetype="NONE" shadecolor="transparent"/>
-        <cl:columns length="100" unit="PIXEL" autoSizing="true"/>
+        <cl:columns length="210" unit="PIXEL" autoSizing="true"/>
         <cl:columns length="1" unit="FRACTION"/>
-        <cl:columns length="150" unit="PIXEL"/>
+        <cl:columns length="100" unit="PIXEL" autoSizing="true"/>
       </cl:formlayout>
     </cl:group>
-    <cl:output std:sid="output-fc576dbe">
+    <cl:output std:sid="output-fc576dbe" style="border-bottom-color:#856c66; border-top-width:1.5px; border-right-width:1.5px; border-bottom-width:1.5px; border-bottom-style:solid; border-left-width:1.5px;">
       <cl:apppropbind property="value" category="PROPERTY" app-property="comment"/>
-      <cl:verticaldata std:sid="v-data-ed46bfed" width="100px" height="45px" autosize="none"/>
+      <cl:verticaldata std:sid="v-data-ed46bfed" width="520px" height="45px" autosize="none"/>
     </cl:output>
     <cl:verticallayout std:sid="v-layout-a6f3a2ee" spacing="0"/>
   </body>
