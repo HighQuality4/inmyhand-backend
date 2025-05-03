@@ -2,8 +2,11 @@ package com.inmyhand.refrigerator.member.service;
 
 import com.inmyhand.refrigerator.member.domain.dto.*;
 import com.inmyhand.refrigerator.member.domain.entity.MemberEntity;
+import com.inmyhand.refrigerator.member.domain.entity.MemberRoleEntity;
+import com.inmyhand.refrigerator.member.domain.enums.MemberRole;
 import com.inmyhand.refrigerator.member.domain.enums.MemberStatus;
 import com.inmyhand.refrigerator.member.repository.MemberRepository;
+import com.inmyhand.refrigerator.member.repository.MemberRoleRepository;
 import com.inmyhand.refrigerator.recipe.domain.entity.RecipeCommentEntity;
 import com.inmyhand.refrigerator.recipe.domain.entity.RecipeInfoEntity;
 import com.inmyhand.refrigerator.recipe.domain.entity.RecipeLikesEntity;
@@ -30,6 +33,7 @@ import java.util.List;
 public class MemberServiceImpl implements MemberService {
 
     private final MemberRepository memberRepository;
+	private final MemberRoleRepository memberRoleRepository;
     private final PasswordEncoder passwordEncoder;
 	private final RecipeCommentRepository recipeCommentRepository;
 	private final RecipeLikesRepository recipeLikesRepository;
@@ -47,8 +51,14 @@ public class MemberServiceImpl implements MemberService {
 	                .providerId("LOCAL")
 	                .status(MemberStatus.active)
 	                .build();
+			memberRepository.save(memberEntity);
 
-	        memberRepository.save(memberEntity);
+			// 권한 엔티티 생성
+			MemberRoleEntity roleEntity = new MemberRoleEntity();
+			roleEntity.setMemberEntity(memberEntity);
+			roleEntity.setUserRole(MemberRole.freetier); // 양방향 연관관계 설정
+
+			memberRoleRepository.save(roleEntity);
         
 	        return true;
 	    } catch (Exception e) {
