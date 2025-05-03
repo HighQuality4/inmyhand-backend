@@ -1,6 +1,6 @@
 /************************************************
- * myRefInfo.js
- * Created at 2025. 5. 2. 오후 2:17:51.
+ * mytable.js
+ * Created at 2025. 5. 3. 오전 4:04:14.
  *
  * @author seongkwan
  ************************************************/
@@ -13,14 +13,3 @@ exports.getText = function(){
 	return "";
 };
 
-exports.setFoodName = function(val) {
-  app.lookup("foodname").value = val;
-};
-
-exports.setExpdate = function(val) {
-  app.lookup("expdate").value = val;
-};
-
-exports.setNum = function(val) {
-  app.lookup("num").value = val + ".";
-};

@@ -30,16 +30,16 @@ public class HealthInfoServiceImpl implements HealthInfoService {
     private final MemberRepository memberRepository;
 
 
-    public List<HealthInfoDTO> getAllergyInfo(@Param("memberId") Long memberId) {
-        return healthInfoRepository.findAllergyByMemberId(memberId);
+    public List<String> getAllergyInfo(Long memberId) {
+        return allergyRepository.findAllergyByMemberId(memberId);
     }
 
-    public List<HealthInfoDTO> getHateFoodInfo(@Param("memberId") Long memberId) {
-        return healthInfoRepository.findHateFoodByMemberId(memberId);
+    public List<String> getHateFoodInfo(@Param("memberId") Long memberId) {
+        return hateFoodRepository.findHateFoodByMemberId(memberId);
     }
 
-    public List<HealthInfoDTO> getHealthInterest(@Param("memberId") Long memberId) {
-        return healthInfoRepository.findInterestInfoByMemberId(memberId);
+    public List<String> getHealthInterest(@Param("memberId") Long memberId) {
+        return healthInterestRepository.findHealthInterestByMemberId(memberId);
     }
 
     @Cacheable("healthCategories")
@@ -54,6 +54,10 @@ public class HealthInfoServiceImpl implements HealthInfoService {
 
     @Transactional
     public void saveHealthInfo(Long userId, HealthInfoDTO healthInfoDTO) {
+
+        allergyRepository.deleteByMemberId(userId);
+        hateFoodRepository.deleteByMemberId(userId);
+        healthInterestRepository.deleteByMemberId(userId);
 
         List<String> interest = healthInfoDTO.getInterestTags(healthInfoDTO.getInterestInfo());
         List<String> hateFood = healthInfoDTO.getInterestTags(healthInfoDTO.getHateFood());

@@ -17,7 +17,7 @@
           <cl:datacolumn std:sid="d-column-28e59770" name="expdate"/>
         </cl:datacolumnlist>
       </cl:datamap>
-      <cl:submission std:sid="submission-a4011292" id="smsMyRef" withCredentials="true" action="/mypage/api/myrefre">
+      <cl:submission std:sid="submission-a4011292" id="smsMyRef" withCredentials="true" action="/api/mypage/myrefre">
         <cl:responsedata dataid="dsMyRef"/>
       </cl:submission>
     </cl:model>
@@ -35,6 +35,10 @@
         <cl:xylayoutdata std:sid="xyl-data-766f1f0b" top="72px" width="480px" height="275px" horizontalAnchor="CENTER" verticalAnchor="TOP"/>
         <cl:verticallayout std:sid="v-layout-5879c8df"/>
       </cl:group>
+      <cl:button std:sid="button-b970e58f" style="border-radius:5px;" value="내 냉장고 보러가기">
+        <cl:listener std:sid="listener-93a4a173" name="click" handler="onButtonClick"/>
+        <cl:xylayoutdata std:sid="xyl-data-2993c108" top="385px" width="460px" height="40px" horizontalAnchor="CENTER" verticalAnchor="TOP"/>
+      </cl:button>
       <cl:xylayout std:sid="xylayout-f366a95e"/>
     </cl:group>
     <cl:xylayout std:sid="xylayout-1577e53b"/>

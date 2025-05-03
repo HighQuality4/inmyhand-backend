@@ -340,36 +340,55 @@
 				]
 			});
 			
-			var button_7 = new cpr.controls.Button();
-			button_7.value = "로그아웃";
-			button_7.style.css({
-				"border-radius" : "5px"
-			});
-			if(typeof onButtonClick == "function") {
-				button_7.addEventListener("click", onButtonClick);
-			}
-			container.addChild(button_7, {
+			var group_2 = new cpr.controls.Container();
+			var xYLayout_2 = new cpr.controls.layouts.XYLayout();
+			group_2.setLayout(xYLayout_2);
+			(function(container){
+				var output_1 = new cpr.controls.Output();
+				output_1.value = "로그인 되었습니다!";
+				container.addChild(output_1, {
+					"left": "2px",
+					"width": "410px",
+					"height": "20px",
+					"top": "calc(50% - 10px)"
+				});
+				var button_7 = new cpr.controls.Button();
+				button_7.value = "로그아웃";
+				button_7.style.css({
+					"border-radius" : "5px"
+				});
+				if(typeof onButtonClick == "function") {
+					button_7.addEventListener("click", onButtonClick);
+				}
+				container.addChild(button_7, {
+					"left": "417px",
+					"width": "100px",
+					"height": "20px",
+					"top": "calc(50% - 10px)"
+				});
+			})(group_2);
+			container.addChild(group_2, {
 				positions: [
 					{
 						"media": "all and (min-width: 1024px)",
-						"top": "70px",
-						"left": "451px",
-						"width": "100px",
-						"height": "20px"
+						"top": "20px",
+						"width": "520px",
+						"height": "20px",
+						"left": "calc(50% - 260px)"
 					}, 
 					{
 						"media": "all and (min-width: 500px) and (max-width: 1023.984px)",
-						"top": "70px",
-						"left": "220px",
-						"width": "49px",
-						"height": "20px"
+						"top": "20px",
+						"width": "254px",
+						"height": "20px",
+						"left": "calc(50% - 127px)"
 					}, 
 					{
 						"media": "all and (max-width: 499.984px)",
-						"top": "70px",
-						"left": "154px",
-						"width": "34px",
-						"height": "20px"
+						"top": "20px",
+						"width": "178px",
+						"height": "20px",
+						"left": "calc(50% - 89px)"
 					}
 				]
 			});

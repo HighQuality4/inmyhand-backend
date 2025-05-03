@@ -9,9 +9,9 @@
     <screen std:sid="screen-374b9d6f" id="mobile" name="mobile" width="350px" height="525px"/>
     <cl:model std:sid="model-601f2e9f"/>
     <cl:appspec>
-      <cl:property name="num" type="string"/>
-      <cl:property name="foodName" type="string"/>
-      <cl:property name="expdate" type="string"/>
+      <cl:property name="num" type="string" bindable="true"/>
+      <cl:property name="foodName" type="string" bindable="true"/>
+      <cl:property name="expdate" type="string" bindable="true"/>
     </cl:appspec>
   </head>
   <body std:sid="body-b3f01d31" style="border-radius:5px; background-color:#FFFFFF; top:0px; left:0px; width:460px; height:42px;">

@@ -1,6 +1,7 @@
 package com.inmyhand.refrigerator.recipe.repository;
 
 import com.inmyhand.refrigerator.admin.dto.AdminRecipeInfoDto;
+import com.inmyhand.refrigerator.member.domain.dto.MyRecipeDTO;
 import com.inmyhand.refrigerator.recipe.domain.entity.RecipeInfoEntity;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -50,5 +51,17 @@ public interface RecipeInfoRepository extends JpaRepository<RecipeInfoEntity, Lo
     // findById 대체 메서드
     @Query("SELECT r FROM RecipeInfoEntity r JOIN FETCH r.filesEntities WHERE r.id = :id")
     Optional<RecipeInfoEntity> similarFindById(Long id);
+
+    @Query("""
+        SELECT new com.inmyhand.refrigerator.member.domain.dto.MyRecipeDTO(
+            m.nickname,
+            r.recipeName,
+            r.createdAt
+        )
+        FROM RecipeInfoEntity r
+        JOIN r.memberEntity m
+        WHERE m.id = :memberId
+    """)
+    Page<MyRecipeDTO> findByMemberEntity_Id(@Param("memberId") Long memberId, Pageable pageable);
 }
 

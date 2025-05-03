@@ -40,6 +40,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             throws ServletException, IOException {
 
         String token = null;
+        String path = request.getRequestURI();
 
 // 1. 먼저 Authorization 헤더에서 꺼내기
         String authHeader = request.getHeader("Authorization");

@@ -12,7 +12,7 @@
           <cl:datacolumn std:sid="d-column-50b75d01" name="interestInfo"/>
         </cl:datacolumnlist>
       </cl:datamap>
-      <cl:submission std:sid="submission-74df0d62" id="smsHealthInfo" withCredentials="true" action="/healthInfo/api/save">
+      <cl:submission std:sid="submission-74df0d62" id="smsHealthInfo" withCredentials="true" action="api/healthInfo/save">
         <cl:requestdata dataid="dmHealthInfo"/>
       </cl:submission>
     </cl:model>
