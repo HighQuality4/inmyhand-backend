@@ -1,41 +1,40 @@
 package com.inmyhand.refrigerator.recipe.controller;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.inmyhand.refrigerator.recipe.domain.dto.RecipeCommentEntityDto;
 import com.inmyhand.refrigerator.recipe.service.RecipeCommentService;
+import com.inmyhand.refrigerator.security.CustomUserDetails;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @RestController
 @RequestMapping("/api/recipes/comments")
 @RequiredArgsConstructor
 public class RecipeCommentController {
-    // TODO : 댓글 등록 /api/recipes/comments/{recipeId}
-
-    // TODO : 댓글 삭제 /api/recipes/comments/delete/{commentId}
-
     private final RecipeCommentService recipeCommentService;
+    private final ObjectMapper objectMapper;
 
-    /**
-     * 댓글 등록 API
-     * @param recipeId 레시피 ID
-     * @param commentDto 댓글 정보 DTO
-     * @param memberId 회원 ID (인증정보에서 추출)
-     * @return 응답 메시지
-     */
+    // 댓글 등록
     @PostMapping("/{recipeId}")
-    public ResponseEntity<Map<String, String>> addComment(
+    public RecipeCommentEntityDto addComment(
             @PathVariable Long recipeId,
-            @RequestBody RecipeCommentEntityDto commentDto,
-            @RequestAttribute("memberId") Long memberId) {
+            @RequestBody Map<String, Object> body,
+            @AuthenticationPrincipal CustomUserDetails userDetails) {
+        Map<String, Object> innerParam = (Map<String, Object>) body.get("param");
+        List<Map<String, Object>> paramList = (List<Map<String, Object>>) innerParam.get("param");
+        Map<String, Object> commentData = paramList.get(0);
+        RecipeCommentEntityDto commentDto = objectMapper.convertValue(commentData, RecipeCommentEntityDto.class);
 
-        recipeCommentService.addComment(commentDto.getCommentContents(), memberId, recipeId);
+        RecipeCommentEntityDto response = recipeCommentService.addComment(
+                commentDto.getCommentContents(), userDetails.getUserId(), recipeId
+        );
 
-        return ResponseEntity.status(HttpStatus.CREATED).body(Map.of("message", "댓글이 성공적으로 등록되었습니다."));
+        return response;
     }
 
     /**
