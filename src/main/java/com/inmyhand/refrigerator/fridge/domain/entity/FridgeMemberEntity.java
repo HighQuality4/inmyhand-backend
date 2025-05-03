@@ -26,7 +26,7 @@ public class FridgeMemberEntity {
 
     private Date joinDate;
 
-    private Boolean state = true;
+    private Boolean state;
 
     private Boolean favoriteState;
 

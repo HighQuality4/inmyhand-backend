@@ -1,6 +1,8 @@
 package com.inmyhand.refrigerator.fridge.service;
 
 import com.inmyhand.refrigerator.fridge.domain.dto.food.*;
+import com.inmyhand.refrigerator.fridge.domain.dto.group.FridgeGroupMemberDTO;
+import com.inmyhand.refrigerator.fridge.domain.dto.group.FridgeLeaderDTO;
 import com.inmyhand.refrigerator.fridge.domain.entity.FridgeEntity;
 import com.inmyhand.refrigerator.fridge.domain.entity.FridgeFoodEntity;
 import com.inmyhand.refrigerator.fridge.domain.entity.FridgeMemberEntity;
@@ -8,9 +10,7 @@ import com.inmyhand.refrigerator.fridge.repository.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -33,53 +33,60 @@ public class FridgeFoodService {
         return foodList;
     }
 
+    public List<FridgeEntity> getFridgeListByUser(Long memberId) {
+        return fridgeMemberRepository.findFridgesByMemberId(memberId);
+    }
 
 
-    // 내가 참여하고 있는 냉장고 리스트 정보 출력
-    public List<FridgeWithRoleDTO> svcGetFridgeListWithLeaderFlag(Long memberId) {
-        List<FridgeMemberEntity> fridgeMembers = fridgeMemberRepository.findByMemberEntity_Id(memberId);
+    // 냉장고 참여중인 멤버 정보
+    public List<FridgeGroupMemberDTO> getFridgeGroupMembers(Long fridgeId) {
+        List<FridgeMemberEntity> fridgeMembers = fridgeMemberRepository.findFridgeMembersWithRolesByFridgeId(fridgeId);
 
         return fridgeMembers.stream()
-                .map(fridgeMember -> {
-                    boolean isLeader = memberGroupRoleRepository.findAllByFridgeMemberEntity_Id(fridgeMember.getId())
-                            .stream()
-                            .anyMatch(role -> "leader".equals(role.getGroupRoleEntity().getRoleName())); // ✅ leader 여부 판단
+                .map(fm -> new FridgeGroupMemberDTO(
+                        fm.getId(),
+                        fm.getMemberEntity().getId(),
+                        fm.getMemberEntity().getNickname(),
+                        fm.getMemberEntity().getEmail(),
+                        fm.getJoinDate(),
+                        fm.getPermissionGroupRoleList().stream()
+                                .map(pgr -> pgr.getGroupRoleEntity().getRoleName())
+                                .distinct() // 중복제거
+                                .toList()
+                ))
+                .toList();
+    }
 
-                    return FridgeWithRoleDTO.builder()
-                            .fridgeId(fridgeMember.getFridgeEntity().getId())
-                            .fridgeName(fridgeMember.getFridgeEntity().getFridgeName())
-                            .favoriteState(fridgeMember.getFavoriteState())
-                            .isLeader(isLeader) // ✅ true or false 설정
-                            .build();
+    // 내가 참여하고 있는 냉장고 리스트 + 권한 정보 출력
+    public List<FridgeWithRolesDTO> getFridgeListWithRoles(Long memberId) {
+        List<Object[]> results = fridgeMemberRepository.findFridgeListWithRolesNative(memberId);
+
+        return results.stream()
+                .map(row -> FridgeWithRolesDTO.builder()
+                        .fridgeId(((Number) row[0]).longValue())
+                        .fridgeName((String) row[1])
+                        .roleNames(
+                                Optional.ofNullable((String) row[2])
+                                        .map(roleStr -> Arrays.asList(roleStr.split(",")))
+                                        .orElseGet(ArrayList::new)
+                        )
+                        .favoriteState((Boolean) row[3])
+                        .build())
+                .sorted((a, b) -> {
+                    // favoriteState가 true인 것 먼저
+                    boolean aFavorite = Boolean.TRUE.equals(a.getFavoriteState());
+                    boolean bFavorite = Boolean.TRUE.equals(b.getFavoriteState());
+                    if (aFavorite != bFavorite) {
+                        return Boolean.compare(!aFavorite, !bFavorite); // true 먼저
+                    }
+                    // 그 다음 leader 있는 거 우선
+                    boolean aIsLeader = a.getRoleNames() != null && a.getRoleNames().contains("leader");
+                    boolean bIsLeader = b.getRoleNames() != null && b.getRoleNames().contains("leader");
+                    return Boolean.compare(!aIsLeader, !bIsLeader);
                 })
-                .collect(Collectors.toList());
+                .toList();
     }
 
-    public List<FridgeWithRolesDTO> svcGetFridgeListWithRoles(Long memberId) {
-        List<FridgeMemberEntity> fridgeMembers = fridgeMemberRepository.findByMemberEntity_Id(memberId);
-
-        return fridgeMembers.stream().map(fridgeMember -> {
-            List<String> roleNames = memberGroupRoleRepository.findAllByFridgeMemberEntity_Id(fridgeMember.getId())
-                    .stream()
-                    .map(memberGroupRole -> memberGroupRole.getGroupRoleEntity().getRoleName())
-                    .collect(Collectors.toList());
-
-            return FridgeWithRolesDTO.builder()
-                    .fridgeId(fridgeMember.getFridgeEntity().getId())
-                    .fridgeName(fridgeMember.getFridgeEntity().getFridgeName())
-                    .roleNames(roleNames)
-                    .favoriteState(fridgeMember.getFavoriteState())
-                    .build();
-        })
-        .sorted((a, b) -> {
-            // "리더"가 포함된 냉장고를 우선 정렬
-            boolean aIsLeader = a.getRoleNames().contains("leader");
-            boolean bIsLeader = b.getRoleNames().contains("leader");
-            return Boolean.compare(!aIsLeader, !bIsLeader);
-        })
-        .collect(Collectors.toList());
-
-    }
 
     // 1. 즐겨찾기 냉장고 리스트
     public List<FridgeDTO> svcGetFavoriteFridgeDetail(Long memberId) {
@@ -178,13 +185,17 @@ public class FridgeFoodService {
         fridgeFoodRepository.saveAll(updateList); // 리스트 전체 업데이트
     }
 
-    // 3. Delete
-    public void svcDeleteFridgeFood(Long fridgeFoodId) {
-        if (!fridgeFoodRepository.existsById(fridgeFoodId)) {
-            throw new IllegalArgumentException("식재료 없음");
+    public void deleteFridgeFoods(List<FridgeFoodDTO> updateList) {
+        List<Long> idsToDelete = updateList.stream()
+                .map(FridgeFoodDTO::getId)
+                .filter(Objects::nonNull) // null id 방지
+                .toList();
+
+        if (!idsToDelete.isEmpty()) {
+            fridgeFoodRepository.deleteAllByIdInBatch(idsToDelete);
         }
-        fridgeFoodRepository.deleteById(fridgeFoodId);
     }
+
 
 
 

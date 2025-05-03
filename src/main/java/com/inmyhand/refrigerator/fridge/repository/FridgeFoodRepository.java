@@ -10,4 +10,5 @@ import java.util.List;
 public interface FridgeFoodRepository extends JpaRepository<FridgeFoodEntity, Long> {
     List<FridgeFoodEntity> findByFridgeEntityId(Long fridgeId);
 
+    void deleteAllByIdInBatch(Iterable<Long> ids);
 }

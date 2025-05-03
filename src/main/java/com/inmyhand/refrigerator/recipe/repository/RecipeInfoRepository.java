@@ -50,7 +50,7 @@ public interface RecipeInfoRepository extends JpaRepository<RecipeInfoEntity, Lo
 
     // findById 대체 메서드
     @Query("SELECT r FROM RecipeInfoEntity r JOIN FETCH r.filesEntities WHERE r.id = :id")
-    Optional<RecipeInfoEntity> similarFindById(Long id);
+    Optional<RecipeInfoEntity> similarFindById(@Param("id")Long id);
 
     @Query("""
         SELECT new com.inmyhand.refrigerator.member.domain.dto.MyRecipeDTO(

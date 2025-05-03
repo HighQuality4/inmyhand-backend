@@ -10,11 +10,10 @@ import java.util.List;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class FridgeGroupMemberDTO {
+public class FridgeGroupEditDTO {
     private Long fridgeMemberId;
     private Long memberId;
-    private String nickname;
-    private String email;
     private Date joinDate;
-    private List<String> roleName; // 예: "leader", "member", editor
+    private String permissionName;
+    private String roleStatus;
 }

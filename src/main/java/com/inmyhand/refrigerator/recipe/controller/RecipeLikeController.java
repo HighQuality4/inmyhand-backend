@@ -21,7 +21,7 @@ public class RecipeLikeController {
     // localhost:7079/api/recipes/likes/36
     @PostMapping("/{recipeId}")
     public ResponseEntity<Map<String, Object>> toggleLike(
-            @PathVariable Long recipeId,
+            @PathVariable("recipeId") Long recipeId,
             @AuthenticationPrincipal CustomUserDetails userDetails) {
 
         boolean isLiked = recipeLikeService.toggleRecipeLike(userDetails.getUserId(), recipeId);
@@ -37,7 +37,7 @@ public class RecipeLikeController {
     // localhost:7079/api/recipes/likes/check/36
     @PostMapping("/check/{recipeId}")
     public ResponseEntity<Boolean> checkLikeStatus(
-            @PathVariable Long recipeId,
+            @PathVariable("recipeId") Long recipeId,
             @AuthenticationPrincipal CustomUserDetails userDetails) {
         boolean isLiked = recipeLikeService.isRecipeLikedByMember(userDetails.getUserId(), recipeId);
         return ResponseEntity.ok(isLiked);

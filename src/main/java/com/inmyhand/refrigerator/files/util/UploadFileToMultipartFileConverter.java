@@ -1,7 +1,5 @@
 package com.inmyhand.refrigerator.files.util;
 
-
-
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -36,7 +34,6 @@ public class UploadFileToMultipartFileConverter {
         return new MultipartFile() {
             @Override
             public String getName() {
-                // Form field name; can be customized if needed
                 return "file";
             }
 
@@ -47,12 +44,25 @@ public class UploadFileToMultipartFileConverter {
 
             @Override
             public String getContentType() {
+                // 1차 시도: probeContentType 사용
                 try {
                     String probeType = Files.probeContentType(file.toPath());
-                    return (probeType != null ? probeType : "application/octet-stream");
-                } catch (IOException e) {
-                    return "application/octet-stream";
+                    if (probeType != null) {
+                        return probeType;
+                    }
+                } catch (IOException ignored) {
                 }
+
+                // 2차 시도: 파일 확장자 기반 매핑
+                String lowerName = originalFilename.toLowerCase();
+                if (lowerName.endsWith(".jpg") || lowerName.endsWith(".jpeg")) return "image/jpeg";
+                if (lowerName.endsWith(".png")) return "image/png";
+                if (lowerName.endsWith(".gif")) return "image/gif";
+                if (lowerName.endsWith(".pdf")) return "application/pdf";
+                if (lowerName.endsWith(".txt")) return "text/plain";
+
+                // 최종 fallback
+                return "application/octet-stream";
             }
 
             @Override
