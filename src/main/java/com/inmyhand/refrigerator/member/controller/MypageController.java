@@ -67,7 +67,7 @@ public class MypageController {
                                             ,@RequestParam(defaultValue = "0") int page,
                                               @RequestParam(defaultValue = "10") int size) {
         Long userId = userDetails.getUserId();
-        return ResponseEntity.ok(memberService.getMyLikeRecipeInfo(userId, page, size));
+        return ResponseEntity.ok(memberService.getMyOwnRecipeInfo(userId, page, size));
     }
 
     @GetMapping("/mycomment")
