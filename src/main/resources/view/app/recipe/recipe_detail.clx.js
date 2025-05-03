@@ -270,10 +270,10 @@
 			                var recipeId = control.userData("id");
 			                if (recipeId) {
 			                    // SPA 방식으로 URL 변경
-			//                    history.pushState({}, '', `/recipe/${recipeId}`);
+			                    history.pushState({}, '', `/recipe/${recipeId}`);
 			                    // 세션 스토리지에 저장
-			//                    sessionStorage.setItem('currentRecipeId', recipeId);
-			    window.location.href = `/recipe/${recipeId}`;
+			                    sessionStorage.setItem('currentRecipeId', recipeId);
+			//    window.location.href = `/recipe/${recipeId}`;
 			                    console.log("이동: /recipe/" + recipeId);
 			                }
 			            });
@@ -295,10 +295,10 @@
 			                var recipeId = control.userData("id");
 			                if (recipeId) {
 			                    // SPA 방식으로 URL 변경
-			//                    history.pushState({}, '', `/recipe/${recipeId}`);
-			                   	history.replaceState({}, '', `/recipe/${recipeId}`);
+			                    history.pushState({}, '', `/recipe/${recipeId}`);
+			//                   	history.replaceState({}, '', `/recipe/${recipeId}`);
 			                    // 세션 스토리지에 저장
-			//                    sessionStorage.setItem('currentRecipeId', recipeId);
+			                    sessionStorage.setItem('currentRecipeId', recipeId);
 			                    // 이동
 			                    window.location.href = `/recipe/${recipeId}`;
 			                    console.log("이동: /recipe/" + recipeId);
