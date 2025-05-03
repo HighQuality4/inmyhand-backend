@@ -26,7 +26,7 @@ function onButtonClick(e){
  * 사용자가 컨트롤을 클릭할 때 발생하는 이벤트.
  */
 function onButtonClickNaver(e){
-	window.location.href = "http://localhost:7079/oauth2/authorization/naver";
+	window.location.href = window.location.origin + "/oauth2/authorization/naver";
 }
 
 /*
@@ -34,7 +34,7 @@ function onButtonClickNaver(e){
  * 사용자가 컨트롤을 클릭할 때 발생하는 이벤트.
  */
 function onButtonClickGoogle(e){
-	window.location.href = "http://localhost:7079/oauth2/authorization/google";
+	window.location.href = window.location.origin + "/oauth2/authorization/google";
 }
 
 /*
@@ -42,8 +42,7 @@ function onButtonClickGoogle(e){
  * 사용자가 컨트롤을 클릭할 때 발생하는 이벤트.
  */
 function onButtonClickKakao(e){
-	window.location.href = "http://localhost:7079/oauth2/authorization/kakao";
-	
+	window.location.href = window.location.origin + "/oauth2/authorization/kakao";
 }
 
 /*
