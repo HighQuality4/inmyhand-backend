@@ -50,8 +50,6 @@ public class MemeberRestController {
     @PostMapping("/auth/verify-email")
     public ResponseEntity<String> sendEmailVerification(DataRequest dataRequest) {
 
-        String datarequest = dataRequest.toString();
-        System.out.println(datarequest);
         EmailAuthDTO emailAuthDTO = ConverterClassUtil.getSingleClass(dataRequest, "dmEmailAuth", EmailAuthDTO.class);
 
         emailAuthService.sendEmailVerification(emailAuthDTO.getEmail());
@@ -61,13 +59,9 @@ public class MemeberRestController {
 
     @PostMapping("/auth/verify-code")
     public ResponseEntity<?> emailVerifyCode(DataRequest dataRequest) {
-        System.out.println(dataRequest.toString());
         EmailAuthDTO emailAuthDTO = ConverterClassUtil.getSingleClass(dataRequest, "dmEmailCode", EmailAuthDTO.class);
-        System.out.println(emailAuthDTO.getEmail());
-        System.out.println(emailAuthDTO.getCode());
         int code = Integer.parseInt(emailAuthDTO.getCode());
         String email = emailAuthDTO.getEmail();
-        System.out.println(email);
         boolean emailAuth = emailAuthService.verifyEmailCode(code, email);
         return ResponseEntity.ok(emailAuth);
     }

@@ -23,31 +23,36 @@ import java.util.Map;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/healthInfo")
+@RequestMapping("/api/healthInfo")
 public class HealthInfoRestController {
 
     private final HealthInfoServiceImpl healthInfoService;
 
     @PostMapping("/allergy")
-    public ResponseEntity<List<HealthInfoDTO>> ctlGetAllergyInfo(@Param("memberId") Long memberId) {
+    public ResponseEntity<List<String>> ctlGetAllergyInfo(@AuthenticationPrincipal CustomUserDetails customUserDetails) {
 
-        List<HealthInfoDTO> healthInfoList = healthInfoService.getAllergyInfo(memberId);
+        Long memberId = customUserDetails.getUserId();
+        List<String> healthInfoList = healthInfoService.getAllergyInfo(memberId);
         return new ResponseEntity<>(healthInfoList, HttpStatus.OK);
     }
 
     @PostMapping("/hate_food")
-    public ResponseEntity<List<HealthInfoDTO>> ctlGetHateFoodInfo(@Param("memberId") Long memberId) {
-        List<HealthInfoDTO> healthInfoList = healthInfoService.getHateFoodInfo(memberId);
+    public ResponseEntity<List<String>> ctlGetHateFoodInfo(@AuthenticationPrincipal CustomUserDetails customUserDetails) {
+
+        Long memberId = customUserDetails.getUserId();
+        List<String> healthInfoList = healthInfoService.getHateFoodInfo(memberId);
         return new ResponseEntity<>(healthInfoList, HttpStatus.OK);
     }
 
     @PostMapping("/health_interest")
-    public ResponseEntity<List<HealthInfoDTO>> ctlGetHealthInterestInfo(@Param("memberId") Long memberId) {
-        List<HealthInfoDTO> healthInfoList = healthInfoService.getHealthInterest(memberId);
+    public ResponseEntity<List<String>> ctlGetHealthInterestInfo(@AuthenticationPrincipal CustomUserDetails customUserDetails) {
+
+        Long memberId = customUserDetails.getUserId();
+        List<String> healthInfoList = healthInfoService.getHealthInterest(memberId);
         return new ResponseEntity<>(healthInfoList, HttpStatus.OK);
     }
 
-    @PostMapping("/api/search/health_interest")
+    @PostMapping("/search/health_interest")
     public View searchHealthInfo(DataRequest dataRequest) throws IOException {
 
         List<String> HEALTH_CATEGORIES = healthInfoService.getAllInterestInfoCategory();
@@ -68,7 +73,7 @@ public class HealthInfoRestController {
         return new JSONDataView();
     }
 
-    @PostMapping("/api/search/ingredients")
+    @PostMapping("/search/ingredients")
     public View searchIngredients(DataRequest dataRequest) {
 
         List<String> INGREDIENT_CATEGORIES = healthInfoService.getAllRecipeIngredientCategory();
@@ -89,15 +94,9 @@ public class HealthInfoRestController {
         return new JSONDataView();
     }
 
-    @PostMapping("/api/save")
+    @PostMapping("/save")
     public ResponseEntity<?> ctlSaveHealthInfo(@AuthenticationPrincipal CustomUserDetails custom, DataRequest dataRequest) {
         HealthInfoDTO health = ConverterClassUtil.getSingleClass(dataRequest, "dmHealthInfo", HealthInfoDTO.class);
-        System.out.println(dataRequest.toString());
-        System.out.println(health.getAllergy());
-        System.out.println(health.getHateFood());
-        System.out.println(health.getInterestInfo());
-
-        System.out.println(custom.getUserId());
         healthInfoService.saveHealthInfo(custom.getUserId(), health);
 
         return ResponseEntity.ok("dd");
