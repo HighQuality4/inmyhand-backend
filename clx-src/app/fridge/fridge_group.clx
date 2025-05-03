@@ -1,0 +1,286 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:cl="http://tomatosystem.co.kr/cleopatra" xmlns:std="http://tomatosystem.co.kr/cleopatra/studio" std:sid="html-cef4f320" version="1.0.5481">
+  <head std:sid="head-1bf9200e">
+    <std:metadata>
+      <std:property key="template-file" value="templates/contents_container.clx"/>
+    </std:metadata>
+    <screen std:sid="screen-6179313f" id="default" name="default" width="1024px" height="768px" useCustomWidth="true" useCustomHeight="true" customHeight="500" customWidth="300" active="true"/>
+    <screen std:sid="screen-087e9e53" id="tablet" name="tablet" width="500px" height="667px"/>
+    <screen std:sid="screen-c064d2a2" id="mobile" name="mobile" width="350px" height="525px"/>
+    <cl:model std:sid="model-c2e79a6e">
+      <cl:dataset std:sid="d-set-926f4fbf" id="searchGroupList">
+        <cl:datacolumnlist>
+          <cl:datacolumn std:sid="d-column-05b0ba91" name="memberName"/>
+          <cl:datacolumn std:sid="d-column-82945be7" name="joinDate"/>
+          <cl:datacolumn std:sid="d-column-4af1f8c3" name="roleStatus" datatype="string"/>
+          <cl:datacolumn std:sid="d-column-18a93cc8" name="permissionName"/>
+          <cl:datacolumn std:sid="d-column-c7e06c24" name="memberId"/>
+          <cl:datacolumn std:sid="d-column-b9601443" name="fridgeMemberId"/>
+        </cl:datacolumnlist>
+      </cl:dataset>
+      <cl:dataset std:sid="d-set-73a94638" id="searchMemberList">
+        <cl:datacolumnlist>
+          <cl:datacolumn std:sid="d-column-63e79c35" name="name"/>
+          <cl:datacolumn std:sid="d-column-60424133" name="nickname"/>
+          <cl:datacolumn std:sid="d-column-b066d750" name="email"/>
+        </cl:datacolumnlist>
+        <cl:datarowlist>
+          <cl:datarow>
+            <cl:datavalue columnname="name">name1</cl:datavalue>
+            <cl:datavalue columnname="nickname">nickname1</cl:datavalue>
+            <cl:datavalue columnname="email">email1</cl:datavalue>
+          </cl:datarow>
+          <cl:datarow>
+            <cl:datavalue columnname="name">name2</cl:datavalue>
+            <cl:datavalue columnname="nickname">nickname2</cl:datavalue>
+            <cl:datavalue columnname="email">email2</cl:datavalue>
+          </cl:datarow>
+        </cl:datarowlist>
+      </cl:dataset>
+      <cl:dataset std:sid="d-set-ba262b18" id="inviteList">
+        <cl:datacolumnlist>
+          <cl:datacolumn std:sid="d-column-d8e44b06" name="fridgeId" datatype="number"/>
+          <cl:datacolumn std:sid="d-column-8119bf93" name="fridgeName"/>
+          <cl:datacolumn std:sid="d-column-237f146a" name="joinDate"/>
+          <cl:datacolumn std:sid="d-column-0f47be46" name="state"/>
+          <cl:datacolumn std:sid="d-column-578952d5" name="favoriteState"/>
+        </cl:datacolumnlist>
+      </cl:dataset>
+      <cl:dataset std:sid="d-set-b6551084" id="roleList">
+        <cl:datacolumnlist>
+          <cl:datacolumn std:sid="d-column-46a5d38d" name="roleId" datatype="number"/>
+          <cl:datacolumn std:sid="d-column-c963735a" name="roleName" datatype="string"/>
+          <cl:datacolumn std:sid="d-column-542458b7" name="roleDescription"/>
+        </cl:datacolumnlist>
+      </cl:dataset>
+      <cl:dataset std:sid="d-set-262eed08" id="comboList">
+        <cl:datacolumnlist>
+          <cl:datacolumn std:sid="d-column-318cc7c2" name="statusId" datatype="number"/>
+          <cl:datacolumn std:sid="d-column-2c0ac48d" name="statusName"/>
+        </cl:datacolumnlist>
+        <cl:datarowlist>
+          <cl:datarow>
+            <cl:datavalue columnname="statusId">1</cl:datavalue>
+            <cl:datavalue columnname="statusName"><![CDATA[수락]]></cl:datavalue>
+          </cl:datarow>
+          <cl:datarow>
+            <cl:datavalue columnname="statusId">2</cl:datavalue>
+            <cl:datavalue columnname="statusName"><![CDATA[거절]]></cl:datavalue>
+          </cl:datarow>
+        </cl:datarowlist>
+      </cl:dataset>
+      <cl:dataset std:sid="d-set-1356f2a6" id="deleteGroupList">
+        <cl:datacolumnlist>
+          <cl:datacolumn std:sid="d-column-6cb7b275" name="memberName"/>
+          <cl:datacolumn std:sid="d-column-b3f34fde" name="joinDate"/>
+          <cl:datacolumn std:sid="d-column-0f6d4d10" name="roleStatus" datatype="string"/>
+          <cl:datacolumn std:sid="d-column-4954b8f8" name="permissionName"/>
+          <cl:datacolumn std:sid="d-column-8552df86" name="memberId"/>
+          <cl:datacolumn std:sid="d-column-d31de3fb" name="fridgeMemberId"/>
+        </cl:datacolumnlist>
+      </cl:dataset>
+      <cl:dataset std:sid="d-set-072d30a9" id="updateGroupList">
+        <cl:datacolumnlist>
+          <cl:datacolumn std:sid="d-column-d0fe2cca" name="memberName"/>
+          <cl:datacolumn std:sid="d-column-5363b7f2" name="joinDate"/>
+          <cl:datacolumn std:sid="d-column-8dcd0590" name="roleStatus" datatype="string"/>
+          <cl:datacolumn std:sid="d-column-046e605a" name="permissionName"/>
+          <cl:datacolumn std:sid="d-column-f22b6662" name="memberId"/>
+          <cl:datacolumn std:sid="d-column-bdc2f913" name="fridgeMemberId"/>
+        </cl:datacolumnlist>
+      </cl:dataset>
+      <cl:datamap std:sid="d-map-d5159e8d" id="dmFridgeParam">
+        <cl:datacolumnlist>
+          <cl:datacolumn std:sid="d-column-6235d502" name="fridgeId" datatype="number"/>
+          <cl:datacolumn std:sid="d-column-3a717417" name="memberId" datatype="number"/>
+        </cl:datacolumnlist>
+      </cl:datamap>
+      <cl:submission std:sid="submission-9b3240de" id="getJoinGroupList" action="/api/fridge/members">
+        <cl:listener std:sid="listener-d681d30e" name="submit-success" handler="onGetJoinGroupListSubmitSuccess"/>
+        <cl:requestdata dataid="dmFridgeParam"/>
+      </cl:submission>
+      <cl:submission std:sid="submission-b8a8bae3" id="getRoleList" action="/api/fridge/role/checkbox">
+        <cl:listener std:sid="listener-55611b0a" name="submit-success" handler="onGetRoleListSubmitSuccess"/>
+        <cl:responsedata dataid="roleList"/>
+      </cl:submission>
+      <cl:submission std:sid="submission-0e4c437d" id="getPendIngGroupList" action="/api/fridge/role/pending/groupList" mediatype="application/json">
+        <cl:listener std:sid="listener-7738b0fb" name="submit-success" handler="onGetPendIngGroupListSubmitSuccess"/>
+        <cl:requestdata dataid="dmFridgeParam"/>
+        <cl:responsedata dataid="inviteList"/>
+      </cl:submission>
+      <cl:submission std:sid="submission-c44b8803" id="sendEditGroupList" action="/api/fridge/role/group/edit">
+        <cl:requestdata dataid="updateGroupList"/>
+        <cl:requestdata dataid="deleteGroupList"/>
+      </cl:submission>
+    </cl:model>
+    <cl:appspec/>
+  </head>
+  <body std:sid="body-c43e6d9f" style="background-color:#FFFFFF;" class="contents-container">
+    <cl:listener std:sid="listener-75cb7424" name="load" handler="onBodyLoad"/>
+    <cl:output std:sid="output-420a435a" style="background-color:#F59760; border-radius:7px; color:#FFFFFF; font-weight:bold; font-size:20px; font-family:Kim jung chul Myungjo Regular; text-align:center;" value="냉장고 그룹원 관리">
+      <cl:verticaldata std:sid="v-data-d9394b01" width="490px" height="40px" autosize="none"/>
+    </cl:output>
+    <cl:group std:sid="group-4cac218f">
+      <cl:verticaldata std:sid="v-data-0a1ab1d8" width="400px" height="233px" autosize="none"/>
+      <cl:group std:sid="group-fd6c28f1">
+        <cl:verticaldata std:sid="v-data-6fba8bf7" width="400px" height="45px"/>
+        <cl:udc std:sid="ud-control-341d458f" type="udc.fridge.fridgeCRUD">
+          <cl:listener std:sid="listener-160b8640" name="save-click" handler="onFridgeCRUDSaveClick"/>
+          <cl:flowlayoutdata std:sid="f-data-5558c965" width="200px" height="38px" autosize="none"/>
+          <cl:property name="grdCtrl" value="JoinGroupMemeberGrid" type="control"/>
+          <cl:property name="visibleAddButton" value="false" type="boolean"/>
+          <cl:property name="deleteStr" value="퇴출" type="string"/>
+        </cl:udc>
+        <cl:flowlayout std:sid="f-layout-5d4705b4" halign="right"/>
+      </cl:group>
+      <cl:grid std:sid="grid-16d2cca4" id="JoinGroupMemeberGrid" datasetid="searchGroupList">
+        <cl:verticaldata std:sid="v-data-7dd02a52" width="360px" height="176px" autosize="none"/>
+        <cl:gridcolumn std:sid="g-column-8a80e98d" width="50px"/>
+        <cl:gridcolumn std:sid="g-column-1640da90"/>
+        <cl:gridcolumn std:sid="g-column-33262346"/>
+        <cl:gridcolumn std:sid="g-column-bbbe447b"/>
+        <cl:gridcolumn std:sid="g-column-d7955b99" width="259px" visible="true"/>
+        <cl:gridcolumn std:sid="g-column-33b6026c" width="61px" visible="false"/>
+        <cl:gridcolumn std:sid="g-column-96286d82" visible="false"/>
+        <cl:gridheader std:sid="gh-band-29368352">
+          <cl:gridrow std:sid="g-row-bbda2a94" height="24px"/>
+          <cl:gridcell std:sid="gh-cell-35defd33" rowindex="0" colindex="0" sortable="false" filterable="false"/>
+          <cl:gridcell std:sid="gh-cell-488ff06e" rowindex="0" colindex="1" targetcolumnname="memberName" sortable="false" filterable="false" text="이름"/>
+          <cl:gridcell std:sid="gh-cell-4b34cace" rowindex="0" colindex="2" targetcolumnname="joinDate" sortable="false" filterable="false" text="참여일"/>
+          <cl:gridcell std:sid="gh-cell-778a8904" rowindex="0" colindex="3" targetcolumnname="roleStatus" sortable="false" filterable="false" text="직위"/>
+          <cl:gridcell std:sid="gh-cell-e04b03e7" rowindex="0" colindex="4" targetcolumnname="permissionName" sortable="false" filterable="false" text="권한"/>
+          <cl:gridcell std:sid="gh-cell-58c10e4a" rowindex="0" colindex="5" targetcolumnname="memberId" sortable="false" filterable="false" text="memberId"/>
+          <cl:gridcell std:sid="gh-cell-51cf1236" rowindex="0" colindex="6" targetcolumnname="fridgeMemberId" sortable="false" filterable="false" text="fridgeMemberId"/>
+        </cl:gridheader>
+        <cl:griddetail std:sid="gd-band-2538d0fc">
+          <cl:gridrow std:sid="g-row-2cbedb09" height="24px"/>
+          <cl:gridcell std:sid="gd-cell-5922fb99" rowindex="0" colindex="0" columntype="rowindex"/>
+          <cl:gridcell std:sid="gd-cell-d4dc761c" rowindex="0" colindex="1" columnname="memberName"/>
+          <cl:gridcell std:sid="gd-cell-da4e25d2" rowindex="0" colindex="2" columnname="joinDate"/>
+          <cl:gridcell std:sid="gd-cell-f6c4643b" rowindex="0" colindex="3" columnname="roleStatus"/>
+          <cl:gridcell std:sid="gd-cell-e44a19f3" rowindex="0" colindex="4" columnname="permissionName">
+            <cl:checkboxgroup std:sid="cb-group-95663749" id="cbg1">
+              <cl:celldata std:sid="c-data-7075d8fc"/>
+              <cl:itemset datasetid="roleList" label="roleName" value="roleName"/>
+            </cl:checkboxgroup>
+          </cl:gridcell>
+          <cl:gridcell std:sid="gd-cell-bb085c9e" rowindex="0" colindex="5" columnname="memberId"/>
+          <cl:gridcell std:sid="gd-cell-a375fd15" rowindex="0" colindex="6" columnname="fridgeMemberId"/>
+        </cl:griddetail>
+      </cl:grid>
+      <cl:verticallayout std:sid="v-layout-c8ec5426"/>
+    </cl:group>
+    <cl:group std:sid="group-792aad67">
+      <cl:verticaldata std:sid="v-data-410652d8" width="400px" height="10px"/>
+      <cl:xylayout std:sid="xylayout-84ab7e76"/>
+    </cl:group>
+    <cl:output std:sid="output-f051f95c" style="background-color:#F59760; border-radius:7px; color:#FFFFFF; font-weight:bold; font-size:20px; font-family:Kim jung chul Myungjo Regular; text-align:center;" value="냉장고 초대 관리">
+      <cl:verticaldata std:sid="v-data-941a3bd8" width="400px" height="40px" autosize="none"/>
+    </cl:output>
+    <cl:group std:sid="group-dd53f87b">
+      <cl:verticaldata std:sid="v-data-901d2cf4" width="155px" height="200px" autosize="none"/>
+      <cl:output std:sid="output-a28545ee" style="border-right-style:solid; color:#F59760; border-bottom-color:#f59760; border-top-width:2px; font-weight:bold; border-right-width:2px; border-left-color:#f59760; font-size:15px; border-right-color:#f59760; border-left-width:2px; border-top-style:solid; background-color:#ffffff; border-radius:7px; border-left-style:solid; border-bottom-width:2px; border-top-color:#f59760; font-family:Kim jung chul Myungjo Regular; border-bottom-style:solid; background-image:none; text-align:center;" value="초대 받은 목록">
+        <cl:formdata std:sid="f-data-7b6058b9" row="0" col="0"/>
+      </cl:output>
+      <cl:grid std:sid="grid-8fbfa231" id="inviteMemberGrid" datasetid="inviteList">
+        <cl:formdata std:sid="f-data-36659dd3" row="2" col="0"/>
+        <cl:gridcolumn std:sid="g-column-47c5c017" width="25px" visible="false"/>
+        <cl:gridcolumn std:sid="g-column-ab060acd" width="33px"/>
+        <cl:gridcolumn std:sid="g-column-5d374a58" visible="false"/>
+        <cl:gridcolumn std:sid="g-column-b3475312" width="75px"/>
+        <cl:gridcolumn std:sid="g-column-c5af4fc0"/>
+        <cl:gridcolumn std:sid="g-column-33bef748" width="148px"/>
+        <cl:gridheader std:sid="gh-band-b353944f">
+          <cl:gridrow std:sid="g-row-0b93e81c" height="24px"/>
+          <cl:gridcell std:sid="gh-cell-0aea7b29" rowindex="0" colindex="0" sortable="false" filterable="false"/>
+          <cl:gridcell std:sid="gh-cell-f251a262" rowindex="0" colindex="1" sortable="false" filterable="false"/>
+          <cl:gridcell std:sid="gh-cell-588da013" rowindex="0" colindex="2" targetcolumnname="fridgeId" sortable="false" filterable="false" text="fridgeId"/>
+          <cl:gridcell std:sid="gh-cell-e07b807a" rowindex="0" colindex="3" targetcolumnname="fridgeName" sortable="false" filterable="false" text="초대받은 냉장고"/>
+          <cl:gridcell std:sid="gh-cell-5abdd0bc" rowindex="0" colindex="4" targetcolumnname="joinDate" sortable="false" filterable="false" text="초대일"/>
+          <cl:gridcell std:sid="gh-cell-5bb18f84" rowindex="0" colindex="5" targetcolumnname="state" sortable="false" filterable="false" text="상태"/>
+        </cl:gridheader>
+        <cl:griddetail std:sid="gd-band-03137541">
+          <cl:gridrow std:sid="g-row-55d56d70" height="24px"/>
+          <cl:gridcell std:sid="gd-cell-08be11fc" rowindex="0" colindex="0" columntype="radio"/>
+          <cl:gridcell std:sid="gd-cell-5867464c" rowindex="0" colindex="1" columntype="rowindex"/>
+          <cl:gridcell std:sid="gd-cell-8dc25cee" rowindex="0" colindex="2" columnname="fridgeId"/>
+          <cl:gridcell std:sid="gd-cell-7cb84c82" rowindex="0" colindex="3" columnname="fridgeName"/>
+          <cl:gridcell std:sid="gd-cell-597d4fa2" rowindex="0" colindex="4" columnname="joinDate"/>
+          <cl:gridcell std:sid="gd-cell-dba5d0ed" rowindex="0" colindex="5" columnname="state">
+            <cl:radiobutton std:sid="r-button-40af01a2" id="rdb1">
+              <cl:celldata std:sid="c-data-c857c756"/>
+              <cl:itemset datasetid="comboList" label="statusName" value="statusId"/>
+            </cl:radiobutton>
+          </cl:gridcell>
+        </cl:griddetail>
+      </cl:grid>
+      <cl:group std:sid="group-8c6e3f61">
+        <cl:formdata std:sid="f-data-11c14db1" row="1" col="0"/>
+        <cl:button std:sid="button-29cb9ba1" class="custom-button" value="저장">
+          <cl:listener std:sid="listener-bf6436c4" name="click" handler="onButtonClick"/>
+          <cl:flowlayoutdata std:sid="f-data-9a9dd44b" width="71px" height="25px"/>
+        </cl:button>
+        <cl:flowlayout std:sid="f-layout-e9b8335c" halign="right"/>
+      </cl:group>
+      <cl:formlayout std:sid="f-layout-02301e55" scrollable="false" hspace="1px" vspace="1px" top-margin="10px" right-margin="10px" bottom-margin="10px" left-margin="10px">
+        <cl:rows length="30" unit="PIXEL"/>
+        <cl:rows length="30" unit="PIXEL"/>
+        <cl:rows length="1" unit="FRACTION"/>
+        <cl:columns length="1" unit="FRACTION"/>
+      </cl:formlayout>
+    </cl:group>
+    <cl:group std:sid="group-4ef6b713">
+      <cl:verticaldata std:sid="v-data-82e3efdf" width="260px" height="10px" autosize="none"/>
+      <cl:xylayout std:sid="xylayout-51cb90dd"/>
+    </cl:group>
+    <cl:group std:sid="group-1952f99d">
+      <cl:verticaldata std:sid="v-data-3c30625f" width="400px" height="187px"/>
+      <cl:output std:sid="output-1dec14b5" style="border-right-style:solid; color:#F59760; border-bottom-color:#f59760; border-top-width:2px; font-weight:bold; border-right-width:2px; border-left-color:#f59760; font-size:15px; border-right-color:#f59760; border-left-width:2px; border-top-style:solid; background-color:#ffffff; border-radius:7px; border-left-style:solid; border-bottom-width:2px; border-top-color:#f59760; font-family:Kim jung chul Myungjo Regular; border-bottom-style:solid; background-image:none; text-align:center;" value="그룹원 초대하기">
+        <cl:verticaldata std:sid="v-data-f43e2b9d" width="260px" height="30px" autosize="none"/>
+      </cl:output>
+      <cl:group std:sid="group-a3c0193f">
+        <cl:verticaldata std:sid="v-data-3f265432" width="260px" height="29px"/>
+        <cl:inputbox std:sid="i-box-37d181ae" id="ipb1">
+          <cl:flowlayoutdata std:sid="f-data-9a292386" width="134px" height="24px"/>
+        </cl:inputbox>
+        <cl:button std:sid="button-2427a1d0" value="검색">
+          <cl:flowlayoutdata std:sid="f-data-082787d0" width="55px" height="24px"/>
+        </cl:button>
+        <cl:flowlayout std:sid="f-layout-e78cfe69" halign="right"/>
+      </cl:group>
+      <cl:grid std:sid="grid-1333832f" id="searchMemberGrid" datasetid="searchMemberList">
+        <cl:verticaldata std:sid="v-data-7dabefad" width="253px" height="98px"/>
+        <cl:gridcolumn std:sid="g-column-f4eadb44" width="20px"/>
+        <cl:gridcolumn std:sid="g-column-6e16a0c7" width="48px"/>
+        <cl:gridcolumn std:sid="g-column-b1450348" width="65px"/>
+        <cl:gridcolumn std:sid="g-column-3d4f11b9" width="70px"/>
+        <cl:gridheader std:sid="gh-band-1960a324">
+          <cl:gridrow std:sid="g-row-02180d54" height="24px"/>
+          <cl:gridcell std:sid="gh-cell-b0e15b39" rowindex="0" colindex="0" sortable="false" filterable="false"/>
+          <cl:gridcell std:sid="gh-cell-38f72cbc" rowindex="0" colindex="1" targetcolumnname="name" sortable="false" filterable="false" text="이름"/>
+          <cl:gridcell std:sid="gh-cell-a6f09d6f" rowindex="0" colindex="2" targetcolumnname="email" sortable="false" filterable="false" text="이메일"/>
+          <cl:gridcell std:sid="gh-cell-d0981029" rowindex="0" colindex="3" text="초대"/>
+        </cl:gridheader>
+        <cl:griddetail std:sid="gd-band-e054e77b">
+          <cl:gridrow std:sid="g-row-d0a39b27" height="24px"/>
+          <cl:gridcell std:sid="gd-cell-84fc617f" rowindex="0" colindex="0" columntype="rowindex"/>
+          <cl:gridcell std:sid="gd-cell-ff9bf203" rowindex="0" colindex="1" columnname="name"/>
+          <cl:gridcell std:sid="gd-cell-5b41f012" rowindex="0" colindex="2" columnname="email"/>
+          <cl:gridcell std:sid="gd-cell-ff73893b" rowindex="0" colindex="3">
+            <cl:button std:sid="button-1de26f57" value="초대하기">
+              <cl:celldata std:sid="c-data-54029bee"/>
+            </cl:button>
+          </cl:gridcell>
+        </cl:griddetail>
+      </cl:grid>
+      <cl:verticallayout std:sid="v-layout-9863e693" leftmargin="10" rightmargin="10" topmargin="10" bottommargin="0"/>
+    </cl:group>
+    <cl:verticallayout std:sid="v-layout-27a4a001" leftmargin="20" rightmargin="20" topmargin="20" bottommargin="20"/>
+  </body>
+  <std:studiosetting>
+    <std:hruler/>
+    <std:vruler>
+      <std:guide position="49"/>
+    </std:vruler>
+  </std:studiosetting>
+</html>

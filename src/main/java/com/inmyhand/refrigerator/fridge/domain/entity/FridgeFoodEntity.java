@@ -1,5 +1,6 @@
 package com.inmyhand.refrigerator.fridge.domain.entity;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.*;
@@ -24,8 +25,11 @@ public class FridgeFoodEntity {
 
     private String foodName;
     private Long foodAmount;
+    @JsonFormat(pattern = "yyyy-MM-dd")
     private Date endDate;
+    @JsonFormat(pattern = "yyyy-MM-dd")
     private Date chargeDate;
+    @JsonFormat(pattern = "yyyy-MM-dd")
     private Date saveDate;
     private String categoryName;
 

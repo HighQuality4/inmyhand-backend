@@ -95,3 +95,30 @@ function onCancelDummyClick(e){
 
 	grd.revertData(); 
 }
+
+/*
+ * 루트 컨테이너에서 property-change 이벤트 발생 시 호출.
+ * 앱의 속성이 변경될 때 발생하는 이벤트 입니다.
+ */
+function onBodyPropertyChange(e){
+	// 로드 이벤트와 같이 이벤트 탐
+	// udc 앱속성이 변경되는 경우
+	if(e.property == "visibleAddButton"){
+		if(app.getAppProperty("visibleAddButton")){
+			// 추가버튼 보이게
+			app.lookup("updateGroup").getLayout().setColumnVisible(0, true);
+		}else{
+			// 추가버튼 안보이게
+			app.lookup("updateGroup").getLayout().setColumnVisible(0, false);
+		}
+	}
+	
+	if(e.property == "deleteStr"){
+		if(app.getAppProperty("deleteStr").length > 0){
+			app.lookup("deleteDummy").value("퇴출");
+		}
+	}
+}
+
+
+

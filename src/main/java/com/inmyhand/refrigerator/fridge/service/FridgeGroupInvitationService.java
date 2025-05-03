@@ -3,6 +3,7 @@ package com.inmyhand.refrigerator.fridge.service;
 import com.inmyhand.refrigerator.fridge.domain.dto.food.FridgeWithRoleDTO;
 import com.inmyhand.refrigerator.fridge.domain.dto.group.FridgeGroupMemberDTO;
 import com.inmyhand.refrigerator.fridge.domain.dto.group.FridgeGroupRequestDTO;
+import com.inmyhand.refrigerator.fridge.domain.dto.group.FridgeMemberPendingDTO;
 import com.inmyhand.refrigerator.fridge.domain.entity.FridgeEntity;
 import com.inmyhand.refrigerator.fridge.domain.entity.FridgeMemberEntity;
 import com.inmyhand.refrigerator.fridge.domain.entity.GroupRoleEntity;
@@ -17,6 +18,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -79,46 +81,74 @@ public class FridgeGroupInvitationService {
 
 
     // 냉장고 그룹에 속한 유저 리스트 조회
-    public List<FridgeGroupMemberDTO> getAllMembers(Long fridgeId) {
-        List<FridgeMemberEntity> members = fridgeMemberRepository.findByFridgeEntity_Id(fridgeId);
+    public List<FridgeGroupMemberDTO> getFridgeGroupMembers(Long fridgeId) {
+        List<FridgeMemberEntity> fridgeMembers = fridgeMemberRepository.findFridgeMembersWithRolesByFridgeId(fridgeId);
 
-        return members.stream().map(fm -> {
-            String roleName = fm.getPermissionGroupRoleList().stream()
-                    .findFirst() // 여러 역할이 있을 경우 하나만 선택
-                    .map(role -> role.getGroupRoleEntity().getRoleName())
-                    .orElse("member"); // 기본 역할명
+        return fridgeMembers.stream()
+                .map(fm -> new FridgeGroupMemberDTO(
+                        fm.getId(),
+                        fm.getMemberEntity().getId(),
+                        fm.getMemberEntity().getNickname(),
+                        fm.getMemberEntity().getEmail(),
+                        fm.getJoinDate(),
+                        fm.getPermissionGroupRoleList().stream()
+                                .map(pgr -> pgr.getGroupRoleEntity().getRoleName())
+                                .distinct()
+                                .toList()
+                ))
+                .sorted((a, b) -> {
+                    // 1. leader 포함 여부에 따라 우선순위 부여
+                    boolean aIsLeader = a.getRoleName().contains("leader");
+                    boolean bIsLeader = b.getRoleName().contains("leader");
 
-            return new FridgeGroupMemberDTO(
-                    fm.getId(),
-                    fm.getMemberEntity().getId(),
-                    fm.getMemberEntity().getNickname(),
-                    fm.getMemberEntity().getEmail(),
-                    fm.getJoinDate(),
-                    roleName
-            );
-        }).toList();
+                    if (aIsLeader && !bIsLeader) {
+                        return -1; // a가 leader면 앞으로
+                    } else if (!aIsLeader && bIsLeader) {
+                        return 1; // b가 leader면 앞으로
+                    } else {
+                        // 둘 다 leader거나 둘 다 아니면 joinDate 오름차순 비교
+                        return a.getJoinDate().compareTo(b.getJoinDate());
+                    }
+                })
+                .toList();
     }
 
-    @Transactional(readOnly = true)
-    public FridgeGroupMemberDTO findMemberByName(Long fridgeId, String name) {
-        FridgeMemberEntity fridgeMember = fridgeMemberRepository
-                .findByFridgeEntity_IdAndMemberEntity_Nickname(fridgeId, name)
-                .orElseThrow(() -> new RuntimeException("해당 이름의 유저가 존재하지 않습니다."));
+    public List<FridgeMemberPendingDTO> getPendingFridgeInvites(Long memberId) {
+        List<FridgeMemberPendingDTO> invites = fridgeMemberRepository.findPendingFridgeInvitesDtoByMemberId(memberId);
 
-        String roleName = fridgeMember.getPermissionGroupRoleList().stream()
-                .findFirst()
-                .map(r -> r.getGroupRoleEntity().getRoleName())
-                .orElse("member");
-
-        return new FridgeGroupMemberDTO(
-                fridgeMember.getId(),
-                fridgeMember.getMemberEntity().getId(),
-                fridgeMember.getMemberEntity().getNickname(),
-                fridgeMember.getMemberEntity().getEmail(),
-                fridgeMember.getJoinDate(),
-                roleName
-        );
+        return invites.stream()
+                .map(invite -> new FridgeMemberPendingDTO(
+                        invite.getFridgeId(),
+                        invite.getFridgeName(),
+                        invite.getJoinDate(),
+                        invite.getState(),           // ✅ state 가져오기
+                        invite.getFavoriteState()    // ✅ favoriteState 가져오기
+                ))
+                .sorted(Comparator.comparing(FridgeMemberPendingDTO::getJoinDate).reversed())
+                .toList();
     }
+
+
+//    @Transactional(readOnly = true)
+//    public FridgeGroupMemberDTO findMemberByName(Long fridgeId, String name) {
+//        FridgeMemberEntity fridgeMember = fridgeMemberRepository
+//                .findByFridgeEntity_IdAndMemberEntity_Nickname(fridgeId, name)
+//                .orElseThrow(() -> new RuntimeException("해당 이름의 유저가 존재하지 않습니다."));
+//
+//        String roleName = fridgeMember.getPermissionGroupRoleList().stream()
+//                .findFirst()
+//                .map(r -> r.getGroupRoleEntity().getRoleName())
+//                .orElse("member");
+//
+//        return new FridgeGroupMemberDTO(
+//                fridgeMember.getId(),
+//                fridgeMember.getMemberEntity().getId(),
+//                fridgeMember.getMemberEntity().getNickname(),
+//                fridgeMember.getMemberEntity().getEmail(),
+//                fridgeMember.getJoinDate(),
+//
+//        );
+//    }
 
 
 }

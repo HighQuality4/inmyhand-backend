@@ -10,33 +10,43 @@
       <cl:property name="grdCtrl" type="control"/>
       <cl:property name="addStr" type="string" default="추가" bindable="false"/>
       <cl:property name="delColor" type="color" default="#FF0000"/>
+      <cl:property name="visibleAddButton" type="boolean" default="true"/>
+      <cl:property name="deleteStr" type="string" default="퇴출"/>
       <cl:event name="save-click" type="cpr.events.CAppEvent" std:desc="저장버튼 클릭시 발생하는 이벤트"/>
     </cl:appspec>
   </head>
   <body std:sid="body-e5f4b1fa" style="top:0px; left:0px; width:300px; height:40px;">
-    <cl:button std:sid="button-2f34f070" id="addDummy" class="custom-button">
-      <cl:listener std:sid="listener-6a688ad7" name="click" handler="onButtonClick2"/>
-      <cl:apppropbind property="value" category="PROPERTY" app-property="addStr"/>
-      <cl:formdata std:sid="f-data-f2b20dcd" row="0" col="0"/>
-    </cl:button>
-    <cl:button std:sid="button-9246d80a" id="deleteDummy" class="custom-button" value="삭제">
-      <cl:listener std:sid="listener-591eb23a" name="click" handler="onButtonClick"/>
-      <cl:apppropbind property="color" category="STYLER" app-property="delColor"/>
-      <cl:formdata std:sid="f-data-c78fbd1e" row="0" col="1"/>
-    </cl:button>
-    <cl:button std:sid="button-b75656f5" id="cancelDummy" class="custom-button" value="취소">
-      <cl:listener std:sid="listener-5554b776" name="click" handler="onCancelDummyClick"/>
-      <cl:formdata std:sid="f-data-b8f9716c" row="0" col="2"/>
-    </cl:button>
-    <cl:button std:sid="button-bf1efb1e" id="saveDummy" class="custom-button" value="저장">
-      <cl:listener std:sid="listener-8d2480ee" name="click" handler="onButtonClick3"/>
-      <cl:formdata std:sid="f-data-95c09138" row="0" col="3"/>
-    </cl:button>
+    <cl:listener std:sid="listener-7114b6e4" name="property-change" handler="onBodyPropertyChange"/>
+    <cl:group std:sid="group-71551322" id="updateGroup">
+      <cl:formdata std:sid="f-data-455fde81" row="0" col="0" rowspan="1" colspan="1"/>
+      <cl:button std:sid="button-2f34f070" id="addDummy" class="custom-button">
+        <cl:listener std:sid="listener-6a688ad7" name="click" handler="onButtonClick2"/>
+        <cl:apppropbind property="value" category="PROPERTY" app-property="addStr"/>
+        <cl:formdata std:sid="f-data-f2b20dcd" row="0" col="0"/>
+      </cl:button>
+      <cl:button std:sid="button-9246d80a" id="deleteDummy" class="custom-button" value="삭제">
+        <cl:listener std:sid="listener-591eb23a" name="click" handler="onButtonClick"/>
+        <cl:apppropbind property="color" category="STYLER" app-property="delColor"/>
+        <cl:formdata std:sid="f-data-c78fbd1e" row="0" col="1"/>
+      </cl:button>
+      <cl:button std:sid="button-b75656f5" id="cancelDummy" class="custom-button" value="취소">
+        <cl:listener std:sid="listener-5554b776" name="click" handler="onCancelDummyClick"/>
+        <cl:formdata std:sid="f-data-b8f9716c" row="0" col="2"/>
+      </cl:button>
+      <cl:button std:sid="button-bf1efb1e" id="saveDummy" class="custom-button" value="저장">
+        <cl:listener std:sid="listener-8d2480ee" name="click" handler="onButtonClick3"/>
+        <cl:formdata std:sid="f-data-95c09138" row="0" col="3"/>
+      </cl:button>
+      <cl:formlayout std:sid="f-layout-fd6150ce" scrollable="false" hspace="10px" vspace="10px">
+        <cl:rows length="1" unit="FRACTION"/>
+        <cl:columns length="1" unit="FRACTION"/>
+        <cl:columns length="1" unit="FRACTION"/>
+        <cl:columns length="1" unit="FRACTION"/>
+        <cl:columns length="1" unit="FRACTION"/>
+      </cl:formlayout>
+    </cl:group>
     <cl:formlayout std:sid="f-layout-d9239894" scrollable="false" hspace="10px" vspace="10px" top-margin="5px" right-margin="5px" bottom-margin="5px" left-margin="5px">
       <cl:rows length="1" unit="FRACTION"/>
-      <cl:columns length="1" unit="FRACTION"/>
-      <cl:columns length="1" unit="FRACTION"/>
-      <cl:columns length="1" unit="FRACTION"/>
       <cl:columns length="1" unit="FRACTION"/>
     </cl:formlayout>
   </body>

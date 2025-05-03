@@ -18,19 +18,7 @@
 			 * @author gyrud
 			 ************************************************/
 
-			/*
-			 * 루트 컨테이너에서 load 이벤트 발생 시 호출.
-			 * 앱이 최초 구성된후 최초 랜더링 직후에 발생하는 이벤트 입니다.
-			 */
-			/*
-			 * "Button" 버튼에서 click 이벤트 발생 시 호출.
-			 * 사용자가 컨트롤을 클릭할 때 발생하는 이벤트.
-			 */
-			function onButtonClick(e){
-				var button = e.control;
-				alert("동작 테스트합니다");
 
-			}
 
 
 			/*
@@ -38,9 +26,41 @@
 			 * 앱이 최초 구성된후 최초 랜더링 직후에 발생하는 이벤트 입니다.
 			 */
 			function onBodyLoad2(e){
-
-				app.lookup("getFridgeList").send();
-				app.lookup("getFoodList").send();
+				// 냉장고 목록
+				const getFridgeList= app.lookup("getFridgeList"); 
+				// 식재료 목록
+				const getFoodList = app.lookup("getFoodList");
+				
+				// 식재료 그리드 
+				const foodListGrid = app.lookup("foodListGrid");
+				
+				// 서브미션 보내기
+				getFridgeList.send().then(function(pbSuccess){
+					if(pbSuccess){
+						app.lookup("fridgNavbar").redraw();
+						app.lookup("fridgNavbar").selectItemByValue("1");
+					}
+				});
+				getFoodList.send();
+				
+				// 그룹 접기 이벤트 추가하기 
+				 getFoodList.addEventListener("submit-success", function(e) {
+			        alert("식재료 정보 가져오기 성공"); 
+			        
+			        foodListGrid.redraw(); 
+			        setTimeout(function() {
+			            foodListGrid.collapseAll(); // 0.1초 뒤에 접기 (collapseAll) 실행
+			        }, 100);
+			        
+			    });
+			    
+			//    // 선택된 냉장고 목록 효과 추가하기
+			//    getFridgeList.addEventListener("submit-success", function(e){
+			//    	alert("냉장고 목록 불러오기 성공");
+			//    	
+			//    	
+			//    });
+				
 			}
 
 
@@ -48,19 +68,17 @@
 			 * 서브미션에서 submit-success 이벤트 발생 시 호출.
 			 * 통신이 성공하면 발생합니다.
 			 */
-			function onGetFridgeListSubmitSuccess(e){
-				var getFridgeList = e.control;
-				
-			//	app.lookup("fridgeList").getRowDataRanged().forEach(function(each){
-			//	 
-			//		// NavigationBar에 사용할 올바른 객체는 MenuItem입니다
-			//		var item = new cpr.controls.MenuItem(each.fridgeName, each.fridgeId, null);
+			//function onGetFridgeListSubmitSuccess(e){
+			//	var getFridgeList = e.control;
 			//	
-			//		// NavigationBar에 아이템 추가
-			//		app.lookup("fridgNavbar").addItem(item);
-			//	});
-
-			}
+			////	app.lookup("fridgeList").getRowDataRanged().forEach(function(each){ 
+			////		// NavigationBar에 사용할 올바른 객체는 MenuItem입니다
+			////		var item = new cpr.controls.MenuItem(each.fridgeName, each.fridgeId, null);
+			////		// NavigationBar에 아이템 추가
+			////		app.lookup("fridgNavbar").addItem(item);
+			////	});
+			//
+			//}
 
 
 			/*
@@ -70,7 +88,6 @@
 			function onFridgNavbarItemClick(e){
 
 				var fridgNavbar = e.control;
-
 				alert("클릭됨 "+e.item.value);
 			  	
 			  	var setClickLabelValue = e.item.value; 
@@ -81,47 +98,12 @@
 			    var voItem = vcNav.getItemByValue(setClickLabelValue);
 			    vcNav.focusItem(voItem);
 			    alert(voItem.value);	
+			    
+			    // 현재 냉장고 정보 및 멤버 아이디
+			    app.lookup("fridgeIdParam").setValue("fridgeId", e.item.value);
+			    app.lookup("fridgeIdParam").setValue("memberId", 1);
 				
 			}
-
-			function focusItem(vsValue) {
-			    
-			    var vcNav = app.lookup("fridgNavbar");
-			    var voItem = vcNav.getItemByValue(vsValue);
-			    vcNav.focusItem(voItem);
-			    alert(voItem);
-			    
-			}
-
-			function fixGridSetting(){
-				
-				var grid = app.lookup("foodListGrid");
-				// 좌측 틀고정을 가로사이즈 100px, 고정되는 셀 수는 2개로 설정합니다.
-				grid.leftSplitWidth = 100;
-				grid.rightSplit = 1;
-
-			}
-
-			function onRowAdded(event) {
-				
-				/** @type cpr.controls.provider.GridRow */
-			    var grid = event.control;
-			    var addedRow = event.row;
-			    var index = event.rowIndex;
-			    var target = event.relativeTargetName;
-
-			    console.log("추가된 행의 인덱스:", index);
-			    console.log("타겟 이름:", target);
-
-			    // 추가된 행에 특정 데이터 설정
-			    addedRow.setValue("columnName", "기본값");
-
-			    // 필요에 따라 UI 업데이트 또는 다른 로직 실행
-			    
-			}
-
-
-
 
 			//----------------------------------------
 
@@ -132,20 +114,14 @@
 			function onFridgeCRUDSaveClick(e){
 				var fridgeCRUD = e.control;
 				
-				
 				var foodDataSet = app.lookup("insertFoodList");
+				console.log("저장된 식재료 데이터 셋 구조")
+				console.log(foodDataSet.getRowDataRanged());
 				
-				var foodDataMap = app.lookup("fridgeIdParam");
-				
-			//	fridgeId 
-			// 	foodDataMap.setAttr("fridgeId", "1");
-				
-				
+				var foodDataMap = app.lookup("fridgeIdParam");	
 				
 				var totalInsertRow = foodDataSet.getRowCount();
-					
 				alert("변경된 저장 방법");
-
 				app.lookup("sendFoodList").send();
 				app.lookup("getFoodList").send();
 				
@@ -161,14 +137,142 @@
 			 * 사용자 정의 컨트롤에서 save-update-click 이벤트 발생 시 호출.
 			 * update서버연결저장
 			 */
-			function onFridgeUDSaveUpdateClick(e){
-				var fridgeUD = e.control;
-				app.lookup("updateFoodList").send();
+			//function onFridgeUDSaveUpdateClick(e){
+			//	var fridgeUD = e.control;
+			//	
+			//	var foodDataList = app.lookup("foodList"); // 식재료 DataSet
+			//	var foodGrid = app.lookup("foodListGrid"); // 식재료 Grid
+			//
+			//	var inserted = getChangedRowsByState(cpr.data.tabledata.RowState.INSERTED);
+			//	var updated = getChangedRowsByState(cpr.data.tabledata.RowState.UPDATED);
+			//	var deleted = getChangedRowsByState(cpr.data.tabledata.RowState.DELETED);
+			//
+			//	alert("추가됨: " + JSON.stringify(inserted) + 
+			//      "\n수정됨: " + JSON.stringify(updated) + 
+			//      "\n삭제됨: " + JSON.stringify(deleted));
+			//    
+			//    app.lookup("updateFoodList").send();
+			//    
+			//    
+			//    
+			//	// 새로 그리기
+			//	app.lookup("getFoodList").send();
+			//		
+			//	
+			//}
+
+			function getChangedRowsByState(state) {
+			    var ds = app.lookup("foodList");
+			    var rows = [];
+
+			    for (var i = 0; i < ds.getRowCount(); i++) {
+			        if (ds.getRowState(i) === state) {
+			            var rowData = {};
+			            var cols = ds.getColumnNames();
+			            cols.forEach(function(col) {
+			                rowData[col] = ds.getValue(i, col);
+			            });
+
+			            rows.push(rowData);
+			        }
+			    }
+			    return rows;
+			}
+
+			/*
+			 * "식재료 추가하기" 아웃풋에서 click 이벤트 발생 시 호출.
+			 * 사용자가 컨트롤을 클릭할 때 발생하는 이벤트.
+			 */
+			function onOutputClick(e){
+				var output = e.control;
+
+				var insertFoodgrd = app.lookup("insertFoodgrd");
+				var fridgeCRUD = app.lookup("fridgeCRUD");
+			  
+				insertFoodgrd.visible = !insertFoodgrd.visible;
+				fridgeCRUD.visible = !fridgeCRUD.visible;
 				
 				
-				app.lookup("getFoodList").send();
-				app.lookup("foodListGrid").redraw();	
+			}
+
+			/*
+			 * "그룹원관리" 아웃풋에서 click 이벤트 발생 시 호출.
+			 * 사용자가 컨트롤을 클릭할 때 발생하는 이벤트.
+			 */
+			function onOutputClick2(e){
+				var output = e.control;
+			//	window.location.href = "";
+				alert("다이얼로그 시작");
+				app.dialogManager.openDialog("app/fridge/fridge_group","dialogName",{width:500, height:500},function(dialog){
+
+					//다이얼로그가 로드 되었을때 처리
+					dialog.modal = false;
+					dialog.headerMin = true;
+					dialog.headerTitle = "냉장고 그룹원 관리";
+					
+					const myfridgeId  = app.lookup("fridgeIdParam").getValue("fridgeId");
+					const myId = app.lookup("fridgeIdParam").getValue("memberId");
+					
+					dialog.initValue = {fridgeIdParam: myfridgeId, memberIdParam: myId};
+					
+					
+					console.log(dialog.app.id);
+					}).then(function(returnValue){
+						
+					//닫기 했을때 반환되는 값에 대한 처리
+				});
+			}
+
+			/*
+			 * 사용자 정의 컨트롤에서 save-click 이벤트 발생 시 호출.
+			 * 저장버튼 클릭시 발생하는 이벤트
+			 */
+			function onFridgeCRUDForUDSaveClick(e){
+				var fridgeCRUDForUD = e.control;
 				
+
+				var inserted = getChangedRowsByState(cpr.data.tabledata.RowState.INSERTED);
+				var updated = getChangedRowsByState(cpr.data.tabledata.RowState.UPDATED);
+				var deleted = getChangedRowsByState(cpr.data.tabledata.RowState.DELETED);
+
+				alert("추가됨: " + JSON.stringify(inserted) + 
+				      "\n수정됨: " + JSON.stringify(updated) + 
+				      "\n삭제됨: " + JSON.stringify(deleted));
+
+				// 식재료 업데이트 서브미션
+				var submission = app.lookup("updateFoodList");
+				
+				const updateDataSet = app.lookup("updateList");
+				const deleteDataSet = app.lookup("deleteList");
+				// 기존 데이터 초기화 (필수)
+				updateDataSet.clearData();
+				deleteDataSet.clearData();
+				
+				// updated 데이터를 DataSet에 추가
+				updated.forEach(function(rowData) {
+					updateDataSet.addRowData(rowData);
+				});
+				
+				// deleted 데이터를 DataSet에 추가
+				deleted.forEach(function(rowData) {
+					deleteDataSet.addRowData(rowData);
+				});
+
+				console.log("전송전 데이터셋 확인 =======")
+				console.log(updateDataSet.getRowDataRanged());
+				
+				
+				// ✅ 서버로 전송
+				submission.send();
+
+				submission.addEventListener("submit-done", function() {
+				    const getList = app.lookup("getFoodList");
+				    getList.send();
+				
+				    getList.addEventListener("submit-done", function() {
+					        app.lookup("foodListGrid").redraw();
+				    });
+				});
 			};
 			// End - User Script
 			
@@ -292,12 +396,78 @@
 				]
 			});
 			app.register(dataSet_5);
+			
+			var dataSet_6 = new cpr.data.DataSet("updateList");
+			dataSet_6.parseData({
+				"columns" : [
+					{
+						"name": "id",
+						"dataType": "number"
+					},
+					{
+						"name": "foodName",
+						"dataType": "string"
+					},
+					{
+						"name": "foodAmount",
+						"dataType": "number"
+					},
+					{"name": "endDate"},
+					{"name": "chargeDate"},
+					{"name": "saveDate"},
+					{
+						"name": "categoryName",
+						"dataType": "string"
+					},
+					{
+						"name": "fridgeId",
+						"dataType": "number"
+					}
+				]
+			});
+			app.register(dataSet_6);
+			
+			var dataSet_7 = new cpr.data.DataSet("deleteList");
+			dataSet_7.parseData({
+				"columns" : [
+					{
+						"name": "id",
+						"dataType": "number"
+					},
+					{
+						"name": "foodName",
+						"dataType": "string"
+					},
+					{
+						"name": "foodAmount",
+						"dataType": "number"
+					},
+					{"name": "endDate"},
+					{"name": "chargeDate"},
+					{"name": "saveDate"},
+					{
+						"name": "categoryName",
+						"dataType": "string"
+					},
+					{
+						"name": "fridgeId",
+						"dataType": "number"
+					}
+				]
+			});
+			app.register(dataSet_7);
 			var dataMap_1 = new cpr.data.DataMap("fridgeIdParam");
 			dataMap_1.parseData({
-				"columns" : [{
-					"name": "fridgeId",
-					"dataType": "number"
-				}]
+				"columns" : [
+					{
+						"name": "fridgeId",
+						"dataType": "number"
+					},
+					{
+						"name": "memberId",
+						"dataType": "number"
+					}
+				]
 			});
 			app.register(dataMap_1);
 			
@@ -343,10 +513,10 @@
 			app.register(submission_4);
 			
 			var submission_5 = new cpr.protocols.Submission("updateFoodList");
-			submission_5.method = "put";
 			submission_5.action = "/api/fridge/update/foodList";
 			submission_5.mediaType = "application/json";
-			submission_5.addRequestData(dataSet_1);
+			submission_5.addRequestData(dataSet_6);
+			submission_5.addRequestData(dataSet_7);
 			app.register(submission_5);
 			app.supportMedia("all and (min-width: 1024px)", "default");
 			app.supportMedia("all and (min-width: 500px) and (max-width: 1023.984px)", "tablet");
@@ -356,9 +526,14 @@
 			var container = app.getContainer();
 			container.style.setClasses(["contents-container"]);
 			container.style.css({
-				"background-color" : "#FFFFFF",
+				"color" : "white",
+				"border-bottom-style" : "none",
+				"background-color" : "white",
+				"border-top-style" : "none",
+				"border-right-style" : "none",
 				"width" : "100%",
-				"height" : "100%"
+				"height" : "100%",
+				"border-left-style" : "none"
 			});
 			
 			// Layout
@@ -367,63 +542,176 @@
 			
 			// UI Configuration
 			var group_1 = new cpr.controls.Container();
+			group_1.style.setClasses(["contents-container"]);
+			group_1.style.css({
+				"background-color" : "#faf8f5",
+				"color" : "#EFE0DD",
+				"background-image" : "none"
+			});
 			var verticalLayout_1 = new cpr.controls.layouts.VerticalLayout();
+			verticalLayout_1.leftMargin = 40;
+			verticalLayout_1.rightMargin = 40;
+			verticalLayout_1.topMargin = 20;
+			verticalLayout_1.bottomMargin = 10;
 			group_1.setLayout(verticalLayout_1);
 			(function(container){
-				var navigationBar_1 = new cpr.controls.NavigationBar("fridgNavbar");
-				(function(navigationBar_1){
-					navigationBar_1.setItemSet(app.lookup("fridgeList"), {
-						"label": "fridgeName",
-						"value": "fridgeId"
-					});
-				})(navigationBar_1);
-				if(typeof onFridgNavbarSelectionChange == "function") {
-					navigationBar_1.addEventListener("selection-change", onFridgNavbarSelectionChange);
-				}
-				if(typeof onFridgNavbarBeforeContextValueChange == "function") {
-					navigationBar_1.addEventListener("before-context-value-change", onFridgNavbarBeforeContextValueChange);
-				}
-				if(typeof onFridgNavbarItemClick == "function") {
-					navigationBar_1.addEventListener("item-click", onFridgNavbarItemClick);
-				}
-				container.addChild(navigationBar_1, {
-					"autoSize": "none",
-					"width": "419px",
-					"height": "40px"
-				});
 				var group_2 = new cpr.controls.Container();
-				var flowLayout_1 = new cpr.controls.layouts.FlowLayout();
-				flowLayout_1.horizontalAlign = "right";
-				group_2.setLayout(flowLayout_1);
+				var formLayout_1 = new cpr.controls.layouts.FormLayout();
+				formLayout_1.scrollable = false;
+				formLayout_1.horizontalSpacing = "1px";
+				formLayout_1.verticalSpacing = "1px";
+				formLayout_1.topMargin = "0px";
+				formLayout_1.rightMargin = "0px";
+				formLayout_1.bottomMargin = "0px";
+				formLayout_1.leftMargin = "0px";
+				formLayout_1.setColumns(["1fr", "270px", "90px"]);
+				formLayout_1.setRows(["1fr"]);
+				group_2.setLayout(formLayout_1);
 				(function(container){
-					var userDefinedControl_1 = linker.userDefinedControl_1 = new udc.fridge.fridgeUD();
-					if(typeof onFridgeUDSaveUpdateClick == "function") {
-						userDefinedControl_1.addEventListener("save-update-click", onFridgeUDSaveUpdateClick);
-					}
-					container.addChild(userDefinedControl_1, {
-						"autoSize": "none",
-						"width": "220px",
-						"height": "50px"
+					var group_3 = new cpr.controls.Container();
+					var formLayout_2 = new cpr.controls.layouts.FormLayout();
+					formLayout_2.scrollable = false;
+					formLayout_2.horizontalSpacing = "1px";
+					formLayout_2.verticalSpacing = "1px";
+					formLayout_2.topMargin = "5px";
+					formLayout_2.rightMargin = "5px";
+					formLayout_2.bottomMargin = "5px";
+					formLayout_2.leftMargin = "5px";
+					formLayout_2.setColumns(["150px", "1fr"]);
+					formLayout_2.setRows(["1fr"]);
+					group_3.setLayout(formLayout_2);
+					(function(container){
+						var output_1 = new cpr.controls.Output();
+						output_1.value = "주방 냉장고";
+						output_1.style.css({
+							"border-radius" : "7px",
+							"background-color" : "#eae2da",
+							"color" : "#6B4626",
+							"font-weight" : "bold",
+							"font-size" : "19px",
+							"font-family" : "Kim jung chul Myungjo Regular",
+							"background-image" : "none",
+							"text-align" : "center"
+						});
+						container.addChild(output_1, {
+							"colIndex": 0,
+							"rowIndex": 0,
+							"colSpan": 1,
+							"rowSpan": 1,
+							"topSpacing": 0,
+							"rightSpacing": 0,
+							"bottomSpacing": 0,
+							"leftSpacing": 0
+						});
+						var output_2 = new cpr.controls.Output();
+						output_2.value = "식재료 정보";
+						output_2.style.css({
+							"color" : "#6B4626",
+							"font-weight" : "bold",
+							"font-size" : "19px",
+							"font-family" : "Kim jung chul Myungjo Regular",
+							"text-align" : "center"
+						});
+						container.addChild(output_2, {
+							"colIndex": 1,
+							"rowIndex": 0,
+							"colSpan": 1,
+							"rowSpan": 1
+						});
+					})(group_3);
+					container.addChild(group_3, {
+						"colIndex": 1,
+						"rowIndex": 0
+					});
+					var group_4 = new cpr.controls.Container();
+					var formLayout_3 = new cpr.controls.layouts.FormLayout();
+					formLayout_3.scrollable = false;
+					formLayout_3.horizontalSpacing = "1px";
+					formLayout_3.verticalSpacing = "1px";
+					formLayout_3.topMargin = "2px";
+					formLayout_3.setColumns(["1fr"]);
+					formLayout_3.setRows(["47px"]);
+					group_4.setLayout(formLayout_3);
+					(function(container){
+						var output_3 = new cpr.controls.Output();
+						output_3.value = "그룹원 관리";
+						output_3.style.css({
+							"border-radius" : "15px",
+							"background-color" : "#9f7e6a",
+							"color" : "#FFFFFF",
+							"font-weight" : "bold",
+							"font-size" : "12px",
+							"font-family" : "Kim jung chul Myungjo Regular",
+							"background-image" : "none",
+							"text-align" : "center"
+						});
+						if(typeof onOutputClick2 == "function") {
+							output_3.addEventListener("click", onOutputClick2);
+						}
+						container.addChild(output_3, {
+							"colIndex": 0,
+							"rowIndex": 0,
+							"topSpacing": 5,
+							"rightSpacing": 5,
+							"bottomSpacing": 5,
+							"leftSpacing": 5
+						});
+					})(group_4);
+					container.addChild(group_4, {
+						"colIndex": 2,
+						"rowIndex": 0,
+						"colSpan": 1,
+						"rowSpan": 1
 					});
 				})(group_2);
 				container.addChild(group_2, {
-					"autoSize": "height",
-					"width": "400px",
+					"autoSize": "none",
+					"width": "502px",
 					"height": "50px"
+				});
+				var group_5 = new cpr.controls.Container();
+				var flowLayout_1 = new cpr.controls.layouts.FlowLayout();
+				flowLayout_1.horizontalAlign = "right";
+				flowLayout_1.verticalAlign = "middle";
+				group_5.setLayout(flowLayout_1);
+				(function(container){
+					var userDefinedControl_1 = linker.userDefinedControl_1 = new udc.fridge.fridgeCRUD("fridgeCRUDForUD");
+					userDefinedControl_1.addStr = "추가";
+					userDefinedControl_1.visibleAddButton = false;
+					if(typeof onFridgeCRUDForUDSaveClick == "function") {
+						userDefinedControl_1.addEventListener("save-click", onFridgeCRUDForUDSaveClick);
+					}
+					container.addChild(userDefinedControl_1, {
+						"autoSize": "none",
+						"width": "295px",
+						"height": "35px"
+					});
+				})(group_5);
+				container.addChild(group_5, {
+					"autoSize": "height",
+					"width": "516px",
+					"height": "40px"
 				});
 				var grid_1 = linker.grid_1 = new cpr.controls.Grid("foodListGrid");
 				grid_1.init({
 					"dataSet": app.lookup("foodList"),
+					"collapsible": true,
 					"columns": [
 						{"width": "32px"},
 						{"width": "60px"},
-						{"width": "47px"},
+						{
+							"width": "47px",
+							"visible": false
+						},
 						{"width": "60px"},
 						{"width": "60px"},
 						{"width": "60px"},
 						{"width": "60px"},
 						{"width": "60px"},
-						{"width": "60px"}
+						{
+							"width": "60px",
+							"visible": false
+						}
 					],
 					"header": {
 						"rows": [{"height": "24px"}],
@@ -433,6 +721,10 @@
 								"configurator": function(cell){
 									cell.filterable = false;
 									cell.sortable = false;
+									cell.style.css({
+										"background-color" : "#b7a39f",
+										"background-image" : "none"
+									});
 								}
 							},
 							{
@@ -441,7 +733,11 @@
 									cell.filterable = false;
 									cell.sortable = false;
 									cell.targetColumnName = "categoryName";
-									cell.text = "카테고리이름";
+									cell.text = "카테고리";
+									cell.style.css({
+										"background-color" : "#b7a39f",
+										"background-image" : "none"
+									});
 								}
 							},
 							{
@@ -451,6 +747,10 @@
 									cell.sortable = false;
 									cell.targetColumnName = "id";
 									cell.text = "id";
+									cell.style.css({
+										"background-color" : "#b7a39f",
+										"background-image" : "none"
+									});
 								}
 							},
 							{
@@ -460,6 +760,10 @@
 									cell.sortable = false;
 									cell.targetColumnName = "foodName";
 									cell.text = "음식이름";
+									cell.style.css({
+										"background-color" : "#b7a39f",
+										"background-image" : "none"
+									});
 								}
 							},
 							{
@@ -469,6 +773,10 @@
 									cell.sortable = false;
 									cell.targetColumnName = "foodAmount";
 									cell.text = "수량";
+									cell.style.css({
+										"background-color" : "#b7a39f",
+										"background-image" : "none"
+									});
 								}
 							},
 							{
@@ -478,6 +786,10 @@
 									cell.sortable = false;
 									cell.targetColumnName = "endDate";
 									cell.text = "유통기한";
+									cell.style.css({
+										"background-color" : "#b7a39f",
+										"background-image" : "none"
+									});
 								}
 							},
 							{
@@ -487,6 +799,10 @@
 									cell.sortable = false;
 									cell.targetColumnName = "chargeDate";
 									cell.text = "구매일";
+									cell.style.css({
+										"background-color" : "#b7a39f",
+										"background-image" : "none"
+									});
 								}
 							},
 							{
@@ -496,6 +812,10 @@
 									cell.sortable = false;
 									cell.targetColumnName = "saveDate";
 									cell.text = "등록일";
+									cell.style.css({
+										"background-color" : "#b7a39f",
+										"background-image" : "none"
+									});
 								}
 							},
 							{
@@ -505,6 +825,10 @@
 									cell.sortable = false;
 									cell.targetColumnName = "fridgeId";
 									cell.text = "fridgeId";
+									cell.style.css({
+										"background-color" : "#b7a39f",
+										"background-image" : "none"
+									});
 								}
 							}
 						]
@@ -522,6 +846,9 @@
 								"constraint": {"rowIndex": 0, "colIndex": 1},
 								"configurator": function(cell){
 									cell.columnName = "categoryName";
+									cell.style.css({
+										"color" : "#3D2511"
+									});
 									cell.control = (function(){
 										var inputBox_1 = new cpr.controls.InputBox("ipb2");
 										inputBox_1.bind("value").toDataColumn("categoryName");
@@ -533,12 +860,18 @@
 								"constraint": {"rowIndex": 0, "colIndex": 2},
 								"configurator": function(cell){
 									cell.columnName = "id";
+									cell.style.css({
+										"color" : "#3D2511"
+									});
 								}
 							},
 							{
 								"constraint": {"rowIndex": 0, "colIndex": 3},
 								"configurator": function(cell){
 									cell.columnName = "foodName";
+									cell.style.css({
+										"color" : "#3D2511"
+									});
 									cell.control = (function(){
 										var inputBox_2 = new cpr.controls.InputBox("ipb1");
 										inputBox_2.bind("value").toDataColumn("foodName");
@@ -550,6 +883,9 @@
 								"constraint": {"rowIndex": 0, "colIndex": 4},
 								"configurator": function(cell){
 									cell.columnName = "foodAmount";
+									cell.style.css({
+										"color" : "#3D2511"
+									});
 									cell.control = (function(){
 										var numberEditor_1 = new cpr.controls.NumberEditor("nbe1");
 										numberEditor_1.bind("value").toDataColumn("foodAmount");
@@ -561,6 +897,9 @@
 								"constraint": {"rowIndex": 0, "colIndex": 5},
 								"configurator": function(cell){
 									cell.columnName = "endDate";
+									cell.style.css({
+										"color" : "#3D2511"
+									});
 									cell.control = (function(){
 										var dateInput_1 = new cpr.controls.DateInput("dti1");
 										dateInput_1.bind("value").toDataColumn("endDate");
@@ -572,6 +911,9 @@
 								"constraint": {"rowIndex": 0, "colIndex": 6},
 								"configurator": function(cell){
 									cell.columnName = "chargeDate";
+									cell.style.css({
+										"color" : "#3D2511"
+									});
 									cell.control = (function(){
 										var dateInput_2 = new cpr.controls.DateInput("dti2");
 										dateInput_2.bind("value").toDataColumn("chargeDate");
@@ -583,6 +925,9 @@
 								"constraint": {"rowIndex": 0, "colIndex": 7},
 								"configurator": function(cell){
 									cell.columnName = "saveDate";
+									cell.style.css({
+										"color" : "#3D2511"
+									});
 									cell.control = (function(){
 										var dateInput_3 = new cpr.controls.DateInput("dti3");
 										dateInput_3.bind("value").toDataColumn("saveDate");
@@ -594,6 +939,9 @@
 								"constraint": {"rowIndex": 0, "colIndex": 8},
 								"configurator": function(cell){
 									cell.columnName = "fridgeId";
+									cell.style.css({
+										"color" : "#3D2511"
+									});
 								}
 							}
 						]
@@ -610,65 +958,35 @@
 									}
 								},
 								{
-									"constraint": {"rowIndex": 0, "colIndex": 2},
+									"constraint": {"rowIndex": 0, "colIndex": 7, "rowSpan": 1, "colSpan": 1},
 									"configurator": function(cell){
-										cell.expr = "\"\"";
+										cell.expr = "getRowCount()";
 										cell.style.css({
-											"background-color" : "lightgray"
+											"background-color" : "#F0EDEA",
+											"color" : "#6B4626",
+											"background-image" : "none"
 										});
 									}
 								},
 								{
-									"constraint": {"rowIndex": 0, "colIndex": 3},
+									"constraint": {"rowIndex": 0, "colIndex": 1, "rowSpan": 1, "colSpan": 5},
 									"configurator": function(cell){
-										cell.expr = "\"\"";
+										cell.expr = "categoryName";
 										cell.style.css({
-											"background-color" : "lightgray"
+											"background-color" : "#F0EDEA",
+											"color" : "#6B4626",
+											"background-image" : "none"
 										});
 									}
 								},
 								{
-									"constraint": {"rowIndex": 0, "colIndex": 4},
+									"constraint": {"rowIndex": 0, "colIndex": 6, "rowSpan": 1, "colSpan": 1},
 									"configurator": function(cell){
-										cell.expr = "\"\"";
+										cell.expr = "\"수량 :\"";
 										cell.style.css({
-											"background-color" : "lightgray"
-										});
-									}
-								},
-								{
-									"constraint": {"rowIndex": 0, "colIndex": 5},
-									"configurator": function(cell){
-										cell.expr = "\"\"";
-										cell.style.css({
-											"background-color" : "lightgray"
-										});
-									}
-								},
-								{
-									"constraint": {"rowIndex": 0, "colIndex": 6},
-									"configurator": function(cell){
-										cell.expr = "\"\"";
-										cell.style.css({
-											"background-color" : "lightgray"
-										});
-									}
-								},
-								{
-									"constraint": {"rowIndex": 0, "colIndex": 7},
-									"configurator": function(cell){
-										cell.expr = "\"\"";
-										cell.style.css({
-											"background-color" : "lightgray"
-										});
-									}
-								},
-								{
-									"constraint": {"rowIndex": 0, "colIndex": 1},
-									"configurator": function(cell){
-										cell.expr = "\"\"";
-										cell.style.css({
-											"background-color" : "lightgray"
+											"background-color" : "#F0EDEA",
+											"color" : "#6B4626",
+											"background-image" : "none"
 										});
 									}
 								},
@@ -682,27 +1000,91 @@
 						}
 					}]
 				});
-				container.addChild(grid_1, {
-					"autoSize": "none",
-					"width": "419px",
-					"height": "238px"
+				grid_1.style.css({
+					"background-color" : "#FFFFFF"
 				});
-				var pageIndexer_1 = new cpr.controls.PageIndexer();
-				container.addChild(pageIndexer_1, {
-					"width": "200px",
+				container.addChild(grid_1, {
+					"width": "425px",
+					"height": "207px"
+				});
+				var group_6 = new cpr.controls.Container();
+				var xYLayout_1 = new cpr.controls.layouts.XYLayout();
+				group_6.setLayout(xYLayout_1);
+				container.addChild(group_6, {
+					"width": "400px",
+					"height": "12px"
+				});
+				var output_4 = new cpr.controls.Output();
+				output_4.value = "식재료 추가하기";
+				output_4.style.css({
+					"border-right-style" : "solid",
+					"color" : "#9f7e6a",
+					"border-top-width" : "2px",
+					"border-bottom-color" : "#9f7e6a",
+					"font-weight" : "bold",
+					"border-right-width" : "2px",
+					"border-left-color" : "#9f7e6a",
+					"font-size" : "19px",
+					"border-right-color" : "#9f7e6a",
+					"border-left-width" : "2px",
+					"border-top-style" : "solid",
+					"border-radius" : "15px",
+					"background-color" : "#FFFFFF",
+					"border-left-style" : "solid",
+					"border-bottom-width" : "2px",
+					"border-top-color" : "#9f7e6a",
+					"font-family" : "Kim jung chul Myungjo Regular",
+					"border-bottom-style" : "solid",
+					"text-align" : "center"
+				});
+				if(typeof onOutputClick == "function") {
+					output_4.addEventListener("click", onOutputClick);
+				}
+				container.addChild(output_4, {
+					"width": "543px",
+					"height": "35px"
+				});
+				var group_7 = new cpr.controls.Container();
+				var flowLayout_2 = new cpr.controls.layouts.FlowLayout();
+				flowLayout_2.horizontalAlign = "right";
+				flowLayout_2.verticalAlign = "middle";
+				group_7.setLayout(flowLayout_2);
+				(function(container){
+					var userDefinedControl_2 = linker.userDefinedControl_2 = new udc.fridge.fridgeCRUD("fridgeCRUD");
+					userDefinedControl_2.visible = false;
+					userDefinedControl_2.addStr = "추가";
+					if(typeof onFridgeCRUDSaveClick == "function") {
+						userDefinedControl_2.addEventListener("save-click", onFridgeCRUDSaveClick);
+					}
+					container.addChild(userDefinedControl_2, {
+						"autoSize": "none",
+						"width": "297px",
+						"height": "35px"
+					});
+				})(group_7);
+				container.addChild(group_7, {
+					"autoSize": "height",
+					"width": "470px",
 					"height": "40px"
 				});
 				var grid_2 = linker.grid_2 = new cpr.controls.Grid("insertFoodgrd");
+				grid_2.visible = false;
 				grid_2.init({
 					"dataSet": app.lookup("insertFoodList"),
 					"columns": [
-						{"width": "50px"},
+						{"width": "31px"},
+						{
+							"width": "100px",
+							"visible": false
+						},
+						{"width": "83px"},
+						{"width": "63px"},
+						{"width": "93px"},
 						{"width": "100px"},
-						{"width": "100px"},
-						{"width": "100px"},
-						{"width": "100px"},
-						{"width": "100px"},
-						{"width": "100px"}
+						{
+							"width": "100px",
+							"visible": false
+						}
 					],
 					"header": {
 						"rows": [{"height": "24px"}],
@@ -719,12 +1101,21 @@
 								"configurator": function(cell){
 									cell.filterable = false;
 									cell.sortable = false;
+									cell.targetColumnName = "categoryName";
+									cell.text = "카테고리이름";
+								}
+							},
+							{
+								"constraint": {"rowIndex": 0, "colIndex": 2},
+								"configurator": function(cell){
+									cell.filterable = false;
+									cell.sortable = false;
 									cell.targetColumnName = "foodName";
 									cell.text = "식재료명";
 								}
 							},
 							{
-								"constraint": {"rowIndex": 0, "colIndex": 2},
+								"constraint": {"rowIndex": 0, "colIndex": 3},
 								"configurator": function(cell){
 									cell.filterable = false;
 									cell.sortable = false;
@@ -733,7 +1124,7 @@
 								}
 							},
 							{
-								"constraint": {"rowIndex": 0, "colIndex": 3},
+								"constraint": {"rowIndex": 0, "colIndex": 4},
 								"configurator": function(cell){
 									cell.filterable = false;
 									cell.sortable = false;
@@ -742,7 +1133,7 @@
 								}
 							},
 							{
-								"constraint": {"rowIndex": 0, "colIndex": 4},
+								"constraint": {"rowIndex": 0, "colIndex": 5},
 								"configurator": function(cell){
 									cell.filterable = false;
 									cell.sortable = false;
@@ -751,21 +1142,12 @@
 								}
 							},
 							{
-								"constraint": {"rowIndex": 0, "colIndex": 5},
+								"constraint": {"rowIndex": 0, "colIndex": 6},
 								"configurator": function(cell){
 									cell.filterable = false;
 									cell.sortable = false;
 									cell.targetColumnName = "saveDate";
 									cell.text = "등록일";
-								}
-							},
-							{
-								"constraint": {"rowIndex": 0, "colIndex": 6},
-								"configurator": function(cell){
-									cell.filterable = false;
-									cell.sortable = false;
-									cell.targetColumnName = "categoryName";
-									cell.text = "카테고리이름";
 								}
 							}
 						]
@@ -782,16 +1164,27 @@
 							{
 								"constraint": {"rowIndex": 0, "colIndex": 1},
 								"configurator": function(cell){
-									cell.columnName = "foodName";
+									cell.columnName = "categoryName";
 									cell.control = (function(){
-										var inputBox_3 = new cpr.controls.InputBox("ipb3");
-										inputBox_3.bind("value").toDataColumn("foodName");
+										var inputBox_3 = new cpr.controls.InputBox("ipb4");
+										inputBox_3.bind("value").toDataColumn("categoryName");
 										return inputBox_3;
 									})();
 								}
 							},
 							{
 								"constraint": {"rowIndex": 0, "colIndex": 2},
+								"configurator": function(cell){
+									cell.columnName = "foodName";
+									cell.control = (function(){
+										var inputBox_4 = new cpr.controls.InputBox("ipb3");
+										inputBox_4.bind("value").toDataColumn("foodName");
+										return inputBox_4;
+									})();
+								}
+							},
+							{
+								"constraint": {"rowIndex": 0, "colIndex": 3},
 								"configurator": function(cell){
 									cell.columnName = "foodAmount";
 									cell.control = (function(){
@@ -802,7 +1195,7 @@
 								}
 							},
 							{
-								"constraint": {"rowIndex": 0, "colIndex": 3},
+								"constraint": {"rowIndex": 0, "colIndex": 4},
 								"configurator": function(cell){
 									cell.columnName = "endDate";
 									cell.control = (function(){
@@ -813,7 +1206,7 @@
 								}
 							},
 							{
-								"constraint": {"rowIndex": 0, "colIndex": 4},
+								"constraint": {"rowIndex": 0, "colIndex": 5},
 								"configurator": function(cell){
 									cell.columnName = "chargeDate";
 									cell.control = (function(){
@@ -824,7 +1217,7 @@
 								}
 							},
 							{
-								"constraint": {"rowIndex": 0, "colIndex": 5},
+								"constraint": {"rowIndex": 0, "colIndex": 6},
 								"configurator": function(cell){
 									cell.columnName = "saveDate";
 									cell.control = (function(){
@@ -833,58 +1226,83 @@
 										return dateInput_6;
 									})();
 								}
-							},
-							{
-								"constraint": {"rowIndex": 0, "colIndex": 6},
-								"configurator": function(cell){
-									cell.columnName = "categoryName";
-									cell.control = (function(){
-										var inputBox_4 = new cpr.controls.InputBox("ipb4");
-										inputBox_4.bind("value").toDataColumn("categoryName");
-										return inputBox_4;
-									})();
-								}
 							}
 						]
 					}
 				});
-				container.addChild(grid_2, {
-					"width": "400px",
-					"height": "200px"
+				grid_2.style.css({
+					"background-color" : "#FFFFFF"
 				});
-				var userDefinedControl_2 = linker.userDefinedControl_2 = new udc.fridge.fridgeCRUD("fridgeCRUD");
-				userDefinedControl_2.addStr = "추가";
-				if(typeof onFridgeCRUDSaveClick == "function") {
-					userDefinedControl_2.addEventListener("save-click", onFridgeCRUDSaveClick);
-				}
-				container.addChild(userDefinedControl_2, {
-					"autoSize": "none",
-					"width": "300px",
-					"height": "40px"
+				container.addChild(grid_2, {
+					"width": "543px",
+					"height": "133px"
 				});
 			})(group_1);
 			container.addChild(group_1, {
 				positions: [
 					{
 						"media": "all and (min-width: 1024px)",
-						"top": "20px",
-						"left": "64px",
-						"width": "448px",
-						"height": "657px"
+						"top": "73px",
+						"width": "600px",
+						"height": "620px",
+						"left": "calc(50% - 300px)"
 					}, 
 					{
 						"media": "all and (min-width: 500px) and (max-width: 1023.984px)",
-						"top": "20px",
-						"left": "31px",
-						"width": "219px",
-						"height": "657px"
+						"top": "73px",
+						"width": "293px",
+						"height": "620px",
+						"left": "calc(50% - 146px)"
 					}, 
 					{
 						"media": "all and (max-width: 499.984px)",
-						"top": "20px",
-						"left": "22px",
-						"width": "153px",
-						"height": "657px"
+						"top": "73px",
+						"width": "205px",
+						"height": "620px",
+						"left": "calc(50% - 102px)"
+					}
+				]
+			});
+			
+			var navigationBar_1 = new cpr.controls.NavigationBar("fridgNavbar");
+			navigationBar_1.style.setClasses(["test"]);
+			(function(navigationBar_1){
+				navigationBar_1.setItemSet(app.lookup("fridgeList"), {
+					"label": "fridgeName",
+					"value": "fridgeId"
+				});
+			})(navigationBar_1);
+			if(typeof onFridgNavbarSelectionChange == "function") {
+				navigationBar_1.addEventListener("selection-change", onFridgNavbarSelectionChange);
+			}
+			if(typeof onFridgNavbarBeforeContextValueChange == "function") {
+				navigationBar_1.addEventListener("before-context-value-change", onFridgNavbarBeforeContextValueChange);
+			}
+			if(typeof onFridgNavbarItemClick == "function") {
+				navigationBar_1.addEventListener("item-click", onFridgNavbarItemClick);
+			}
+			container.addChild(navigationBar_1, {
+				positions: [
+					{
+						"media": "all and (min-width: 1024px)",
+						"top": "2px",
+						"width": "600px",
+						"height": "72px",
+						"left": "calc(50% - 300px)"
+					}, 
+					{
+						"media": "all and (min-width: 500px) and (max-width: 1023.984px)",
+						"top": "2px",
+						"width": "293px",
+						"height": "72px",
+						"left": "calc(50% - 146px)"
+					}, 
+					{
+						"media": "all and (max-width: 499.984px)",
+						"top": "2px",
+						"width": "205px",
+						"height": "72px",
+						"left": "calc(50% - 102px)"
 					}
 				]
 			});
@@ -892,7 +1310,7 @@
 				app.addEventListener("load", onBodyLoad2);
 			}
 			// Linking
-			linker.userDefinedControl_1.grdUDCtrl = linker.grid_1;
+			linker.userDefinedControl_1.grdCtrl = linker.grid_1;
 			linker.userDefinedControl_2.grdCtrl = linker.grid_2;
 		}
 	});
