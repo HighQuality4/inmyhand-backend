@@ -27,7 +27,7 @@ public class ServerAuthController {
         try {
             Long userId = custom.getUserId();
             if(userId == null) {
-                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+                return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
             } else if (userId == 1L) {
                 log.info("어드민 유저 로그인 SERVER 로그인");
                 return ResponseEntity.ok().build();
