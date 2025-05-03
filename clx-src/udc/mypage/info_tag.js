@@ -125,6 +125,8 @@ var selectedTags = [];
 function onBodyLoad(e){
 	
 	cpr.core.Module.require("module/quicksearch/quickSearch");
+	var sms = app.lookup("smsHealthInfoTags");
+	sms.send();
 	
 }
 
@@ -172,6 +174,7 @@ function addHashtag(tagText) {
 
         console.log("❌ 태그 삭제됨. 현재 개수:", remaining);
         console.log("🧾 현재 selectedTags:", selectedTags);
+        
     });
 
     grpHashtags.addChild(tag, {
@@ -201,4 +204,18 @@ function onIpbFirstKeydown2(e){
 		
 		ipbFirst.value = "";
 	}
+}
+
+/*
+ * 서브미션에서 receive 이벤트 발생 시 호출.
+ * 서버로 부터 데이터를 모두 전송받았을 때 발생합니다.
+ */
+function onSmsHealthInfoTagsReceive(e){
+	var smsHealthInfoTags = e.control;
+	var xhr = smsHealthInfoTags.xhr;
+	var response = JSON.parse(xhr.responseText);
+	
+	response.forEach(function(tagText) {
+		addHashtag(tagText);
+	})
 }

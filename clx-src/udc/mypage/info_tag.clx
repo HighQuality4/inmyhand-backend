@@ -5,7 +5,9 @@
     <screen std:sid="screen-1df44ed8" id="tablet" name="tablet" width="500px" height="667px"/>
     <screen std:sid="screen-33f8f233" id="mobile" name="mobile" width="350px" height="525px"/>
     <cl:model std:sid="model-c08488ca">
-      <cl:dataset std:sid="d-set-a12470a8" id="ds1"/>
+      <cl:submission std:sid="submission-73e05075" id="smsHealthInfoTags" action="/api/healthInfo/health_interest">
+        <cl:listener std:sid="listener-7caf0624" name="receive" handler="onSmsHealthInfoTagsReceive"/>
+      </cl:submission>
     </cl:model>
     <cl:appspec/>
   </head>
@@ -18,7 +20,7 @@
         <cl:inputbox std:sid="i-box-b4670385" id="ipbFirst" style="background-position:top left; text-align:center;" value="">
           <cl:listener std:sid="listener-87235463" name="select" handler="onIpbFirstSelect"/>
           <cl:listener std:sid="listener-70e40990" name="keydown" handler="onIpbFirstKeydown2"/>
-          <cl:attribute name="submit-action" value="../healthInfo/api/search/health_interest"/>
+          <cl:attribute name="submit-action" value="../api/healthInfo/search/health_interest"/>
           <cl:attribute name="showAssist" value="Y"/>
           <cl:flowlayoutdata std:sid="f-data-3ff1d775" width="203px" height="20px" autosize="none"/>
         </cl:inputbox>

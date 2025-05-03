@@ -13,3 +13,14 @@ exports.getText = function(){
 	return "";
 };
 
+exports.setFoodName = function(val) {
+  app.lookup("foodname").value = val;
+};
+
+exports.setExpdate = function(val) {
+  app.lookup("expdate").value = val;
+};
+
+exports.setNum = function(val) {
+  app.lookup("num").value = val + ".";
+};

@@ -127,6 +127,10 @@ function onBodyLoad(e){
 	
 	cpr.core.Module.require("module/quicksearch/quickSearch");
 	
+	var sms = app.lookup("smsAllergyTags");
+	sms.send();
+	
+	
 }
 
 function addHashtag(tagText) {
@@ -202,4 +206,18 @@ function onIpbFirstKeydown2(e){
 		
 		ipbFirst.value = "";
 	}
+}
+
+/*
+ * 서브미션에서 receive 이벤트 발생 시 호출.
+ * 서버로 부터 데이터를 모두 전송받았을 때 발생합니다.
+ */
+function onSmsAllergyTagsReceive(e){
+	var smsAllergyTags = e.control;
+	var xhr = smsAllergyTags.xhr;
+	var response = JSON.parse(xhr.responseText);
+	
+	response.forEach(function(tagText) {
+		addHashtag(tagText);
+	})
 }

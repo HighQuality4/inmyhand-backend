@@ -46,7 +46,7 @@ function onBodyLoad(e){
 function onHomeClick(e){history.pushState({}, '', `/`);}
 function onFridgeClick(e){history.pushState({}, '', `/fridge`);}
 function onRecipeClick(e){history.pushState({}, '', `/recipe`);}
-function onAuthClick(e){history.pushState({}, '', `/users/login`);}
+function onAuthClick(e){history.pushState({}, '', `/auth/login`);}
 
 // URL 변경 감지
 (function(history) {

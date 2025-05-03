@@ -11,7 +11,7 @@
           <cl:datacolumn std:sid="d-column-77d2231c" name="createdAt"/>
         </cl:datacolumnlist>
       </cl:datamap>
-      <cl:submission std:sid="submission-89c7006e" id="smsProfile" withCredentials="true" action="/mypage/api/profile">
+      <cl:submission std:sid="submission-89c7006e" id="smsProfile" withCredentials="true" action="/api/mypage/profile">
         <cl:responsedata dataid="dmProfile"/>
       </cl:submission>
     </cl:model>
@@ -44,6 +44,7 @@
         </cl:responsivexylayoutdata>
       </cl:output>
       <cl:img std:sid="image-beeb3805" style="border-right-style:solid; border-top-width:5px; border-bottom-color:#eaf1f3; border-right-width:5px; border-left-color:#eaf1f3; border-right-color:#eaf1f3; border-left-width:5px; border-top-style:solid; border-radius:100%; border-left-style:solid; border-bottom-width:5px; border-top-color:#eaf1f3; border-bottom-style:solid;" src="../../theme/images/빗살문희토기.jpg">
+        <cl:listener std:sid="listener-8d9ab446" name="click" handler="onImageClick"/>
         <cl:responsivexylayoutdata std:sid="rxyl-data-246d2b81">
           <cl:xylayoutdata std:sid="sxyl-data-58828f2f" top="12px" left="20px" width="100px" height="100px" horizontalAnchor="LEFT" verticalAnchor="TOP" screenid="default"/>
         </cl:responsivexylayoutdata>
