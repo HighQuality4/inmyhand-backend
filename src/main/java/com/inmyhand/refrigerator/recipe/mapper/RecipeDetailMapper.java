@@ -124,8 +124,8 @@ public class RecipeDetailMapper {
                 // RecipeNutrientAnalysisDTO 생성 및 값 설정
                 RecipeNutrientAnalysisEntityDto analysisDto = new RecipeNutrientAnalysisEntityDto();
                 analysisDto.setAnalysisResult(analysisEntityDto.getAnalysisResult());
-                analysisDto.setScore(analysisEntityDto.getScore());
-                analysisDto.setCarbs(analysisEntityDto.getCarbs());
+                analysisDto.setFitnessScore(analysisEntityDto.getFitnessScore());
+                analysisDto.setCarbohydrate(analysisEntityDto.getCarbohydrate());
                 analysisDto.setProtein(analysisEntityDto.getProtein());
                 analysisDto.setFat(analysisEntityDto.getFat());
                 analysisDto.setMineral(analysisEntityDto.getMineral());

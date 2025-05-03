@@ -25,8 +25,8 @@ public class RecipeNutrientAnalysisMapper {
         RecipeNutrientAnalysisEntity entity = new RecipeNutrientAnalysisEntity();
         entity.setId(dto.getId());
         entity.setAnalysisResult(dto.getAnalysisResult());
-        entity.setScore(dto.getScore());
-        entity.setCarbs(dto.getCarbs());
+        entity.setScore(dto.getFitnessScore());
+        entity.setCarbs(dto.getCarbohydrate());
         entity.setProtein(dto.getProtein());
         entity.setFat(dto.getFat());
         entity.setMineral(dto.getMineral());
@@ -50,8 +50,8 @@ public class RecipeNutrientAnalysisMapper {
         RecipeNutrientAnalysisEntityDto dto = new RecipeNutrientAnalysisEntityDto();
         dto.setId(entity.getId());
         dto.setAnalysisResult(entity.getAnalysisResult());
-        dto.setScore(entity.getScore());
-        dto.setCarbs(entity.getCarbs());
+        dto.setFitnessScore(entity.getScore());
+        dto.setCarbohydrate(entity.getCarbs());
         dto.setProtein(entity.getProtein());
         dto.setFat(entity.getFat());
         dto.setMineral(entity.getMineral());

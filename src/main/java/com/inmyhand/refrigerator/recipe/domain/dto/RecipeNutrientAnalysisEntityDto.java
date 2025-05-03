@@ -15,8 +15,8 @@ import java.io.Serializable;
 public class RecipeNutrientAnalysisEntityDto implements Serializable {
     private Long id;
     private String analysisResult;
-    private int score;
-    private int carbs;
+    private int fitnessScore;
+    private int carbohydrate;
     private int protein;
     private int fat;
     private int mineral;
