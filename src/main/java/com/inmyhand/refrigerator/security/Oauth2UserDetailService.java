@@ -8,6 +8,7 @@ import com.inmyhand.refrigerator.member.domain.entity.RefreshTokenEntity;
 import com.inmyhand.refrigerator.member.domain.enums.MemberRole;
 import com.inmyhand.refrigerator.member.repository.LoginRepository;
 import com.inmyhand.refrigerator.member.repository.MemberRepository;
+import com.inmyhand.refrigerator.member.repository.MemberRoleRepository;
 import com.inmyhand.refrigerator.member.repository.RefreshTokenRepository;
 import com.inmyhand.refrigerator.security.jwt.JwtTokenUtil;
 import jakarta.transaction.Transactional;
@@ -42,6 +43,7 @@ public class Oauth2UserDetailService implements OAuth2UserService<OAuth2UserRequ
     private final RedisKeyManager redisKeyManager;
     private final LoginRepository loginRepository;
     private final MemberRepository memberRepository;
+    private final MemberRoleRepository memberRoleRepository;
     private final RefreshTokenRepository refreshTokenRepository;
 
     public OAuth2User loadUser(OAuth2UserRequest userRequest) throws OAuth2AuthenticationException {
@@ -87,17 +89,19 @@ public class Oauth2UserDetailService implements OAuth2UserService<OAuth2UserRequ
                     .regdate(new Date())
                     .build();
 
-            memberRepository.save(member); //멤버 저장
+            MemberEntity memberNew = memberRepository.saveAndFlush(member); //멤버 저장
+
 
             MemberRoleEntity role = new MemberRoleEntity();
-            role.setUserRole(MemberRole.freetier); // 기본값이지만 명시적 지정
-            role.setMemberEntity(member);
-            member.getMemberRoleList().add(role); // 양방향 연관관계 유지
+            role.setUserRole(MemberRole.freetier);
+            role.setMemberEntity(memberNew); // 단방향 설정만 하면 충분
+            memberRoleRepository.save(role);
 
             RefreshTokenEntity refreshTokenEntity = new RefreshTokenEntity();
-            refreshTokenEntity.setTokenValue(jwtTokenUtil.generateRefreshToken(member)); //리프레시 토큰 발급
+            refreshToken = jwtTokenUtil.generateRefreshToken(memberNew);
+            refreshTokenEntity.setTokenValue(refreshToken); //리프레시 토큰 발급
             refreshTokenEntity.setExpiredAt(Timestamp.valueOf(LocalDateTime.now().plusDays(7))); // 예: 1주 유효
-            refreshTokenEntity.setMemberEntity(member);
+            refreshTokenEntity.setMemberEntity(memberNew);
             refreshTokenRepository.save(refreshTokenEntity);
             refreshTokenRepository.flush();
 
@@ -113,16 +117,16 @@ public class Oauth2UserDetailService implements OAuth2UserService<OAuth2UserRequ
             refreshTokenRepository.save(existedToken); //리프레시 토큰 엔티티 저장
             refreshTokenRepository.flush();
         }
-
+        System.out.println("레디스 키 확인: " + member.getId());
         String redisKey = redisKeyManager.getLoginKey(member.getId());
         Long expiredTime = jwtTokenUtil.getRemainingTimeFromToken(refreshToken);
 
         try {
+            System.out.println(refreshToken);
             redisUtil.set(redisKey, refreshToken, expiredTime, TimeUnit.SECONDS);
         } catch (Exception e) {
             log.warn("Redis 저장 실패 - RefreshToken: {}", redisKey, e);
         }
-
         accessToken = jwtTokenUtil.generateAccessToken(member);
         List<GrantedAuthority> authorities = member.getMemberRoleList().stream()
                 .map(role -> new SimpleGrantedAuthority("ROLE_" + role.getUserRole().name().toUpperCase()))

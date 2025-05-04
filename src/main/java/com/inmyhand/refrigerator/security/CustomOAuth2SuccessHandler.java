@@ -38,14 +38,14 @@ public class CustomOAuth2SuccessHandler implements AuthenticationSuccessHandler 
         response.setHeader("Set-Cookie", cookie.toString());
         
         
-        ResponseCookie userIdCookie = ResponseCookie.from("userId", String.valueOf(user.getMember().getId()))
-                .httpOnly(false) //JS에서 접근 가능
-                .sameSite("Lax")
-                .path("/")
-                .maxAge(Duration.ofDays(7))
-                .build();
-
-        response.addHeader("Set-Cookie", userIdCookie.toString());
+//        ResponseCookie userIdCookie = ResponseCookie.from("userId", String.valueOf(user.getMember().getId()))
+//                .httpOnly(false) //JS에서 접근 가능
+//                .sameSite("Lax")
+//                .path("/")
+//                .maxAge(Duration.ofDays(7))
+//                .build();
+//
+//        response.addHeader("Set-Cookie", userIdCookie.toString());
 
         //request.getSession().removeAttribute("SPRING_SECURITY_SAVED_REQUEST");
 

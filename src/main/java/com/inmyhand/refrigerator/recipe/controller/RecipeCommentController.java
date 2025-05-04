@@ -22,7 +22,7 @@ public class RecipeCommentController {
     // 댓글 등록
     @PostMapping("/{recipeId}")
     public RecipeCommentEntityDto addComment(
-            @PathVariable Long recipeId,
+            @PathVariable("recipeId") Long recipeId,
             @RequestBody Map<String, Object> body,
             @AuthenticationPrincipal CustomUserDetails userDetails) {
         Map<String, Object> innerParam = (Map<String, Object>) body.get("param");

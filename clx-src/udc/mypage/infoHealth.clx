@@ -12,14 +12,14 @@
           <cl:datacolumn std:sid="d-column-50b75d01" name="interestInfo"/>
         </cl:datacolumnlist>
       </cl:datamap>
-      <cl:submission std:sid="submission-74df0d62" id="smsHealthInfo" withCredentials="true" action="api/healthInfo/save">
+      <cl:submission std:sid="submission-c9368471" id="smsHealthInfo" withCredentials="true" action="/api/healthInfo/save">
         <cl:requestdata dataid="dmHealthInfo"/>
       </cl:submission>
     </cl:model>
     <cl:appspec/>
   </head>
   <body std:sid="body-fda733f2" style="top:0px; left:0px; width:520px; height:440px;">
-    <cl:listener std:sid="listener-644037e5" name="load" handler="onBodyLoad"/>
+    <cl:listener std:sid="listener-3bafd771" name="load" handler="onBodyLoad2"/>
     <cl:group std:sid="group-a10f19c1" id="health_info" style="border-radius:5px; background-color:#E5E6C7; vertical-align:middle;">
       <cl:xylayoutdata std:sid="xyl-data-a70aa815" top="0px" left="0px" width="520px" height="440px" horizontalAnchor="LEFT" verticalAnchor="TOP"/>
       <cl:output std:sid="output-45aab41d" id="title" style="color:#856C66; font-weight:bold; font-size:20px; text-align:center;" value="나의 건강 정보">
