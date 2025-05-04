@@ -76,6 +76,11 @@ function onSmsCheckLocalReceive(e) {
       showToastModule.showToast("로컬 가입 회원만 변경이 가능합니다!", 2000);
       history.back();
       return;
+    } else {
+    	showToastModule.showToast("비밀번호가 수정되어 로그아웃합니다!", 2000);
+    	 setTimeout(() => {
+	      location.reload();
+	    }, 4000); 
     }
   } catch (error) {
     // 응답이 JSON이 아닌 경우
@@ -110,6 +115,7 @@ function proceedWithPasswordChange() {
   
   var dmPass = app.lookup("dmChangePw");
   var smsPass = app.lookup("smsChangePw");
-  dmPass.setValue("newPassword", pass1); // 또는 필요한 key로 설정
+  dmPass.setValue("password1", pass1); // 또는 필요한 key로 설정
+  dmPass.setValue("password2", pass2);
   smsPass.send();
 }

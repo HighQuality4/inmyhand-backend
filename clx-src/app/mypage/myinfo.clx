@@ -34,7 +34,7 @@
       <cl:submission std:sid="submission-9d96ff9d" id="smsSetMyInfo" action="/api/myInfo/setMyInfo">
         <cl:requestdata dataid="dmSetMyInfo"/>
       </cl:submission>
-      <cl:submission std:sid="submission-487a1922" id="smsChangePw" action="/api/myInfo/change/password">
+      <cl:submission std:sid="submission-487a1922" id="smsChangePw" withCredentials="true" action="/api/myInfo/change/password">
         <cl:listener std:sid="listener-3520f06e" name="receive" handler="onSmsChangePwReceive"/>
         <cl:requestdata dataid="dmChangePw"/>
       </cl:submission>
