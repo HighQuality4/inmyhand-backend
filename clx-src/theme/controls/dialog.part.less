@@ -2,14 +2,16 @@
 
  /* 다이얼로그 루트 */
 .cl-dialog {
-	border: solid 1px @focus-border-color;
+	border: solid 1px @default-border-color;
+	border-radius: 5px;
 
 	/* 다이얼로그 헤더 */
 	.cl-dialog-header {
-		background-color: #1D7FDC;
+		background-color: @default-border-color;
 		color: white;
-		border-bottom:1px solid #e5e5e5;
-
+		font-weight: bold;
+		border:1px solid @default-border-color;
+		
 		/* 다이얼로그 헤더 텍스트 */
 		.cl-text {
 		}
@@ -59,6 +61,8 @@
 			// background-image: url(icons/dialog-restore-active.png);
 		}
 	}
+	.cl-dialog-wrapper {
+		border-radius: 5px;
+	}
 
 }
-
