@@ -30,7 +30,7 @@
         </cl:group>
         <cl:flowlayout std:sid="f-layout-8bbd3967" scrollable="false"/>
       </cl:group>
-      <cl:xylayout std:sid="xylayout-4b37a49e"/>
+      <cl:xylayout std:sid="xylayout-4b37a49e" scrollable="false"/>
     </cl:group>
     <cl:xylayout std:sid="xylayout-8f4c1950" scrollable="false"/>
   </body>
