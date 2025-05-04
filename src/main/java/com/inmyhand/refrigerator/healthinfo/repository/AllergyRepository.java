@@ -18,4 +18,6 @@ public interface AllergyRepository extends JpaRepository<MemberAllergyEntity, Lo
     @Modifying
     @Query("DELETE FROM MemberAllergyEntity h WHERE h.memberEntity.id = :memberId")
     void deleteByMemberId(@Param("memberId") Long memberId);
+
+    List<MemberAllergyEntity> findByMemberEntityId(Long memberId);
 }
