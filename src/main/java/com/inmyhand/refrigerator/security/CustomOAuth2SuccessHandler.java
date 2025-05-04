@@ -31,9 +31,9 @@ public class CustomOAuth2SuccessHandler implements AuthenticationSuccessHandler 
         ResponseCookie cookie = ResponseCookie.from("access_token", accessToken)
                 .httpOnly(true)
                 .secure(false) // production이면 true로 유지
-                .sameSite("Strict") // 또는 "Strict" / "None" (CORS 환경 따라)
+                .sameSite("Lax") // 또는 "Strict" / "None" (CORS 환경 따라)
                 .path("/")
-                .maxAge(Duration.ofMinutes(30))
+                .maxAge(Duration.ofMinutes(60))
                 .build();
         response.setHeader("Set-Cookie", cookie.toString());
         

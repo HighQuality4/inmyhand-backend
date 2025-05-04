@@ -10,6 +10,7 @@ import org.springframework.security.config.annotation.authentication.configurati
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
+import org.springframework.security.config.annotation.web.configurers.HeadersConfigurer;
 import org.springframework.security.config.annotation.web.configurers.RequestCacheConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -57,7 +58,7 @@ public class SecurityConfig {
                         .sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/admin/**").hasRole("ADMIN") // 어드민 전용
-                        .requestMatchers("/user/**").hasAnyRole("USER", "ADMIN") // 유저 또는 어드민
+                        .requestMatchers("/users/**").hasAnyRole("FREETIER", "PAID", "ADMIN") // 유저 또는 어드민
                         .anyRequest().permitAll()
                 )
                 .httpBasic(AbstractHttpConfigurer::disable)
@@ -75,6 +76,7 @@ public class SecurityConfig {
                         .loginPage("/auth/login")
                 )
                 .requestCache(RequestCacheConfigurer::disable)
+                .headers(headers -> headers.frameOptions(HeadersConfigurer.FrameOptionsConfig::sameOrigin))
                 //.formLogin(withDefaults()) //테스트 용도
 //                .headers(headers -> headers
 //                        // 최신 OWASP 권장사항에 따라 X-XSS-Protection 헤더를 비활성화
