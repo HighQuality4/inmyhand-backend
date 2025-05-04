@@ -39,29 +39,37 @@ function onGetJoinGroupListSubmitSuccess(e){
 	const result = getJoinGroupList.xhr.responseText;
 	const resultJson = JSON.parse(result);
 	
-	
+	console.log("가져온 값 >>>" +resultJson);
 	
 	// 데이터 가공
-	const processedData = resultJson.searchGroupList.map(item => {
-	    const roleNames = item.roleName || [];
-	
-	    const roleStatus = roleNames.find(role => role === "leader" || role === "member") || "";
-	    const permissionList = roleNames.filter(role => role !== "leader" && role !== "member");
-	    const permissionName = permissionList.join(", ");
-	
-	    return {
-	        memberName: item.nickname,
-	        joinDate: item.joinDate,
-	        roleStatus: roleStatus.toUpperCase(),
-	        permissionName: permissionName,
-	        fridgeMemberId : item.fridgeMemberId,
-	        memberId : item.memberId 
-	    };
-	    
-	});
-	
-	// 데이터셋 세팅
-	// 참여중인 그룹 리스트 데이터셋 저장하기
+	const processedData = resultJson.searchGroupList.map((item, index) => {
+    const roleNames = item.roleName || [];
+
+    const roleStatus = roleNames.find(role => role === "leader" || role === "member") || "";
+    const permissionList = roleNames.filter(role => role !== "leader" && role !== "member");
+    const permissionName = permissionList.join(", ");
+
+    const rowData = {
+        memberName: item.nickname,
+        joinDate: item.joinDate,
+        roleStatus: roleStatus.toUpperCase(),
+        permissionName: permissionName,
+        fridgeMemberId: item.fridgeMemberId,
+        memberId: item.memberId
+    };
+
+    console.log(" roleNames:", roleNames);
+    console.log(" roleStatus:", roleStatus);
+    console.log(" permissionList:", permissionList);
+    console.log(" permissionName:", permissionName);
+    console.log(" rowData:", rowData);
+
+    return rowData;
+});
+//	
+//	// 데이터셋 세팅
+//	// 참여중인 그룹 리스트 데이터셋 저장하기
+
 	const ds = app.lookup("searchGroupList");
 	ds.clearData();
 	ds.build(processedData);
@@ -70,26 +78,47 @@ function onGetJoinGroupListSubmitSuccess(e){
 	// 그리드 새로고침
 	const grd = app.lookup("JoinGroupMemeberGrid")
 	grd.redraw();
-	
+//	
 
 }
 /*
  * 서브미션에서 submit-success 이벤트 발생 시 호출.
  * 통신이 성공하면 발생합니다.
  */
-function onGetRoleListSubmitSuccess(e){
-	var getRoleList = e.control;
-	
-	// 문제가 있었음
-	// 데이터는 받아오는데 check가 안됨
-	// 1. 제발 필히 그리드에 연결되어 있는 dataset 변경 시켜줘야한다.
-	// 2. 그리고 그 그리드를 다시 그려야한다. 
+function onGetRoleListSubmitSuccess(e) {
+	const ds = app.lookup("searchGroupList");
+	const roleList = app.lookup("roleList");
+	const rowCount = ds.getRowCount();
 
-	
-	const grd = app.lookup("JoinGroupMemeberGrid")
-	grd.redraw();
-	
-	
+	for (let i = 0; i < rowCount; i++) {
+
+		const permissionStr = ds.getValue(i, "permissionName");
+		console.log("원본 permissionName:", permissionStr);
+
+		if (permissionStr) {
+			const permissionArray = permissionStr.split(",").map(item => item.trim());
+			console.log("권한 이름 배열:", permissionArray);
+
+			const roleIds = permissionArray.map(roleName => {
+				const roleRow = roleList.findFirstRow("roleName == '" + roleName + "'");
+				if (roleRow) {
+					return roleRow.getValue("roleId");
+				}
+				return null;
+			}).filter(Boolean);
+
+			console.log("매핑된 roleId 목록:", roleIds);
+
+			const newPermissionValue = roleIds.join(",");
+			console.log("최종 저장될 permissionName (roleId 기반):", newPermissionValue);
+
+			ds.setValue(i, "permissionName", newPermissionValue);
+		} else {
+			console.log("⚠️ permissionName이 없음 (스킵)");
+		}
+	}
+
+	app.lookup("JoinGroupMemeberGrid").redraw();
 }
 
 function getChangedRowsByState(state) {

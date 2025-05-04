@@ -161,7 +161,7 @@
           <cl:gridcell std:sid="gd-cell-e44a19f3" rowindex="0" colindex="4" columnname="permissionName">
             <cl:checkboxgroup std:sid="cb-group-95663749" id="cbg1">
               <cl:celldata std:sid="c-data-7075d8fc"/>
-              <cl:itemset datasetid="roleList" label="roleName" value="roleName"/>
+              <cl:itemset datasetid="roleList" label="roleName" value="roleId"/>
             </cl:checkboxgroup>
           </cl:gridcell>
           <cl:gridcell std:sid="gd-cell-bb085c9e" rowindex="0" colindex="5" columnname="memberId"/>
