@@ -136,7 +136,7 @@ public class RecipeController {
     // 레시피 삭제
     @DeleteMapping("/{recipeId}")
     public ResponseEntity<String> deleteRecipe(
-            @PathVariable Long recipeId
+            @PathVariable("recipeId") Long recipeId
            //@RequestParam Long userId
     ) {
         recipeCommandService.deleteRecipe(recipeId);
