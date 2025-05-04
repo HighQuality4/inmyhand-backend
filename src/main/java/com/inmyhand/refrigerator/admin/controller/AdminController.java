@@ -4,8 +4,10 @@ import java.util.List;
 import java.util.Map;
 
 import com.inmyhand.refrigerator.member.domain.dto.MemberCustomQueryDTO;
+import com.inmyhand.refrigerator.subscription.security.CustomUserDetails;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import com.cleopatra.protocol.data.DataRequest;
@@ -70,6 +72,18 @@ public class AdminController {
                                         @ModelAttribute MemberCustomQueryDTO memberCustomQueryDTO) {
 
         return ResponseEntity.ok(adminService.findMemberDTOSearch(PageRequest.of(pageId, 30), memberCustomQueryDTO));
+    }
+
+    @PostMapping("/check")
+    public ResponseEntity<?> check(@AuthenticationPrincipal CustomUserDetails customUserDetails) {
+        log.info("어드민 체크 실행");
+        if(customUserDetails != null && customUserDetails.getUserId() != null && customUserDetails.getUserId() == 1) {
+            log.info("admin : 1111");
+            return ResponseEntity.ok(Map.of("adcheck",Map.of("check","1")));
+        } else {
+            log.info("admin : 0000");
+            return ResponseEntity.ok(Map.of("adcheck",Map.of("check","0")));
+        }
     }
 
 
