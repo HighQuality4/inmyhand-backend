@@ -32,16 +32,11 @@ import java.util.List;
 @RequiredArgsConstructor
 public class RecipeCommandService {
 
-    @Autowired
     private final RecipeInfoRepository infoRepository;
-    @Autowired
     private final RecipeStepRepository stepRepository;
-    @Autowired
     private final MemberRepository memberRepository;
-    @Autowired
     private final FilesRepository filesRepository;
-    @Autowired
-    private FileUploadService fileUploadService;
+    private final FileUploadService fileUploadService;
 
     // 레시피 생성
     @Transactional

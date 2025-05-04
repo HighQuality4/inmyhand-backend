@@ -18,4 +18,6 @@ public interface HateFoodRepository extends JpaRepository<HateFoodEntity, Long> 
     @Modifying
     @Query("DELETE FROM HateFoodEntity h WHERE h.memberEntity.id = :memberId")
     void deleteByMemberId(@Param("memberId") Long memberId);
+
+    List<HateFoodEntity> findByMemberEntityId(Long memberId);
 }
