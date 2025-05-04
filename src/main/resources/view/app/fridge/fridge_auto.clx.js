@@ -321,23 +321,23 @@
 					{
 						"media": "all and (min-width: 1024px)",
 						"top": "8px",
-						"left": "20px",
-						"width": "559px",
-						"height": "50px"
+						"width": "565px",
+						"height": "50px",
+						"left": "calc(50% - 282px)"
 					}, 
 					{
 						"media": "all and (min-width: 500px) and (max-width: 1023.984px)",
 						"top": "8px",
-						"left": "10px",
-						"width": "273px",
-						"height": "50px"
+						"width": "276px",
+						"height": "50px",
+						"left": "calc(50% - 138px)"
 					}, 
 					{
 						"media": "all and (max-width: 499.984px)",
 						"top": "8px",
-						"left": "7px",
-						"width": "191px",
-						"height": "50px"
+						"width": "193px",
+						"height": "50px",
+						"left": "calc(50% - 96px)"
 					}
 				]
 			});
@@ -403,7 +403,7 @@
 						var button_1 = new cpr.controls.Button();
 						button_1.value = "사진\r\n업로드";
 						button_1.style.css({
-							"color" : "#856C66"
+							"font-size" : "16px"
 						});
 						if(typeof onButtonClick == "function") {
 							button_1.addEventListener("click", onButtonClick);
@@ -429,24 +429,24 @@
 				positions: [
 					{
 						"media": "all and (min-width: 1024px)",
-						"top": "63px",
-						"left": "20px",
-						"width": "559px",
-						"height": "143px"
+						"top": "68px",
+						"width": "565px",
+						"height": "143px",
+						"left": "calc(50% - 282px)"
 					}, 
 					{
 						"media": "all and (min-width: 500px) and (max-width: 1023.984px)",
-						"top": "63px",
-						"left": "10px",
-						"width": "273px",
-						"height": "143px"
+						"top": "68px",
+						"width": "276px",
+						"height": "143px",
+						"left": "calc(50% - 138px)"
 					}, 
 					{
 						"media": "all and (max-width: 499.984px)",
-						"top": "63px",
-						"left": "7px",
-						"width": "191px",
-						"height": "143px"
+						"top": "68px",
+						"width": "193px",
+						"height": "143px",
+						"left": "calc(50% - 96px)"
 					}
 				]
 			});
@@ -498,23 +498,23 @@
 					{
 						"media": "all and (min-width: 1024px)",
 						"top": "215px",
-						"left": "20px",
-						"width": "559px",
-						"height": "50px"
+						"width": "565px",
+						"height": "50px",
+						"left": "calc(50% - 282px)"
 					}, 
 					{
 						"media": "all and (min-width: 500px) and (max-width: 1023.984px)",
 						"top": "215px",
-						"left": "10px",
-						"width": "273px",
-						"height": "50px"
+						"width": "276px",
+						"height": "50px",
+						"left": "calc(50% - 138px)"
 					}, 
 					{
 						"media": "all and (max-width: 499.984px)",
 						"top": "215px",
-						"left": "7px",
-						"width": "191px",
-						"height": "50px"
+						"width": "193px",
+						"height": "50px",
+						"left": "calc(50% - 96px)"
 					}
 				]
 			});
@@ -527,23 +527,23 @@
 					{
 						"media": "all and (min-width: 1024px)",
 						"top": "274px",
-						"left": "20px",
-						"width": "559px",
-						"height": "334px"
+						"width": "565px",
+						"height": "357px",
+						"left": "calc(50% - 282px)"
 					}, 
 					{
 						"media": "all and (min-width: 500px) and (max-width: 1023.984px)",
 						"top": "274px",
-						"left": "10px",
-						"width": "273px",
-						"height": "334px"
+						"width": "276px",
+						"height": "357px",
+						"left": "calc(50% - 138px)"
 					}, 
 					{
 						"media": "all and (max-width: 499.984px)",
 						"top": "274px",
-						"left": "7px",
-						"width": "191px",
-						"height": "334px"
+						"width": "193px",
+						"height": "357px",
+						"left": "calc(50% - 96px)"
 					}
 				]
 			});
@@ -575,24 +575,24 @@
 				positions: [
 					{
 						"media": "all and (min-width: 1024px)",
-						"top": "607px",
-						"left": "20px",
-						"width": "559px",
-						"height": "50px"
+						"top": "630px",
+						"width": "565px",
+						"height": "50px",
+						"left": "calc(50% - 282px)"
 					}, 
 					{
 						"media": "all and (min-width: 500px) and (max-width: 1023.984px)",
-						"top": "607px",
-						"left": "10px",
-						"width": "273px",
-						"height": "50px"
+						"top": "630px",
+						"width": "276px",
+						"height": "50px",
+						"left": "calc(50% - 138px)"
 					}, 
 					{
 						"media": "all and (max-width: 499.984px)",
-						"top": "607px",
-						"left": "7px",
-						"width": "191px",
-						"height": "50px"
+						"top": "630px",
+						"width": "193px",
+						"height": "50px",
+						"left": "calc(50% - 96px)"
 					}
 				]
 			});

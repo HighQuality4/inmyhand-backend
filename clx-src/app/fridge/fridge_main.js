@@ -77,7 +77,7 @@ function onBodyLoad2(e){
 function onFridgNavbarItemClick(e){
 
 	var fridgNavbar = e.control;
-	alert("클릭됨 "+e.item.value);
+	console.log("클릭됨 "+e.item.value);
   	
   	var setClickLabelValue = e.item.value; 
   	// 상단 제목 변경
@@ -88,7 +88,7 @@ function onFridgNavbarItemClick(e){
   	
     var voItem = vcNav.getItemByValue(setClickLabelValue);
     vcNav.focusItem(voItem);
-    alert(voItem.value);	
+    console.log(voItem.value);	
     
     // 현재 냉장고 정보 및 멤버 아이디
     app.lookup("fridgeIdParam").setValue("fridgeId", e.item.value);
@@ -205,7 +205,7 @@ function onOutputClick(e){
 function onOutputClick2(e){
 	var output = e.control;
 //	window.location.href = "";
-	alert("다이얼로그 시작");
+
 	app.dialogManager.openDialog("app/fridge/fridge_group","dialogName",{width:500, height:500},function(dialog){
 
 		//다이얼로그가 로드 되었을때 처리
@@ -238,7 +238,7 @@ function onFridgeCRUDForUDSaveClick(e){
 	var updated = getChangedRowsByState(cpr.data.tabledata.RowState.UPDATED);
 	var deleted = getChangedRowsByState(cpr.data.tabledata.RowState.DELETED);
 
-	alert("추가됨: " + JSON.stringify(inserted) + 
+	console.log("추가됨: " + JSON.stringify(inserted) + 
 	      "\n수정됨: " + JSON.stringify(updated) + 
 	      "\n삭제됨: " + JSON.stringify(deleted));
 
