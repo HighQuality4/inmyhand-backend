@@ -28,6 +28,15 @@
 				app.lookup("adminCheckSms").send();
 				const pathName = window.location.pathname;
 				
+				// 모든 탭 텍스트 색상 초기화
+				const routeKeys = ["home", "recipe", "auth", "fridge"];
+				routeKeys.forEach((key) => {
+				  const output = app.lookup(`${key}Output`);
+				  if (output) {
+				     output.style.css({ color: "#856C66" }); // 기본 회색
+				  }
+				});
+				
 				const match = embeddedRoutes.find(route => {
 				  if (typeof route.path === "string") {
 				    return route.path === pathName;
@@ -37,6 +46,13 @@
 				  return false;
 				});
 				
+				// 해당 routeKey가 있다면 색상 강조
+			  	if (match && match.routeKey) {
+				    const activeOutput = app.lookup(`${match.routeKey}Output`);
+			    	if (activeOutput) {
+			      		activeOutput.style.css({ color: "#F59760" }); // 강조 색상
+			    	}
+			  	}
 				
 				if (match != null) {
 					const vsAppId = match.loadApp;
@@ -417,14 +433,14 @@
 					formLayout_6.setRows(["30px", "1fr"]);
 					group_7.setLayout(formLayout_6);
 					(function(container){
-						var output_5 = new cpr.controls.Output();
+						var output_5 = new cpr.controls.Output("homeOutput");
 						output_5.value = "홈";
 						output_5.style.setClasses(["page-nav"]);
 						container.addChild(output_5, {
 							"colIndex": 0,
 							"rowIndex": 1
 						});
-						var image_4 = new cpr.controls.Image();
+						var image_4 = new cpr.controls.Image("homeImg");
 						image_4.src = "theme/images/home.svg";
 						container.addChild(image_4, {
 							"colIndex": 0,
@@ -459,14 +475,14 @@
 					formLayout_7.setRows(["30px", "1fr"]);
 					group_8.setLayout(formLayout_7);
 					(function(container){
-						var output_6 = new cpr.controls.Output();
+						var output_6 = new cpr.controls.Output("fridgeOutput");
 						output_6.value = "냉장고";
 						output_6.style.setClasses(["page-nav"]);
 						container.addChild(output_6, {
 							"colIndex": 0,
 							"rowIndex": 1
 						});
-						var image_5 = new cpr.controls.Image();
+						var image_5 = new cpr.controls.Image("fridgeImg");
 						image_5.src = "theme/images/refrigerator.svg";
 						container.addChild(image_5, {
 							"colIndex": 0,
@@ -498,14 +514,14 @@
 					formLayout_8.setRows(["30px", "1fr"]);
 					group_9.setLayout(formLayout_8);
 					(function(container){
-						var output_7 = new cpr.controls.Output();
+						var output_7 = new cpr.controls.Output("recipeOutput");
 						output_7.value = "레시피";
 						output_7.style.setClasses(["page-nav"]);
 						container.addChild(output_7, {
 							"colIndex": 0,
 							"rowIndex": 1
 						});
-						var image_6 = new cpr.controls.Image();
+						var image_6 = new cpr.controls.Image("recipeImg");
 						image_6.src = "theme/images/recipe.svg";
 						container.addChild(image_6, {
 							"colIndex": 0,

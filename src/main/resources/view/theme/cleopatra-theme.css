@@ -1089,6 +1089,7 @@ body.cl-has-modal {
   color: #000000;
   border: solid 1px #856C66;
   min-height: 100px;
+  border-radius: 5px;
   /* 그리드 헤더 */
   /* 그리드 디테일 */
   /* 그리드 푸터 */
@@ -1099,6 +1100,8 @@ body.cl-has-modal {
   /* noDataMessage 보여질 때 해당 텍스트영역 스타일 */
 }
 .cl-grid .cl-grid-header {
+  background-image: none;
+  background-color: #EFE4D3;
   /* 그리드 헤더 셀 */
   /* 그리드 헤더 셀 정렬 인디케이터 (header의 sortColumnName속성) */
   /* 그리드 헤더 셀 필터 인디케이터 */
@@ -1212,8 +1215,15 @@ body.cl-has-modal {
   /* 행 그룹시 그룹의 헤더 */
   /* 행 그룹시 그룹의 푸터 */
 }
+.cl-grid-row.cl-viewing .cl-grid-cell {
+  background-color: #F3F1F0;
+}
 .cl-grid-row.cl-selected {
+  color: #F59760;
   /* 선택된행 포커스 스타일 */
+}
+.cl-grid-row.cl-editing {
+  color: #000000;
 }
 /* 모든 셀 스타일 */
 .cl-grid-cell {

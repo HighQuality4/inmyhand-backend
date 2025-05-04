@@ -14,6 +14,15 @@ const embeddedAppChange = () => {
 	app.lookup("adminCheckSms").send();
 	const pathName = window.location.pathname;
 	
+	// 모든 탭 텍스트 색상 초기화
+	const routeKeys = ["home", "recipe", "auth", "fridge"];
+	routeKeys.forEach((key) => {
+	  const output = app.lookup(`${key}Output`);
+	  if (output) {
+	     output.style.css({ color: "#856C66" }); // 기본 회색
+	  }
+	});
+	
 	const match = embeddedRoutes.find(route => {
 	  if (typeof route.path === "string") {
 	    return route.path === pathName;
@@ -23,6 +32,13 @@ const embeddedAppChange = () => {
 	  return false;
 	});
 	
+	// 해당 routeKey가 있다면 색상 강조
+  	if (match && match.routeKey) {
+	    const activeOutput = app.lookup(`${match.routeKey}Output`);
+    	if (activeOutput) {
+      		activeOutput.style.css({ color: "#F59760" }); // 강조 색상
+    	}
+  	}
 	
 	if (match != null) {
 		const vsAppId = match.loadApp;

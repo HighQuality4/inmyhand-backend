@@ -1,13 +1,13 @@
 const embeddedRoutes = [
-  { path: "/", loadApp: "app/home/home" },
-  { path: "/recipe", loadApp: "app/recipe/recipe_main" },
+  { path: "/", loadApp: "app/home/home", routeKey:"home"  },
+  { path: "/recipe", loadApp: "app/recipe/recipe_main", routeKey:"recipe" },
   { path: /^\/recipe\/(\d+)$/, loadApp: "app/recipe/recipe_detail" },
   { path: "/recipe/search", loadApp: "app/recipe/recipe_search" },
-  { path: "/auth/login", loadApp: "app/login/login" },
-  { path: "/users/mypage", loadApp: "app/mypage/mypage"},
+  { path: "/auth/login", loadApp: "app/login/login", routeKey:"auth"  },
+  { path: "/users/mypage", loadApp: "app/mypage/mypage", routeKey:"auth"},
   { path: "/users/payment", loadApp: "app/payment/paycheck"},
   { path: "/users/myinfo" , loadApp: "app/mypage/myinfo"},
-  { path: "/fridge", loadApp: "app/fridge/fridge_main" },
+  { path: "/fridge", loadApp: "app/fridge/fridge_main", routeKey:"fridge"  },
   { path: "/recipe/form", loadApp: "app/recipe/recipe_form" }, // 레시피 등록
   { path: /^\/recipe\/form\/(\d+)$/, loadApp: "app/recipe/recipe_form" }, // 레시피 수정
   { path: "/auth/register", loadApp: "app/login/register"},
