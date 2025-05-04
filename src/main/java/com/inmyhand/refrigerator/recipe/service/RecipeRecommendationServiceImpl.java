@@ -106,6 +106,7 @@ public class RecipeRecommendationServiceImpl {
                     .matchedIngredients(matchedIngredients)
                     .totalIngredients(totalIngredients)
                     .missingIngredients(totalIngredients - matchedIngredients)
+                    .recipeSummary(recipeSummaryMapper.toDto(recipe))
                     .build();
 
             recommendations.add(dto);
@@ -174,6 +175,7 @@ public class RecipeRecommendationServiceImpl {
                 .matchedIngredients(matched)
                 .totalIngredients(total)
                 .missingIngredients(total - matched)
+                .recipeSummary(recipeSummaryMapper.toDto(recipe))
                 .build();
     }
 
