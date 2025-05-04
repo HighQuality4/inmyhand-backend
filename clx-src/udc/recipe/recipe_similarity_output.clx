@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:cl="http://tomatosystem.co.kr/cleopatra" xmlns:std="http://tomatosystem.co.kr/cleopatra/studio" std:sid="html-de1a651e" version="1.0.5545">
+  <head std:sid="head-71fd89cc">
+    <std:metadata>
+      <std:property key="template-file" value="templates/contents_container.clx"/>
+    </std:metadata>
+    <screen std:sid="screen-d3ae6fa1" id="default" name="default" width="1024px" height="768px" customHeight="600" customWidth="800" active="true"/>
+    <screen std:sid="screen-88527397" id="tablet" name="tablet" width="500px" height="667px"/>
+    <screen std:sid="screen-0f72b6ea" id="mobile" name="mobile" width="350px" height="525px"/>
+    <cl:model std:sid="model-ead68cba"/>
+    <cl:appspec>
+      <cl:property name="fontColor" type="string" default="#F59760"/>
+      <cl:property name="value" type="string"/>
+    </cl:appspec>
+  </head>
+  <body std:sid="body-5510e683" style="top:0px; left:0px; width:250px; height:30px;">
+    <cl:output std:sid="output-01affb3f" style="font-weight:bold; text-align:center;">
+      <cl:apppropbind property="color" category="STYLER" app-property="fontColor"/>
+      <cl:apppropbind property="value" category="PROPERTY" app-property="value"/>
+      <cl:xylayoutdata std:sid="xyl-data-a0f9ae01" top="0px" right="0px" bottom="0px" left="0px" horizontalAnchor="BOTH" verticalAnchor="BOTH"/>
+    </cl:output>
+    <cl:xylayout std:sid="xylayout-870377f1"/>
+  </body>
+  <std:studiosetting>
+    <std:hruler/>
+    <std:vruler/>
+  </std:studiosetting>
+</html>
