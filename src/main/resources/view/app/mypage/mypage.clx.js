@@ -56,6 +56,28 @@
 					e.preventDefault();
 				}
 				
+			}
+
+			/*
+			 * 루트 컨테이너에서 load 이벤트 발생 시 호출.
+			 * 앱이 최초 구성된후 최초 랜더링 직후에 발생하는 이벤트 입니다.
+			 */
+			function onBodyLoad(e){
+				var name = app.lookup("name");
+				var smsName = app.lookup("smsName");
+				
+				 smsName.addEventListener("submit-success", function(e) {
+			        var nicknameValue = name.getValue("nickname");
+
+			        var nickname = app.lookup("nickname");
+
+			        nickname.value = nicknameValue;
+			        console.log("✅ 닉네임:", nicknameValue);
+			    });
+				
+				smsName.send();
+				
+				
 			};
 			// End - User Script
 			
@@ -72,6 +94,12 @@
 			var dataMap_2 = new cpr.data.DataMap("dmHealthInfo");
 			dataMap_2.parseData({});
 			app.register(dataMap_2);
+			
+			var dataMap_3 = new cpr.data.DataMap("name");
+			dataMap_3.parseData({
+				"columns" : [{"name": "nickname"}]
+			});
+			app.register(dataMap_3);
 			var submission_1 = new cpr.protocols.Submission("smsLogout");
 			submission_1.withCredentials = true;
 			submission_1.action = "/api/users/logout";
@@ -81,6 +109,11 @@
 				submission_1.addEventListener("submit-success", onSmsLogoutSubmitSuccess);
 			}
 			app.register(submission_1);
+			
+			var submission_2 = new cpr.protocols.Submission("smsName");
+			submission_2.action = "/api/mypage/nickname";
+			submission_2.addResponseData(dataMap_3, false);
+			app.register(submission_2);
 			app.supportMedia("all and (min-width: 1024px)", "default");
 			app.supportMedia("all and (min-width: 500px) and (max-width: 1023.984px)", "tablet");
 			app.supportMedia("all and (max-width: 499.984px)", "mobile");
@@ -240,13 +273,32 @@
 			var xYLayout_1 = new cpr.controls.layouts.XYLayout();
 			group_1.setLayout(xYLayout_1);
 			(function(container){
-				var output_1 = new cpr.controls.Output();
-				output_1.value = "로그인 되었습니다!";
-				container.addChild(output_1, {
-					"left": "2px",
-					"width": "410px",
-					"height": "20px",
-					"top": "calc(50% - 10px)"
+				var group_2 = new cpr.controls.Container();
+				var flowLayout_1 = new cpr.controls.layouts.FlowLayout();
+				flowLayout_1.scrollable = false;
+				group_2.setLayout(flowLayout_1);
+				(function(container){
+					var output_1 = new cpr.controls.Output("nickname");
+					output_1.value = "Output";
+					output_1.style.css({
+						"text-align" : "center"
+					});
+					container.addChild(output_1, {
+						"width": "auto",
+						"height": "20px"
+					});
+					var output_2 = new cpr.controls.Output();
+					output_2.value = "님 환영합니다!";
+					container.addChild(output_2, {
+						"width": "302px",
+						"height": "20px"
+					});
+				})(group_2);
+				container.addChild(group_2, {
+					"top": "0px",
+					"left": "0px",
+					"width": "412px",
+					"height": "20px"
 				});
 				var button_3 = new cpr.controls.Button();
 				button_3.value = "로그아웃";
@@ -288,6 +340,9 @@
 					}
 				]
 			});
+			if(typeof onBodyLoad == "function"){
+				app.addEventListener("load", onBodyLoad);
+			}
 		}
 	});
 	app.title = "mypage";
