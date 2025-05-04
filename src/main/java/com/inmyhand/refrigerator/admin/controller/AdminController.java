@@ -4,7 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.inmyhand.refrigerator.member.domain.dto.MemberCustomQueryDTO;
-import com.inmyhand.refrigerator.subscription.security.CustomUserDetails;
+import com.inmyhand.refrigerator.security.CustomUserDetails;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
