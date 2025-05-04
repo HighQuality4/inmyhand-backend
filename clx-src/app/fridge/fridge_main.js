@@ -21,14 +21,27 @@ function onBodyLoad2(e){
 	const changeFoodList = app.lookup("changeFoodList");
 	// 식재료 그리드 
 	const foodListGrid = app.lookup("foodListGrid");
+	const inputName = app.lookup("titleInput");
 	
 	// 서브미션 보내기
 	getFridgeList.send().then(function(pbSuccess){
 		if(pbSuccess){
 			app.lookup("fridgNavbar").redraw();
-			app.lookup("fridgNavbar").selectItemByValue("1");
+			 setTimeout(function() {
+			 	
+				const getFridgeId = app.lookup("fridgeIdParam").getValue("fridgeId")
+				
+			 	app.lookup("fridgNavbar").selectItemByValue(getFridgeId.toString());
+				inputName.value = app.lookup("fridgNavbar").getItem(0).label
+				
+			 }, 150);
 		}
+		
+			    
+			 	
 	});
+	
+	
 	getFoodList.send();
 	
 	// 그룹 접기 이벤트 추가하기 
@@ -80,6 +93,7 @@ function onFridgNavbarItemClick(e){
 	console.log("클릭됨 "+e.item.value);
   	
   	var setClickLabelValue = e.item.value; 
+  	
   	// 상단 제목 변경
   	app.lookup("titleInput").value = e.item.label;
   	
@@ -91,9 +105,9 @@ function onFridgNavbarItemClick(e){
     console.log(voItem.value);	
     
     // 현재 냉장고 정보 및 멤버 아이디
-    app.lookup("fridgeIdParam").setValue("fridgeId", e.item.value);
-    app.lookup("fridgeIdParam").setValue("memberId", 3);
-    
+    var myFridgeId= app.lookup("fridgeIdParam")
+    myFridgeId.setValue("fridgeId", e.item.value);
+    console.log("fridgeIdParam >> 클릭 변경 후 " + myFridgeId.getValue("fridgeId"))
    
 	app.lookup("changeFoodList").send();
 	app.lookup("checkUserRole").send();
@@ -340,13 +354,19 @@ function onChangeFoodListBeforeSend(e){
    	
 }
 
+
 /*
- * 서브미션에서 before-send 이벤트 발생 시 호출.
- * XMLHttpRequest가 open된 후 send 함수가 호출되기 직전에 발생합니다.
+ * 서브미션에서 submit-success 이벤트 발생 시 호출.
+ * 통신이 성공하면 발생합니다.
  */
-function onCheckUserRoleBeforeSend(e){
-	var checkUserRole = e.control;
+function onGetFoodListSubmitSuccess(e){
+	var getFoodList = e.control;
 	
-	
+	 var fridgeId = app.lookup("foodList").getRow(1).getValue("fridgeId");
+	 var fristParam = app.lookup("fridgeIdParam")
+	 fristParam.setValue("fridgeId", fridgeId);
+	 
+	 console.log("가장 첫번째 냉장고 아이디" + fristParam.getValue("fridgeId"))
+	 
 	
 }

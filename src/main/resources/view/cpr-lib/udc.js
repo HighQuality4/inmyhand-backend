@@ -588,24 +588,18 @@
 				formLayout_2.rightMargin = "5px";
 				formLayout_2.bottomMargin = "5px";
 				formLayout_2.leftMargin = "5px";
-				formLayout_2.setColumns(["50px", "1fr"]);
+				formLayout_2.setColumns(["1fr"]);
 				formLayout_2.setRows(["1fr"]);
 				group_1.setLayout(formLayout_2);
 				(function(container){
-					var inputBox_1 = new cpr.controls.InputBox("ipb2");
-					inputBox_1.value = "1번";
-					container.addChild(inputBox_1, {
-						"colIndex": 0,
-						"rowIndex": 0
-					});
 					var grid_1 = new cpr.controls.Grid("grd1");
 					grid_1.init({
 						"dataSet": app.lookup("insertFoodList"),
 						"columns": [
-							{"width": "50px"},
+							{"width": "24px"},
 							{"width": "100px"},
 							{"width": "100px"},
-							{"width": "100px"},
+							{"width": "42px"},
 							{"width": "100px"},
 							{"width": "100px"}
 						],
@@ -624,8 +618,8 @@
 									"configurator": function(cell){
 										cell.filterable = false;
 										cell.sortable = false;
-										cell.targetColumnName = "foodName";
-										cell.text = "foodName";
+										cell.targetColumnName = "categoryName";
+										cell.text = "카테고리이름";
 									}
 								},
 								{
@@ -633,8 +627,8 @@
 									"configurator": function(cell){
 										cell.filterable = false;
 										cell.sortable = false;
-										cell.targetColumnName = "foodAmount";
-										cell.text = "foodAmount";
+										cell.targetColumnName = "foodName";
+										cell.text = "음식명";
 									}
 								},
 								{
@@ -642,8 +636,8 @@
 									"configurator": function(cell){
 										cell.filterable = false;
 										cell.sortable = false;
-										cell.targetColumnName = "endDate";
-										cell.text = "endDate";
+										cell.targetColumnName = "foodAmount";
+										cell.text = "수량";
 									}
 								},
 								{
@@ -651,8 +645,8 @@
 									"configurator": function(cell){
 										cell.filterable = false;
 										cell.sortable = false;
-										cell.targetColumnName = "chargeDate";
-										cell.text = "chargeDate";
+										cell.targetColumnName = "endDate";
+										cell.text = "유통기한";
 									}
 								},
 								{
@@ -660,8 +654,8 @@
 									"configurator": function(cell){
 										cell.filterable = false;
 										cell.sortable = false;
-										cell.targetColumnName = "categoryName";
-										cell.text = "categoryName";
+										cell.targetColumnName = "chargeDate";
+										cell.text = "구매일";
 									}
 								}
 							]
@@ -678,11 +672,17 @@
 								{
 									"constraint": {"rowIndex": 0, "colIndex": 1},
 									"configurator": function(cell){
-										cell.columnName = "foodName";
+										cell.columnName = "categoryName";
 									}
 								},
 								{
 									"constraint": {"rowIndex": 0, "colIndex": 2},
+									"configurator": function(cell){
+										cell.columnName = "foodName";
+									}
+								},
+								{
+									"constraint": {"rowIndex": 0, "colIndex": 3},
 									"configurator": function(cell){
 										cell.columnName = "foodAmount";
 										cell.control = (function(){
@@ -693,7 +693,7 @@
 									}
 								},
 								{
-									"constraint": {"rowIndex": 0, "colIndex": 3},
+									"constraint": {"rowIndex": 0, "colIndex": 4},
 									"configurator": function(cell){
 										cell.columnName = "endDate";
 										cell.control = (function(){
@@ -704,7 +704,7 @@
 									}
 								},
 								{
-									"constraint": {"rowIndex": 0, "colIndex": 4},
+									"constraint": {"rowIndex": 0, "colIndex": 5},
 									"configurator": function(cell){
 										cell.columnName = "chargeDate";
 										cell.control = (function(){
@@ -713,18 +713,12 @@
 											return dateInput_2;
 										})();
 									}
-								},
-								{
-									"constraint": {"rowIndex": 0, "colIndex": 5},
-									"configurator": function(cell){
-										cell.columnName = "categoryName";
-									}
 								}
 							]
 						}
 					});
 					container.addChild(grid_1, {
-						"colIndex": 1,
+						"colIndex": 0,
 						"rowIndex": 0
 					});
 				})(group_1);

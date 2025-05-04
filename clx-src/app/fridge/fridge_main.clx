@@ -96,6 +96,7 @@
         </cl:datacolumnlist>
       </cl:datamap>
       <cl:submission std:sid="submission-8dd9b29d" id="getFoodList" method="post" action="/api/fridge/change" mediatype="application/json">
+        <cl:listener std:sid="listener-9a0d8548" name="submit-success" handler="onGetFoodListSubmitSuccess"/>
         <cl:responsedata dataid="foodList"/>
       </cl:submission>
       <cl:submission std:sid="submission-427fa235" id="getFridgeList" action="/api/fridge/myFridgeList" mediatype="application/json">
