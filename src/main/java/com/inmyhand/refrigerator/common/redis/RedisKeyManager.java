@@ -18,7 +18,6 @@ public class RedisKeyManager {
     private static final String EMAIL_AUTH = "EMAIL_AUTH"; // 이메일 인증 관련
     private static final String EMAIL_VERIFIED = "EMAIL_VERIFIED";
 
-
     // 로그인 관련 키 생성
     public String getLoginKey(Long userId) {
         return String.format("%s:REFRESH_TOKEN:%s", AUTH_PREFIX, userId);
@@ -55,6 +54,7 @@ public class RedisKeyManager {
     public String getEmailVerifiedKey(String email) {
         return String.format("%s:%s", EMAIL_VERIFIED, email);
     }
+
 
     // 임시저장 관련 키 생성
     public String getTempSaveKey(String userId, String contentType) {
