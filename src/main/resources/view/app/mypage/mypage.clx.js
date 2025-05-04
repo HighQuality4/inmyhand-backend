@@ -86,7 +86,16 @@
 			 */
 			function onButtonClick2(e){
 				var button = e.control;
-				window.location.href = window.location.origin + "/users/payment"
+				history.pushState({}, '', `/users/payment`);
+			}
+
+			/*
+			 * "내 정보 변경하기" 버튼에서 click 이벤트 발생 시 호출.
+			 * 사용자가 컨트롤을 클릭할 때 발생하는 이벤트.
+			 */
+			function onButtonClick3(e){
+				var button = e.control;
+				history.pushState({}, '', `/users/myinfo`);
 			};
 			// End - User Script
 			
@@ -223,57 +232,32 @@
 			});
 			
 			var button_1 = new cpr.controls.Button();
-			button_1.value = "Button";
+			button_1.value = "구독 및 결제 관리";
+			button_1.style.css({
+				"background-color" : "#856C66"
+			});
+			if(typeof onButtonClick2 == "function") {
+				button_1.addEventListener("click", onButtonClick2);
+			}
 			container.addChild(button_1, {
 				positions: [
 					{
 						"media": "all and (min-width: 1024px)",
-						"top": "1106px",
-						"width": "0px",
-						"height": "66px",
-						"left": "calc(50% - 0px)"
-					}, 
-					{
-						"media": "all and (min-width: 500px) and (max-width: 1023.984px)",
-						"top": "1106px",
-						"width": "0px",
-						"height": "66px",
-						"left": "calc(50% - 0px)"
-					}, 
-					{
-						"media": "all and (max-width: 499.984px)",
-						"top": "1106px",
-						"width": "0px",
-						"height": "66px",
-						"left": "calc(50% - 0px)"
-					}
-				]
-			});
-			
-			var button_2 = new cpr.controls.Button();
-			button_2.value = "구독 및 결제 관리";
-			if(typeof onButtonClick2 == "function") {
-				button_2.addEventListener("click", onButtonClick2);
-			}
-			container.addChild(button_2, {
-				positions: [
-					{
-						"media": "all and (min-width: 1024px)",
-						"top": "1093px",
+						"top": "1083px",
 						"width": "520px",
 						"height": "66px",
 						"left": "calc(50% - 260px)"
 					}, 
 					{
 						"media": "all and (min-width: 500px) and (max-width: 1023.984px)",
-						"top": "1093px",
+						"top": "1083px",
 						"width": "254px",
 						"height": "66px",
 						"left": "calc(50% - 127px)"
 					}, 
 					{
 						"media": "all and (max-width: 499.984px)",
-						"top": "1093px",
+						"top": "1083px",
 						"width": "178px",
 						"height": "66px",
 						"left": "calc(50% - 89px)"
@@ -312,15 +296,15 @@
 					"width": "412px",
 					"height": "20px"
 				});
-				var button_3 = new cpr.controls.Button();
-				button_3.value = "로그아웃";
-				button_3.style.css({
+				var button_2 = new cpr.controls.Button();
+				button_2.value = "로그아웃";
+				button_2.style.css({
 					"border-radius" : "5px"
 				});
 				if(typeof onButtonClick == "function") {
-					button_3.addEventListener("click", onButtonClick);
+					button_2.addEventListener("click", onButtonClick);
 				}
-				container.addChild(button_3, {
+				container.addChild(button_2, {
 					"left": "417px",
 					"width": "100px",
 					"height": "20px",
@@ -348,6 +332,37 @@
 						"top": "20px",
 						"width": "178px",
 						"height": "20px",
+						"left": "calc(50% - 89px)"
+					}
+				]
+			});
+			
+			var button_3 = new cpr.controls.Button();
+			button_3.value = "내 정보 변경하기";
+			if(typeof onButtonClick3 == "function") {
+				button_3.addEventListener("click", onButtonClick3);
+			}
+			container.addChild(button_3, {
+				positions: [
+					{
+						"media": "all and (min-width: 1024px)",
+						"top": "1171px",
+						"width": "520px",
+						"height": "66px",
+						"left": "calc(50% - 260px)"
+					}, 
+					{
+						"media": "all and (min-width: 500px) and (max-width: 1023.984px)",
+						"top": "1171px",
+						"width": "254px",
+						"height": "66px",
+						"left": "calc(50% - 127px)"
+					}, 
+					{
+						"media": "all and (max-width: 499.984px)",
+						"top": "1171px",
+						"width": "178px",
+						"height": "66px",
 						"left": "calc(50% - 89px)"
 					}
 				]

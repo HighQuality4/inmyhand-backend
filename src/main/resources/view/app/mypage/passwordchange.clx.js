@@ -16,10 +16,52 @@
 			 * Created at 2025. 4. 17. 오후 1:52:50.
 			 *
 			 * @author gyrud
-			 ************************************************/;
+			 ************************************************/
+			const showToastModule = cpr.core.Module.require("module/common/showToast");
+			/*
+			 * "비밀번호 재발급" 버튼(emailBtn)에서 click 이벤트 발생 시 호출.
+			 * 사용자가 컨트롤을 클릭할 때 발생하는 이벤트.
+			 */
+			function onEmailBtnClick(e){
+				var emailBtn = e.control;
+				
+				var email = app.lookup("email");
+				var dmEmail = app.lookup("dmEmail");
+				dmEmail.setValue("email", email);
+				
+				var smsEmail = app.lookup("smsEmail");
+				smsEmail.send();
+			}
+
+			/*
+			 * 서브미션에서 receive 이벤트 발생 시 호출.
+			 * 서버로 부터 데이터를 모두 전송받았을 때 발생합니다.
+			 */
+			function onSmsEmailReceive(e){
+				var smsEmail = e.control;
+				
+				var xhr = smsEmail.xhr;
+				var response = JSON.parse(xhr.responseText);
+				if (response === "true") {
+					showToastModule.showToast("이메일로 임시 비밀번호를 발송하였습니다.", 2000);
+					
+				} else {
+					showToastModule.showToast("이메일이 틀렸습니다!", 2000);
+				}
+			};
 			// End - User Script
 			
 			// Header
+			var dataMap_1 = new cpr.data.DataMap("dmEmail");
+			dataMap_1.parseData({});
+			app.register(dataMap_1);
+			var submission_1 = new cpr.protocols.Submission("smsEmail");
+			submission_1.action = "/api/myInfo/reset/password";
+			submission_1.addRequestData(dataMap_1);
+			if(typeof onSmsEmailReceive == "function") {
+				submission_1.addEventListener("receive", onSmsEmailReceive);
+			}
+			app.register(submission_1);
 			app.supportMedia("all and (min-width: 1024px)", "default");
 			app.supportMedia("all and (min-width: 500px) and (max-width: 1023.984px)", "tablet");
 			app.supportMedia("all and (max-width: 499.984px)", "mobile");
@@ -39,7 +81,7 @@
 			
 			// UI Configuration
 			var output_1 = new cpr.controls.Output();
-			output_1.value = "내 정보 변경 페이지";
+			output_1.value = "비밀번호 재발급";
 			output_1.style.css({
 				"color" : "#000000",
 				"font-weight" : "bold",
@@ -72,129 +114,59 @@
 				]
 			});
 			
-			var inputBox_1 = new cpr.controls.InputBox("ipb1");
-			inputBox_1.placeholder = "현재 비밀번호 입력";
-			inputBox_1.style.css({
-				"border-radius" : "5px",
-				"text-align" : "center"
-			});
-			container.addChild(inputBox_1, {
+			var group_1 = new cpr.controls.Container();
+			var xYLayout_1 = new cpr.controls.layouts.XYLayout();
+			group_1.setLayout(xYLayout_1);
+			(function(container){
+				var inputBox_1 = new cpr.controls.InputBox("email");
+				inputBox_1.placeholder = "이메일 입력";
+				inputBox_1.style.css({
+					"border-radius" : "5px",
+					"text-align" : "center"
+				});
+				container.addChild(inputBox_1, {
+					"top": "2px",
+					"left": "0px",
+					"width": "520px",
+					"height": "52px"
+				});
+				var button_1 = new cpr.controls.Button("emailBtn");
+				button_1.value = "비밀번호 재발급";
+				button_1.style.css({
+					"border-radius" : "5px"
+				});
+				if(typeof onEmailBtnClick == "function") {
+					button_1.addEventListener("click", onEmailBtnClick);
+				}
+				container.addChild(button_1, {
+					"top": "237px",
+					"left": "0px",
+					"width": "520px",
+					"height": "53px"
+				});
+			})(group_1);
+			container.addChild(group_1, {
 				positions: [
 					{
 						"media": "all and (min-width: 1024px)",
-						"top": "158px",
-						"left": "40px",
+						"top": "152px",
 						"width": "520px",
-						"height": "52px"
+						"height": "290px",
+						"left": "calc(50% - 260px)"
 					}, 
 					{
 						"media": "all and (min-width: 500px) and (max-width: 1023.984px)",
-						"top": "158px",
-						"left": "20px",
+						"top": "152px",
 						"width": "254px",
-						"height": "52px"
+						"height": "290px",
+						"left": "calc(50% - 127px)"
 					}, 
 					{
 						"media": "all and (max-width: 499.984px)",
-						"top": "158px",
-						"left": "14px",
+						"top": "152px",
 						"width": "178px",
-						"height": "52px"
-					}
-				]
-			});
-			
-			var inputBox_2 = new cpr.controls.InputBox("ipb2");
-			inputBox_2.placeholder = "새 비밀번호 입력";
-			inputBox_2.style.css({
-				"border-radius" : "5px",
-				"text-align" : "center"
-			});
-			container.addChild(inputBox_2, {
-				positions: [
-					{
-						"media": "all and (min-width: 1024px)",
-						"top": "220px",
-						"left": "40px",
-						"width": "520px",
-						"height": "52px"
-					}, 
-					{
-						"media": "all and (min-width: 500px) and (max-width: 1023.984px)",
-						"top": "220px",
-						"left": "20px",
-						"width": "254px",
-						"height": "52px"
-					}, 
-					{
-						"media": "all and (max-width: 499.984px)",
-						"top": "220px",
-						"left": "14px",
-						"width": "178px",
-						"height": "52px"
-					}
-				]
-			});
-			
-			var button_1 = new cpr.controls.Button();
-			button_1.value = "변경하기";
-			button_1.style.css({
-				"border-radius" : "5px"
-			});
-			container.addChild(button_1, {
-				positions: [
-					{
-						"media": "all and (min-width: 1024px)",
-						"top": "344px",
-						"left": "40px",
-						"width": "520px",
-						"height": "52px"
-					}, 
-					{
-						"media": "all and (min-width: 500px) and (max-width: 1023.984px)",
-						"top": "344px",
-						"left": "20px",
-						"width": "254px",
-						"height": "52px"
-					}, 
-					{
-						"media": "all and (max-width: 499.984px)",
-						"top": "344px",
-						"left": "14px",
-						"width": "178px",
-						"height": "52px"
-					}
-				]
-			});
-			
-			var inputBox_3 = new cpr.controls.InputBox("ipb3");
-			inputBox_3.placeholder = "새 비밀번호 확인";
-			inputBox_3.style.css({
-				"border-radius" : "5px",
-				"text-align" : "center"
-			});
-			container.addChild(inputBox_3, {
-				positions: [
-					{
-						"media": "all and (min-width: 1024px)",
-						"top": "282px",
-						"left": "40px",
-						"width": "520px",
-						"height": "52px"
-					}, 
-					{
-						"media": "all and (min-width: 500px) and (max-width: 1023.984px)",
-						"top": "282px",
-						"left": "20px",
-						"width": "254px",
-						"height": "52px"
-					}, 
-					{
-						"media": "all and (max-width: 499.984px)",
-						"top": "282px",
-						"left": "14px",
-						"width": "178px",
-						"height": "52px"
+						"height": "290px",
+						"left": "calc(50% - 89px)"
 					}
 				]
 			});
