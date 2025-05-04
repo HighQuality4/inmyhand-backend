@@ -52,6 +52,7 @@
       </cl:responsivexylayoutdata>
     </cl:button>
     <cl:button std:sid="button-b21fc41a" value="구독 및 결제 관리">
+      <cl:listener std:sid="listener-c0f7ff79" name="click" handler="onButtonClick2"/>
       <cl:responsivexylayoutdata std:sid="rxyl-data-ed090986">
         <cl:xylayoutdata std:sid="sxyl-data-d97b4811" top="1093px" width="520px" height="66px" horizontalAnchor="CENTER" verticalAnchor="TOP" screenid="default"/>
       </cl:responsivexylayoutdata>

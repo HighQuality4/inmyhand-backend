@@ -78,6 +78,15 @@
 				smsName.send();
 				
 				
+			}
+
+			/*
+			 * "구독 및 결제 관리" 버튼에서 click 이벤트 발생 시 호출.
+			 * 사용자가 컨트롤을 클릭할 때 발생하는 이벤트.
+			 */
+			function onButtonClick2(e){
+				var button = e.control;
+				window.location.href = window.location.origin + "/users/payment"
 			};
 			// End - User Script
 			
@@ -243,6 +252,9 @@
 			
 			var button_2 = new cpr.controls.Button();
 			button_2.value = "구독 및 결제 관리";
+			if(typeof onButtonClick2 == "function") {
+				button_2.addEventListener("click", onButtonClick2);
+			}
 			container.addChild(button_2, {
 				positions: [
 					{
