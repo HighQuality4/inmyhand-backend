@@ -14,14 +14,23 @@
         </cl:datacolumnlist>
       </cl:datamap>
       <cl:datamap std:sid="d-map-1ca76b2d" id="dmHealthInfo"/>
+      <cl:datamap std:sid="d-map-49ada23e" id="name">
+        <cl:datacolumnlist>
+          <cl:datacolumn std:sid="d-column-67f620fa" name="nickname"/>
+        </cl:datacolumnlist>
+      </cl:datamap>
       <cl:submission std:sid="submission-29d5f379" id="smsLogout" withCredentials="true" action="/api/users/logout" mediatype="application/json">
         <cl:listener std:sid="listener-55b37218" name="submit-success" handler="onSmsLogoutSubmitSuccess"/>
         <cl:requestdata dataid="dmLogout"/>
+      </cl:submission>
+      <cl:submission std:sid="submission-a1d1c5b3" id="smsName" action="/api/mypage/nickname">
+        <cl:responsedata dataid="name"/>
       </cl:submission>
     </cl:model>
     <cl:appspec/>
   </head>
   <body std:sid="body-c43e6d9f" style="background-color:#FFFFFF;" class="contents-container">
+    <cl:listener std:sid="listener-15f454c1" name="load" handler="onBodyLoad"/>
     <cl:udc std:sid="ud-control-cf1083d1" id="profile" type="udc.mypage.profile">
       <cl:responsivexylayoutdata std:sid="rxyl-data-975432c5">
         <cl:xylayoutdata std:sid="sxyl-data-65bdba25" top="50px" width="520px" height="124px" horizontalAnchor="CENTER" verticalAnchor="TOP" screenid="default"/>
@@ -51,9 +60,16 @@
       <cl:responsivexylayoutdata std:sid="rxyl-data-c46194b9">
         <cl:xylayoutdata std:sid="sxyl-data-22d8bb39" top="20px" width="520px" height="20px" horizontalAnchor="CENTER" verticalAnchor="TOP" screenid="default"/>
       </cl:responsivexylayoutdata>
-      <cl:output std:sid="output-71326abb" value="로그인 되었습니다!">
-        <cl:xylayoutdata std:sid="xyl-data-43e0b40e" left="2px" width="410px" height="20px" horizontalAnchor="LEFT" verticalAnchor="CENTER"/>
-      </cl:output>
+      <cl:group std:sid="group-0aea4ab3">
+        <cl:xylayoutdata std:sid="xyl-data-c1f88165" top="0px" left="0px" width="412px" height="20px" horizontalAnchor="LEFT" verticalAnchor="TOP"/>
+        <cl:output std:sid="output-344b1fdf" id="nickname" style="text-align:center;" value="Output">
+          <cl:flowlayoutdata std:sid="f-data-c3512c3d" width="auto" height="20px"/>
+        </cl:output>
+        <cl:output std:sid="output-71326abb" value="님 환영합니다!">
+          <cl:flowlayoutdata std:sid="f-data-e9c0674e" width="302px" height="20px"/>
+        </cl:output>
+        <cl:flowlayout std:sid="f-layout-5322e71e" scrollable="false"/>
+      </cl:group>
       <cl:button std:sid="button-b65466f7" style="border-radius:5px;" value="로그아웃">
         <cl:listener std:sid="listener-e84014d6" name="click" handler="onButtonClick"/>
         <cl:xylayoutdata std:sid="xyl-data-cf3f556c" left="417px" width="100px" height="20px" horizontalAnchor="LEFT" verticalAnchor="CENTER"/>
