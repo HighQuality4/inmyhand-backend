@@ -3,6 +3,7 @@ package com.inmyhand.refrigerator.payment.controller;
 import com.inmyhand.refrigerator.payment.domain.dto.PaymentConfirmRequest;
 import com.inmyhand.refrigerator.payment.domain.dto.PaymentConfirmResponse;
 import com.inmyhand.refrigerator.payment.service.PaymentServiceImpl;
+import com.inmyhand.refrigerator.security.CustomUserDetails;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -10,6 +11,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestClient;
@@ -35,7 +37,7 @@ public class TossController {
     private final PaymentServiceImpl paymentService;
 
     @PostMapping("/confirm")
-    public ResponseEntity<?> confirmPayment(@RequestBody PaymentConfirmRequest request){
+    public ResponseEntity<?> confirmPayment(@AuthenticationPrincipal CustomUserDetails userDetails, @RequestBody PaymentConfirmRequest request){
 //        log.info("결제 승인 요청: {}", request);
 
         String authorizations = "Basic " + Base64.getEncoder().encodeToString(
@@ -59,7 +61,7 @@ public class TossController {
             log.info("결제 승인 응답: {}", response);
 
             //TODO, 2번째 파라미터 MemberId 가 들어감 - @최성관
-            paymentService.savePaymentFromConfirmation(response, 2L);
+            paymentService.savePaymentFromConfirmation(response, userDetails.getUserId());
 
             return ResponseEntity.ok(response);
         } catch (Exception e) {
@@ -111,11 +113,14 @@ public class TossController {
 
     @GetMapping("/finduser")
     @ResponseBody
-    public ResponseEntity<?> findSubUserId() {
+    public ResponseEntity<?> findSubUserId(@AuthenticationPrincipal CustomUserDetails customUserDetails) {
         //TODO Member Id를 @PathVariable or @RequestParam, DataRequest 을 사용해서  MemberId를 받으세요~~~
         //TODO 그리고 아래에 2L 대신 넣으세요~~~
-        //TODO 대답.
-        return ResponseEntity.ok(Map.of("finduser", paymentService.getSubscriptionsByMemberId(2L)));
+        //TODO 대답. AuthenticaationPrincipal 썼습니다.
+
+        Long userId = customUserDetails.getUserId();
+
+        return ResponseEntity.ok(Map.of("finduser", paymentService.getSubscriptionsByMemberId(userId)));
     }
 
 
