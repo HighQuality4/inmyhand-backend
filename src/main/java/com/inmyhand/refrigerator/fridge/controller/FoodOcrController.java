@@ -8,7 +8,9 @@ import com.inmyhand.refrigerator.fridge.domain.dto.ReceiptDTO;
 import com.inmyhand.refrigerator.fridge.domain.dto.food.FridgeFoodDTO;
 import com.inmyhand.refrigerator.fridge.service.FridgeFoodService;
 import com.inmyhand.refrigerator.fridge.service.FridgeGroupRoleService;
+import com.inmyhand.refrigerator.security.CustomUserDetails;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -35,19 +37,19 @@ public class FoodOcrController {
     private final FridgeGroupRoleService fridgeGroupRoleService;
 
     @PostMapping("/create")
-    public ResponseEntity<?> getChangeFridgeFoods(DataRequest dataRequest) {
+    public ResponseEntity<?> getChangeFridgeFoods(DataRequest dataRequest,@AuthenticationPrincipal CustomUserDetails userDetails) {
     	log.info("요청에 포함된 : {}", dataRequest.getResponse());
         List<OcrFoodDTO> classList = ConverterClassUtil.getClassList(dataRequest, "ocrAllList", OcrFoodDTO.class,"yyyyMMdd");
 
         //---------------------------------------------------------------------
 
-        // userId 받는코드 변환하기
-        Long memberId = 3L;
+        Long userId = userDetails.getUserId();
+//        Long memberId = 3L;
 
         //---------------------------------------------------------------------
 
         // 유저가 소유한 leader 냉장고에 저장하기
-        Long fridgeId = fridgeGroupRoleService.getMyLeaderFridgeId(memberId);
+        Long fridgeId = fridgeGroupRoleService.getMyLeaderFridgeId(userId);
         System.out.println("냉장고 id 확인하기 >>>"+fridgeId);
 
         List<FridgeFoodDTO> fridgeFoodList = new ArrayList<>();
@@ -70,21 +72,5 @@ public class FoodOcrController {
         return ResponseEntity.ok("ok");
     }
 
-    // ocr 연결 테스트
-    // 성공
-//    @PostMapping("/test")
-//    public ResponseEntity<?> getOcrTotalTest (@RequestParam("file") MultipartFile file) {
-//    	List<MultipartFile> fileList =  new ArrayList<>();;
-//    	fileList.add(file);
-//    	System.out.println("파일명: " + file.getOriginalFilename());
-//
-//    	List<ReceiptDTO> result = fridgeAutoService.svcOcrTotalTest(fileList);
-//
-//    	for (ReceiptDTO receipt : result) {
-//    	    System.out.println(receipt);
-//    	}
-//
-//    	return ResponseEntity.ok("ok");
-//    }
     
 }
