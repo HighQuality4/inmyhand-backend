@@ -11,6 +11,7 @@ const embeddedRoutes = [
   { path: "/recipe/form", loadApp: "app/recipe/recipe_form" }, // 레시피 등록
   { path: /^\/recipe\/form\/(\d+)$/, loadApp: "app/recipe/recipe_form" }, // 레시피 수정
   { path: "/auth/register", loadApp: "app/login/register"},
+  { path: "/auth/password", loadApp: "app/mypage/passwordchange"},
   { path: "/fridge", loadApp: "app/fridge/fridge_main" },
   { path: "/fridge/auto", loadApp: "app/fridge/fridge_auto" }
 ];
