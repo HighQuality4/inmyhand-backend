@@ -11,7 +11,8 @@
 	.cl-pageindexer-prev,
 	.cl-pageindexer-next,
 	.cl-pageindexer-index {
-		border: 1px solid @default-border-color;
+		border: 1px solid #E8E6E5;
+		border-radius: 4px;
 
 		&.cl-disabled {
 			background-color: @disabled-selection-background;
@@ -46,9 +47,11 @@
 
 		/* 페이지 인덱서 선택된 페이지 */
 		&.cl-selected {
-			background-color: @selection-background;
-			color: @selection-foreground;
-			border-color: @focus-border-color;
+			background-color: #FFFFFF;
+			color: @default-border-color;
+			border: 2px solid;
+			border-color: @default-border-color;
+			font-weight: bold;
 		}
 	}
 
@@ -73,6 +76,7 @@
 }
 
 
+
 .cl-pageindexer:not(.cl-disabled) {
 
 	.cl-pageindexer-first,
@@ -85,7 +89,7 @@
 
 			&.cl-hover,
 			&:hover {
-				background-color: @hover-background;
+				background-color: #EFE4D3;
 			}
 		}
 
@@ -118,4 +122,11 @@
 	.cl-pageindexer-last:active {
 		// background-image: url("icons/last-selected.png");
 	}
+}
+
+
+.cl-pageindexer .cl-pageindexer-first:focus,
+.cl-pageindexer .cl-pageindexer-last:focus, .cl-pageindexer .cl-pageindexer-prev:focus,
+.cl-pageindexer .cl-pageindexer-next:focus, .cl-pageindexer .cl-pageindexer-index:focus {
+    outline: none;
 }
