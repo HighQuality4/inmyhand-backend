@@ -8,6 +8,7 @@ import com.inmyhand.refrigerator.fridge.domain.entity.FridgeFoodEntity;
 import com.inmyhand.refrigerator.fridge.domain.entity.FridgeMemberEntity;
 import com.inmyhand.refrigerator.fridge.repository.*;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
@@ -15,6 +16,7 @@ import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class FridgeFoodService {
 
     private final FridgeFoodRepository fridgeFoodRepository;
@@ -102,12 +104,14 @@ public class FridgeFoodService {
                 .map(fridgeMember -> fridgeMember.getFridgeEntity().getId())
                 .orElseThrow(() -> new RuntimeException("메인 냉장고 없음"));
     }
+
     //  냉장고별 전체 리스트
     public List<FridgeFoodDTO> svcGetAllFridgeFoods(Long fridgeId) {
         return fridgeFoodRepository.findByFridgeEntityId(fridgeId).stream()
                 .map(this::toDto)
                 .collect(Collectors.toList());
     }
+
 
     //--------------------------DTO 변환-----------------------------
     // 냉장고 → DTO 변환

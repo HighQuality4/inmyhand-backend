@@ -72,7 +72,7 @@
             </cl:fileinput>
             <cl:flowlayout std:sid="f-layout-9e837da0"/>
           </cl:group>
-          <cl:button std:sid="button-b5632ffc" style="color:#856C66;" value="사진&#xD;&#xA;업로드">
+          <cl:button std:sid="button-b5632ffc" style="font-size:16px;" value="사진&#xD;&#xA;업로드">
             <cl:listener std:sid="listener-6703c4d6" name="click" handler="onButtonClick"/>
             <cl:formdata std:sid="f-data-23a996e3" row="0" col="0"/>
           </cl:button>

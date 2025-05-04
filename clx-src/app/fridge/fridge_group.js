@@ -15,7 +15,7 @@ function onBodyLoad(e){
 	var fridgeId = initValue.fridgeIdParam; 
 	var memberId = initValue.memberIdParam; 
 	
-	alert("가져온값" + initValue +  " " + memberId + " " + fridgeId);
+	console.log("가져온값" + initValue +  " " + memberId + " " + fridgeId);
 	
 	
 	app.lookup("dmFridgeParam").setAttr("fridgeId", fridgeId);
@@ -166,7 +166,7 @@ function onGetPendIngGroupListSubmitSuccess(e){
 	var getPendIngGroupList = e.control;
 	
 	const grd = app.lookup("inviteMemberGrid").redraw();
-	alert("초대 리스트 서버연결 성공");
+	console.log("초대 리스트 서버연결 성공");
 	
 }
 
