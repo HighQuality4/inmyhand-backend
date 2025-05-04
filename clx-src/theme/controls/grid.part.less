@@ -7,10 +7,13 @@
 	color: @default-text-color;
 	border: solid 1px @default-border-color;
 	min-height: 100px;
+	border-radius: 5px;
 
 
 	/* 그리드 헤더 */
 	.cl-grid-header {
+		background-image: none;
+		background-color: #EFE4D3;
 
 		/* 그리드 헤더 셀 */
 		.cl-grid-cell {
@@ -283,10 +286,10 @@
 
 /* 그리드 행 */
 .cl-grid-row {
-
 	/* 보기 모드의 행 */
 	&.cl-viewing {
 		.cl-grid-cell {
+			background-color:#F3F1F0;
 
 			.cl-inputbox,
 			.cl-maskeditor,
@@ -379,19 +382,21 @@
 
 	/* 선택된 행 - 보기 모드 */
 	&.cl-selected {
-		// background-color: @selection-background;
-		// color:@selection-foreground;
+//		 background-color: @selection-background;
+		color:@selection-background;
 
 		/* 선택된행 포커스 스타일 */
 		:focus,
 		.cl-focus {
 			// background-color: @selection-background;
-			// color:@selection-foreground;
+//			 color:@selection-foreground;
 		}
 	}
 
 	/* 편집중인 행 */
-	&.cl-editing {}
+	&.cl-editing {
+		color:@default-text-color;
+	}
 
 	/* 체크된 행 */
 	&.cl-checked {}
