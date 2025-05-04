@@ -5,20 +5,22 @@
  * @author gyrud
  ************************************************/
 
-const createRecipeCard=(resultJson, recipeContainer)=> {
+const createRecipeCard=(resultJson, recipeContainer, recommendRecipe = false)=> {
 	for (let i = 0; i < resultJson.length; i++) {
-		const recipeCard = new udc.recipe.recipe_card();
-		recipeCard.title = resultJson[i].recipeName;
-		recipeCard.difficulty = resultJson[i].difficulty;
-		recipeCard.cookingTime = resultJson[i].cookingTime;
-		recipeCard.author = resultJson[i].userNickname;
-		recipeCard.likesCount = resultJson[i].likeCount;
-		recipeCard.recipeImg = resultJson[i].fileUrl;
-		recipeCard.authorImg = resultJson[i].userProfileImageUrl;
-		recipeCard.calories = resultJson[i].calories+"kcal";
-		recipeCard.recipeId = resultJson[i].id;
+		const data = recommendRecipe ? resultJson[i].recipeSummary : resultJson[i];
 		
-		const categories = resultJson[i].categories;
+		const recipeCard = new udc.recipe.recipe_card();
+		recipeCard.title = data.recipeName;
+		recipeCard.difficulty = data.difficulty;
+		recipeCard.cookingTime = data.cookingTime;
+		recipeCard.author = data.userNickname;
+		recipeCard.likesCount = data.likeCount;
+		recipeCard.recipeImg = data.fileUrl;
+		recipeCard.authorImg = data.userProfileImageUrl;
+		recipeCard.calories = data.calories+"kcal";
+		recipeCard.recipeId = data.id;
+		
+		const categories = data.categories;
 		for (let j = 0; j < categories.length; j++) {
 		  const category = categories[j];
 		  switch (category.recipeCategoryType) {
@@ -36,11 +38,56 @@ const createRecipeCard=(resultJson, recipeContainer)=> {
 		  }
 		}
 		
-		recipeContainer.addChild(recipeCard, {
+		if(recommendRecipe) {
+			recipeContainer[i].addChild(recipeCard, {
+			  width: "250px",
+			  height: "400px",
+			});		
+		} else {
+			recipeContainer.addChild(recipeCard, {
+			  width: "250px",
+			  height: "400px",
+			});		
+		}	
+	}
+}
+
+const createRecommendRecipeCard=(resultJson, recipeContainer)=> {
+	const recipeGroupList = [];
+	
+	for (let i = 0; i < resultJson.length; i++) {
+		// 버티컬 레이아웃 생성
+		const recipeGroup = new cpr.controls.Container("recipeGroup");
+		const recipeLayout = new cpr.controls.layouts.VerticalLayout();
+		recipeLayout.spacing = "10px";
+		recipeGroup.setLayout(recipeLayout);
+		
+		// 아웃풋 설정
+		const matchedIngredients = resultJson[i].matchedIngredients;
+		const similarityOutput = new udc.recipe.recipe_similarity_output();
+
+		similarityOutput.value = `냉장고 재료와 ${matchedIngredients}개 일치!`;
+		
+		recipeGroup.addChild(similarityOutput, {
 		  width: "250px",
-		  height: "400px",
+		  height: "30px",
 		});	
+				
+		// 버티컬 레이아웃 배열에 넣기
+		recipeGroupList.push(recipeGroup);	
+	}
+	
+	// 레시피 카드 넣기
+	createRecipeCard(resultJson, recipeGroupList, true);
+	
+	// 레시피 그룹 Container에 넣기
+	for (let i = 0; i < recipeGroupList.length; i++) {
+		recipeContainer.addChild(recipeGroupList[i], {
+			  width: "250px",
+			  height: "440px",
+		});		
 	}
 }
 
 exports.createRecipeCard = createRecipeCard;
+exports.createRecommendRecipeCard = createRecommendRecipeCard;
