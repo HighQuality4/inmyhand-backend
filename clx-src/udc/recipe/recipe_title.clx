@@ -16,17 +16,17 @@
   <body std:sid="body-6c6a0d6a" style="top:0px; left:0px; width:600px; height:30px;">
     <cl:listener std:sid="listener-2c6d1378" name="load" handler="onBodyLoad"/>
     <cl:group std:sid="group-947d44b8">
-      <cl:flowlayoutdata std:sid="f-data-5e6b7363" width="150px" height="30px"/>
+      <cl:flowlayoutdata std:sid="f-data-5e6b7363" width="150px" height="30px" autosize="width"/>
       <cl:img std:sid="image-7842800a" src="../../theme/images/recipe.svg">
-        <cl:xylayoutdata std:sid="xyl-data-05e0c131" top="0px" left="0px" width="30px" height="30px" horizontalAnchor="LEFT" verticalAnchor="TOP"/>
+        <cl:flowlayoutdata std:sid="f-data-e500c4b2" width="30px" height="30px"/>
       </cl:img>
       <cl:output std:sid="output-6e804228" id="titleValue" style="color:#856C66; font-weight:bold; font-size:16px;">
         <cl:apppropbind property="value" category="PROPERTY" app-property="value"/>
-        <cl:xylayoutdata std:sid="xyl-data-3ead55eb" top="0px" left="40px" width="110px" height="30px" horizontalAnchor="LEFT" verticalAnchor="TOP"/>
+        <cl:flowlayoutdata std:sid="f-data-684586ae" width="110px" height="30px" autosize="width"/>
       </cl:output>
-      <cl:xylayout std:sid="xylayout-423e4605"/>
+      <cl:flowlayout std:sid="f-layout-8dff81bb" scrollable="false" vspacing="0" halign="center"/>
     </cl:group>
-    <cl:flowlayout std:sid="f-layout-6a519f93" hspacing="0" vspacing="0">
+    <cl:flowlayout std:sid="f-layout-6a519f93" hspacing="0" vspacing="0" valign="middle">
       <cl:apppropbind property="horizontalAlign" category="PROPERTY" app-property="horizontalAlign"/>
     </cl:flowlayout>
   </body>
@@ -34,6 +34,7 @@
     <std:hruler>
       <std:guide position="300"/>
       <std:guide position="63"/>
+      <std:guide position="95"/>
     </std:hruler>
     <std:vruler/>
   </std:studiosetting>

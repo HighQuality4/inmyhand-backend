@@ -15,4 +15,5 @@ public class RecipeRecommendationDTO {
     private int matchedIngredients;  // 일치하는 재료 수
     private int totalIngredients;    // 총 필요 재료 수
     private int missingIngredients;  // 부족한 재료 수
+    private RecipeSummaryDTO recipeSummary; // 추가
 }

@@ -42,7 +42,7 @@
   color: #1068A4;
 }
 .cl-button.custom-button.cl-focus {
-  border: solid 1px #856C66;
+  border: solid 1px #F59760;
 }
 .cl-button.custom-button:not(.cl-disabled).cl-activated,
 .cl-button.custom-button:not(.cl-disabled):active {

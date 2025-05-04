@@ -58,6 +58,7 @@
 			 */
 			function onBodyLoad(e){ 
 				embeddedAppChange();
+				app.lookup("adminCheckSms").send();
 				
 				//TODO: 로그인 여부 판단해서 버튼 교체 로직 넣을 것
 			}
@@ -103,7 +104,36 @@
 			// 뒤로 가기, 앞으로 가기 감지
 			window.addEventListener('popstate', function(event) {
 			    embeddedAppChange();
-			});;
+			});
+
+			/*
+			 * 그룹에서 click 이벤트 발생 시 호출.
+			 * 사용자가 컨트롤을 클릭할 때 발생하는 이벤트.
+			 */
+			function onAdminpotoClick(e){
+				var adminpoto = e.control;
+			    window.location.href = "/admin/user";
+			}
+
+			/*
+			 * 서브미션에서 submit-success 이벤트 발생 시 호출.
+			 * 통신이 성공하면 발생합니다.
+			 */
+			function onAdminCheckSmsSubmitSuccess(e){
+				var adminCheckSms = e.control;
+				var adminGroup = app.lookup("adminpoto");
+				let check = app.lookup("adcheck");
+				let result = check.getValue("check");
+				if (result === "1") {
+					  adminGroup.visible = true;
+			        } else {
+				     adminGroup.visible = false;
+				}
+				
+				adminGroup.redraw();
+				
+
+			};
 			// End - User Script
 			
 			// Header
@@ -115,6 +145,11 @@
 				]
 			});
 			app.register(dataSet_1);
+			var dataMap_1 = new cpr.data.DataMap("adcheck");
+			dataMap_1.parseData({
+				"columns" : [{"name": "check"}]
+			});
+			app.register(dataMap_1);
 			var submission_1 = new cpr.protocols.Submission("sms1");
 			submission_1.action = "/api/page-routes";
 			submission_1.mediaType = "application/json";
@@ -126,6 +161,15 @@
 				submission_1.addEventListener("submit-success", onSms1SubmitSuccess);
 			}
 			app.register(submission_1);
+			
+			var submission_2 = new cpr.protocols.Submission("adminCheckSms");
+			submission_2.action = "/api/admin/check";
+			submission_2.mediaType = "application/json";
+			submission_2.addResponseData(dataMap_1, false);
+			if(typeof onAdminCheckSmsSubmitSuccess == "function") {
+				submission_2.addEventListener("submit-success", onAdminCheckSmsSubmitSuccess);
+			}
+			app.register(submission_2);
 			app.supportMedia("all and (min-width: 1024px)", "default");
 			app.supportMedia("all and (min-width: 500px) and (max-width: 1023.984px)", "tablet");
 			app.supportMedia("all and (max-width: 499.984px)", "mobile");
@@ -164,7 +208,7 @@
 				formLayout_1.rightMargin = "0px";
 				formLayout_1.bottomMargin = "0px";
 				formLayout_1.leftMargin = "0px";
-				formLayout_1.setColumns(["40px", "1fr", "1fr", "48px", "10px", "48px", "40px"]);
+				formLayout_1.setColumns(["40px", "1fr", "48px", "10px", "48px", "10px", "48px", "40px"]);
 				formLayout_1.setRows(["10px", "1fr", "10px"]);
 				group_2.setLayout(formLayout_1);
 				(function(container){
@@ -213,7 +257,7 @@
 						group_3.addEventListener("click", onRecipeRegistrationClick);
 					}
 					container.addChild(group_3, {
-						"colIndex": 5,
+						"colIndex": 6,
 						"rowIndex": 1,
 						"colSpan": 1,
 						"rowSpan": 1,
@@ -248,10 +292,45 @@
 						});
 					})(group_4);
 					container.addChild(group_4, {
-						"colIndex": 3,
+						"colIndex": 4,
 						"rowIndex": 1,
 						"colSpan": 1,
 						"rowSpan": 1
+					});
+					var group_5 = new cpr.controls.Container("adminpoto");
+					group_5.visible = false;
+					var formLayout_4 = new cpr.controls.layouts.FormLayout();
+					formLayout_4.scrollable = false;
+					formLayout_4.horizontalSpacing = "0px";
+					formLayout_4.verticalSpacing = "0px";
+					formLayout_4.topMargin = "0px";
+					formLayout_4.rightMargin = "0px";
+					formLayout_4.bottomMargin = "0px";
+					formLayout_4.leftMargin = "0px";
+					formLayout_4.setColumns(["1fr"]);
+					formLayout_4.setRows(["35px", "5px", "1fr"]);
+					group_5.setLayout(formLayout_4);
+					(function(container){
+						var output_4 = new cpr.controls.Output();
+						output_4.value = "어드민";
+						output_4.style.setClasses(["page-nav"]);
+						container.addChild(output_4, {
+							"colIndex": 0,
+							"rowIndex": 2
+						});
+						var image_3 = new cpr.controls.Image();
+						image_3.src = "theme/images/user.svg";
+						container.addChild(image_3, {
+							"colIndex": 0,
+							"rowIndex": 0
+						});
+					})(group_5);
+					if(typeof onAdminpotoClick == "function") {
+						group_5.addEventListener("click", onAdminpotoClick);
+					}
+					container.addChild(group_5, {
+						"colIndex": 2,
+						"rowIndex": 1
 					});
 				})(group_2);
 				container.addChild(group_2, {
@@ -265,61 +344,24 @@
 					"width": "100%",
 					"height": "calc(100% - 143px)"
 				});
-				var group_5 = new cpr.controls.Container("footer");
-				group_5.style.setClasses(["page-nav"]);
-				group_5.style.css({
+				var group_6 = new cpr.controls.Container("footer");
+				group_6.style.setClasses(["page-nav"]);
+				group_6.style.css({
 					"background-color" : "#FFFFFF"
 				});
-				var formLayout_4 = new cpr.controls.layouts.FormLayout();
-				formLayout_4.scrollable = false;
-				formLayout_4.horizontalSpacing = "0px";
-				formLayout_4.verticalSpacing = "0px";
-				formLayout_4.topMargin = "0px";
-				formLayout_4.rightMargin = "0px";
-				formLayout_4.bottomMargin = "0px";
-				formLayout_4.leftMargin = "0px";
-				formLayout_4.setColumns(["40px", "40px", "1fr", "40px", "1fr", "40px", "1fr", "40px", "40px"]);
-				formLayout_4.setRows(["10px", "50px", "10px"]);
-				group_5.setLayout(formLayout_4);
+				var formLayout_5 = new cpr.controls.layouts.FormLayout();
+				formLayout_5.scrollable = false;
+				formLayout_5.horizontalSpacing = "0px";
+				formLayout_5.verticalSpacing = "0px";
+				formLayout_5.topMargin = "0px";
+				formLayout_5.rightMargin = "0px";
+				formLayout_5.bottomMargin = "0px";
+				formLayout_5.leftMargin = "0px";
+				formLayout_5.setColumns(["40px", "40px", "1fr", "40px", "1fr", "40px", "1fr", "40px", "40px"]);
+				formLayout_5.setRows(["10px", "50px", "10px"]);
+				group_6.setLayout(formLayout_5);
 				(function(container){
-					var group_6 = new cpr.controls.Container("home");
-					var formLayout_5 = new cpr.controls.layouts.FormLayout();
-					formLayout_5.scrollable = false;
-					formLayout_5.horizontalSpacing = "0px";
-					formLayout_5.verticalSpacing = "0px";
-					formLayout_5.topMargin = "0px";
-					formLayout_5.rightMargin = "0px";
-					formLayout_5.bottomMargin = "0px";
-					formLayout_5.leftMargin = "0px";
-					formLayout_5.setColumns(["1fr"]);
-					formLayout_5.setRows(["30px", "1fr"]);
-					group_6.setLayout(formLayout_5);
-					(function(container){
-						var output_4 = new cpr.controls.Output();
-						output_4.value = "홈";
-						output_4.style.setClasses(["page-nav"]);
-						container.addChild(output_4, {
-							"colIndex": 0,
-							"rowIndex": 1
-						});
-						var image_3 = new cpr.controls.Image();
-						image_3.src = "theme/images/home.svg";
-						container.addChild(image_3, {
-							"colIndex": 0,
-							"rowIndex": 0
-						});
-					})(group_6);
-					if(typeof onHomeDblclick == "function") {
-						group_6.addEventListener("dblclick", onHomeDblclick);
-					}
-					if(typeof onHomeClick == "function") {
-						group_6.addEventListener("click", onHomeClick);
-					}
-					container.addChild(group_6, {
-						"colIndex": 1,
-						"rowIndex": 1
-					});
-					var group_7 = new cpr.controls.Container("fridge");
+					var group_7 = new cpr.controls.Container("home");
 					var formLayout_6 = new cpr.controls.layouts.FormLayout();
 					formLayout_6.scrollable = false;
 					formLayout_6.horizontalSpacing = "0px";
@@ -333,27 +375,30 @@
 					group_7.setLayout(formLayout_6);
 					(function(container){
 						var output_5 = new cpr.controls.Output();
-						output_5.value = "냉장고";
+						output_5.value = "홈";
 						output_5.style.setClasses(["page-nav"]);
 						container.addChild(output_5, {
 							"colIndex": 0,
 							"rowIndex": 1
 						});
 						var image_4 = new cpr.controls.Image();
-						image_4.src = "theme/images/refrigerator.svg";
+						image_4.src = "theme/images/home.svg";
 						container.addChild(image_4, {
 							"colIndex": 0,
 							"rowIndex": 0
 						});
 					})(group_7);
-					if(typeof onFridgeClick == "function") {
-						group_7.addEventListener("click", onFridgeClick);
+					if(typeof onHomeDblclick == "function") {
+						group_7.addEventListener("dblclick", onHomeDblclick);
+					}
+					if(typeof onHomeClick == "function") {
+						group_7.addEventListener("click", onHomeClick);
 					}
 					container.addChild(group_7, {
-						"colIndex": 3,
+						"colIndex": 1,
 						"rowIndex": 1
 					});
-					var group_8 = new cpr.controls.Container("recipe");
+					var group_8 = new cpr.controls.Container("fridge");
 					var formLayout_7 = new cpr.controls.layouts.FormLayout();
 					formLayout_7.scrollable = false;
 					formLayout_7.horizontalSpacing = "0px";
@@ -367,27 +412,27 @@
 					group_8.setLayout(formLayout_7);
 					(function(container){
 						var output_6 = new cpr.controls.Output();
-						output_6.value = "레시피";
+						output_6.value = "냉장고";
 						output_6.style.setClasses(["page-nav"]);
 						container.addChild(output_6, {
 							"colIndex": 0,
 							"rowIndex": 1
 						});
 						var image_5 = new cpr.controls.Image();
-						image_5.src = "theme/images/recipe.svg";
+						image_5.src = "theme/images/refrigerator.svg";
 						container.addChild(image_5, {
 							"colIndex": 0,
 							"rowIndex": 0
 						});
 					})(group_8);
-					if(typeof onRecipeClick == "function") {
-						group_8.addEventListener("click", onRecipeClick);
+					if(typeof onFridgeClick == "function") {
+						group_8.addEventListener("click", onFridgeClick);
 					}
 					container.addChild(group_8, {
-						"colIndex": 5,
+						"colIndex": 3,
 						"rowIndex": 1
 					});
-					var group_9 = new cpr.controls.Container("auth");
+					var group_9 = new cpr.controls.Container("recipe");
 					var formLayout_8 = new cpr.controls.layouts.FormLayout();
 					formLayout_8.scrollable = false;
 					formLayout_8.horizontalSpacing = "0px";
@@ -401,28 +446,62 @@
 					group_9.setLayout(formLayout_8);
 					(function(container){
 						var output_7 = new cpr.controls.Output();
-						output_7.value = "로그인";
+						output_7.value = "레시피";
 						output_7.style.setClasses(["page-nav"]);
 						container.addChild(output_7, {
 							"colIndex": 0,
 							"rowIndex": 1
 						});
 						var image_6 = new cpr.controls.Image();
-						image_6.src = "theme/images/user.svg";
+						image_6.src = "theme/images/recipe.svg";
 						container.addChild(image_6, {
 							"colIndex": 0,
 							"rowIndex": 0
 						});
 					})(group_9);
-					if(typeof onAuthClick == "function") {
-						group_9.addEventListener("click", onAuthClick);
+					if(typeof onRecipeClick == "function") {
+						group_9.addEventListener("click", onRecipeClick);
 					}
 					container.addChild(group_9, {
+						"colIndex": 5,
+						"rowIndex": 1
+					});
+					var group_10 = new cpr.controls.Container("auth");
+					var formLayout_9 = new cpr.controls.layouts.FormLayout();
+					formLayout_9.scrollable = false;
+					formLayout_9.horizontalSpacing = "0px";
+					formLayout_9.verticalSpacing = "0px";
+					formLayout_9.topMargin = "0px";
+					formLayout_9.rightMargin = "0px";
+					formLayout_9.bottomMargin = "0px";
+					formLayout_9.leftMargin = "0px";
+					formLayout_9.setColumns(["1fr"]);
+					formLayout_9.setRows(["30px", "1fr"]);
+					group_10.setLayout(formLayout_9);
+					(function(container){
+						var output_8 = new cpr.controls.Output();
+						output_8.value = "로그인";
+						output_8.style.setClasses(["page-nav"]);
+						container.addChild(output_8, {
+							"colIndex": 0,
+							"rowIndex": 1
+						});
+						var image_7 = new cpr.controls.Image();
+						image_7.src = "theme/images/user.svg";
+						container.addChild(image_7, {
+							"colIndex": 0,
+							"rowIndex": 0
+						});
+					})(group_10);
+					if(typeof onAuthClick == "function") {
+						group_10.addEventListener("click", onAuthClick);
+					}
+					container.addChild(group_10, {
 						"colIndex": 7,
 						"rowIndex": 1
 					});
-				})(group_5);
-				container.addChild(group_5, {
+				})(group_6);
+				container.addChild(group_6, {
 					"autoSize": "width",
 					"width": "600px",
 					"height": "70px"

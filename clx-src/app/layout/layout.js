@@ -44,6 +44,7 @@ const embeddedAppChange = () => {
  */
 function onBodyLoad(e){ 
 	embeddedAppChange();
+	app.lookup("adminCheckSms").send();
 	
 	//TODO: 로그인 여부 판단해서 버튼 교체 로직 넣을 것
 }
@@ -90,3 +91,32 @@ history.onreplacestate = function(e) {
 window.addEventListener('popstate', function(event) {
     embeddedAppChange();
 });
+
+/*
+ * 그룹에서 click 이벤트 발생 시 호출.
+ * 사용자가 컨트롤을 클릭할 때 발생하는 이벤트.
+ */
+function onAdminpotoClick(e){
+	var adminpoto = e.control;
+    window.location.href = "/admin/user";
+}
+
+/*
+ * 서브미션에서 submit-success 이벤트 발생 시 호출.
+ * 통신이 성공하면 발생합니다.
+ */
+function onAdminCheckSmsSubmitSuccess(e){
+	var adminCheckSms = e.control;
+	var adminGroup = app.lookup("adminpoto");
+	let check = app.lookup("adcheck");
+	let result = check.getValue("check");
+	if (result === "1") {
+		  adminGroup.visible = true;
+        } else {
+	     adminGroup.visible = false;
+	}
+	
+	adminGroup.redraw();
+	
+
+}

@@ -7,6 +7,7 @@
 
 const createRecipeCardModule = cpr.core.Module.require("module/recipe/createRecipeCard");
 const createRecipeCard = createRecipeCardModule.createRecipeCard;
+const createRecommendRecipeCard = createRecipeCardModule.createRecommendRecipeCard;
 const setRecipeListModule = cpr.core.Module.require("module/recipe/setRecipeList");
 const setRecipeList = setRecipeListModule.setRecipeList;
 const slidify = cpr.core.Module.require("module/common/Slidifiy").slidify;
@@ -35,12 +36,30 @@ const initRecipeList = () => {
 	allRecipeListSms.removeAllParameters();
 }
 
+// 레시피 슬라이드 출력
+const setSlideRecipeList = (recipeContainer, recipeListSms, recommendRecipe) => {
+	const result = recipeListSms.xhr.responseText;
+	const resultJson = JSON.parse(result);
+	if(recommendRecipe) {
+		createRecommendRecipeCard(resultJson, recipeContainer);
+	} else {
+		createRecipeCard(resultJson, recipeContainer);	
+	}
+	
+	const slide = slidify(recipeContainer);
+	slide.start();
+	
+	recipeContainer.redraw();
+}
 
 /*
  * 루트 컨테이너에서 load 이벤트 발생 시 호출.
  * 앱이 최초 구성된후 최초 랜더링 직후에 발생하는 이벤트 입니다.
  */
 function onBodyLoad(e){
+	const recommendRecipeListSms = app.lookup("recommendRecipeListSms");
+	recommendRecipeListSms.send();
+	
 	const popularRecipeListSms = app.lookup("popularRecipeListSms");
 	popularRecipeListSms.send();
 	
@@ -53,18 +72,9 @@ function onBodyLoad(e){
  */
 function onPopularRecipeListSmsSubmitSuccess(e){
 	const popularRecipeListSms = e.control;
+	const recipeContainer = app.lookup("popluarRecipeList");
 	
-	const recipeContainer = app.lookup("popluarRecipeList"); 
-
-	const result = popularRecipeListSms.xhr.responseText;
-	const resultJson = JSON.parse(result);
-	
-	createRecipeCard(resultJson, recipeContainer);
-
-	const slide = slidify(recipeContainer);
-	slide.start();
-	
-	recipeContainer.redraw();
+	setSlideRecipeList(recipeContainer, popularRecipeListSms);
 }
 
 /*
@@ -93,6 +103,18 @@ function onSortRecipeListSmsSubmitSuccess(e){
 	const pageIndexer = app.lookup("allRecipePageIndexer");
 	
 	setRecipeList(sortRecipeListSms, recipeContainer, recipeGroup, pageIndexer);
+}
+
+
+/*
+ * 서브미션에서 submit-success 이벤트 발생 시 호출.
+ * 통신이 성공하면 발생합니다.
+ */
+function onRecommendRecipeListSmsSubmitSuccess(e){
+	const recommendRecipeListSms = e.control;
+	
+	const recipeContainer = app.lookup("recommendRecipeList");
+	setSlideRecipeList(recipeContainer, recommendRecipeListSms, true);
 }
 
 /*
@@ -138,3 +160,4 @@ function onRecipe_sort_selectReset(e){
 	recipeSortSelect.resetRecipeSortSelectBoxItem();
 	initRecipeList();
 }
+
