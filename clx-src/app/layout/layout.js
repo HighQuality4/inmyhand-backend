@@ -55,10 +55,15 @@ function onBodyLoad(e){
 const navClickEvent=(e)=>{
 	history.pushState({}, '', e.control.userAttr("route"));
 }
+// footer
 function onHomeClick(e){navClickEvent(e);}
 function onFridgeClick(e){navClickEvent(e);}
 function onRecipeClick(e){navClickEvent(e);}
 function onAuthClick(e){navClickEvent(e);}
+// header
+function onReceiptPhotoClick(e){navClickEvent(e);}
+function onRecipeRegistrationClick(e){navClickEvent(e);}
+
 
 // URL 변경 감지
 (function(history) {

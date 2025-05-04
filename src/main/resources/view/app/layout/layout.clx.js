@@ -69,10 +69,15 @@
 			const navClickEvent=(e)=>{
 				history.pushState({}, '', e.control.userAttr("route"));
 			}
+			// footer
 			function onHomeClick(e){navClickEvent(e);}
 			function onFridgeClick(e){navClickEvent(e);}
 			function onRecipeClick(e){navClickEvent(e);}
 			function onAuthClick(e){navClickEvent(e);}
+			// header
+			function onReceiptPhotoClick(e){navClickEvent(e);}
+			function onRecipeRegistrationClick(e){navClickEvent(e);}
+
 
 			// URL 변경 감지
 			(function(history) {
@@ -258,6 +263,7 @@
 						"rowSpan": 1
 					});
 					var group_3 = new cpr.controls.Container("recipeRegistration");
+					group_3.userAttr({"route": "/recipe/form"});
 					var formLayout_2 = new cpr.controls.layouts.FormLayout();
 					formLayout_2.scrollable = false;
 					formLayout_2.horizontalSpacing = "0px";
@@ -296,6 +302,7 @@
 						"height": 9
 					});
 					var group_4 = new cpr.controls.Container("receiptPhoto");
+					group_4.userAttr({"route": "/fridge/auto"});
 					var formLayout_3 = new cpr.controls.layouts.FormLayout();
 					formLayout_3.scrollable = false;
 					formLayout_3.horizontalSpacing = "0px";
@@ -322,6 +329,9 @@
 							"rowIndex": 2
 						});
 					})(group_4);
+					if(typeof onReceiptPhotoClick == "function") {
+						group_4.addEventListener("click", onReceiptPhotoClick);
+					}
 					container.addChild(group_4, {
 						"colIndex": 4,
 						"rowIndex": 1,

@@ -42,7 +42,8 @@
           <cl:formdata std:sid="f-data-0931ddfe" row="1" col="1" rowspan="1" colspan="1"/>
         </cl:output>
         <cl:group std:sid="group-331ea24d" id="recipeRegistration">
-          <cl:listener std:sid="listener-3c20c838" name="click" handler="onRecipeRegistrationClick"/>
+          <cl:listener std:sid="listener-0ad95a97" name="click" handler="onRecipeRegistrationClick"/>
+          <cl:attribute name="route" value="/recipe/form"/>
           <cl:formdata std:sid="f-data-0252dad1" width="100" height="9" row="1" col="6" rowspan="1" colspan="1"/>
           <cl:img std:sid="image-fe397534" src="../../theme/images/recipe_registration.svg">
             <cl:formdata std:sid="f-data-54f2a24f" row="0" col="0"/>
@@ -58,6 +59,8 @@
           </cl:formlayout>
         </cl:group>
         <cl:group std:sid="group-e9d6147f" id="receiptPhoto">
+          <cl:listener std:sid="listener-15e6b0ab" name="click" handler="onReceiptPhotoClick"/>
+          <cl:attribute name="route" value="/fridge/auto"/>
           <cl:formdata std:sid="f-data-22c6eb23" row="1" col="4" rowspan="1" colspan="1"/>
           <cl:img std:sid="image-e615c79d" src="../../theme/images/receipt_photo.svg">
             <cl:formdata std:sid="f-data-dd4bc157" row="0" col="0"/>
