@@ -26,7 +26,7 @@ public class FridgeFoodService {
 
     // 냉장고 메인 페이지 로드 시 식재료 정보 출력
     public List<FridgeFoodDTO> svcGetFridgeMainPage(Long memberId) {
-        // 1. 메인 냉장고 ID
+        // 1. 메인 냉장고 ID 주석추가
         Long mainFridgeId = svcFindMainFridgeId(memberId);
 
         // 2. 메인 냉장고 식재료
