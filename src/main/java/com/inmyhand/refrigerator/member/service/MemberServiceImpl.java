@@ -86,6 +86,19 @@ public class MemberServiceImpl implements MemberService {
 		}).toList();
 	}
 
+	public boolean checkLocalOrElse(Long userId) {
+		MemberEntity memberEntity = memberRepository.findById(userId).orElse(null);
+		if (memberEntity != null) {
+			if (memberEntity.getProviderId().equals("LOCAL")) {
+				return true;
+			} else {
+				return false;
+			}
+		} else {
+			return false;
+		}
+	}
+
 	public Page<MyRecipeDTO> getMyOwnRecipeInfo(Long userId, int page, int size) {
 		Pageable pageable = PageRequest.of(page, size, Sort.by(Sort.Direction.DESC, "createdAt"));
 		return recipeInfoRepository.findByMemberEntity_Id(userId, pageable);

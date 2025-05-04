@@ -1,18 +1,19 @@
 package com.inmyhand.refrigerator.member.controller;
 
 import com.cleopatra.protocol.data.DataRequest;
-import com.inmyhand.refrigerator.common.redis.RedisKeyManager;
-import com.inmyhand.refrigerator.common.redis.RedisUtil;
 import com.inmyhand.refrigerator.member.domain.dto.EmailAuthDTO;
 import com.inmyhand.refrigerator.member.domain.dto.MemberDTO;
+import com.inmyhand.refrigerator.member.domain.entity.MemberEntity;
 import com.inmyhand.refrigerator.member.service.EmailAuthService;
 import com.inmyhand.refrigerator.member.service.MemberServiceImpl;
+import com.inmyhand.refrigerator.security.CustomUserDetails;
 import com.inmyhand.refrigerator.util.ConverterClassUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 @Slf4j
@@ -20,7 +21,7 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 @RequestMapping("/api/user")
 public class MemeberRestController {
-    
+
     private final MemberServiceImpl memberService;
     private final JavaMailSender mailSender;
     private final EmailAuthService emailAuthService;
@@ -62,6 +63,14 @@ public class MemeberRestController {
         String email = emailAuthDTO.getEmail();
         boolean emailAuth = emailAuthService.verifyEmailCode(code, email);
         return ResponseEntity.ok(emailAuth);
+    }
+
+    @PostMapping("/check/local")
+    public ResponseEntity<?> checkLocal(@AuthenticationPrincipal CustomUserDetails customUserDetails) {
+        Long userId = customUserDetails.getUserId();
+        boolean result = memberService.checkLocalOrElse(userId);
+
+        return ResponseEntity.ok(result);
     }
 
 
