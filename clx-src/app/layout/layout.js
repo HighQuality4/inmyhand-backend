@@ -11,6 +11,7 @@ const embeddedRoutes = embeddedRoutesModule.embeddedRoutes;
 
 const embeddedAppChange = () => {
 	app.lookup("isLoggedInSms").send();
+	app.lookup("adminCheckSms").send();
 	const pathName = window.location.pathname;
 	
 	const match = embeddedRoutes.find(route => {
