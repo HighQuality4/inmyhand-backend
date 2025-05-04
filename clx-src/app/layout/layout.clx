@@ -26,6 +26,9 @@
         <cl:listener std:sid="listener-380c99ed" name="submit-success" handler="onAdminCheckSmsSubmitSuccess"/>
         <cl:responsedata dataid="adcheck"/>
       </cl:submission>
+      <cl:submission std:sid="submission-fdbd936f" id="isLoggedInSms" withCredentials="true" action="/api/users/login/check">
+        <cl:listener std:sid="listener-f727e369" name="submit-success" handler="onIsLoggedInSmsSubmitSuccess"/>
+      </cl:submission>
     </cl:model>
     <cl:appspec/>
   </head>
@@ -107,12 +110,13 @@
         <cl:group std:sid="group-7d23e362" id="home">
           <cl:listener std:sid="listener-2b086b9f" name="dblclick" handler="onHomeDblclick"/>
           <cl:listener std:sid="listener-6107b815" name="click" handler="onHomeClick"/>
+          <cl:attribute name="route" value="/"/>
           <cl:formdata std:sid="f-data-202cd3d0" row="1" col="1"/>
           <cl:output std:sid="output-fb5110e5" class="page-nav" value="홈">
             <cl:formdata std:sid="f-data-d5133a57" row="1" col="0"/>
           </cl:output>
           <cl:img std:sid="image-a3b67c36" src="../../theme/images/home.svg">
-            <cl:formdata std:sid="f-data-072cf112" row="0" col="0"/>
+            <cl:formdata std:sid="f-data-072cf112" halign="CENTER" valign="CENTER" width="30" height="30" row="0" col="0"/>
           </cl:img>
           <cl:formlayout std:sid="f-layout-8903d60d" scrollable="false" hspace="0px" vspace="0px" top-margin="0px" right-margin="0px" bottom-margin="0px" left-margin="0px">
             <cl:rows length="30" unit="PIXEL"/>
@@ -122,12 +126,13 @@
         </cl:group>
         <cl:group std:sid="group-fc6a12c1" id="fridge">
           <cl:listener std:sid="listener-5692f530" name="click" handler="onFridgeClick"/>
+          <cl:attribute name="route" value="/fridge"/>
           <cl:formdata std:sid="f-data-cbe8fefc" row="1" col="3"/>
           <cl:output std:sid="output-16ca9855" class="page-nav" value="냉장고">
             <cl:formdata std:sid="f-data-a67c9362" row="1" col="0"/>
           </cl:output>
           <cl:img std:sid="image-e1057535" src="../../theme/images/refrigerator.svg">
-            <cl:formdata std:sid="f-data-4a94daa7" row="0" col="0"/>
+            <cl:formdata std:sid="f-data-4a94daa7" halign="CENTER" valign="CENTER" width="30" height="30" row="0" col="0"/>
           </cl:img>
           <cl:formlayout std:sid="f-layout-5a550272" scrollable="false" hspace="0px" vspace="0px" top-margin="0px" right-margin="0px" bottom-margin="0px" left-margin="0px">
             <cl:rows length="30" unit="PIXEL"/>
@@ -137,12 +142,13 @@
         </cl:group>
         <cl:group std:sid="group-b176307a" id="recipe">
           <cl:listener std:sid="listener-fa7f3f8d" name="click" handler="onRecipeClick"/>
+          <cl:attribute name="route" value="/recipe"/>
           <cl:formdata std:sid="f-data-c843dcc0" row="1" col="5"/>
           <cl:output std:sid="output-bf9b9f5d" class="page-nav" value="레시피">
             <cl:formdata std:sid="f-data-dde24b2b" row="1" col="0"/>
           </cl:output>
           <cl:img std:sid="image-e649c99f" src="../../theme/images/recipe.svg">
-            <cl:formdata std:sid="f-data-996c43c1" row="0" col="0"/>
+            <cl:formdata std:sid="f-data-996c43c1" halign="CENTER" valign="CENTER" width="30" height="30" row="0" col="0"/>
           </cl:img>
           <cl:formlayout std:sid="f-layout-27f5feba" scrollable="false" hspace="0px" vspace="0px" top-margin="0px" right-margin="0px" bottom-margin="0px" left-margin="0px">
             <cl:rows length="30" unit="PIXEL"/>
@@ -152,17 +158,18 @@
         </cl:group>
         <cl:group std:sid="group-50ac48b6" id="auth">
           <cl:listener std:sid="listener-a97bea5f" name="click" handler="onAuthClick"/>
+          <cl:attribute name="route" value="/auth/login"/>
           <cl:formdata std:sid="f-data-3c4fcb69" row="1" col="7"/>
-          <cl:output std:sid="output-44a72287" class="page-nav" value="로그인">
+          <cl:output std:sid="output-44a72287" id="authOutput" class="page-nav" value="로그인">
             <cl:formdata std:sid="f-data-4e99effe" row="1" col="0"/>
           </cl:output>
-          <cl:img std:sid="image-652cf025" src="../../theme/images/user.svg">
-            <cl:formdata std:sid="f-data-5b72a7b6" row="0" col="0"/>
+          <cl:img std:sid="image-652cf025" id="authImg" src="../../theme/images/login.svg">
+            <cl:formdata std:sid="f-data-5b72a7b6" halign="CENTER" valign="CENTER" width="30" height="30" row="0" col="0"/>
           </cl:img>
           <cl:formlayout std:sid="f-layout-00363438" scrollable="false" hspace="0px" vspace="0px" top-margin="0px" right-margin="0px" bottom-margin="0px" left-margin="0px">
             <cl:rows length="30" unit="PIXEL"/>
             <cl:rows length="1" unit="FRACTION"/>
-            <cl:columns length="1" unit="FRACTION"/>
+            <cl:columns length="1" unit="FRACTION" shadetype="NONE" shadecolor="transparent"/>
           </cl:formlayout>
         </cl:group>
         <cl:formlayout std:sid="f-layout-74818fd6" scrollable="false" hspace="0px" vspace="0px" top-margin="0px" right-margin="0px" bottom-margin="0px" left-margin="0px">
@@ -170,13 +177,13 @@
           <cl:rows length="50" unit="PIXEL"/>
           <cl:rows length="10" unit="PIXEL"/>
           <cl:columns length="40" unit="PIXEL" shadetype="NONE" shadecolor="transparent"/>
-          <cl:columns length="40" unit="PIXEL"/>
+          <cl:columns length="60" unit="PIXEL" shadetype="NONE" shadecolor="transparent"/>
           <cl:columns length="1" unit="FRACTION"/>
-          <cl:columns length="40" unit="PIXEL" shadetype="NONE" shadecolor="transparent"/>
+          <cl:columns length="60" unit="PIXEL" shadetype="NONE" shadecolor="transparent"/>
           <cl:columns length="1" unit="FRACTION"/>
-          <cl:columns length="40" unit="PIXEL"/>
+          <cl:columns length="60" unit="PIXEL" shadetype="NONE" shadecolor="transparent"/>
           <cl:columns length="1" unit="FRACTION" shadetype="NONE" shadecolor="transparent"/>
-          <cl:columns length="40" unit="PIXEL"/>
+          <cl:columns length="60" unit="PIXEL" shadetype="NONE" shadecolor="transparent"/>
           <cl:columns length="40" unit="PIXEL"/>
         </cl:formlayout>
       </cl:group>

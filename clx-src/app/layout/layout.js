@@ -8,7 +8,9 @@
 const embeddedRoutesModule = cpr.core.Module.require("data/embeddedRoutes");
 const embeddedRoutes = embeddedRoutesModule.embeddedRoutes;
 
+
 const embeddedAppChange = () => {
+	app.lookup("isLoggedInSms").send();
 	const pathName = window.location.pathname;
 	
 	const match = embeddedRoutes.find(route => {
@@ -45,15 +47,18 @@ const embeddedAppChange = () => {
 function onBodyLoad(e){ 
 	embeddedAppChange();
 	app.lookup("adminCheckSms").send();
-	
+	app.lookup("isLoggedInSms").send();
 	//TODO: 로그인 여부 판단해서 버튼 교체 로직 넣을 것
 }
 
 /* nav바 버튼 클릭 시 화면 이동 */
-function onHomeClick(e){history.pushState({}, '', `/`);}
-function onFridgeClick(e){history.pushState({}, '', `/fridge`);}
-function onRecipeClick(e){history.pushState({}, '', `/recipe`);}
-function onAuthClick(e){history.pushState({}, '', `/auth/login`);}
+const navClickEvent=(e)=>{
+	history.pushState({}, '', e.control.userAttr("route"));
+}
+function onHomeClick(e){navClickEvent(e);}
+function onFridgeClick(e){navClickEvent(e);}
+function onRecipeClick(e){navClickEvent(e);}
+function onAuthClick(e){navClickEvent(e);}
 
 // URL 변경 감지
 (function(history) {
@@ -117,6 +122,24 @@ function onAdminCheckSmsSubmitSuccess(e){
 	}
 	
 	adminGroup.redraw();
-	
+}
 
+/*
+ * 서브미션에서 submit-success 이벤트 발생 시 호출.
+ * 통신이 성공하면 발생합니다.
+ */
+function onIsLoggedInSmsSubmitSuccess(e){
+	const isLoggedInSms = e.control;
+	
+	const result = isLoggedInSms.xhr.responseText;
+	const resultJson = JSON.parse(result);
+	
+	if(resultJson){
+		const auth = app.lookup("auth");
+		const authOutput = app.lookup("authOutput");
+		const authImg = app.lookup("authImg");
+		authOutput.value = "마이페이지";
+		authImg.src = "theme/images/user.svg";
+		auth.userAttr("route", "/users/mypage");
+	}
 }
