@@ -30,7 +30,8 @@
 				const getFridgeList= app.lookup("getFridgeList"); 
 				// 식재료 목록
 				const getFoodList = app.lookup("getFoodList");
-				
+				// 변경될 식재료 목록
+				const changeFoodList = app.lookup("changeFoodList");
 				// 식재료 그리드 
 				const foodListGrid = app.lookup("foodListGrid");
 				
@@ -45,7 +46,6 @@
 				
 				// 그룹 접기 이벤트 추가하기 
 				 getFoodList.addEventListener("submit-success", function(e) {
-			        alert("식재료 정보 가져오기 성공"); 
 			        
 			        foodListGrid.redraw(); 
 			        setTimeout(function() {
@@ -54,13 +54,15 @@
 			        
 			    });
 			    
-			//    // 선택된 냉장고 목록 효과 추가하기
-			//    getFridgeList.addEventListener("submit-success", function(e){
-			//    	alert("냉장고 목록 불러오기 성공");
-			//    	
-			//    	
-			//    });
-				
+			    changeFoodList.addEventListener("submit-success", function(e) {
+			        
+			        foodListGrid.redraw(); 
+			        setTimeout(function() {
+			            foodListGrid.collapseAll(); // 0.1초 뒤에 접기 (collapseAll) 실행
+			        }, 100);
+			        
+			    });
+
 			}
 
 
@@ -88,20 +90,34 @@
 			function onFridgNavbarItemClick(e){
 
 				var fridgNavbar = e.control;
-				alert("클릭됨 "+e.item.value);
+				console.log("클릭됨 "+e.item.value);
 			  	
 			  	var setClickLabelValue = e.item.value; 
+			  	// 상단 제목 변경
+			  	app.lookup("titleInput").value = e.item.label;
 			  	
 			  	// 정적의 nav값 추출했음.
 			  	var vcNav = app.lookup("fridgNavbar");
 			  	
 			    var voItem = vcNav.getItemByValue(setClickLabelValue);
 			    vcNav.focusItem(voItem);
-			    alert(voItem.value);	
+			    console.log(voItem.value);	
 			    
 			    // 현재 냉장고 정보 및 멤버 아이디
 			    app.lookup("fridgeIdParam").setValue("fridgeId", e.item.value);
-			    app.lookup("fridgeIdParam").setValue("memberId", 1);
+			    app.lookup("fridgeIdParam").setValue("memberId", 3);
+			    
+			   
+				app.lookup("changeFoodList").send();
+				app.lookup("checkUserRole").send();
+				
+				if(e.item.value != 1){
+					app.lookup("groupBtn").visible = false;	
+				}else{
+					app.lookup("groupBtn").visible = true;
+				}
+				
+				
 				
 			}
 
@@ -121,7 +137,8 @@
 				var foodDataMap = app.lookup("fridgeIdParam");	
 				
 				var totalInsertRow = foodDataSet.getRowCount();
-				alert("변경된 저장 방법");
+				
+				// 변경된 저장 방법
 				app.lookup("sendFoodList").send();
 				app.lookup("getFoodList").send();
 				
@@ -192,7 +209,6 @@
 				insertFoodgrd.visible = !insertFoodgrd.visible;
 				fridgeCRUD.visible = !fridgeCRUD.visible;
 				
-				
 			}
 
 			/*
@@ -202,7 +218,7 @@
 			function onOutputClick2(e){
 				var output = e.control;
 			//	window.location.href = "";
-				alert("다이얼로그 시작");
+
 				app.dialogManager.openDialog("app/fridge/fridge_group","dialogName",{width:500, height:500},function(dialog){
 
 					//다이얼로그가 로드 되었을때 처리
@@ -235,7 +251,7 @@
 				var updated = getChangedRowsByState(cpr.data.tabledata.RowState.UPDATED);
 				var deleted = getChangedRowsByState(cpr.data.tabledata.RowState.DELETED);
 
-				alert("추가됨: " + JSON.stringify(inserted) + 
+				console.log("추가됨: " + JSON.stringify(inserted) + 
 				      "\n수정됨: " + JSON.stringify(updated) + 
 				      "\n삭제됨: " + JSON.stringify(deleted));
 
@@ -273,6 +289,79 @@
 					        app.lookup("foodListGrid").redraw();
 				    });
 				});
+			}
+
+			/*
+			 * 서브미션에서 submit-success 이벤트 발생 시 호출.
+			 * 통신이 성공하면 발생합니다.
+			 */
+			function onChangeFoodListSubmitSuccess(e){
+				var changeFoodList = e.control;
+				
+				
+				console.log("변경됐습니다.")
+
+				
+				console.log(" 데이터 셋 확인 >>>> ")
+				console.log(app.lookup("foodList").getRowDataRanged())
+				app.lookup("foodListGrid").redraw();
+			}
+
+			/*
+			 * 서브미션에서 submit-done 이벤트 발생 시 호출.
+			 * 응답처리가 모두 종료되면 발생합니다.
+			 */
+			function onCheckUserRoleSubmitDone(e){
+				var checkUserRole = e.control;
+				
+				app.lookup("checkUserRole").userData();
+				console.log("받아온 데이터 확인>>>"+JSON.stringify(app.lookup("myRole").getDatas()))
+				
+				var dm = app.lookup("myRole");
+				var isEditor = dm.getValue("editor"); 
+				var isWriter = dm.getValue("writer");
+				
+				var dm = app.lookup("myRole");
+			  	var isEditor = dm.getValue("editor") === "true";
+			  	var isWriter = dm.getValue("writer") === "true";
+
+			  	// 버튼/CRUD 보이기
+			  	app.lookup("addFoodBtn").visible = isWriter;
+			  	
+			  	app.lookup("insertGroup").visible = isWriter;
+			  	app.lookup("fridgeCRUDForUD").visible = isEditor;
+
+			  	// 그리드 클릭(편집) 허용 여부
+			  	app.lookup("foodListGrid").enabled = isEditor;
+
+			  	// 렌더링 강제
+			  	app.lookup("addFoodBtn").redraw();
+			  	app.lookup("fridgeCRUDForUD").redraw();
+			  	app.lookup("foodListGrid").redraw();
+			}
+
+
+			/*
+			 * 서브미션에서 before-send 이벤트 발생 시 호출.
+			 * XMLHttpRequest가 open된 후 send 함수가 호출되기 직전에 발생합니다.
+			 */
+			function onChangeFoodListBeforeSend(e){
+				var changeFoodList = e.control;
+			//	
+					// 그리드 객체 지우기
+			   	app.lookup("foodList").clearData();
+			   	
+			}
+
+			/*
+			 * 서브미션에서 before-send 이벤트 발생 시 호출.
+			 * XMLHttpRequest가 open된 후 send 함수가 호출되기 직전에 발생합니다.
+			 */
+			function onCheckUserRoleBeforeSend(e){
+				var checkUserRole = e.control;
+				
+				
+				
 			};
 			// End - User Script
 			
@@ -482,6 +571,18 @@
 				]
 			});
 			app.register(dataMap_2);
+			
+			var dataMap_3 = new cpr.data.DataMap("myRole");
+			dataMap_3.parseData({
+				"columns" : [
+					{
+						"name": "editor",
+						"dataType": "string"
+					},
+					{"name": "writer"}
+				]
+			});
+			app.register(dataMap_3);
 			var submission_1 = new cpr.protocols.Submission("getFoodList");
 			submission_1.method = "post";
 			submission_1.action = "/api/fridge/change";
@@ -498,26 +599,45 @@
 			}
 			app.register(submission_2);
 			
-			var submission_3 = new cpr.protocols.Submission("searchFoodCategoryList");
-			submission_3.action = "/search";
-			submission_3.mediaType = "application/json";
-			submission_3.addRequestData(dataMap_2);
-			submission_3.addResponseData(dataSet_3, false);
+			var submission_3 = new cpr.protocols.Submission("sendFoodList");
+			submission_3.action = "/api/fridge/create/foodList";
+			submission_3.addRequestData(dataSet_5);
+			submission_3.addRequestData(dataMap_1);
+			submission_3.addResponseData(dataSet_5, false);
 			app.register(submission_3);
 			
-			var submission_4 = new cpr.protocols.Submission("sendFoodList");
-			submission_4.action = "/api/fridge/create/foodList";
-			submission_4.addRequestData(dataSet_5);
-			submission_4.addRequestData(dataMap_1);
-			submission_4.addResponseData(dataSet_5, false);
+			var submission_4 = new cpr.protocols.Submission("updateFoodList");
+			submission_4.action = "/api/fridge/update/foodList";
+			submission_4.mediaType = "application/json";
+			submission_4.addRequestData(dataSet_6);
+			submission_4.addRequestData(dataSet_7);
 			app.register(submission_4);
 			
-			var submission_5 = new cpr.protocols.Submission("updateFoodList");
-			submission_5.action = "/api/fridge/update/foodList";
+			var submission_5 = new cpr.protocols.Submission("changeFoodList");
+			submission_5.action = "/api/fridge/change/click";
 			submission_5.mediaType = "application/json";
-			submission_5.addRequestData(dataSet_6);
-			submission_5.addRequestData(dataSet_7);
+			submission_5.addRequestData(dataMap_1);
+			submission_5.addResponseData(dataSet_1, false);
+			if(typeof onChangeFoodListSubmitSuccess == "function") {
+				submission_5.addEventListener("submit-success", onChangeFoodListSubmitSuccess);
+			}
+			if(typeof onChangeFoodListBeforeSend == "function") {
+				submission_5.addEventListener("before-send", onChangeFoodListBeforeSend);
+			}
 			app.register(submission_5);
+			
+			var submission_6 = new cpr.protocols.Submission("checkUserRole");
+			submission_6.action = "/api/fridge/checkRoles";
+			submission_6.mediaType = "application/json";
+			submission_6.addRequestData(dataMap_1);
+			submission_6.addResponseData(dataMap_3, false);
+			if(typeof onCheckUserRoleSubmitDone == "function") {
+				submission_6.addEventListener("submit-done", onCheckUserRoleSubmitDone);
+			}
+			if(typeof onCheckUserRoleBeforeSend == "function") {
+				submission_6.addEventListener("before-send", onCheckUserRoleBeforeSend);
+			}
+			app.register(submission_6);
 			app.supportMedia("all and (min-width: 1024px)", "default");
 			app.supportMedia("all and (min-width: 500px) and (max-width: 1023.984px)", "tablet");
 			app.supportMedia("all and (max-width: 499.984px)", "mobile");
@@ -581,7 +701,7 @@
 					formLayout_2.setRows(["1fr"]);
 					group_3.setLayout(formLayout_2);
 					(function(container){
-						var output_1 = new cpr.controls.Output();
+						var output_1 = new cpr.controls.Output("titleInput");
 						output_1.value = "주방 냉장고";
 						output_1.style.css({
 							"border-radius" : "7px",
@@ -633,7 +753,7 @@
 					formLayout_3.setRows(["47px"]);
 					group_4.setLayout(formLayout_3);
 					(function(container){
-						var output_3 = new cpr.controls.Output();
+						var output_3 = new cpr.controls.Output("groupBtn");
 						output_3.value = "그룹원 관리";
 						output_3.style.css({
 							"border-radius" : "15px",
@@ -1014,7 +1134,7 @@
 					"width": "400px",
 					"height": "12px"
 				});
-				var output_4 = new cpr.controls.Output();
+				var output_4 = new cpr.controls.Output("addFoodBtn");
 				output_4.value = "식재료 추가하기";
 				output_4.style.css({
 					"border-right-style" : "solid",
@@ -1044,198 +1164,207 @@
 					"width": "543px",
 					"height": "35px"
 				});
-				var group_7 = new cpr.controls.Container();
-				var flowLayout_2 = new cpr.controls.layouts.FlowLayout();
-				flowLayout_2.horizontalAlign = "right";
-				flowLayout_2.verticalAlign = "middle";
-				group_7.setLayout(flowLayout_2);
+				var group_7 = new cpr.controls.Container("insertGroupArea");
+				var verticalLayout_2 = new cpr.controls.layouts.VerticalLayout();
+				group_7.setLayout(verticalLayout_2);
 				(function(container){
-					var userDefinedControl_2 = linker.userDefinedControl_2 = new udc.fridge.fridgeCRUD("fridgeCRUD");
-					userDefinedControl_2.visible = false;
-					userDefinedControl_2.addStr = "추가";
-					if(typeof onFridgeCRUDSaveClick == "function") {
-						userDefinedControl_2.addEventListener("save-click", onFridgeCRUDSaveClick);
-					}
-					container.addChild(userDefinedControl_2, {
-						"autoSize": "none",
-						"width": "297px",
-						"height": "35px"
+					var group_8 = new cpr.controls.Container("insertGroup");
+					var flowLayout_2 = new cpr.controls.layouts.FlowLayout();
+					flowLayout_2.horizontalAlign = "right";
+					flowLayout_2.verticalAlign = "middle";
+					group_8.setLayout(flowLayout_2);
+					(function(container){
+						var userDefinedControl_2 = linker.userDefinedControl_2 = new udc.fridge.fridgeCRUD("fridgeCRUD");
+						userDefinedControl_2.visible = false;
+						userDefinedControl_2.addStr = "추가";
+						if(typeof onFridgeCRUDSaveClick == "function") {
+							userDefinedControl_2.addEventListener("save-click", onFridgeCRUDSaveClick);
+						}
+						container.addChild(userDefinedControl_2, {
+							"autoSize": "none",
+							"width": "297px",
+							"height": "35px"
+						});
+					})(group_8);
+					container.addChild(group_8, {
+						"autoSize": "height",
+						"width": "470px",
+						"height": "40px"
+					});
+					var grid_2 = linker.grid_2 = new cpr.controls.Grid("insertFoodgrd");
+					grid_2.visible = false;
+					grid_2.init({
+						"dataSet": app.lookup("insertFoodList"),
+						"columns": [
+							{"width": "31px"},
+							{"width": "83px"},
+							{"width": "63px"},
+							{"width": "93px"},
+							{"width": "100px"},
+							{
+								"width": "100px",
+								"visible": false
+							},
+							{
+								"width": "100px",
+								"visible": true
+							}
+						],
+						"header": {
+							"rows": [{"height": "24px"}],
+							"cells": [
+								{
+									"constraint": {"rowIndex": 0, "colIndex": 0},
+									"configurator": function(cell){
+										cell.filterable = false;
+										cell.sortable = false;
+									}
+								},
+								{
+									"constraint": {"rowIndex": 0, "colIndex": 1},
+									"configurator": function(cell){
+										cell.filterable = false;
+										cell.sortable = false;
+										cell.targetColumnName = "foodName";
+										cell.text = "식재료명";
+									}
+								},
+								{
+									"constraint": {"rowIndex": 0, "colIndex": 2},
+									"configurator": function(cell){
+										cell.filterable = false;
+										cell.sortable = false;
+										cell.targetColumnName = "foodAmount";
+										cell.text = "수량";
+									}
+								},
+								{
+									"constraint": {"rowIndex": 0, "colIndex": 3},
+									"configurator": function(cell){
+										cell.filterable = false;
+										cell.sortable = false;
+										cell.targetColumnName = "endDate";
+										cell.text = "유통기한";
+									}
+								},
+								{
+									"constraint": {"rowIndex": 0, "colIndex": 4},
+									"configurator": function(cell){
+										cell.filterable = false;
+										cell.sortable = false;
+										cell.targetColumnName = "chargeDate";
+										cell.text = "구매일";
+									}
+								},
+								{
+									"constraint": {"rowIndex": 0, "colIndex": 5},
+									"configurator": function(cell){
+										cell.filterable = false;
+										cell.sortable = false;
+										cell.targetColumnName = "saveDate";
+										cell.text = "등록일";
+									}
+								},
+								{
+									"constraint": {"rowIndex": 0, "colIndex": 6},
+									"configurator": function(cell){
+										cell.filterable = false;
+										cell.sortable = false;
+										cell.targetColumnName = "categoryName";
+										cell.text = "카테고리이름";
+									}
+								}
+							]
+						},
+						"detail": {
+							"rows": [{"height": "24px"}],
+							"cells": [
+								{
+									"constraint": {"rowIndex": 0, "colIndex": 0},
+									"configurator": function(cell){
+										cell.columnType = "rowindex";
+									}
+								},
+								{
+									"constraint": {"rowIndex": 0, "colIndex": 1},
+									"configurator": function(cell){
+										cell.columnName = "foodName";
+										cell.control = (function(){
+											var inputBox_3 = new cpr.controls.InputBox("ipb3");
+											inputBox_3.bind("value").toDataColumn("foodName");
+											return inputBox_3;
+										})();
+									}
+								},
+								{
+									"constraint": {"rowIndex": 0, "colIndex": 2},
+									"configurator": function(cell){
+										cell.columnName = "foodAmount";
+										cell.control = (function(){
+											var numberEditor_2 = new cpr.controls.NumberEditor("nbe2");
+											numberEditor_2.bind("value").toDataColumn("foodAmount");
+											return numberEditor_2;
+										})();
+									}
+								},
+								{
+									"constraint": {"rowIndex": 0, "colIndex": 3},
+									"configurator": function(cell){
+										cell.columnName = "endDate";
+										cell.control = (function(){
+											var dateInput_4 = new cpr.controls.DateInput("dti4");
+											dateInput_4.bind("value").toDataColumn("endDate");
+											return dateInput_4;
+										})();
+									}
+								},
+								{
+									"constraint": {"rowIndex": 0, "colIndex": 4},
+									"configurator": function(cell){
+										cell.columnName = "chargeDate";
+										cell.control = (function(){
+											var dateInput_5 = new cpr.controls.DateInput("dti5");
+											dateInput_5.bind("value").toDataColumn("chargeDate");
+											return dateInput_5;
+										})();
+									}
+								},
+								{
+									"constraint": {"rowIndex": 0, "colIndex": 5},
+									"configurator": function(cell){
+										cell.columnName = "saveDate";
+										cell.control = (function(){
+											var dateInput_6 = new cpr.controls.DateInput("dti6");
+											dateInput_6.bind("value").toDataColumn("saveDate");
+											return dateInput_6;
+										})();
+									}
+								},
+								{
+									"constraint": {"rowIndex": 0, "colIndex": 6},
+									"configurator": function(cell){
+										cell.columnName = "categoryName";
+										cell.control = (function(){
+											var inputBox_4 = new cpr.controls.InputBox("ipb4");
+											inputBox_4.bind("value").toDataColumn("categoryName");
+											return inputBox_4;
+										})();
+									}
+								}
+							]
+						}
+					});
+					grid_2.style.css({
+						"background-color" : "#FFFFFF"
+					});
+					container.addChild(grid_2, {
+						"width": "543px",
+						"height": "133px"
 					});
 				})(group_7);
 				container.addChild(group_7, {
-					"autoSize": "height",
-					"width": "470px",
-					"height": "40px"
-				});
-				var grid_2 = linker.grid_2 = new cpr.controls.Grid("insertFoodgrd");
-				grid_2.visible = false;
-				grid_2.init({
-					"dataSet": app.lookup("insertFoodList"),
-					"columns": [
-						{"width": "31px"},
-						{
-							"width": "100px",
-							"visible": false
-						},
-						{"width": "83px"},
-						{"width": "63px"},
-						{"width": "93px"},
-						{"width": "100px"},
-						{
-							"width": "100px",
-							"visible": false
-						}
-					],
-					"header": {
-						"rows": [{"height": "24px"}],
-						"cells": [
-							{
-								"constraint": {"rowIndex": 0, "colIndex": 0},
-								"configurator": function(cell){
-									cell.filterable = false;
-									cell.sortable = false;
-								}
-							},
-							{
-								"constraint": {"rowIndex": 0, "colIndex": 1},
-								"configurator": function(cell){
-									cell.filterable = false;
-									cell.sortable = false;
-									cell.targetColumnName = "categoryName";
-									cell.text = "카테고리이름";
-								}
-							},
-							{
-								"constraint": {"rowIndex": 0, "colIndex": 2},
-								"configurator": function(cell){
-									cell.filterable = false;
-									cell.sortable = false;
-									cell.targetColumnName = "foodName";
-									cell.text = "식재료명";
-								}
-							},
-							{
-								"constraint": {"rowIndex": 0, "colIndex": 3},
-								"configurator": function(cell){
-									cell.filterable = false;
-									cell.sortable = false;
-									cell.targetColumnName = "foodAmount";
-									cell.text = "수량";
-								}
-							},
-							{
-								"constraint": {"rowIndex": 0, "colIndex": 4},
-								"configurator": function(cell){
-									cell.filterable = false;
-									cell.sortable = false;
-									cell.targetColumnName = "endDate";
-									cell.text = "유통기한";
-								}
-							},
-							{
-								"constraint": {"rowIndex": 0, "colIndex": 5},
-								"configurator": function(cell){
-									cell.filterable = false;
-									cell.sortable = false;
-									cell.targetColumnName = "chargeDate";
-									cell.text = "구매일";
-								}
-							},
-							{
-								"constraint": {"rowIndex": 0, "colIndex": 6},
-								"configurator": function(cell){
-									cell.filterable = false;
-									cell.sortable = false;
-									cell.targetColumnName = "saveDate";
-									cell.text = "등록일";
-								}
-							}
-						]
-					},
-					"detail": {
-						"rows": [{"height": "24px"}],
-						"cells": [
-							{
-								"constraint": {"rowIndex": 0, "colIndex": 0},
-								"configurator": function(cell){
-									cell.columnType = "rowindex";
-								}
-							},
-							{
-								"constraint": {"rowIndex": 0, "colIndex": 1},
-								"configurator": function(cell){
-									cell.columnName = "categoryName";
-									cell.control = (function(){
-										var inputBox_3 = new cpr.controls.InputBox("ipb4");
-										inputBox_3.bind("value").toDataColumn("categoryName");
-										return inputBox_3;
-									})();
-								}
-							},
-							{
-								"constraint": {"rowIndex": 0, "colIndex": 2},
-								"configurator": function(cell){
-									cell.columnName = "foodName";
-									cell.control = (function(){
-										var inputBox_4 = new cpr.controls.InputBox("ipb3");
-										inputBox_4.bind("value").toDataColumn("foodName");
-										return inputBox_4;
-									})();
-								}
-							},
-							{
-								"constraint": {"rowIndex": 0, "colIndex": 3},
-								"configurator": function(cell){
-									cell.columnName = "foodAmount";
-									cell.control = (function(){
-										var numberEditor_2 = new cpr.controls.NumberEditor("nbe2");
-										numberEditor_2.bind("value").toDataColumn("foodAmount");
-										return numberEditor_2;
-									})();
-								}
-							},
-							{
-								"constraint": {"rowIndex": 0, "colIndex": 4},
-								"configurator": function(cell){
-									cell.columnName = "endDate";
-									cell.control = (function(){
-										var dateInput_4 = new cpr.controls.DateInput("dti4");
-										dateInput_4.bind("value").toDataColumn("endDate");
-										return dateInput_4;
-									})();
-								}
-							},
-							{
-								"constraint": {"rowIndex": 0, "colIndex": 5},
-								"configurator": function(cell){
-									cell.columnName = "chargeDate";
-									cell.control = (function(){
-										var dateInput_5 = new cpr.controls.DateInput("dti5");
-										dateInput_5.bind("value").toDataColumn("chargeDate");
-										return dateInput_5;
-									})();
-								}
-							},
-							{
-								"constraint": {"rowIndex": 0, "colIndex": 6},
-								"configurator": function(cell){
-									cell.columnName = "saveDate";
-									cell.control = (function(){
-										var dateInput_6 = new cpr.controls.DateInput("dti6");
-										dateInput_6.bind("value").toDataColumn("saveDate");
-										return dateInput_6;
-									})();
-								}
-							}
-						]
-					}
-				});
-				grid_2.style.css({
-					"background-color" : "#FFFFFF"
-				});
-				container.addChild(grid_2, {
-					"width": "543px",
-					"height": "133px"
+					"width": "520px",
+					"height": "178px"
 				});
 			})(group_1);
 			container.addChild(group_1, {

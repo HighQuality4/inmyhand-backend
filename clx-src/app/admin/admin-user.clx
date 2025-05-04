@@ -191,30 +191,6 @@
         <cl:columns length="2" unit="FRACTION" shadetype="NONE" shadecolor="transparent"/>
       </cl:formlayout>
     </cl:group>
-    <cl:group std:sid="group-749c8134" id="header" style="background-color:#FBF3EB;">
-      <cl:xylayoutdata std:sid="xyl-data-e2b56a75" top="0px" right="0px" left="0px" height="73px" horizontalAnchor="BOTH" verticalAnchor="TOP"/>
-      <cl:output std:sid="output-970e83fe" style="color:#856C66; font-weight:bold; font-size:20px; font-family:Kim jung chul Myungjo Regular;" value="내손안의 냉장고">
-        <cl:formdata std:sid="f-data-3703a650" row="1" col="1" rowspan="2" colspan="1"/>
-      </cl:output>
-      <cl:img std:sid="image-a3b67c36" src="../../theme/images/home.svg">
-        <cl:formdata std:sid="f-data-4272aed9" row="1" col="5"/>
-      </cl:img>
-      <cl:output std:sid="output-fb5110e5" style="text-align:center;" class="page-nav" value="홈">
-        <cl:formdata std:sid="f-data-8eb6749d" halign="CENTER" row="2" col="5"/>
-      </cl:output>
-      <cl:formlayout std:sid="f-layout-1ed27eb3" scrollable="false" hspace="0px" vspace="0px" top-margin="0px" right-margin="0px" bottom-margin="0px" left-margin="0px">
-        <cl:rows length="10" unit="PIXEL" shadetype="NONE" shadecolor="transparent"/>
-        <cl:rows length="1" unit="FRACTION" shadetype="NONE" shadecolor="transparent"/>
-        <cl:rows length="22" unit="PIXEL" shadetype="NONE" shadecolor="transparent"/>
-        <cl:columns length="40" unit="PIXEL"/>
-        <cl:columns length="1" unit="FRACTION"/>
-        <cl:columns length="1" unit="FRACTION"/>
-        <cl:columns length="48" unit="PIXEL" shadetype="NONE" shadecolor="transparent"/>
-        <cl:columns length="10" unit="PIXEL"/>
-        <cl:columns length="48" unit="PIXEL"/>
-        <cl:columns length="40" unit="PIXEL" shadetype="NONE" shadecolor="transparent"/>
-      </cl:formlayout>
-    </cl:group>
     <cl:group std:sid="group-303c763f">
       <cl:xylayoutdata std:sid="xyl-data-5ce0ab8d" top="80px" right="80px" left="80px" height="40px" horizontalAnchor="BOTH" verticalAnchor="TOP"/>
       <cl:inputbox std:sid="i-box-3264405a" id="ipb1">
@@ -246,6 +222,47 @@
         <cl:xylayoutdata std:sid="xyl-data-4594df85" top="5px" right="180px" bottom="5px" width="48px" horizontalAnchor="RIGHT" verticalAnchor="BOTH"/>
       </cl:button>
       <cl:xylayout std:sid="xylayout-11856252"/>
+    </cl:group>
+    <cl:group std:sid="group-749c8134" id="header" style="background-color:#FBF3EB;">
+      <cl:xylayoutdata std:sid="xyl-data-2a9a27b6" top="0px" right="0px" left="0px" height="73px" horizontalAnchor="BOTH" verticalAnchor="TOP"/>
+      <cl:output std:sid="output-970e83fe" style="color:#856C66; font-weight:bold; font-size:20px; font-family:Kim jung chul Myungjo Regular;" value="내손안의 냉장고">
+        <cl:formdata std:sid="f-data-3703a650" row="1" col="1" rowspan="2" colspan="1"/>
+      </cl:output>
+      <cl:group std:sid="group-504812da">
+        <cl:listener std:sid="listener-ad620338" name="click" handler="onGroupClick"/>
+        <cl:formdata std:sid="f-data-a4ab6779" row="1" col="3" rowspan="2" colspan="1"/>
+        <cl:img std:sid="image-79ef7cd5" src="../../theme/images/grafana.svg">
+          <cl:xylayoutdata std:sid="xyl-data-7d0dcd0d" top="0px" right="0px" left="0px" height="41px" horizontalAnchor="BOTH" verticalAnchor="TOP"/>
+        </cl:img>
+        <cl:output std:sid="output-6d045742" class="page-nav" value="모니터링">
+          <cl:xylayoutdata std:sid="xyl-data-4aea60d5" top="40px" right="0px" left="0px" height="22px" horizontalAnchor="BOTH" verticalAnchor="TOP"/>
+        </cl:output>
+        <cl:xylayout std:sid="xylayout-349b1a3e"/>
+      </cl:group>
+      <cl:group std:sid="group-d5257361">
+        <cl:listener std:sid="listener-464b2d63" name="click" handler="onGroupClick2"/>
+        <cl:formdata std:sid="f-data-376f48ff" row="1" col="5" rowspan="2" colspan="1"/>
+        <cl:output std:sid="output-0a859d74" class="page-nav" value="홈">
+          <cl:xylayoutdata std:sid="xyl-data-c69498ca" top="40px" right="0px" left="0px" height="22px" horizontalAnchor="BOTH" verticalAnchor="TOP"/>
+        </cl:output>
+        <cl:img std:sid="image-a3b67c36" src="../../theme/images/home.svg">
+          <cl:xylayoutdata std:sid="xyl-data-208e7728" top="0px" right="0px" left="0px" height="41px" horizontalAnchor="BOTH" verticalAnchor="TOP"/>
+        </cl:img>
+        <cl:xylayout std:sid="xylayout-e7d809c9"/>
+      </cl:group>
+      <cl:formlayout std:sid="f-layout-1ed27eb3" scrollable="false" hspace="0px" vspace="0px" top-margin="0px" right-margin="0px" bottom-margin="0px" left-margin="0px">
+        <cl:rows length="10" unit="PIXEL" shadetype="NONE" shadecolor="transparent"/>
+        <cl:rows length="1" unit="FRACTION" shadetype="NONE" shadecolor="transparent"/>
+        <cl:rows length="22" unit="PIXEL" shadetype="NONE" shadecolor="transparent"/>
+        <cl:rows length="1" unit="PIXEL" shadetype="NONE" shadecolor="transparent"/>
+        <cl:columns length="40" unit="PIXEL"/>
+        <cl:columns length="1" unit="FRACTION"/>
+        <cl:columns length="1" unit="FRACTION"/>
+        <cl:columns length="48" unit="PIXEL" shadetype="NONE" shadecolor="transparent"/>
+        <cl:columns length="10" unit="PIXEL"/>
+        <cl:columns length="48" unit="PIXEL"/>
+        <cl:columns length="40" unit="PIXEL" shadetype="NONE" shadecolor="transparent"/>
+      </cl:formlayout>
     </cl:group>
     <cl:xylayout std:sid="xylayout-f37739bf"/>
   </body>

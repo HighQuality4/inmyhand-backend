@@ -4,6 +4,7 @@ import com.inmyhand.refrigerator.fridge.domain.dto.food.RoleCheckboxDTO;
 import com.inmyhand.refrigerator.fridge.domain.dto.group.FridgeGroupEditDTO;
 import com.inmyhand.refrigerator.fridge.domain.dto.group.FridgeGroupMemberDTO;
 import com.inmyhand.refrigerator.fridge.domain.dto.group.FridgeLeaderDTO;
+import com.inmyhand.refrigerator.fridge.domain.dto.group.MyRoleDTO;
 import com.inmyhand.refrigerator.fridge.domain.entity.FridgeMemberEntity;
 import com.inmyhand.refrigerator.fridge.domain.entity.GroupRoleEntity;
 import com.inmyhand.refrigerator.fridge.domain.entity.MemberGroupRoleEntity;
@@ -144,5 +145,22 @@ public class FridgeGroupRoleService {
                 .build();
 
         memberGroupRoleRepository.save(newMemberGroupRole);
+    }
+
+    /**
+     * 특정 냉장고(fridgeId)에서 특정 사용자(memberId)가
+     * editor, writer 역할을 갖고 있는지 체크해서 MyRoleDTO로 반환합니다.
+     */
+    public MyRoleDTO getRolesForUserInFridge(Long fridgeId, Long memberId) {
+        List<String> roles = memberGroupRoleRepository
+                .findRoleNamesByFridgeAndMember(fridgeId, memberId)
+                .stream()
+                .map(String::toLowerCase)
+                .toList();
+
+        boolean isEditor = roles.contains("editor");
+        boolean isWriter = roles.contains("writer");
+
+        return new MyRoleDTO(isEditor, isWriter);
     }
 }

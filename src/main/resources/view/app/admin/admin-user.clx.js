@@ -136,6 +136,24 @@
 				cmb2.clearSelection();
 				ipb1.clear();
 				cmb2.value = "전체보기";
+			}
+
+			/*
+			 * 그룹에서 click 이벤트 발생 시 호출.
+			 * 사용자가 컨트롤을 클릭할 때 발생하는 이벤트.
+			 */
+			function onGroupClick(e){
+				var group = e.control;
+					window.location.href = "/server/grafana";
+			}
+
+			/*
+			 * 그룹에서 click 이벤트 발생 시 호출.
+			 * 사용자가 컨트롤을 클릭할 때 발생하는 이벤트.
+			 */
+			function onGroupClick2(e){
+				var group = e.control;
+					window.location.href = "/";
 			};
 			// End - User Script
 			
@@ -509,64 +527,9 @@
 				"height": "70px"
 			});
 			
-			var group_4 = new cpr.controls.Container("header");
-			group_4.style.css({
-				"background-color" : "#FBF3EB"
-			});
-			var formLayout_2 = new cpr.controls.layouts.FormLayout();
-			formLayout_2.scrollable = false;
-			formLayout_2.horizontalSpacing = "0px";
-			formLayout_2.verticalSpacing = "0px";
-			formLayout_2.topMargin = "0px";
-			formLayout_2.rightMargin = "0px";
-			formLayout_2.bottomMargin = "0px";
-			formLayout_2.leftMargin = "0px";
-			formLayout_2.setColumns(["40px", "1fr", "1fr", "48px", "10px", "48px", "40px"]);
-			formLayout_2.setRows(["10px", "1fr", "22px"]);
-			group_4.setLayout(formLayout_2);
-			(function(container){
-				var output_9 = new cpr.controls.Output();
-				output_9.value = "내손안의 냉장고";
-				output_9.style.css({
-					"color" : "#856C66",
-					"font-weight" : "bold",
-					"font-size" : "20px",
-					"font-family" : "Kim jung chul Myungjo Regular"
-				});
-				container.addChild(output_9, {
-					"colIndex": 1,
-					"rowIndex": 1,
-					"colSpan": 1,
-					"rowSpan": 2
-				});
-				var image_1 = new cpr.controls.Image();
-				image_1.src = "theme/images/home.svg";
-				container.addChild(image_1, {
-					"colIndex": 5,
-					"rowIndex": 1
-				});
-				var output_10 = new cpr.controls.Output();
-				output_10.value = "홈";
-				output_10.style.setClasses(["page-nav"]);
-				output_10.style.css({
-					"text-align" : "center"
-				});
-				container.addChild(output_10, {
-					"colIndex": 5,
-					"rowIndex": 2,
-					"horizontalAlign": "center"
-				});
-			})(group_4);
-			container.addChild(group_4, {
-				"top": "0px",
-				"right": "0px",
-				"left": "0px",
-				"height": "73px"
-			});
-			
-			var group_5 = new cpr.controls.Container();
+			var group_4 = new cpr.controls.Container();
 			var xYLayout_3 = new cpr.controls.layouts.XYLayout();
-			group_5.setLayout(xYLayout_3);
+			group_4.setLayout(xYLayout_3);
 			(function(container){
 				var inputBox_1 = new cpr.controls.InputBox("ipb1");
 				container.addChild(inputBox_1, {
@@ -589,9 +552,9 @@
 					"width": "48px",
 					"height": "30px"
 				});
-				var group_6 = new cpr.controls.Container();
+				var group_5 = new cpr.controls.Container();
 				var xYLayout_4 = new cpr.controls.layouts.XYLayout();
-				group_6.setLayout(xYLayout_4);
+				group_5.setLayout(xYLayout_4);
 				(function(container){
 					var radioButton_1 = new cpr.controls.RadioButton("rdb1");
 					radioButton_1.fixedWidth = false;
@@ -619,8 +582,8 @@
 						"bottom": "5px",
 						"width": "100px"
 					});
-				})(group_6);
-				container.addChild(group_6, {
+				})(group_5);
+				container.addChild(group_5, {
 					"top": "0px",
 					"right": "485px",
 					"width": "359px",
@@ -648,12 +611,112 @@
 					"bottom": "5px",
 					"width": "48px"
 				});
-			})(group_5);
-			container.addChild(group_5, {
+			})(group_4);
+			container.addChild(group_4, {
 				"top": "80px",
 				"right": "80px",
 				"left": "80px",
 				"height": "40px"
+			});
+			
+			var group_6 = new cpr.controls.Container("header");
+			group_6.style.css({
+				"background-color" : "#FBF3EB"
+			});
+			var formLayout_2 = new cpr.controls.layouts.FormLayout();
+			formLayout_2.scrollable = false;
+			formLayout_2.horizontalSpacing = "0px";
+			formLayout_2.verticalSpacing = "0px";
+			formLayout_2.topMargin = "0px";
+			formLayout_2.rightMargin = "0px";
+			formLayout_2.bottomMargin = "0px";
+			formLayout_2.leftMargin = "0px";
+			formLayout_2.setColumns(["40px", "1fr", "1fr", "48px", "10px", "48px", "40px"]);
+			formLayout_2.setRows(["10px", "1fr", "22px", "1px"]);
+			group_6.setLayout(formLayout_2);
+			(function(container){
+				var output_9 = new cpr.controls.Output();
+				output_9.value = "내손안의 냉장고";
+				output_9.style.css({
+					"color" : "#856C66",
+					"font-weight" : "bold",
+					"font-size" : "20px",
+					"font-family" : "Kim jung chul Myungjo Regular"
+				});
+				container.addChild(output_9, {
+					"colIndex": 1,
+					"rowIndex": 1,
+					"colSpan": 1,
+					"rowSpan": 2
+				});
+				var group_7 = new cpr.controls.Container();
+				var xYLayout_5 = new cpr.controls.layouts.XYLayout();
+				group_7.setLayout(xYLayout_5);
+				(function(container){
+					var image_1 = new cpr.controls.Image();
+					image_1.src = "theme/images/grafana.svg";
+					container.addChild(image_1, {
+						"top": "0px",
+						"right": "0px",
+						"left": "0px",
+						"height": "41px"
+					});
+					var output_10 = new cpr.controls.Output();
+					output_10.value = "모니터링";
+					output_10.style.setClasses(["page-nav"]);
+					container.addChild(output_10, {
+						"top": "40px",
+						"right": "0px",
+						"left": "0px",
+						"height": "22px"
+					});
+				})(group_7);
+				if(typeof onGroupClick == "function") {
+					group_7.addEventListener("click", onGroupClick);
+				}
+				container.addChild(group_7, {
+					"colIndex": 3,
+					"rowIndex": 1,
+					"colSpan": 1,
+					"rowSpan": 2
+				});
+				var group_8 = new cpr.controls.Container();
+				var xYLayout_6 = new cpr.controls.layouts.XYLayout();
+				group_8.setLayout(xYLayout_6);
+				(function(container){
+					var output_11 = new cpr.controls.Output();
+					output_11.value = "홈";
+					output_11.style.setClasses(["page-nav"]);
+					container.addChild(output_11, {
+						"top": "40px",
+						"right": "0px",
+						"left": "0px",
+						"height": "22px"
+					});
+					var image_2 = new cpr.controls.Image();
+					image_2.src = "theme/images/home.svg";
+					container.addChild(image_2, {
+						"top": "0px",
+						"right": "0px",
+						"left": "0px",
+						"height": "41px"
+					});
+				})(group_8);
+				if(typeof onGroupClick2 == "function") {
+					group_8.addEventListener("click", onGroupClick2);
+				}
+				container.addChild(group_8, {
+					"colIndex": 5,
+					"rowIndex": 1,
+					"colSpan": 1,
+					"rowSpan": 2
+				});
+			})(group_6);
+			container.addChild(group_6, {
+				"top": "0px",
+				"right": "0px",
+				"left": "0px",
+				"height": "73px"
 			});
 			if(typeof onBodyLoad == "function"){
 				app.addEventListener("load", onBodyLoad);

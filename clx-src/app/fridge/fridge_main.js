@@ -17,7 +17,8 @@ function onBodyLoad2(e){
 	const getFridgeList= app.lookup("getFridgeList"); 
 	// 식재료 목록
 	const getFoodList = app.lookup("getFoodList");
-	
+	// 변경될 식재료 목록
+	const changeFoodList = app.lookup("changeFoodList");
 	// 식재료 그리드 
 	const foodListGrid = app.lookup("foodListGrid");
 	
@@ -32,7 +33,6 @@ function onBodyLoad2(e){
 	
 	// 그룹 접기 이벤트 추가하기 
 	 getFoodList.addEventListener("submit-success", function(e) {
-        alert("식재료 정보 가져오기 성공"); 
         
         foodListGrid.redraw(); 
         setTimeout(function() {
@@ -41,13 +41,15 @@ function onBodyLoad2(e){
         
     });
     
-//    // 선택된 냉장고 목록 효과 추가하기
-//    getFridgeList.addEventListener("submit-success", function(e){
-//    	alert("냉장고 목록 불러오기 성공");
-//    	
-//    	
-//    });
-	
+    changeFoodList.addEventListener("submit-success", function(e) {
+        
+        foodListGrid.redraw(); 
+        setTimeout(function() {
+            foodListGrid.collapseAll(); // 0.1초 뒤에 접기 (collapseAll) 실행
+        }, 100);
+        
+    });
+
 }
 
 
@@ -75,20 +77,34 @@ function onBodyLoad2(e){
 function onFridgNavbarItemClick(e){
 
 	var fridgNavbar = e.control;
-	alert("클릭됨 "+e.item.value);
+	console.log("클릭됨 "+e.item.value);
   	
   	var setClickLabelValue = e.item.value; 
+  	// 상단 제목 변경
+  	app.lookup("titleInput").value = e.item.label;
   	
   	// 정적의 nav값 추출했음.
   	var vcNav = app.lookup("fridgNavbar");
   	
     var voItem = vcNav.getItemByValue(setClickLabelValue);
     vcNav.focusItem(voItem);
-    alert(voItem.value);	
+    console.log(voItem.value);	
     
     // 현재 냉장고 정보 및 멤버 아이디
     app.lookup("fridgeIdParam").setValue("fridgeId", e.item.value);
-    app.lookup("fridgeIdParam").setValue("memberId", 1);
+    app.lookup("fridgeIdParam").setValue("memberId", 3);
+    
+   
+	app.lookup("changeFoodList").send();
+	app.lookup("checkUserRole").send();
+	
+	if(e.item.value != 1){
+		app.lookup("groupBtn").visible = false;	
+	}else{
+		app.lookup("groupBtn").visible = true;
+	}
+	
+	
 	
 }
 
@@ -108,7 +124,8 @@ function onFridgeCRUDSaveClick(e){
 	var foodDataMap = app.lookup("fridgeIdParam");	
 	
 	var totalInsertRow = foodDataSet.getRowCount();
-	alert("변경된 저장 방법");
+	
+	// 변경된 저장 방법
 	app.lookup("sendFoodList").send();
 	app.lookup("getFoodList").send();
 	
@@ -179,7 +196,6 @@ function onOutputClick(e){
 	insertFoodgrd.visible = !insertFoodgrd.visible;
 	fridgeCRUD.visible = !fridgeCRUD.visible;
 	
-	
 }
 
 /*
@@ -189,7 +205,7 @@ function onOutputClick(e){
 function onOutputClick2(e){
 	var output = e.control;
 //	window.location.href = "";
-	alert("다이얼로그 시작");
+
 	app.dialogManager.openDialog("app/fridge/fridge_group","dialogName",{width:500, height:500},function(dialog){
 
 		//다이얼로그가 로드 되었을때 처리
@@ -222,7 +238,7 @@ function onFridgeCRUDForUDSaveClick(e){
 	var updated = getChangedRowsByState(cpr.data.tabledata.RowState.UPDATED);
 	var deleted = getChangedRowsByState(cpr.data.tabledata.RowState.DELETED);
 
-	alert("추가됨: " + JSON.stringify(inserted) + 
+	console.log("추가됨: " + JSON.stringify(inserted) + 
 	      "\n수정됨: " + JSON.stringify(updated) + 
 	      "\n삭제됨: " + JSON.stringify(deleted));
 
@@ -260,4 +276,77 @@ function onFridgeCRUDForUDSaveClick(e){
 		        app.lookup("foodListGrid").redraw();
 	    });
 	});
+}
+
+/*
+ * 서브미션에서 submit-success 이벤트 발생 시 호출.
+ * 통신이 성공하면 발생합니다.
+ */
+function onChangeFoodListSubmitSuccess(e){
+	var changeFoodList = e.control;
+	
+	
+	console.log("변경됐습니다.")
+
+	
+	console.log(" 데이터 셋 확인 >>>> ")
+	console.log(app.lookup("foodList").getRowDataRanged())
+	app.lookup("foodListGrid").redraw();
+}
+
+/*
+ * 서브미션에서 submit-done 이벤트 발생 시 호출.
+ * 응답처리가 모두 종료되면 발생합니다.
+ */
+function onCheckUserRoleSubmitDone(e){
+	var checkUserRole = e.control;
+	
+	app.lookup("checkUserRole").userData();
+	console.log("받아온 데이터 확인>>>"+JSON.stringify(app.lookup("myRole").getDatas()))
+	
+	var dm = app.lookup("myRole");
+	var isEditor = dm.getValue("editor"); 
+	var isWriter = dm.getValue("writer");
+	
+	var dm = app.lookup("myRole");
+  	var isEditor = dm.getValue("editor") === "true";
+  	var isWriter = dm.getValue("writer") === "true";
+
+  	// 버튼/CRUD 보이기
+  	app.lookup("addFoodBtn").visible = isWriter;
+  	
+  	app.lookup("insertGroup").visible = isWriter;
+  	app.lookup("fridgeCRUDForUD").visible = isEditor;
+
+  	// 그리드 클릭(편집) 허용 여부
+  	app.lookup("foodListGrid").enabled = isEditor;
+
+  	// 렌더링 강제
+  	app.lookup("addFoodBtn").redraw();
+  	app.lookup("fridgeCRUDForUD").redraw();
+  	app.lookup("foodListGrid").redraw();
+}
+
+
+/*
+ * 서브미션에서 before-send 이벤트 발생 시 호출.
+ * XMLHttpRequest가 open된 후 send 함수가 호출되기 직전에 발생합니다.
+ */
+function onChangeFoodListBeforeSend(e){
+	var changeFoodList = e.control;
+//	
+		// 그리드 객체 지우기
+   	app.lookup("foodList").clearData();
+   	
+}
+
+/*
+ * 서브미션에서 before-send 이벤트 발생 시 호출.
+ * XMLHttpRequest가 open된 후 send 함수가 호출되기 직전에 발생합니다.
+ */
+function onCheckUserRoleBeforeSend(e){
+	var checkUserRole = e.control;
+	
+	
+	
 }

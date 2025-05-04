@@ -403,7 +403,7 @@
 						var button_1 = new cpr.controls.Button();
 						button_1.value = "사진\r\n업로드";
 						button_1.style.css({
-							"color" : "#856C66"
+							"font-size" : "16px"
 						});
 						if(typeof onButtonClick == "function") {
 							button_1.addEventListener("click", onButtonClick);

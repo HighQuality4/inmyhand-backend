@@ -246,12 +246,12 @@ body.cl-has-modal {
 }
 .cl-listbox:not(.cl-disabled) .cl-listbox-item:not(.cl-disabled):not(.cl-selected):focus {
   color: #333435;
-  background-color: #DAEFFC;
+  background-color: #FBF3EB;
 }
 .cl-listbox:not(.cl-disabled) .cl-listbox-item:not(.cl-disabled):not(.cl-selected).cl-hover,
 .cl-listbox:not(.cl-disabled) .cl-listbox-item:not(.cl-disabled):not(.cl-selected):hover {
   color: #333435;
-  background-color: #DAEFFC;
+  background-color: #FBF3EB;
 }
 /* disabled 상태 */
 .cl-listbox.cl-disabled {
@@ -322,7 +322,7 @@ body.cl-has-modal {
 .cl-linkedlistbox:not(.cl-disabled) .cl-linkedlistbox-item:not(.cl-disabled):hover,
 .cl-linkedlistbox:not(.cl-disabled) .cl-linkedlistbox-item:not(.cl-disabled):focus {
   color: #333435;
-  background-color: #DAEFFC;
+  background-color: #FBF3EB;
 }
 .cl-linkedlistbox:not(.cl-disabled) .cl-linkedlistbox-item:not(.cl-disabled).cl-selected {
   color: #FFFFFF;
@@ -360,7 +360,7 @@ body.cl-has-modal {
   /* 메뉴 아이템 - disabled */
 }
 .cl-menu .cl-menu-list .cl-menu-item.cl-hover {
-  background-color: #DAEFFC;
+  background-color: #FBF3EB;
   color: #333435;
 }
 .cl-menu .cl-menu-list .cl-menu-item.cl-disabled {
@@ -380,7 +380,7 @@ body.cl-has-modal {
 }
 .cl-menu:not(.cl-disabled) .cl-menu.item:not(.cl-disabled):not(.cl-selected):hover,
 .cl-menu:not(.cl-disabled) .cl-menu.item:not(.cl-disabled).cl-hover {
-  background-color: #DAEFFC;
+  background-color: #FBF3EB;
   color: #333435;
 }
 .cl-menu.cl-focus {
@@ -550,7 +550,7 @@ body.cl-has-modal {
   background-color: #fff;
   border: 1px solid #856C66;
   border-radius: 5px;
-  padding: 3px;
+  padding: 5px;
   /* 인풋 박스 텍스트 */
   /* 인풋 박스 - 포커스 상태 */
   /* 인풋 박스 - 클리어 버튼 */
@@ -669,7 +669,7 @@ body.cl-has-modal {
   color: #000000;
   border: 1px solid #856C66;
   border-radius: 5px;
-  padding: 3px;
+  padding: 5px;
   /* 텍스트 에리어 텍스트 */
   /* 텍스트 에리어 - 비활성화 */
   /* 텍스트 에리어 - 포커스 */
@@ -680,7 +680,7 @@ body.cl-has-modal {
   color: #666;
 }
 .cl-textarea.cl-focus {
-  border-color: 1px #F59760;
+  border-color: #F59760;
 }
 /* 라디오 버튼 */
 .cl-radiobutton {
@@ -825,6 +825,8 @@ body.cl-has-modal {
   color: #000000;
   border: 1px solid #856C66;
   background-color: #fff;
+  border-radius: 5px;
+  padding: 3px;
   /* 선택된 아이템의 아이콘 */
   /* 텍스트 영역 스타일 */
   /* 콤보 박스 펼침 버튼 */
@@ -847,6 +849,8 @@ body.cl-has-modal {
   font: 14px "김정철 명조 레귤러", "KimjungchulMyungjo-Regular", sans-serif;
   border: 1px solid #F59760;
   color: #000000;
+  border-radius: 5px;
+  padding: 3px;
   /* 리스트의 쉐도우 */
   /* 콤보박스 위에 표시될때 상태 */
   /* 콤보박스 아래에 표시될때 상태 */
@@ -880,7 +884,7 @@ body.cl-has-modal {
 .cl-combobox-list .cl-combobox-item:not(.cl-disabled):not(.cl-selected):hover,
 .cl-combobox-list .cl-combobox-item:not(.cl-disabled):not(.cl-selected).cl-hover {
   color: #333435;
-  background-color: #DAEFFC;
+  background-color: #FBF3EB;
 }
 .cl-combobox-list .cl-combobox-item.cl-treeitem {
   /* 트리 아이콘 스타일 */
@@ -901,10 +905,10 @@ body.cl-has-modal {
 }
 .cl-combobox-list.cl-multi-select .cl-combobox-item:not(.cl-disabled).cl-selected:hover {
   color: #333435;
-  background-color: #DAEFFC;
+  background-color: #FBF3EB;
 }
 .cl-combobox-list.cl-multi-select .cl-combobox-item:not(.cl-disabled).cl-hover.cl-selected {
-  color: #DAEFFC;
+  color: #FBF3EB;
   background-color: #333435;
 }
 /* 링크드 콤보 박스 루트 */
@@ -918,6 +922,7 @@ body.cl-has-modal {
 .cl-linkedcombobox .cl-linkedcombobox-combo {
   border: 1px solid #856C66;
   background-color: #fff;
+  border-radius: 5px;
   /* 선택된 아이템의 아이콘 */
   /* 콤보 박스 인풋 텍스트 */
   /* 콤보 박스 펼침 버튼 */
@@ -942,6 +947,7 @@ body.cl-has-modal {
   color: #000000;
   border: 1px solid #F59760;
   background-color: white;
+  border-radius: 5px;
   /* 리스트박스의 쉐도우 */
   /* 콤보박스 위에 표시될때 상태 */
   /* 콤보박스 아래에 표시될때 상태 */
@@ -974,17 +980,19 @@ body.cl-has-modal {
 .cl-linkedcombobox-list .cl-linkedcombobox-item:not(.cl-disabled):not(.cl-selected):hover,
 .cl-linkedcombobox-list .cl-linkedcombobox-item:not(.cl-disabled):not(.cl-selected).cl-hover {
   color: #333435;
-  background-color: #DAEFFC;
+  background-color: #FBF3EB;
 }
 /* 다이얼로그 루트 */
 .cl-dialog {
-  border: solid 1px #F59760;
+  border: solid 1px #856C66;
+  border-radius: 5px;
   /* 다이얼로그 헤더 */
 }
 .cl-dialog .cl-dialog-header {
-  background-color: #1D7FDC;
+  background-color: #856C66;
   color: white;
-  border-bottom: 1px solid #e5e5e5;
+  font-weight: bold;
+  border: 1px solid #856C66;
   /* 다이얼로그 헤더 텍스트 */
   /* 다이얼로그 닫기 버튼 */
   /* 다이얼로그 닫기 버튼 - 호버 */
@@ -995,6 +1003,9 @@ body.cl-has-modal {
   /* 다이얼로그 최대화 버튼 - 액티브 */
   /* 다이얼로그 복구 버튼 */
   /* 다이얼로그 복구 버튼 - 액티브 */
+}
+.cl-dialog .cl-dialog-wrapper {
+  border-radius: 5px;
 }
 /* 트리 */
 .cl-tree {
@@ -1060,7 +1071,7 @@ body.cl-has-modal {
 }
 .cl-tree:not(.cl-disabled) .cl-tree-item:not(.cl-disabled):not(.cl-selected).cl-hover,
 .cl-tree:not(.cl-disabled) .cl-tree-item:not(.cl-disabled):not(.cl-selected):hover {
-  background-color: #DAEFFC;
+  background-color: #FBF3EB;
   color: #333435;
 }
 /* 트리 - 비활성화 */
@@ -1316,12 +1327,12 @@ body.cl-has-modal {
   /* 내비게이션 바 아이템 - 선택됨 */
 }
 .cl-navigationbar .cl-navigationbar-bar .cl-navigationbar-item.cl-hover {
-  background-color: #DAEFFC;
+  background-color: #FBF3EB;
   color: #333435;
 }
 .cl-navigationbar .cl-navigationbar-bar .cl-navigationbar-item:not(.cl-disabled):not(.cl-selected):hover,
 .cl-navigationbar .cl-navigationbar-bar .cl-navigationbar-item:not(.cl-disabled).cl-hover {
-  background-color: #DAEFFC;
+  background-color: #FBF3EB;
   color: #333435;
 }
 .cl-navigationbar .cl-navigationbar-bar .cl-navigationbar-item.cl-disabled {
@@ -1378,11 +1389,11 @@ body.cl-has-modal {
 }
 .cl-navigationbar-list .cl-navigationbar-listitem:not(.cl-disabled):not(.cl-selected):hover,
 .cl-navigationbar-list .cl-navigationbar-listitem:not(.cl-disabled).cl-hover {
-  background-color: #DAEFFC;
+  background-color: #FBF3EB;
   color: #333435;
 }
 .cl-navigationbar-list .cl-navigationbar-listitem.cl-hover {
-  background-color: #DAEFFC;
+  background-color: #FBF3EB;
   color: #333435;
 }
 .cl-navigationbar-list .cl-navigationbar-listitem.cl-disabled {
@@ -1438,7 +1449,7 @@ body.cl-has-modal {
   /* 선택된 탭 아이템 닫기 버튼 */
 }
 .cl-tabfolder .cl-tabfolder-header .cl-tabfolder-item:not(.cl-selected):hover {
-  background-color: #DAEFFC;
+  background-color: #FBF3EB;
 }
 .cl-tabfolder .cl-tabfolder-body {
   background-color: white;
@@ -1578,6 +1589,7 @@ body.cl-has-modal {
   font: 14px "김정철 명조 레귤러", "KimjungchulMyungjo-Regular", sans-serif;
   color: #000000;
   border: solid 1px #856C66;
+  border-radius: 5px;
   /* autoSize 설정시 표시되는 기본크기 */
   /* 파일 인풋 내 텍스트 */
   /* 포커스 상태 */
@@ -1642,7 +1654,7 @@ body.cl-has-modal {
 .cl-sidenavigation .cl-sidenavigation-item:hover,
 .cl-sidenavigation .cl-sidenavigation-item.cl-hover,
 .cl-sidenavigation .cl-sidenavigation-item:focus {
-  background-color: #DAEFFC;
+  background-color: #FBF3EB;
   color: #333435;
 }
 .cl-sidenavigation .cl-sidenavigation-item.cl-selected {
@@ -1706,7 +1718,7 @@ body.cl-has-modal {
 }
 .cl-button.slide-button:hover,
 .cl-button.slide-button.cl-hover {
-  background-color: rgba(0, 0, 0, 0.2);
+  background-color: rgba(133, 108, 103, 0.2);
   border-radius: 0px;
   border: none;
   color: white;
@@ -1714,7 +1726,7 @@ body.cl-has-modal {
 }
 .cl-button.slide-button:active,
 .cl-button.slide-button.cl-ativated {
-  background-color: rgba(0, 0, 0, 0.3);
+  background-color: rgba(133, 108, 103, 0.3);
   border-radius: 0px;
   border: none;
   color: white;
@@ -1723,14 +1735,14 @@ body.cl-has-modal {
 .cl-button.slide-page-button {
   background-image: none;
   border: none;
-  background-color: rgba(0, 0, 0, 0.3);
+  background-color: rgba(133, 108, 103, 0.3);
   min-width: 5px;
   min-height: 5px;
   max-height: 5px;
   border-radius: 5px;
 }
 .cl-button.slide-page-button.active {
-  background-color: rgba(0, 0, 0, 0.8);
+  background-color: rgba(133, 108, 103, 0.8);
 }
 /* 버튼 */
 .cl-button.custom-button {

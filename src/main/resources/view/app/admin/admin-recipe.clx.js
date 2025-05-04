@@ -127,6 +127,24 @@
 			            window.location.href = "/recipe/" + recipeId;
 			        }
 			    }
+			}
+
+			/*
+			 * 그룹에서 click 이벤트 발생 시 호출.
+			 * 사용자가 컨트롤을 클릭할 때 발생하는 이벤트.
+			 */
+			function onGroupClick(e){
+				var group = e.control;
+				window.location.href = "/server/grafana";
+			}
+
+			/*
+			 * 그룹에서 click 이벤트 발생 시 호출.
+			 * 사용자가 컨트롤을 클릭할 때 발생하는 이벤트.
+			 */
+			function onGroupClick2(e){
+				var group = e.control;
+				window.location.href = "/";
 			};
 			// End - User Script
 			
@@ -400,7 +418,7 @@
 			formLayout_1.bottomMargin = "0px";
 			formLayout_1.leftMargin = "0px";
 			formLayout_1.setColumns(["40px", "1fr", "1fr", "48px", "10px", "48px", "40px"]);
-			formLayout_1.setRows(["10px", "1fr", "22px"]);
+			formLayout_1.setRows(["10px", "1fr", "22px", "1px"]);
 			group_3.setLayout(formLayout_1);
 			(function(container){
 				var output_6 = new cpr.controls.Output();
@@ -417,22 +435,67 @@
 					"colSpan": 1,
 					"rowSpan": 2
 				});
-				var image_1 = new cpr.controls.Image();
-				image_1.src = "theme/images/home.svg";
-				container.addChild(image_1, {
-					"colIndex": 5,
-					"rowIndex": 1
+				var group_4 = new cpr.controls.Container();
+				var xYLayout_3 = new cpr.controls.layouts.XYLayout();
+				group_4.setLayout(xYLayout_3);
+				(function(container){
+					var image_1 = new cpr.controls.Image();
+					image_1.src = "theme/images/grafana.svg";
+					container.addChild(image_1, {
+						"top": "0px",
+						"right": "0px",
+						"left": "0px",
+						"height": "41px"
+					});
+					var output_7 = new cpr.controls.Output();
+					output_7.value = "모니터링";
+					output_7.style.setClasses(["page-nav"]);
+					container.addChild(output_7, {
+						"top": "40px",
+						"right": "0px",
+						"left": "0px",
+						"height": "22px"
+					});
+				})(group_4);
+				if(typeof onGroupClick == "function") {
+					group_4.addEventListener("click", onGroupClick);
+				}
+				container.addChild(group_4, {
+					"colIndex": 3,
+					"rowIndex": 1,
+					"colSpan": 1,
+					"rowSpan": 2
 				});
-				var output_7 = new cpr.controls.Output();
-				output_7.value = "홈";
-				output_7.style.setClasses(["page-nav"]);
-				output_7.style.css({
-					"text-align" : "center"
-				});
-				container.addChild(output_7, {
+				var group_5 = new cpr.controls.Container();
+				var xYLayout_4 = new cpr.controls.layouts.XYLayout();
+				group_5.setLayout(xYLayout_4);
+				(function(container){
+					var output_8 = new cpr.controls.Output();
+					output_8.value = "홈";
+					output_8.style.setClasses(["page-nav"]);
+					container.addChild(output_8, {
+						"top": "40px",
+						"right": "0px",
+						"left": "0px",
+						"height": "22px"
+					});
+					var image_2 = new cpr.controls.Image();
+					image_2.src = "theme/images/home.svg";
+					container.addChild(image_2, {
+						"top": "0px",
+						"right": "0px",
+						"left": "0px",
+						"height": "41px"
+					});
+				})(group_5);
+				if(typeof onGroupClick2 == "function") {
+					group_5.addEventListener("click", onGroupClick2);
+				}
+				container.addChild(group_5, {
 					"colIndex": 5,
-					"rowIndex": 2,
-					"horizontalAlign": "center"
+					"rowIndex": 1,
+					"colSpan": 1,
+					"rowSpan": 2
 				});
 			})(group_3);
 			container.addChild(group_3, {
@@ -442,9 +505,9 @@
 				"height": "73px"
 			});
 			
-			var group_4 = new cpr.controls.Container("footer");
-			group_4.style.setClasses(["page-nav"]);
-			group_4.style.css({
+			var group_6 = new cpr.controls.Container("footer");
+			group_6.style.setClasses(["page-nav"]);
+			group_6.style.css({
 				"background-color" : "#FFFFFF"
 			});
 			var formLayout_2 = new cpr.controls.layouts.FormLayout();
@@ -457,39 +520,39 @@
 			formLayout_2.leftMargin = "0px";
 			formLayout_2.setColumns(["40px", "40px", "1fr", "40px", "1fr", "40px", "2fr"]);
 			formLayout_2.setRows(["10px", "50px", "10px"]);
-			group_4.setLayout(formLayout_2);
+			group_6.setLayout(formLayout_2);
 			(function(container){
-				var group_5 = new cpr.controls.Container();
-				var xYLayout_3 = new cpr.controls.layouts.XYLayout();
-				group_5.setLayout(xYLayout_3);
+				var group_7 = new cpr.controls.Container();
+				var xYLayout_5 = new cpr.controls.layouts.XYLayout();
+				group_7.setLayout(xYLayout_5);
 				(function(container){
-					var output_8 = new cpr.controls.Output();
-					output_8.value = "Copyright © 내손안의 냉장고!. All rights reserved.";
-					output_8.style.css({
+					var output_9 = new cpr.controls.Output();
+					output_9.value = "Copyright © 내손안의 냉장고!. All rights reserved.";
+					output_9.style.css({
 						"text-align" : "right"
 					});
-					container.addChild(output_8, {
+					container.addChild(output_9, {
 						"top": "0px",
 						"right": "50px",
 						"bottom": "0px",
 						"left": "0px"
 					});
-				})(group_5);
-				container.addChild(group_5, {
+				})(group_7);
+				container.addChild(group_7, {
 					"colIndex": 6,
 					"rowIndex": 1
 				});
-			})(group_4);
-			container.addChild(group_4, {
+			})(group_6);
+			container.addChild(group_6, {
 				"right": "0px",
 				"bottom": "0px",
 				"left": "0px",
 				"height": "70px"
 			});
 			
-			var group_6 = new cpr.controls.Container();
-			var xYLayout_4 = new cpr.controls.layouts.XYLayout();
-			group_6.setLayout(xYLayout_4);
+			var group_8 = new cpr.controls.Container();
+			var xYLayout_6 = new cpr.controls.layouts.XYLayout();
+			group_8.setLayout(xYLayout_6);
 			(function(container){
 				var inputBox_1 = new cpr.controls.InputBox("ipb1");
 				container.addChild(inputBox_1, {
@@ -509,16 +572,16 @@
 					"width": "48px",
 					"height": "30px"
 				});
-				var output_9 = new cpr.controls.Output();
-				output_9.value = "레시피명 검색 : ";
-				container.addChild(output_9, {
+				var output_10 = new cpr.controls.Output();
+				output_10.value = "레시피명 검색 : ";
+				container.addChild(output_10, {
 					"top": "5px",
 					"right": "280px",
 					"bottom": "5px",
 					"width": "100px"
 				});
-			})(group_6);
-			container.addChild(group_6, {
+			})(group_8);
+			container.addChild(group_8, {
 				"top": "80px",
 				"right": "80px",
 				"left": "80px",
