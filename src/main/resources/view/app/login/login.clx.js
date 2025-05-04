@@ -75,6 +75,24 @@
 				} else {
 				    showToastModule.showToast("아이디나 비밀번호가 틀렸습니다!", 2000);
 				}
+			}
+
+			/*
+			 * "비밀번호 찾기" 버튼에서 click 이벤트 발생 시 호출.
+			 * 사용자가 컨트롤을 클릭할 때 발생하는 이벤트.
+			 */
+			function onButtonClick2(e){
+				var button = e.control;
+				history.pushState({}, '', `/auth/password`);
+			}
+
+			/*
+			 * "회원가입" 버튼에서 click 이벤트 발생 시 호출.
+			 * 사용자가 컨트롤을 클릭할 때 발생하는 이벤트.
+			 */
+			function onButtonClick3(e){
+				var button = e.control;
+				history.pushState({}, '', `/auth/register`);
 			};
 			// End - User Script
 			
@@ -407,6 +425,9 @@
 					"font-weight" : "bold",
 					"font-size" : "16px"
 				});
+				if(typeof onButtonClick2 == "function") {
+					button_5.addEventListener("click", onButtonClick2);
+				}
 				container.addChild(button_5, {
 					"width": "235px",
 					"height": "75px"
@@ -417,6 +438,9 @@
 					"font-weight" : "bold",
 					"font-size" : "16px"
 				});
+				if(typeof onButtonClick3 == "function") {
+					button_6.addEventListener("click", onButtonClick3);
+				}
 				container.addChild(button_6, {
 					"width": "236px",
 					"height": "75px"
