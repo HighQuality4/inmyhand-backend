@@ -46,15 +46,10 @@
         <cl:xylayoutdata std:sid="sxyl-data-aebf3490" top="183px" width="520px" height="440px" horizontalAnchor="CENTER" verticalAnchor="TOP" screenid="default"/>
       </cl:responsivexylayoutdata>
     </cl:udc>
-    <cl:button std:sid="button-afca849a" value="Button">
-      <cl:responsivexylayoutdata std:sid="rxyl-data-be416af4">
-        <cl:xylayoutdata std:sid="sxyl-data-38dc5c4a" top="1106px" width="0px" height="66px" horizontalAnchor="CENTER" verticalAnchor="TOP" screenid="default"/>
-      </cl:responsivexylayoutdata>
-    </cl:button>
-    <cl:button std:sid="button-b21fc41a" value="구독 및 결제 관리">
+    <cl:button std:sid="button-b21fc41a" style="background-color:#856C66;" value="구독 및 결제 관리">
       <cl:listener std:sid="listener-c0f7ff79" name="click" handler="onButtonClick2"/>
       <cl:responsivexylayoutdata std:sid="rxyl-data-ed090986">
-        <cl:xylayoutdata std:sid="sxyl-data-d97b4811" top="1093px" width="520px" height="66px" horizontalAnchor="CENTER" verticalAnchor="TOP" screenid="default"/>
+        <cl:xylayoutdata std:sid="sxyl-data-d97b4811" top="1083px" width="520px" height="66px" horizontalAnchor="CENTER" verticalAnchor="TOP" screenid="default"/>
       </cl:responsivexylayoutdata>
     </cl:button>
     <cl:group std:sid="group-8b152379">
@@ -77,6 +72,12 @@
       </cl:button>
       <cl:xylayout std:sid="xylayout-552cd5ea"/>
     </cl:group>
+    <cl:button std:sid="button-f3a01fdb" value="내 정보 변경하기">
+      <cl:listener std:sid="listener-3a4471ca" name="click" handler="onButtonClick3"/>
+      <cl:responsivexylayoutdata std:sid="rxyl-data-1d8311a8">
+        <cl:xylayoutdata std:sid="sxyl-data-f91d2606" top="1171px" width="520px" height="66px" horizontalAnchor="CENTER" verticalAnchor="TOP" screenid="default"/>
+      </cl:responsivexylayoutdata>
+    </cl:button>
     <cl:responsivexylayout std:sid="r-xylayout-3e5555da"/>
   </body>
   <std:studiosetting>
