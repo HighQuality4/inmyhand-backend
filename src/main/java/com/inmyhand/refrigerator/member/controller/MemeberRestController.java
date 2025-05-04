@@ -20,9 +20,7 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 @RequestMapping("/api/user")
 public class MemeberRestController {
-
-    private final RedisUtil redisUtil;
-    private final RedisKeyManager redisKeyManager;
+    
     private final MemberServiceImpl memberService;
     private final JavaMailSender mailSender;
     private final EmailAuthService emailAuthService;
