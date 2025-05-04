@@ -34,7 +34,7 @@
 				const changeFoodList = app.lookup("changeFoodList");
 				// 식재료 그리드 
 				const foodListGrid = app.lookup("foodListGrid");
-				
+				const inputName = app.lookup("titleInput");
 				
 				// 서브미션 보내기
 				getFridgeList.send().then(function(pbSuccess){
@@ -44,11 +44,14 @@
 						 	
 							const getFridgeId = app.lookup("fridgeIdParam").getValue("fridgeId")
 							
-						    console.log("getFridgeId >>>>> " + getFridgeId)
-						    
 						 	app.lookup("fridgNavbar").selectItemByValue(getFridgeId.toString());
+							inputName.value = app.lookup("fridgNavbar").getItem(0).label
+							
 						 }, 150);
 					}
+					
+						    
+						 	
 				});
 				
 				
@@ -103,6 +106,7 @@
 				console.log("클릭됨 "+e.item.value);
 			  	
 			  	var setClickLabelValue = e.item.value; 
+			  	
 			  	// 상단 제목 변경
 			  	app.lookup("titleInput").value = e.item.label;
 			  	
