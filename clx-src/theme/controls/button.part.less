@@ -3,38 +3,39 @@
 /* 버튼 */
 .cl-button {
 	font: @default-font;
-	color: @default-text-color;
-	background-image: linear-gradient(#FCFEFF, #E0E1E2);
-	border-radius: 4px;
-	border: solid 1px #959697;
-	text-shadow: 0px 1px 0px white;
+	color: #FFFFFF;
+	background-image: none;
+	background-color: #856C66;
+	border-radius: 5px;
+	border: solid 1px #856C66;
+	text-shadow: none;
 
 	/* 텍스트 스타일 */
 	.cl-text {
-		// text-overflow:ellipsis;
-		// overflow:hidden;
+		 text-overflow:ellipsis;
+		 overflow:hidden;
 	}
 
 	/* 아이콘 스타일 */
 	.cl-icon {
-		// width: 1em;
-		// height: 1em;
+		 width: 1em;
+		 height: 1em;
 	}
 
 	/* 마우스 호버 스타일 */
 	&:not(.cl-disabled):hover {
-		color: #1068A4;
+		color: #EFE4D3;
 	}
 
 	/* 포커스 스타일 */
 	&.cl-focus {
-		border: solid 1px @focus-border-color;
+		border: none;
 	}
 
 	/* 클릭 스타일 */
 	&:not(.cl-disabled).cl-activated,
 	&:not(.cl-disabled):active {
-		background-image: linear-gradient(#ddd, #eee 5px, #ddd);
+		background-image: none;
 	}
 }
 
