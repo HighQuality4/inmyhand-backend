@@ -59,15 +59,15 @@
       <cl:responsivexylayoutdata std:sid="rxyl-data-20fc60e0">
         <cl:xylayoutdata std:sid="sxyl-data-5ab03c46" top="517px" right="0px" left="0px" height="100px" horizontalAnchor="BOTH" verticalAnchor="TOP" screenid="default"/>
       </cl:responsivexylayoutdata>
-      <cl:button std:sid="button-862df382" id="네이버" style="border-radius:100%; background-size:contain; border-top-width:0px; border-right-width:0px; border-bottom-width:0px; background-image:url('../../theme/images/네이버.png'); border-left-width:0px;">
+      <cl:button std:sid="button-862df382" id="네이버" style="border-radius:100%; background-repeat:no-repeat; background-size:contain; border-top-width:0px; border-right-width:0px; border-bottom-width:0px; background-image:url('../../theme/images/네이버.png'); border-left-width:0px;">
         <cl:listener std:sid="listener-56353444" name="click" handler="onButtonClickNaver"/>
         <cl:flowlayoutdata std:sid="f-data-a93f48f8" width="100px" height="100px" autosize="none"/>
       </cl:button>
-      <cl:button std:sid="button-95a0a11f" id="구글" style="border-radius:100%; background-size:contain; border-top-width:0px; border-right-width:0px; border-bottom-width:0px; background-image:url('../../theme/images/구글.png'); border-left-width:0px;">
+      <cl:button std:sid="button-95a0a11f" id="구글" style="border-radius:100%; background-repeat:no-repeat; background-size:contain; border-top-width:0px; border-right-width:0px; border-bottom-width:0px; background-image:url('../../theme/images/구글.png'); border-left-width:0px;">
         <cl:listener std:sid="listener-5e443a7d" name="click" handler="onButtonClickGoogle"/>
         <cl:flowlayoutdata std:sid="f-data-579023c3" width="95px" height="97px" autosize="none"/>
       </cl:button>
-      <cl:button std:sid="button-32f311b5" id="카카오" style="border-radius:100%; background-size:contain; border-top-width:0px; border-right-width:0px; border-bottom-width:0px; background-image:url('../../theme/images/카카오.png'); border-left-width:0px;">
+      <cl:button std:sid="button-32f311b5" id="카카오" style="border-radius:100%; background-repeat:no-repeat; background-size:contain; border-top-width:0px; border-right-width:0px; border-bottom-width:0px; background-image:url('../../theme/images/카카오.png'); border-left-width:0px;">
         <cl:listener std:sid="listener-40b9f88c" name="click" handler="onButtonClickKakao"/>
         <cl:flowlayoutdata std:sid="f-data-0eeb5101" width="100px" height="100px" autosize="none"/>
       </cl:button>

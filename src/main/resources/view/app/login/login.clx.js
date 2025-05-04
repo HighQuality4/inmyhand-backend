@@ -310,6 +310,7 @@
 				var button_2 = new cpr.controls.Button("네이버");
 				button_2.style.css({
 					"border-radius" : "100%",
+					"background-repeat" : "no-repeat",
 					"background-size" : "contain",
 					"border-top-width" : "0px",
 					"border-right-width" : "0px",
@@ -328,6 +329,7 @@
 				var button_3 = new cpr.controls.Button("구글");
 				button_3.style.css({
 					"border-radius" : "100%",
+					"background-repeat" : "no-repeat",
 					"background-size" : "contain",
 					"border-top-width" : "0px",
 					"border-right-width" : "0px",
@@ -346,6 +348,7 @@
 				var button_4 = new cpr.controls.Button("카카오");
 				button_4.style.css({
 					"border-radius" : "100%",
+					"background-repeat" : "no-repeat",
 					"background-size" : "contain",
 					"border-top-width" : "0px",
 					"border-right-width" : "0px",
