@@ -15,7 +15,7 @@ public class RecipeNutrientController {
 
     @PostMapping("/{recipeId}")
     public RecipeNutrientAnalysisEntityDto analyzeNutrition(
-            @PathVariable Long recipeId,
+            @PathVariable("recipeId") Long recipeId,
             @AuthenticationPrincipal CustomUserDetails userDetails) {
         return nutrientService.getNutritionAnalysis(recipeId, userDetails.getUserId());
     }
