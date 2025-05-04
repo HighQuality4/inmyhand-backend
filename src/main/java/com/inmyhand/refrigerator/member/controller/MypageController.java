@@ -25,8 +25,16 @@ import java.util.Map;
 public class MypageController {
 
     private final MemberServiceImpl memberService;
-    private final RecipeQueryService recipeQueryService;
 
+    @PostMapping("/nickname")
+    public ResponseEntity<?> getNickname(@AuthenticationPrincipal CustomUserDetails userDetails) {
+        Map<String, Object> nickname = new HashMap<>();
+        nickname.put("nickname", userDetails.getNickname());
+        Map<String, Object> result = new HashMap<>();
+        result.put("name", nickname);
+
+        return ResponseEntity.ok(result);
+    }
 
     @PostMapping("/profile")
     public ResponseEntity<?> getProfileInfo(@AuthenticationPrincipal CustomUserDetails userDetails) {
