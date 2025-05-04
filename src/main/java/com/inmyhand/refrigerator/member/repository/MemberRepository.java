@@ -34,4 +34,5 @@ public interface MemberRepository extends JpaRepository<MemberEntity, Long>, Cus
     """, nativeQuery = true)
     List<Object[]> findMyRefreInfo(@Param("memberId") Long memberId);
 
+    MemberEntity findByEmail(String email);
 }
