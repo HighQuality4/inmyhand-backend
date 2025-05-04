@@ -22,11 +22,24 @@
           <cl:datacolumn std:sid="d-column-39918855" name="phoneNum"/>
         </cl:datacolumnlist>
       </cl:datamap>
+      <cl:datamap std:sid="d-map-e3457600" id="dmChangePw">
+        <cl:datacolumnlist>
+          <cl:datacolumn std:sid="d-column-7400f3c0" name="password1"/>
+          <cl:datacolumn std:sid="d-column-06575e5b" name="password2"/>
+        </cl:datacolumnlist>
+      </cl:datamap>
       <cl:submission std:sid="submission-5cd0864a" id="smsGetMyInfo" action="/api/myInfo/getMyInfo">
         <cl:responsedata dataid="dmGetMyInfo"/>
       </cl:submission>
       <cl:submission std:sid="submission-9d96ff9d" id="smsSetMyInfo" action="/api/myInfo/setMyInfo">
         <cl:requestdata dataid="dmSetMyInfo"/>
+      </cl:submission>
+      <cl:submission std:sid="submission-487a1922" id="smsChangePw" action="/api/myInfo/change/password">
+        <cl:listener std:sid="listener-3520f06e" name="receive" handler="onSmsChangePwReceive"/>
+        <cl:requestdata dataid="dmChangePw"/>
+      </cl:submission>
+      <cl:submission std:sid="submission-5b044a10" id="smsCheckLocal" withCredentials="true" action="/api/user/check/local">
+        <cl:listener std:sid="listener-bdf6d398" name="receive" handler="onSmsCheckLocalReceive"/>
       </cl:submission>
     </cl:model>
     <cl:appspec/>
@@ -55,8 +68,9 @@
       </cl:responsivexylayoutdata>
     </cl:button>
     <cl:button std:sid="button-c2f67531" style="border-radius:5px; font-weight:bold;" value="비밀번호 변경하기">
+      <cl:listener std:sid="listener-0f533014" name="click" handler="onButtonClick2"/>
       <cl:responsivexylayoutdata std:sid="rxyl-data-67edb6e5">
-        <cl:xylayoutdata std:sid="sxyl-data-a5455414" top="746px" width="520px" height="52px" horizontalAnchor="CENTER" verticalAnchor="TOP" screenid="default"/>
+        <cl:xylayoutdata std:sid="sxyl-data-a5455414" top="913px" width="520px" height="52px" horizontalAnchor="CENTER" verticalAnchor="TOP" screenid="default"/>
       </cl:responsivexylayoutdata>
     </cl:button>
     <cl:group std:sid="group-d6ea0c9e" style="border-radius:5px; background-color:#D5EDF4;">
@@ -69,7 +83,7 @@
       <cl:inputbox std:sid="i-box-477e0dad" id="email" style="border-radius:5px;" readonly="true">
         <cl:xylayoutdata std:sid="xyl-data-12f0c464" top="70px" left="89px" width="411px" height="40px" horizontalAnchor="LEFT" verticalAnchor="TOP"/>
       </cl:inputbox>
-      <cl:inputbox std:sid="i-box-c2b74738" id="phoneNum" style="border-radius:5px;">
+      <cl:inputbox std:sid="i-box-c2b74738" id="phoneNum" style="border-radius:5px;" placeholder="알림 서비스용">
         <cl:xylayoutdata std:sid="xyl-data-3328f6b5" top="120px" left="89px" width="411px" height="40px" horizontalAnchor="LEFT" verticalAnchor="TOP"/>
       </cl:inputbox>
       <cl:output std:sid="output-72be4e36" style="font-size:16px; text-align:center;" value="닉네임">
@@ -88,6 +102,16 @@
         <cl:xylayoutdata std:sid="sxyl-data-eff86eca" top="133px" width="520px" height="124px" horizontalAnchor="CENTER" verticalAnchor="TOP" screenid="default"/>
       </cl:responsivexylayoutdata>
     </cl:udc>
+    <cl:inputbox std:sid="i-box-ae9872cf" id="chPassword" style="border-radius:5px; font-size:16px; text-align:center;" secret="true" placeholder="새 비밀번호 입력">
+      <cl:responsivexylayoutdata std:sid="rxyl-data-6d23f224">
+        <cl:xylayoutdata std:sid="sxyl-data-624ef054" top="759px" width="520px" height="52px" horizontalAnchor="CENTER" verticalAnchor="TOP" screenid="default"/>
+      </cl:responsivexylayoutdata>
+    </cl:inputbox>
+    <cl:inputbox std:sid="i-box-cd55d94e" id="chPassword2" style="border-radius:5px; font-size:16px; text-align:center;" secret="true" placeholder="새 비밀번호 확인">
+      <cl:responsivexylayoutdata std:sid="rxyl-data-d61651ea">
+        <cl:xylayoutdata std:sid="sxyl-data-847b0bf8" top="829px" width="520px" height="52px" horizontalAnchor="CENTER" verticalAnchor="TOP" screenid="default"/>
+      </cl:responsivexylayoutdata>
+    </cl:inputbox>
     <cl:responsivexylayout std:sid="r-xylayout-3e5555da"/>
   </body>
   <std:studiosetting>

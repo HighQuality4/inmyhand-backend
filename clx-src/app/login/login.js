@@ -4,6 +4,8 @@
  *
  * @author gyrud
  ************************************************/
+const showToastModule = cpr.core.Module.require("module/common/showToast");
+
 /*
  * "로그인" 버튼에서 click 이벤트 발생 시 호출.
  * 사용자가 컨트롤을 클릭할 때 발생하는 이벤트.
@@ -55,9 +57,9 @@ function onSmsLoginReceive(e){
 	var xhr = smsLogin.xhr;
 	var res = JSON.parse(xhr.responseText);
 	if (res.success === true) {
-	    alert("로그인 되었습니다!");
+	    showToastModule.showToast("로그인 되었습니다!", 2000);
 	    history.pushState({}, '', `/users/mypage`);
 	} else {
-	    alert("아이디나 비밀번호가 틀렸습니다!");
+	    showToastModule.showToast("아이디나 비밀번호가 틀렸습니다!", 2000);
 	}
 }

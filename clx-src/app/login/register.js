@@ -4,7 +4,7 @@
  *
  * @author gyrud
  ************************************************/
-
+const showToastModule = cpr.core.Module.require("module/common/showToast");
 /*
  * "이메일 인증" 버튼(email_submit)에서 click 이벤트 발생 시 호출.
  * 사용자가 컨트롤을 클릭할 때 발생하는 이벤트.
@@ -14,7 +14,7 @@ function onEmail_submitClick(e){
 	
 	var emailValue = app.lookup("email_input").value;
     if (!emailValue) {
-        alert("이메일을 입력해주세요.");
+        showToastModule.showToast("이메일을 입력해주세요.", 2000);
         return;
     }
 
@@ -25,7 +25,7 @@ function onEmail_submitClick(e){
     console.log(dmEmail.getValue("email"));
     email.send();
 	
-	alert("인증 코드가 발송되었습니다.");
+	showToastModule.showToast("인증 코드가 발송되었습니다.", 2000);
 	
 	var formGroup = app.lookup("confirmForm");
     formGroup.visible = true;
@@ -51,14 +51,14 @@ function onRegister_submitClick(e){
 	var dm = app.lookup("dmRegister");
 	
 	if (password !== password_confirm) {
-		alert("비밀번호가 일치하지 않습니다!!");
+		showToastModule.showToast("비밀번호가 일치하지 않습니다!!", 2000);
 		e.preventDefault(); //서버로 전송 막음
 		return;
 	}
 	var confirmForm = app.lookup("confirmForm");
 	var res = confirmForm.callAppMethod("getRes");  // 인증 플래그 읽기
     if (!res) {
-        alert("이메일 인증을 완료해 주세요.");
+        showToastModule.showToast("이메일 인증을 완료해 주세요.", 2000);
         e.preventDefault();  // 서버 전송 막기
         return;
     }
@@ -82,9 +82,9 @@ function onSmsRegisterReceive(e){
 	var res = JSON.parse(xhr.responseText);
 	console.log(res);
 	if (res === true) {
-		alert("가입에 성공했습니다!");
+		showToastModule.showToast("가입에 성공했습니다!", 2000);
 	} else {
-		alert("가입에 실패했습니다!");
+		showToastModule.showToast("가입에 실패했습니다!", 2000);
 		e.preventDefault();
 	}
 	
