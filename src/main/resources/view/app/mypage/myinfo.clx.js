@@ -16,10 +16,83 @@
 			 * Created at 2025. 4. 17. 오후 1:52:50.
 			 *
 			 * @author gyrud
-			 ************************************************/;
+			 ************************************************/
+
+			/*
+			 * 루트 컨테이너에서 load 이벤트 발생 시 호출.
+			 * 앱이 최초 구성된후 최초 랜더링 직후에 발생하는 이벤트 입니다.
+			 */
+			function onBodyLoad(e){
+				// 내 데이터 불러오기
+				var dmGet = app.lookup("dmGetMyInfo");
+				var smsGet = app.lookup("smsGetMyInfo");
+				
+				smsGet.addEventListenerOnce("submit-success", function(ev) {
+			    // 1. DataMap에서 값 꺼내기
+			    var nickname = dmGet.getValue("nickname");
+			    var phoneNum = dmGet.getValue("phoneNum");
+			    var email = dmGet.getValue("email");
+
+			    // 2. input에 값 설정
+			    app.lookup("nickname").value = nickname;
+			    app.lookup("phoneNum").value = phoneNum;
+			    app.lookup("email").value = email;
+			  });
+
+			  smsGet.send();
+			}
+
+			/*
+			 * "내 정보 수정하기" 버튼에서 click 이벤트 발생 시 호출.
+			 * 사용자가 컨트롤을 클릭할 때 발생하는 이벤트.
+			 */
+			function onButtonClick(e){
+				var button = e.control;
+				
+				var dmSet = app.lookup("dmSetMyInfo");
+				var smsSet = app.lookup("smsSetMyInfo");
+				
+				var email = app.lookup("email").value;
+				var nickname = app.lookup("nickname").value;
+				var phoneNum = app.lookup("phoneNum").value;
+				
+				dmSet.setValue("email", email);
+				dmSet.setValue("nickname", nickname);
+				dmSet.setValue("phoneNum", phoneNum);
+				
+				smsSet.send();
+			};
 			// End - User Script
 			
 			// Header
+			var dataMap_1 = new cpr.data.DataMap("dmGetMyInfo");
+			dataMap_1.parseData({
+				"columns" : [
+					{"name": "email"},
+					{"name": "nickname"},
+					{"name": "phoneNum"}
+				]
+			});
+			app.register(dataMap_1);
+			
+			var dataMap_2 = new cpr.data.DataMap("dmSetMyInfo");
+			dataMap_2.parseData({
+				"columns" : [
+					{"name": "email"},
+					{"name": "nickname"},
+					{"name": "phoneNum"}
+				]
+			});
+			app.register(dataMap_2);
+			var submission_1 = new cpr.protocols.Submission("smsGetMyInfo");
+			submission_1.action = "/api/myInfo/getMyInfo";
+			submission_1.addResponseData(dataMap_1, false);
+			app.register(submission_1);
+			
+			var submission_2 = new cpr.protocols.Submission("smsSetMyInfo");
+			submission_2.action = "/api/myInfo/setMyInfo";
+			submission_2.addRequestData(dataMap_2);
+			app.register(submission_2);
 			app.supportMedia("all and (min-width: 1024px)", "default");
 			app.supportMedia("all and (min-width: 500px) and (max-width: 1023.984px)", "tablet");
 			app.supportMedia("all and (max-width: 499.984px)", "mobile");
@@ -51,23 +124,23 @@
 					{
 						"media": "all and (min-width: 1024px)",
 						"top": "49px",
-						"left": "40px",
 						"width": "520px",
-						"height": "74px"
+						"height": "74px",
+						"left": "calc(50% - 260px)"
 					}, 
 					{
 						"media": "all and (min-width: 500px) and (max-width: 1023.984px)",
 						"top": "49px",
-						"left": "20px",
 						"width": "254px",
-						"height": "74px"
+						"height": "74px",
+						"left": "calc(50% - 127px)"
 					}, 
 					{
 						"media": "all and (max-width: 499.984px)",
 						"top": "49px",
-						"left": "14px",
 						"width": "178px",
-						"height": "74px"
+						"height": "74px",
+						"left": "calc(50% - 89px)"
 					}
 				]
 			});
@@ -84,24 +157,24 @@
 				positions: [
 					{
 						"media": "all and (min-width: 1024px)",
-						"top": "334px",
-						"left": "40px",
+						"top": "278px",
 						"width": "520px",
-						"height": "74px"
+						"height": "74px",
+						"left": "calc(50% - 260px)"
 					}, 
 					{
 						"media": "all and (min-width: 500px) and (max-width: 1023.984px)",
-						"top": "334px",
-						"left": "20px",
+						"top": "278px",
 						"width": "254px",
-						"height": "74px"
+						"height": "74px",
+						"left": "calc(50% - 127px)"
 					}, 
 					{
 						"media": "all and (max-width: 499.984px)",
-						"top": "334px",
-						"left": "14px",
+						"top": "278px",
 						"width": "178px",
-						"height": "74px"
+						"height": "74px",
+						"left": "calc(50% - 89px)"
 					}
 				]
 			});
@@ -119,23 +192,23 @@
 					{
 						"media": "all and (min-width: 1024px)",
 						"top": "663px",
-						"left": "40px",
 						"width": "520px",
-						"height": "74px"
+						"height": "74px",
+						"left": "calc(50% - 260px)"
 					}, 
 					{
 						"media": "all and (min-width: 500px) and (max-width: 1023.984px)",
 						"top": "663px",
-						"left": "20px",
 						"width": "254px",
-						"height": "74px"
+						"height": "74px",
+						"left": "calc(50% - 127px)"
 					}, 
 					{
 						"media": "all and (max-width: 499.984px)",
 						"top": "663px",
-						"left": "14px",
 						"width": "178px",
-						"height": "74px"
+						"height": "74px",
+						"left": "calc(50% - 89px)"
 					}
 				]
 			});
@@ -144,30 +217,34 @@
 			button_1.value = "내 정보 수정하기";
 			button_1.style.css({
 				"border-radius" : "5px",
+				"background-color" : "#91C0CE",
 				"font-weight" : "bold"
 			});
+			if(typeof onButtonClick == "function") {
+				button_1.addEventListener("click", onButtonClick);
+			}
 			container.addChild(button_1, {
 				positions: [
 					{
 						"media": "all and (min-width: 1024px)",
-						"top": "275px",
-						"left": "40px",
+						"top": "580px",
 						"width": "520px",
-						"height": "52px"
+						"height": "52px",
+						"left": "calc(50% - 260px)"
 					}, 
 					{
 						"media": "all and (min-width: 500px) and (max-width: 1023.984px)",
-						"top": "275px",
-						"left": "20px",
+						"top": "580px",
 						"width": "254px",
-						"height": "52px"
+						"height": "52px",
+						"left": "calc(50% - 127px)"
 					}, 
 					{
 						"media": "all and (max-width: 499.984px)",
-						"top": "275px",
-						"left": "14px",
+						"top": "580px",
 						"width": "178px",
-						"height": "52px"
+						"height": "52px",
+						"left": "calc(50% - 89px)"
 					}
 				]
 			});
@@ -183,26 +260,158 @@
 					{
 						"media": "all and (min-width: 1024px)",
 						"top": "746px",
-						"left": "40px",
 						"width": "520px",
-						"height": "52px"
+						"height": "52px",
+						"left": "calc(50% - 260px)"
 					}, 
 					{
 						"media": "all and (min-width: 500px) and (max-width: 1023.984px)",
 						"top": "746px",
-						"left": "20px",
 						"width": "254px",
-						"height": "52px"
+						"height": "52px",
+						"left": "calc(50% - 127px)"
 					}, 
 					{
 						"media": "all and (max-width: 499.984px)",
 						"top": "746px",
-						"left": "14px",
 						"width": "178px",
-						"height": "52px"
+						"height": "52px",
+						"left": "calc(50% - 89px)"
 					}
 				]
 			});
+			
+			var group_1 = new cpr.controls.Container();
+			group_1.style.css({
+				"border-radius" : "5px",
+				"background-color" : "#D5EDF4"
+			});
+			var xYLayout_1 = new cpr.controls.layouts.XYLayout();
+			group_1.setLayout(xYLayout_1);
+			(function(container){
+				var inputBox_1 = new cpr.controls.InputBox("nickname");
+				inputBox_1.style.css({
+					"border-radius" : "5px"
+				});
+				container.addChild(inputBox_1, {
+					"top": "20px",
+					"left": "89px",
+					"width": "411px",
+					"height": "40px"
+				});
+				var inputBox_2 = new cpr.controls.InputBox("email");
+				inputBox_2.readOnly = true;
+				inputBox_2.style.css({
+					"border-radius" : "5px"
+				});
+				container.addChild(inputBox_2, {
+					"top": "70px",
+					"left": "89px",
+					"width": "411px",
+					"height": "40px"
+				});
+				var inputBox_3 = new cpr.controls.InputBox("phoneNum");
+				inputBox_3.style.css({
+					"border-radius" : "5px"
+				});
+				container.addChild(inputBox_3, {
+					"top": "120px",
+					"left": "89px",
+					"width": "411px",
+					"height": "40px"
+				});
+				var output_4 = new cpr.controls.Output();
+				output_4.value = "닉네임";
+				output_4.style.css({
+					"font-size" : "16px",
+					"text-align" : "center"
+				});
+				container.addChild(output_4, {
+					"top": "20px",
+					"left": "2px",
+					"width": "77px",
+					"height": "40px"
+				});
+				var output_5 = new cpr.controls.Output();
+				output_5.value = "이메일";
+				output_5.style.css({
+					"font-size" : "16px",
+					"text-align" : "center"
+				});
+				container.addChild(output_5, {
+					"top": "70px",
+					"left": "2px",
+					"width": "77px",
+					"height": "40px"
+				});
+				var output_6 = new cpr.controls.Output();
+				output_6.value = "전화번호";
+				output_6.style.css({
+					"font-size" : "16px",
+					"text-align" : "center"
+				});
+				container.addChild(output_6, {
+					"top": "120px",
+					"left": "2px",
+					"width": "77px",
+					"height": "40px"
+				});
+			})(group_1);
+			container.addChild(group_1, {
+				positions: [
+					{
+						"media": "all and (min-width: 1024px)",
+						"top": "372px",
+						"width": "520px",
+						"height": "184px",
+						"left": "calc(50% - 260px)"
+					}, 
+					{
+						"media": "all and (min-width: 500px) and (max-width: 1023.984px)",
+						"top": "372px",
+						"width": "254px",
+						"height": "184px",
+						"left": "calc(50% - 127px)"
+					}, 
+					{
+						"media": "all and (max-width: 499.984px)",
+						"top": "372px",
+						"width": "178px",
+						"height": "184px",
+						"left": "calc(50% - 89px)"
+					}
+				]
+			});
+			
+			var userDefinedControl_1 = new udc.mypage.profile();
+			container.addChild(userDefinedControl_1, {
+				positions: [
+					{
+						"media": "all and (min-width: 1024px)",
+						"top": "133px",
+						"width": "520px",
+						"height": "124px",
+						"left": "calc(50% - 260px)"
+					}, 
+					{
+						"media": "all and (min-width: 500px) and (max-width: 1023.984px)",
+						"top": "133px",
+						"width": "254px",
+						"height": "124px",
+						"left": "calc(50% - 127px)"
+					}, 
+					{
+						"media": "all and (max-width: 499.984px)",
+						"top": "133px",
+						"width": "178px",
+						"height": "124px",
+						"left": "calc(50% - 89px)"
+					}
+				]
+			});
+			if(typeof onBodyLoad == "function"){
+				app.addEventListener("load", onBodyLoad);
+			}
 		}
 	});
 	app.title = "myinfo";

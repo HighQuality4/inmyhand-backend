@@ -7,35 +7,87 @@
     <screen std:sid="screen-00315057" id="default" name="default" width="1024px" height="768px" useCustomWidth="true" useCustomHeight="true" customHeight="1000" customWidth="600" active="true"/>
     <screen std:sid="screen-d184c9ef" id="tablet" name="tablet" width="500px" height="667px"/>
     <screen std:sid="screen-dfce70c5" id="mobile" name="mobile" width="350px" height="525px"/>
-    <cl:model std:sid="model-c2e79a6e"/>
+    <cl:model std:sid="model-c2e79a6e">
+      <cl:datamap std:sid="d-map-c84e889f" id="dmGetMyInfo">
+        <cl:datacolumnlist>
+          <cl:datacolumn std:sid="d-column-dfb7b60e" name="email"/>
+          <cl:datacolumn std:sid="d-column-4263c4e5" name="nickname"/>
+          <cl:datacolumn std:sid="d-column-29f2c0c0" name="phoneNum"/>
+        </cl:datacolumnlist>
+      </cl:datamap>
+      <cl:datamap std:sid="d-map-e6d4c72e" id="dmSetMyInfo">
+        <cl:datacolumnlist>
+          <cl:datacolumn std:sid="d-column-c7b8a826" name="email"/>
+          <cl:datacolumn std:sid="d-column-a77c36ff" name="nickname"/>
+          <cl:datacolumn std:sid="d-column-39918855" name="phoneNum"/>
+        </cl:datacolumnlist>
+      </cl:datamap>
+      <cl:submission std:sid="submission-5cd0864a" id="smsGetMyInfo" action="/api/myInfo/getMyInfo">
+        <cl:responsedata dataid="dmGetMyInfo"/>
+      </cl:submission>
+      <cl:submission std:sid="submission-9d96ff9d" id="smsSetMyInfo" action="/api/myInfo/setMyInfo">
+        <cl:requestdata dataid="dmSetMyInfo"/>
+      </cl:submission>
+    </cl:model>
     <cl:appspec/>
   </head>
   <body std:sid="body-c43e6d9f" style="background-color:#FFFFFF;" class="contents-container">
+    <cl:listener std:sid="listener-f6d63ed4" name="load" handler="onBodyLoad"/>
     <cl:output std:sid="output-970e83fe" style="color:#000000; font-weight:bold; font-size:24px; font-family:Kim jung chul Myungjo Regular;" value="내 정보 변경 페이지">
       <cl:responsivexylayoutdata std:sid="rxyl-data-3a1cbd4b">
-        <cl:xylayoutdata std:sid="sxyl-data-7de519c6" top="49px" left="40px" width="520px" height="74px" horizontalAnchor="LEFT" verticalAnchor="TOP" screenid="default"/>
+        <cl:xylayoutdata std:sid="sxyl-data-7de519c6" top="49px" width="520px" height="74px" horizontalAnchor="CENTER" verticalAnchor="TOP" screenid="default"/>
       </cl:responsivexylayoutdata>
     </cl:output>
     <cl:output std:sid="output-31c45442" style="color:#000000; font-weight:bold; font-size:20px; font-family:Kim jung chul Myungjo Regular;" value="내 정보">
       <cl:responsivexylayoutdata std:sid="rxyl-data-15de7b58">
-        <cl:xylayoutdata std:sid="sxyl-data-1fbfa1b4" top="334px" left="40px" width="520px" height="74px" horizontalAnchor="LEFT" verticalAnchor="TOP" screenid="default"/>
+        <cl:xylayoutdata std:sid="sxyl-data-1fbfa1b4" top="278px" width="520px" height="74px" horizontalAnchor="CENTER" verticalAnchor="TOP" screenid="default"/>
       </cl:responsivexylayoutdata>
     </cl:output>
     <cl:output std:sid="output-c55fbfad" style="color:#000000; font-weight:bold; font-size:20px; font-family:Kim jung chul Myungjo Regular;" value="비밀번호 변경">
       <cl:responsivexylayoutdata std:sid="rxyl-data-973c8455">
-        <cl:xylayoutdata std:sid="sxyl-data-fb4e9655" top="663px" left="40px" width="520px" height="74px" horizontalAnchor="LEFT" verticalAnchor="TOP" screenid="default"/>
+        <cl:xylayoutdata std:sid="sxyl-data-fb4e9655" top="663px" width="520px" height="74px" horizontalAnchor="CENTER" verticalAnchor="TOP" screenid="default"/>
       </cl:responsivexylayoutdata>
     </cl:output>
-    <cl:button std:sid="button-29b2a49f" style="border-radius:5px; font-weight:bold;" value="내 정보 수정하기">
+    <cl:button std:sid="button-29b2a49f" style="border-radius:5px; background-color:#91C0CE; font-weight:bold;" value="내 정보 수정하기">
+      <cl:listener std:sid="listener-66a787b7" name="click" handler="onButtonClick"/>
       <cl:responsivexylayoutdata std:sid="rxyl-data-56471b57">
-        <cl:xylayoutdata std:sid="sxyl-data-6de81b5e" top="275px" left="40px" width="520px" height="52px" horizontalAnchor="LEFT" verticalAnchor="TOP" screenid="default"/>
+        <cl:xylayoutdata std:sid="sxyl-data-6de81b5e" top="580px" width="520px" height="52px" horizontalAnchor="CENTER" verticalAnchor="TOP" screenid="default"/>
       </cl:responsivexylayoutdata>
     </cl:button>
     <cl:button std:sid="button-c2f67531" style="border-radius:5px; font-weight:bold;" value="비밀번호 변경하기">
       <cl:responsivexylayoutdata std:sid="rxyl-data-67edb6e5">
-        <cl:xylayoutdata std:sid="sxyl-data-a5455414" top="746px" left="40px" width="520px" height="52px" horizontalAnchor="LEFT" verticalAnchor="TOP" screenid="default"/>
+        <cl:xylayoutdata std:sid="sxyl-data-a5455414" top="746px" width="520px" height="52px" horizontalAnchor="CENTER" verticalAnchor="TOP" screenid="default"/>
       </cl:responsivexylayoutdata>
     </cl:button>
+    <cl:group std:sid="group-d6ea0c9e" style="border-radius:5px; background-color:#D5EDF4;">
+      <cl:responsivexylayoutdata std:sid="rxyl-data-dbc22290">
+        <cl:xylayoutdata std:sid="sxyl-data-a6090dc9" top="372px" width="520px" height="184px" horizontalAnchor="CENTER" verticalAnchor="TOP" screenid="default"/>
+      </cl:responsivexylayoutdata>
+      <cl:inputbox std:sid="i-box-121e169c" id="nickname" style="border-radius:5px;">
+        <cl:xylayoutdata std:sid="xyl-data-facc1b31" top="20px" left="89px" width="411px" height="40px" horizontalAnchor="LEFT" verticalAnchor="TOP"/>
+      </cl:inputbox>
+      <cl:inputbox std:sid="i-box-477e0dad" id="email" style="border-radius:5px;" readonly="true">
+        <cl:xylayoutdata std:sid="xyl-data-12f0c464" top="70px" left="89px" width="411px" height="40px" horizontalAnchor="LEFT" verticalAnchor="TOP"/>
+      </cl:inputbox>
+      <cl:inputbox std:sid="i-box-c2b74738" id="phoneNum" style="border-radius:5px;">
+        <cl:xylayoutdata std:sid="xyl-data-3328f6b5" top="120px" left="89px" width="411px" height="40px" horizontalAnchor="LEFT" verticalAnchor="TOP"/>
+      </cl:inputbox>
+      <cl:output std:sid="output-72be4e36" style="font-size:16px; text-align:center;" value="닉네임">
+        <cl:xylayoutdata std:sid="xyl-data-0aabc27b" top="20px" left="2px" width="77px" height="40px" horizontalAnchor="LEFT" verticalAnchor="TOP"/>
+      </cl:output>
+      <cl:output std:sid="output-41c08744" style="font-size:16px; text-align:center;" value="이메일">
+        <cl:xylayoutdata std:sid="xyl-data-9a96337d" top="70px" left="2px" width="77px" height="40px" horizontalAnchor="LEFT" verticalAnchor="TOP"/>
+      </cl:output>
+      <cl:output std:sid="output-167dddfa" style="font-size:16px; text-align:center;" value="전화번호">
+        <cl:xylayoutdata std:sid="xyl-data-81302eda" top="120px" left="2px" width="77px" height="40px" horizontalAnchor="LEFT" verticalAnchor="TOP"/>
+      </cl:output>
+      <cl:xylayout std:sid="xylayout-63384747"/>
+    </cl:group>
+    <cl:udc std:sid="ud-control-15182426" type="udc.mypage.profile">
+      <cl:responsivexylayoutdata std:sid="rxyl-data-764d69ff">
+        <cl:xylayoutdata std:sid="sxyl-data-eff86eca" top="133px" width="520px" height="124px" horizontalAnchor="CENTER" verticalAnchor="TOP" screenid="default"/>
+      </cl:responsivexylayoutdata>
+    </cl:udc>
     <cl:responsivexylayout std:sid="r-xylayout-3e5555da"/>
   </body>
   <std:studiosetting>
