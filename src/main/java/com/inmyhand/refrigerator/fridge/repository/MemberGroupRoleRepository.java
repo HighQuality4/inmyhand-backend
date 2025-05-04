@@ -36,4 +36,19 @@ public interface MemberGroupRoleRepository extends JpaRepository<MemberGroupRole
     AND gr.roleName = 'leader'
     """)
     List<FridgeLeaderDTO> findFridgeWhereUserIsLeader(@Param("memberId") Long memberId);
+
+
+    /**
+     * 주어진 냉장고(fridgeId)에 속한 memberId의 roleName 리스트를 가져옵니다.
+     */
+    @Query("""
+      SELECT mgr.groupRoleEntity.roleName
+      FROM MemberGroupRoleEntity mgr
+      WHERE mgr.fridgeMemberEntity.fridgeEntity.id = :fridgeId
+        AND mgr.fridgeMemberEntity.memberEntity.id = :memberId
+    """)
+    List<String> findRoleNamesByFridgeAndMember(
+            @Param("fridgeId") Long fridgeId,
+            @Param("memberId") Long memberId
+    );
 }
