@@ -31,9 +31,9 @@
 				// 모든 탭 텍스트 색상 초기화
 				const routeKeys = ["home", "recipe", "auth", "fridge"];
 				routeKeys.forEach((key) => {
-				  const output = app.lookup(`${key}Output`);
-				  if (output) {
-				     output.style.css({ color: "#856C66" }); // 기본 회색
+				  const category = app.lookup(key);
+				  if (category) {
+				     category.style.css({ backgroundColor: "transparent" });
 				  }
 				});
 				
@@ -48,9 +48,9 @@
 				
 				// 해당 routeKey가 있다면 색상 강조
 			  	if (match && match.routeKey) {
-				    const activeOutput = app.lookup(`${match.routeKey}Output`);
-			    	if (activeOutput) {
-			      		activeOutput.style.css({ color: "#F59760" }); // 강조 색상
+				    const activeCategory = app.lookup(match.routeKey);
+			    	if (activeCategory) {
+			      		activeCategory.style.css({ backgroundColor: "#fbf3eb" }); // 강조 색상
 			    	}
 			  	}
 				
@@ -270,8 +270,7 @@
 					output_1.style.css({
 						"color" : "#856C66",
 						"font-weight" : "bold",
-						"font-size" : "20px",
-						"font-family" : "Kim jung chul Myungjo Regular"
+						"font-size" : "20px"
 					});
 					container.addChild(output_1, {
 						"colIndex": 1,
@@ -421,6 +420,9 @@
 				(function(container){
 					var group_7 = new cpr.controls.Container("home");
 					group_7.userAttr({"route": "/"});
+					group_7.style.css({
+						"border-radius" : "22px"
+					});
 					var formLayout_6 = new cpr.controls.layouts.FormLayout();
 					formLayout_6.scrollable = false;
 					formLayout_6.horizontalSpacing = "0px";
@@ -446,9 +448,9 @@
 							"colIndex": 0,
 							"rowIndex": 0,
 							"horizontalAlign": "center",
-							"verticalAlign": "center",
-							"width": 30,
-							"height": 30
+							"verticalAlign": "bottom",
+							"width": 25,
+							"height": 25
 						});
 					})(group_7);
 					if(typeof onHomeDblclick == "function") {
@@ -463,6 +465,9 @@
 					});
 					var group_8 = new cpr.controls.Container("fridge");
 					group_8.userAttr({"route": "/fridge"});
+					group_8.style.css({
+						"border-radius" : "22px"
+					});
 					var formLayout_7 = new cpr.controls.layouts.FormLayout();
 					formLayout_7.scrollable = false;
 					formLayout_7.horizontalSpacing = "0px";
@@ -488,9 +493,9 @@
 							"colIndex": 0,
 							"rowIndex": 0,
 							"horizontalAlign": "center",
-							"verticalAlign": "center",
-							"width": 30,
-							"height": 30
+							"verticalAlign": "bottom",
+							"width": 25,
+							"height": 25
 						});
 					})(group_8);
 					if(typeof onFridgeClick == "function") {
@@ -502,6 +507,9 @@
 					});
 					var group_9 = new cpr.controls.Container("recipe");
 					group_9.userAttr({"route": "/recipe"});
+					group_9.style.css({
+						"border-radius" : "22px"
+					});
 					var formLayout_8 = new cpr.controls.layouts.FormLayout();
 					formLayout_8.scrollable = false;
 					formLayout_8.horizontalSpacing = "0px";
@@ -527,9 +535,9 @@
 							"colIndex": 0,
 							"rowIndex": 0,
 							"horizontalAlign": "center",
-							"verticalAlign": "center",
-							"width": 30,
-							"height": 30
+							"verticalAlign": "bottom",
+							"width": 25,
+							"height": 25
 						});
 					})(group_9);
 					if(typeof onRecipeClick == "function") {
@@ -541,6 +549,9 @@
 					});
 					var group_10 = new cpr.controls.Container("auth");
 					group_10.userAttr({"route": "/auth/login"});
+					group_10.style.css({
+						"border-radius" : "22px"
+					});
 					var formLayout_9 = new cpr.controls.layouts.FormLayout();
 					formLayout_9.scrollable = false;
 					formLayout_9.horizontalSpacing = "0px";
@@ -566,9 +577,9 @@
 							"colIndex": 0,
 							"rowIndex": 0,
 							"horizontalAlign": "center",
-							"verticalAlign": "center",
-							"width": 30,
-							"height": 30
+							"verticalAlign": "bottom",
+							"width": 25,
+							"height": 25
 						});
 					})(group_10);
 					if(typeof onAuthClick == "function") {
