@@ -16,7 +16,6 @@ const createRecipeCard=(resultJson, recipeContainer, recommendRecipe = false)=> 
 		recipeCard.author = data.userNickname;
 		recipeCard.likesCount = data.likeCount;
 		recipeCard.recipeImg = data.fileUrl;
-		recipeCard.authorImg = data.userProfileImageUrl;
 		recipeCard.calories = data.calories+"kcal";
 		recipeCard.recipeId = data.id;
 		
