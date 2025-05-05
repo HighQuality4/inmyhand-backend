@@ -30,7 +30,7 @@
     <cl:listener std:sid="listener-99dca517" name="load" handler="onBodyLoad"/>
     <cl:group std:sid="group-149729e3" id="bannerGroup">
       <cl:verticaldata std:sid="v-data-ffb5fbbd" width="600px" height="300px"/>
-      <cl:img std:sid="image-824af93e" src="../../theme/images/banner_service_intro.svg">
+      <cl:img std:sid="image-824af93e" src="../../theme/images/banner_subscribe.svg">
         <cl:flowlayoutdata std:sid="f-data-e4c5bf7b" width="100%" height="100%" autosize="none"/>
         <cl:itemstyle style="fill:true;"/>
       </cl:img>

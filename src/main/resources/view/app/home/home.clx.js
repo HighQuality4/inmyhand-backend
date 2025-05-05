@@ -187,7 +187,7 @@
 			group_1.setLayout(flowLayout_1);
 			(function(container){
 				var image_1 = new cpr.controls.Image();
-				image_1.src = "theme/images/banner_service_intro.svg";
+				image_1.src = "theme/images/banner_subscribe.svg";
 				image_1.style.item.css({
 					"fill" : "true"
 				});
