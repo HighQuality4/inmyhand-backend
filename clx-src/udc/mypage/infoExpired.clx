@@ -26,22 +26,22 @@
   <body std:sid="body-0f2550c6" style="top:0px; left:0px; width:520px; height:440px;">
     <cl:listener std:sid="listener-11a4e888" name="load" handler="onBodyLoad"/>
     <cl:group std:sid="group-71972767" style="border-radius:5px; background-color:#EAF1F3;">
-      <cl:xylayoutdata std:sid="xyl-data-db1aef79" top="0px" left="0px" width="520px" height="440px" horizontalAnchor="LEFT" verticalAnchor="TOP"/>
-      <cl:output std:sid="output-45aab41d" id="title" style="color:#856C66; font-weight:bold; font-size:20px; text-align:center;" value="내 식재료 유통기한">
+      <cl:verticaldata std:sid="v-data-198ca787" width="520px" height="440px" autosize="height"/>
+      <cl:output std:sid="output-45aab41d" id="title" style="color:#856C66; font-weight:bold; font-size:16px; text-align:center;" value="내 식재료 유통기한">
         <cl:listener std:sid="listener-694007bb" name="value-change" handler="onTitleValueChange"/>
-        <cl:xylayoutdata std:sid="xyl-data-504387a3" top="20px" width="215px" height="26px" horizontalAnchor="CENTER" verticalAnchor="TOP"/>
+        <cl:verticaldata std:sid="v-data-6dd610e6" width="215px" height="26px"/>
       </cl:output>
       <cl:group std:sid="group-f9b746c5" id="refInfoGroup">
-        <cl:xylayoutdata std:sid="xyl-data-766f1f0b" top="72px" width="480px" height="275px" horizontalAnchor="CENTER" verticalAnchor="TOP"/>
-        <cl:verticallayout std:sid="v-layout-5879c8df"/>
+        <cl:verticaldata std:sid="v-data-aa378b2c" width="480px" height="275px" autosize="height"/>
+        <cl:verticallayout std:sid="v-layout-5879c8df" spacing="10"/>
       </cl:group>
-      <cl:button std:sid="button-b970e58f" style="border-radius:5px; background-color:#6DC4DD;" value="내 냉장고 보러가기">
+      <cl:button std:sid="button-b970e58f" style="border-right-style:solid; border-top-width:1px; border-bottom-color:#6dc4dd; border-right-width:1px; border-left-color:#6dc4dd; border-right-color:#6dc4dd; border-left-width:1px; border-top-style:solid; border-radius:5px; background-color:#6DC4DD; border-left-style:solid; border-bottom-width:1px; border-top-color:#6dc4dd; border-bottom-style:solid;" value="내 냉장고 보러가기">
         <cl:listener std:sid="listener-93a4a173" name="click" handler="onButtonClick"/>
-        <cl:xylayoutdata std:sid="xyl-data-2993c108" top="385px" width="460px" height="40px" horizontalAnchor="CENTER" verticalAnchor="TOP"/>
+        <cl:verticaldata std:sid="v-data-7a80ca1a" width="460px" height="40px"/>
       </cl:button>
-      <cl:xylayout std:sid="xylayout-f366a95e"/>
+      <cl:verticallayout std:sid="v-layout-f60eeb3b" spacing="20" leftmargin="10" rightmargin="10" topmargin="20" bottommargin="20"/>
     </cl:group>
-    <cl:xylayout std:sid="xylayout-1577e53b"/>
+    <cl:verticallayout std:sid="v-layout-778da89e"/>
   </body>
   <std:studiosetting>
     <std:hruler/>

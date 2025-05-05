@@ -147,132 +147,26 @@
 			});
 			
 			// Layout
-			var responsiveXYLayout_1 = new cpr.controls.layouts.ResponsiveXYLayout();
-			container.setLayout(responsiveXYLayout_1);
+			var verticalLayout_1 = new cpr.controls.layouts.VerticalLayout();
+			verticalLayout_1.spacing = 20;
+			container.setLayout(verticalLayout_1);
 			
 			// UI Configuration
-			var userDefinedControl_1 = new udc.mypage.profile("profile");
-			container.addChild(userDefinedControl_1, {
-				positions: [
-					{
-						"media": "all and (min-width: 1024px)",
-						"top": "50px",
-						"width": "520px",
-						"height": "124px",
-						"left": "calc(50% - 260px)"
-					}, 
-					{
-						"media": "all and (min-width: 500px) and (max-width: 1023.984px)",
-						"top": "50px",
-						"width": "254px",
-						"height": "124px",
-						"left": "calc(50% - 127px)"
-					}, 
-					{
-						"media": "all and (max-width: 499.984px)",
-						"top": "50px",
-						"width": "178px",
-						"height": "124px",
-						"left": "calc(50% - 89px)"
-					}
-				]
-			});
-			
-			var userDefinedControl_2 = new udc.mypage.infoHealth();
-			container.addChild(userDefinedControl_2, {
-				positions: [
-					{
-						"media": "all and (min-width: 1024px)",
-						"top": "633px",
-						"width": "520px",
-						"height": "440px",
-						"left": "calc(50% - 260px)"
-					}, 
-					{
-						"media": "all and (min-width: 500px) and (max-width: 1023.984px)",
-						"top": "633px",
-						"width": "254px",
-						"height": "440px",
-						"left": "calc(50% - 127px)"
-					}, 
-					{
-						"media": "all and (max-width: 499.984px)",
-						"top": "633px",
-						"width": "178px",
-						"height": "440px",
-						"left": "calc(50% - 89px)"
-					}
-				]
-			});
-			
-			var userDefinedControl_3 = new udc.mypage.infoExpired();
-			container.addChild(userDefinedControl_3, {
-				positions: [
-					{
-						"media": "all and (min-width: 1024px)",
-						"top": "183px",
-						"width": "520px",
-						"height": "440px",
-						"left": "calc(50% - 260px)"
-					}, 
-					{
-						"media": "all and (min-width: 500px) and (max-width: 1023.984px)",
-						"top": "183px",
-						"width": "254px",
-						"height": "440px",
-						"left": "calc(50% - 127px)"
-					}, 
-					{
-						"media": "all and (max-width: 499.984px)",
-						"top": "183px",
-						"width": "178px",
-						"height": "440px",
-						"left": "calc(50% - 89px)"
-					}
-				]
-			});
-			
-			var button_1 = new cpr.controls.Button();
-			button_1.value = "구독 및 결제 관리";
-			button_1.style.css({
-				"background-color" : "#856C66"
-			});
-			if(typeof onButtonClick2 == "function") {
-				button_1.addEventListener("click", onButtonClick2);
-			}
-			container.addChild(button_1, {
-				positions: [
-					{
-						"media": "all and (min-width: 1024px)",
-						"top": "1083px",
-						"width": "520px",
-						"height": "66px",
-						"left": "calc(50% - 260px)"
-					}, 
-					{
-						"media": "all and (min-width: 500px) and (max-width: 1023.984px)",
-						"top": "1083px",
-						"width": "254px",
-						"height": "66px",
-						"left": "calc(50% - 127px)"
-					}, 
-					{
-						"media": "all and (max-width: 499.984px)",
-						"top": "1083px",
-						"width": "178px",
-						"height": "66px",
-						"left": "calc(50% - 89px)"
-					}
-				]
-			});
-			
 			var group_1 = new cpr.controls.Container();
+			group_1.style.css({
+				"vertical-align" : "middle"
+			});
 			var xYLayout_1 = new cpr.controls.layouts.XYLayout();
 			group_1.setLayout(xYLayout_1);
 			(function(container){
 				var group_2 = new cpr.controls.Container();
+				group_2.style.css({
+					"vertical-align" : "middle"
+				});
 				var flowLayout_1 = new cpr.controls.layouts.FlowLayout();
 				flowLayout_1.scrollable = false;
+				flowLayout_1.verticalSpacing = 0;
+				flowLayout_1.verticalAlign = "middle";
 				group_2.setLayout(flowLayout_1);
 				(function(container){
 					var output_1 = new cpr.controls.Output("nickname");
@@ -288,54 +182,66 @@
 					output_2.value = "님 환영합니다!";
 					container.addChild(output_2, {
 						"width": "302px",
-						"height": "20px"
+						"height": "30px"
 					});
 				})(group_2);
 				container.addChild(group_2, {
 					"top": "0px",
+					"bottom": "0px",
 					"left": "0px",
-					"width": "412px",
-					"height": "20px"
+					"width": "412px"
 				});
-				var button_2 = new cpr.controls.Button();
-				button_2.value = "로그아웃";
-				button_2.style.css({
+				var button_1 = new cpr.controls.Button();
+				button_1.value = "로그아웃";
+				button_1.style.css({
 					"border-radius" : "5px"
 				});
 				if(typeof onButtonClick == "function") {
-					button_2.addEventListener("click", onButtonClick);
+					button_1.addEventListener("click", onButtonClick);
 				}
-				container.addChild(button_2, {
+				container.addChild(button_1, {
 					"left": "417px",
 					"width": "100px",
-					"height": "20px",
-					"top": "calc(50% - 10px)"
+					"height": "30px",
+					"top": "calc(50% - 15px)"
 				});
 			})(group_1);
 			container.addChild(group_1, {
-				positions: [
-					{
-						"media": "all and (min-width: 1024px)",
-						"top": "20px",
-						"width": "520px",
-						"height": "20px",
-						"left": "calc(50% - 260px)"
-					}, 
-					{
-						"media": "all and (min-width: 500px) and (max-width: 1023.984px)",
-						"top": "20px",
-						"width": "254px",
-						"height": "20px",
-						"left": "calc(50% - 127px)"
-					}, 
-					{
-						"media": "all and (max-width: 499.984px)",
-						"top": "20px",
-						"width": "178px",
-						"height": "20px",
-						"left": "calc(50% - 89px)"
-					}
-				]
+				"autoSize": "height",
+				"width": "520px",
+				"height": "30px"
+			});
+			
+			var userDefinedControl_1 = new udc.mypage.profile("profile");
+			container.addChild(userDefinedControl_1, {
+				"width": "520px",
+				"height": "124px"
+			});
+			
+			var userDefinedControl_2 = new udc.mypage.infoExpired();
+			container.addChild(userDefinedControl_2, {
+				"autoSize": "height",
+				"width": "520px",
+				"height": "440px"
+			});
+			
+			var userDefinedControl_3 = new udc.mypage.infoHealth();
+			container.addChild(userDefinedControl_3, {
+				"width": "520px",
+				"height": "440px"
+			});
+			
+			var button_2 = new cpr.controls.Button();
+			button_2.value = "구독 및 결제 관리";
+			button_2.style.css({
+				"background-color" : "#856C66"
+			});
+			if(typeof onButtonClick2 == "function") {
+				button_2.addEventListener("click", onButtonClick2);
+			}
+			container.addChild(button_2, {
+				"width": "520px",
+				"height": "50px"
 			});
 			
 			var button_3 = new cpr.controls.Button();
@@ -344,29 +250,8 @@
 				button_3.addEventListener("click", onButtonClick3);
 			}
 			container.addChild(button_3, {
-				positions: [
-					{
-						"media": "all and (min-width: 1024px)",
-						"top": "1171px",
-						"width": "520px",
-						"height": "66px",
-						"left": "calc(50% - 260px)"
-					}, 
-					{
-						"media": "all and (min-width: 500px) and (max-width: 1023.984px)",
-						"top": "1171px",
-						"width": "254px",
-						"height": "66px",
-						"left": "calc(50% - 127px)"
-					}, 
-					{
-						"media": "all and (max-width: 499.984px)",
-						"top": "1171px",
-						"width": "178px",
-						"height": "66px",
-						"left": "calc(50% - 89px)"
-					}
-				]
+				"width": "520px",
+				"height": "50px"
 			});
 			if(typeof onBodyLoad == "function"){
 				app.addEventListener("load", onBodyLoad);

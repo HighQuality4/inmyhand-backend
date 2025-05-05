@@ -21,34 +21,21 @@
     <cl:listener std:sid="listener-87c118bf" name="load" handler="onBodyLoad"/>
     <cl:group std:sid="group-fe7672b7" style="border-radius:5px; background-color:#FBDBCF;">
       <cl:verticaldata std:sid="v-data-7dbf38a1" width="520px" height="124px"/>
-      <cl:output std:sid="output-97f40f7e" style="font-weight:bold; font-size:16px; font-family:@Kim jung chul Myungjo Bold;" value="닉네임:">
-        <cl:responsivexylayoutdata std:sid="rxyl-data-2a6b749e">
-          <cl:xylayoutdata std:sid="sxyl-data-dbb3ec55" top="20px" left="144px" width="100px" height="27px" horizontalAnchor="LEFT" verticalAnchor="TOP" screenid="default"/>
-        </cl:responsivexylayoutdata>
+      <cl:output std:sid="output-97f40f7e" style="font-weight:bold;" value="닉네임">
+        <cl:xylayoutdata std:sid="xyl-data-2336a9e2" top="20px" left="10px" width="50px" height="40px" horizontalAnchor="LEFT" verticalAnchor="TOP"/>
       </cl:output>
-      <cl:output std:sid="output-210878a7" style="font-weight:bold; font-size:16px;" value="가입일:">
-        <cl:responsivexylayoutdata std:sid="rxyl-data-56dc5c8e">
-          <cl:xylayoutdata std:sid="sxyl-data-85004988" top="79px" left="144px" width="100px" height="30px" horizontalAnchor="LEFT" verticalAnchor="TOP" screenid="default"/>
-        </cl:responsivexylayoutdata>
+      <cl:output std:sid="output-210878a7" style="font-weight:bold;" value="가입일">
+        <cl:xylayoutdata std:sid="xyl-data-45bce552" top="69px" left="10px" width="50px" height="40px" horizontalAnchor="LEFT" verticalAnchor="TOP"/>
       </cl:output>
       <cl:output std:sid="output-18eccfc4" id="nickname" style="background-color:#FFFFFF; border-radius:5px; text-align:center;">
         <cl:datamapbind property="value" category="PROPERTY" datacontrolid="dmProfile" columnname="nickname"/>
-        <cl:responsivexylayoutdata std:sid="rxyl-data-30790060">
-          <cl:xylayoutdata std:sid="sxyl-data-78bd6039" top="20px" left="279px" width="120px" height="40px" horizontalAnchor="LEFT" verticalAnchor="TOP" screenid="default"/>
-        </cl:responsivexylayoutdata>
+        <cl:xylayoutdata std:sid="xyl-data-94a2b9e1" top="20px" right="10px" left="60px" height="40px" horizontalAnchor="BOTH" verticalAnchor="TOP"/>
       </cl:output>
       <cl:output std:sid="output-c62e021b" id="createdAt" style="background-color:#FFFFFF; border-radius:5px; text-align:center;">
         <cl:datamapbind property="value" category="PROPERTY" datacontrolid="dmProfile" columnname="createdAt"/>
-        <cl:responsivexylayoutdata std:sid="rxyl-data-e4ebc193">
-          <cl:xylayoutdata std:sid="sxyl-data-d17374eb" top="69px" left="279px" width="120px" height="40px" horizontalAnchor="LEFT" verticalAnchor="TOP" screenid="default"/>
-        </cl:responsivexylayoutdata>
+        <cl:xylayoutdata std:sid="xyl-data-1ba9009a" top="69px" right="10px" left="60px" height="40px" horizontalAnchor="BOTH" verticalAnchor="TOP"/>
       </cl:output>
-      <cl:img std:sid="image-3eaaafed" src="../../theme/images/user.svg">
-        <cl:responsivexylayoutdata std:sid="rxyl-data-dbb0f674">
-          <cl:xylayoutdata std:sid="sxyl-data-68491c76" top="20px" left="20px" width="100px" height="88px" horizontalAnchor="LEFT" verticalAnchor="TOP" screenid="default"/>
-        </cl:responsivexylayoutdata>
-      </cl:img>
-      <cl:responsivexylayout std:sid="r-xylayout-dd430fcd"/>
+      <cl:xylayout std:sid="xylayout-f87ed2e1"/>
     </cl:group>
     <cl:verticallayout std:sid="v-layout-4c3c592d"/>
   </body>

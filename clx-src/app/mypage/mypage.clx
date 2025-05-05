@@ -31,54 +31,42 @@
   </head>
   <body std:sid="body-c43e6d9f" style="background-color:#FFFFFF;" class="contents-container">
     <cl:listener std:sid="listener-15f454c1" name="load" handler="onBodyLoad"/>
-    <cl:udc std:sid="ud-control-cf1083d1" id="profile" type="udc.mypage.profile">
-      <cl:responsivexylayoutdata std:sid="rxyl-data-975432c5">
-        <cl:xylayoutdata std:sid="sxyl-data-65bdba25" top="50px" width="520px" height="124px" horizontalAnchor="CENTER" verticalAnchor="TOP" screenid="default"/>
-      </cl:responsivexylayoutdata>
-    </cl:udc>
-    <cl:udc std:sid="ud-control-1e4fa5da" type="udc.mypage.infoHealth">
-      <cl:responsivexylayoutdata std:sid="rxyl-data-b787d643">
-        <cl:xylayoutdata std:sid="sxyl-data-d83a891c" top="633px" width="520px" height="440px" horizontalAnchor="CENTER" verticalAnchor="TOP" screenid="default"/>
-      </cl:responsivexylayoutdata>
-    </cl:udc>
-    <cl:udc std:sid="ud-control-df1a6adb" type="udc.mypage.infoExpired">
-      <cl:responsivexylayoutdata std:sid="rxyl-data-fa4ffb86">
-        <cl:xylayoutdata std:sid="sxyl-data-aebf3490" top="183px" width="520px" height="440px" horizontalAnchor="CENTER" verticalAnchor="TOP" screenid="default"/>
-      </cl:responsivexylayoutdata>
-    </cl:udc>
-    <cl:button std:sid="button-b21fc41a" style="background-color:#856C66;" value="구독 및 결제 관리">
-      <cl:listener std:sid="listener-c0f7ff79" name="click" handler="onButtonClick2"/>
-      <cl:responsivexylayoutdata std:sid="rxyl-data-ed090986">
-        <cl:xylayoutdata std:sid="sxyl-data-d97b4811" top="1083px" width="520px" height="66px" horizontalAnchor="CENTER" verticalAnchor="TOP" screenid="default"/>
-      </cl:responsivexylayoutdata>
-    </cl:button>
-    <cl:group std:sid="group-8b152379">
-      <cl:responsivexylayoutdata std:sid="rxyl-data-c46194b9">
-        <cl:xylayoutdata std:sid="sxyl-data-22d8bb39" top="20px" width="520px" height="20px" horizontalAnchor="CENTER" verticalAnchor="TOP" screenid="default"/>
-      </cl:responsivexylayoutdata>
-      <cl:group std:sid="group-0aea4ab3">
-        <cl:xylayoutdata std:sid="xyl-data-c1f88165" top="0px" left="0px" width="412px" height="20px" horizontalAnchor="LEFT" verticalAnchor="TOP"/>
+    <cl:group std:sid="group-8b152379" style="vertical-align:middle;">
+      <cl:verticaldata std:sid="v-data-e03f1ccb" width="520px" height="30px" autosize="height"/>
+      <cl:group std:sid="group-0aea4ab3" style="vertical-align:middle;">
+        <cl:xylayoutdata std:sid="xyl-data-c1f88165" top="0px" bottom="0px" left="0px" width="412px" horizontalAnchor="LEFT" verticalAnchor="BOTH"/>
         <cl:output std:sid="output-344b1fdf" id="nickname" style="text-align:center;" value="Output">
           <cl:flowlayoutdata std:sid="f-data-c3512c3d" width="auto" height="20px"/>
         </cl:output>
         <cl:output std:sid="output-71326abb" value="님 환영합니다!">
-          <cl:flowlayoutdata std:sid="f-data-e9c0674e" width="302px" height="20px"/>
+          <cl:flowlayoutdata std:sid="f-data-e9c0674e" width="302px" height="30px"/>
         </cl:output>
-        <cl:flowlayout std:sid="f-layout-5322e71e" scrollable="false"/>
+        <cl:flowlayout std:sid="f-layout-5322e71e" scrollable="false" vspacing="0" valign="middle"/>
       </cl:group>
       <cl:button std:sid="button-b65466f7" style="border-radius:5px;" value="로그아웃">
         <cl:listener std:sid="listener-e84014d6" name="click" handler="onButtonClick"/>
-        <cl:xylayoutdata std:sid="xyl-data-cf3f556c" left="417px" width="100px" height="20px" horizontalAnchor="LEFT" verticalAnchor="CENTER"/>
+        <cl:xylayoutdata std:sid="xyl-data-cf3f556c" left="417px" width="100px" height="30px" horizontalAnchor="LEFT" verticalAnchor="CENTER"/>
       </cl:button>
       <cl:xylayout std:sid="xylayout-552cd5ea"/>
     </cl:group>
+    <cl:udc std:sid="ud-control-cf1083d1" id="profile" type="udc.mypage.profile">
+      <cl:verticaldata std:sid="v-data-846617a6" width="520px" height="124px"/>
+    </cl:udc>
+    <cl:udc std:sid="ud-control-df1a6adb" type="udc.mypage.infoExpired">
+      <cl:verticaldata std:sid="v-data-9f43ba7e" width="520px" height="440px" autosize="height"/>
+    </cl:udc>
+    <cl:udc std:sid="ud-control-1e4fa5da" type="udc.mypage.infoHealth">
+      <cl:verticaldata std:sid="v-data-15ed6e33" width="520px" height="440px"/>
+    </cl:udc>
+    <cl:button std:sid="button-b21fc41a" style="background-color:#856C66;" value="구독 및 결제 관리">
+      <cl:listener std:sid="listener-c0f7ff79" name="click" handler="onButtonClick2"/>
+      <cl:verticaldata std:sid="v-data-22f02da6" width="520px" height="50px"/>
+    </cl:button>
     <cl:button std:sid="button-f3a01fdb" value="내 정보 변경하기">
       <cl:listener std:sid="listener-3a4471ca" name="click" handler="onButtonClick3"/>
-      <cl:responsivexylayoutdata std:sid="rxyl-data-1d8311a8">
-        <cl:xylayoutdata std:sid="sxyl-data-f91d2606" top="1171px" width="520px" height="66px" horizontalAnchor="CENTER" verticalAnchor="TOP" screenid="default"/>
-      </cl:responsivexylayoutdata>
+      <cl:verticaldata std:sid="v-data-662ffb25" width="520px" height="50px"/>
     </cl:button>
-    <cl:responsivexylayout std:sid="r-xylayout-3e5555da"/>
+    <cl:verticallayout std:sid="v-layout-0acb68ad" spacing="20"/>
   </body>
   <std:studiosetting>
     <std:hruler/>

@@ -14,7 +14,7 @@
   <body std:sid="body-f218bef3" style="border-radius:5px; top:0px; color:#FFFFFF; left:0px; width:460px; vertical-align:middle; height:85px; text-align:center;">
     <cl:listener std:sid="listener-219f3a76" name="load" handler="onBodyLoad"/>
     <cl:group std:sid="group-f2dc7cd7" style="border-radius:5px; background-color:#FFFFFF; color:#FFFFFF;">
-      <cl:xylayoutdata std:sid="xyl-data-5954c625" top="0px" left="0px" width="460px" height="80px" horizontalAnchor="LEFT" verticalAnchor="TOP"/>
+      <cl:xylayoutdata std:sid="xyl-data-5954c625" top="0px" right="0px" left="0px" height="80px" horizontalAnchor="BOTH" verticalAnchor="TOP"/>
       <cl:group std:sid="group-e07c17bc" id="tagGroup" style="border-radius:5px; background-color:#FFFFFF; color:#FFFFFF; vertical-align:middle;">
         <cl:xylayoutdata std:sid="xyl-data-ff436f6d" top="0px" left="99px" width="360px" height="80px" horizontalAnchor="LEFT" verticalAnchor="TOP"/>
         <cl:inputbox std:sid="i-box-b4670385" id="ipbFirst" style="background-position:top left; text-align:center;" value="">
