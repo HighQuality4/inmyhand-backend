@@ -58,7 +58,7 @@ function onSmsLoginReceive(e){
 	var res = JSON.parse(xhr.responseText);
 	if (res.success === true) {
 	    showToastModule.showToast("로그인 되었습니다!", 2000);
-	    history.pushState({}, '', `/users/mypage`);
+	    history.pushState({}, '', `/`);
 	} else {
 	    showToastModule.showToast("아이디나 비밀번호가 틀렸습니다!", 2000);
 	}
