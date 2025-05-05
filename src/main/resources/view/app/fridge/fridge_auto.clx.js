@@ -182,14 +182,6 @@
 			//	console.log(ds1.getRowDataRanged());
 			}
 
-			/*
-			 * 서브미션에서 submit-success 이벤트 발생 시 호출.
-			 * 통신이 성공하면 발생합니다.
-			 */
-			function onSendImageOcrSubmitSuccess(e){
-				var sendImageOcr = e.control;
-				
-			}
 
 			/*
 			 * "저장" 버튼에서 click 이벤트 발생 시 호출.
@@ -216,6 +208,28 @@
 				app.lookup("sendOcrResultInfo").send();
 				
 				
+			}
+
+
+			/*
+			 * 서브미션에서 submit-success 이벤트 발생 시 호출.
+			 * 통신이 성공하면 발생합니다.
+			 */
+			function onSendOcrResultInfoSubmitSuccess(e){
+				var sendOcrResultInfo = e.control;
+				
+					alert("저장에 성공했습니다.")
+				window.location.href = "/fridge/auto";
+			}
+
+			/*
+			 * 서브미션에서 submit-error 이벤트 발생 시 호출.
+			 * 통신 중 문제가 생기면 발생합니다.
+			 */
+			function onSendOcrResultInfoSubmitError(e){
+				var sendOcrResultInfo = e.control;
+				alert("저장에 실패했습니다. 다시 시도해주세요")
+				window.location.href = "/fridge/auto";
 			};
 			// End - User Script
 			
@@ -260,11 +274,20 @@
 			if(typeof onSendImageOcrSubmitSuccess == "function") {
 				submission_1.addEventListener("submit-success", onSendImageOcrSubmitSuccess);
 			}
+			if(typeof onSendImageOcrSubmitError == "function") {
+				submission_1.addEventListener("submit-error", onSendImageOcrSubmitError);
+			}
 			app.register(submission_1);
 			
 			var submission_2 = new cpr.protocols.Submission("sendOcrResultInfo");
 			submission_2.action = "/api/ocr/create";
 			submission_2.addRequestData(dataSet_2);
+			if(typeof onSendOcrResultInfoSubmitSuccess == "function") {
+				submission_2.addEventListener("submit-success", onSendOcrResultInfoSubmitSuccess);
+			}
+			if(typeof onSendOcrResultInfoSubmitError == "function") {
+				submission_2.addEventListener("submit-error", onSendOcrResultInfoSubmitError);
+			}
 			app.register(submission_2);
 			app.supportMedia("all and (min-width: 1024px)", "default");
 			app.supportMedia("all and (min-width: 500px) and (max-width: 1023.984px)", "tablet");

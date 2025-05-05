@@ -32,9 +32,12 @@
       </cl:dataset>
       <cl:submission std:sid="submission-a9d87f87" id="sendImageOcr" action="/api/files/ocr-upload-test" mediatype="multipart/form-data">
         <cl:listener std:sid="listener-2273aabe" name="submit-success" handler="onSendImageOcrSubmitSuccess"/>
+        <cl:listener std:sid="listener-9331dfa2" name="submit-error" handler="onSendImageOcrSubmitError"/>
         <cl:responsedata dataid="ocrResultList"/>
       </cl:submission>
       <cl:submission std:sid="submission-3fea8a3d" id="sendOcrResultInfo" action="/api/ocr/create">
+        <cl:listener std:sid="listener-ccdbc7c6" name="submit-success" handler="onSendOcrResultInfoSubmitSuccess"/>
+        <cl:listener std:sid="listener-37c6b4e9" name="submit-error" handler="onSendOcrResultInfoSubmitError"/>
         <cl:requestdata dataid="ocrAllList"/>
       </cl:submission>
     </cl:model>
