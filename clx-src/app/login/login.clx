@@ -23,71 +23,70 @@
     <cl:appspec/>
   </head>
   <body std:sid="body-c43e6d9f" style="background-color:#FFFFFF; color:#000000;" class="contents-container">
+    <cl:output std:sid="output-970e83fe" style="color:#000000; font-weight:bold; font-size:20px;" value="로그인">
+      <cl:verticaldata std:sid="v-data-bfd0fe40" width="600px" height="50px"/>
+    </cl:output>
     <cl:group std:sid="group-0f9d529b" id="loginForm" class="login_input">
-      <cl:responsivexylayoutdata std:sid="rxyl-data-a8ef5b31">
-        <cl:xylayoutdata std:sid="sxyl-data-e64e465a" top="132px" right="0px" left="0px" height="170px" horizontalAnchor="BOTH" verticalAnchor="TOP" screenid="default"/>
-      </cl:responsivexylayoutdata>
-      <cl:inputbox std:sid="i-box-6c262ea3" id="email" style="border-radius:5px; background-color:#FFFBF7; font-size:24px;" value="" placeholder="아이디">
+      <cl:verticaldata std:sid="v-data-95747f13" width="600px" height="142px" autosize="height"/>
+      <cl:inputbox std:sid="i-box-6c262ea3" id="email" style="font-size:16px;" value="" placeholder="아이디">
         <cl:formdata std:sid="f-data-d672af3b" row="0" col="0"/>
       </cl:inputbox>
-      <cl:inputbox std:sid="i-box-32516a75" id="password" style="border-radius:5px; color:#000000; font-size:24px;" value="" secret="true" placeholder="비밀번호">
+      <cl:inputbox std:sid="i-box-32516a75" id="password" style="font-size:16px;" value="" secret="true" placeholder="비밀번호">
         <cl:formdata std:sid="f-data-dbbcf666" row="1" col="0"/>
       </cl:inputbox>
       <cl:formlayout std:sid="f-layout-504b6ebb" scrollable="false" hspace="10px" vspace="10px" top-margin="5px" right-margin="5px" bottom-margin="5px" left-margin="5px">
-        <cl:rows length="74" unit="PIXEL"/>
-        <cl:rows length="74" unit="PIXEL"/>
+        <cl:rows length="60" unit="PIXEL"/>
+        <cl:rows length="60" unit="PIXEL"/>
         <cl:columns length="1" unit="FRACTION"/>
       </cl:formlayout>
     </cl:group>
-    <cl:button std:sid="button-083111ef" style="background-color:#856C66; color:#856C66; font-weight:bold; font-size:16px; font-family:@Kim jung chul Myungjo Bold;" value="로그인">
+    <cl:button std:sid="button-083111ef" style="font-weight:bold; font-size:16px;" value="로그인">
       <cl:listener std:sid="listener-1920fe0c" name="click" handler="onButtonClick"/>
-      <cl:responsivexylayoutdata std:sid="rxyl-data-3f149ade">
-        <cl:xylayoutdata std:sid="sxyl-data-deb1a1dc" top="336px" right="0px" left="0px" height="74px" horizontalAnchor="BOTH" verticalAnchor="TOP" screenid="default"/>
-      </cl:responsivexylayoutdata>
+      <cl:verticaldata std:sid="v-data-56534c60" width="600px" height="60px"/>
     </cl:button>
-    <cl:output std:sid="output-970e83fe" style="color:#000000; font-weight:bold; font-size:24px; font-family:Kim jung chul Myungjo Regular;" value="로그인">
-      <cl:responsivexylayoutdata std:sid="rxyl-data-ad6cd248">
-        <cl:xylayoutdata std:sid="sxyl-data-82928203" top="49px" right="0px" left="0px" height="74px" horizontalAnchor="BOTH" verticalAnchor="TOP" screenid="default"/>
-      </cl:responsivexylayoutdata>
+    <cl:output std:sid="output-218c659b" value="">
+      <cl:verticaldata std:sid="v-data-0f7a6300" width="100px" height="30px"/>
     </cl:output>
-    <cl:output std:sid="output-694f9248" style="color:#000000; font-weight:bold; font-size:24px; font-family:Kim jung chul Myungjo Regular;" value="소셜 로그인">
-      <cl:responsivexylayoutdata std:sid="rxyl-data-52ade60c">
-        <cl:xylayoutdata std:sid="sxyl-data-2654b855" top="433px" right="0px" left="0px" height="74px" horizontalAnchor="BOTH" verticalAnchor="TOP" screenid="default"/>
-      </cl:responsivexylayoutdata>
+    <cl:output std:sid="output-694f9248" style="color:#000000; font-weight:bold; font-size:20px;" value="소셜 로그인">
+      <cl:verticaldata std:sid="v-data-720c2780" width="600px" height="50px"/>
     </cl:output>
     <cl:group std:sid="group-fd617ffd">
-      <cl:responsivexylayoutdata std:sid="rxyl-data-20fc60e0">
-        <cl:xylayoutdata std:sid="sxyl-data-5ab03c46" top="517px" right="0px" left="0px" height="100px" horizontalAnchor="BOTH" verticalAnchor="TOP" screenid="default"/>
-      </cl:responsivexylayoutdata>
-      <cl:button std:sid="button-862df382" id="네이버" style="border-radius:100%; background-repeat:no-repeat; background-size:contain; border-top-width:0px; border-right-width:0px; border-bottom-width:0px; background-image:url('../../theme/images/네이버.png'); border-left-width:0px;">
+      <cl:verticaldata std:sid="v-data-ac5bd45d" width="600px" height="80px" autosize="height"/>
+      <cl:button std:sid="button-862df382" id="네이버" style="border-radius:100%; background-color:transparent; background-repeat:no-repeat; background-size:contain; border-top-width:0px; border-right-width:0px; border-bottom-width:0px; background-image:url('../../theme/images/네이버.png'); border-left-width:0px;">
         <cl:listener std:sid="listener-56353444" name="click" handler="onButtonClickNaver"/>
-        <cl:flowlayoutdata std:sid="f-data-a93f48f8" width="100px" height="100px" autosize="none"/>
+        <cl:flowlayoutdata std:sid="f-data-a93f48f8" width="80px" height="80px" autosize="none"/>
       </cl:button>
-      <cl:button std:sid="button-95a0a11f" id="구글" style="border-radius:100%; background-repeat:no-repeat; background-size:contain; border-top-width:0px; border-right-width:0px; border-bottom-width:0px; background-image:url('../../theme/images/구글.png'); border-left-width:0px;">
+      <cl:button std:sid="button-95a0a11f" id="구글" style="border-radius:100%; background-color:transparent; background-repeat:no-repeat; background-size:contain; border-top-width:0px; border-right-width:0px; border-bottom-width:0px; background-image:url('../../theme/images/구글.png'); border-left-width:0px;">
         <cl:listener std:sid="listener-5e443a7d" name="click" handler="onButtonClickGoogle"/>
-        <cl:flowlayoutdata std:sid="f-data-579023c3" width="95px" height="97px" autosize="none"/>
+        <cl:flowlayoutdata std:sid="f-data-579023c3" width="80px" height="80px" autosize="none"/>
       </cl:button>
-      <cl:button std:sid="button-32f311b5" id="카카오" style="border-radius:100%; background-repeat:no-repeat; background-size:contain; border-top-width:0px; border-right-width:0px; border-bottom-width:0px; background-image:url('../../theme/images/카카오.png'); border-left-width:0px;">
+      <cl:button std:sid="button-32f311b5" id="카카오" style="border-radius:100%; background-color:transparent; background-repeat:no-repeat; background-size:contain; border-top-width:0px; border-right-width:0px; border-bottom-width:0px; background-image:url('../../theme/images/카카오.png'); border-left-width:0px;">
         <cl:listener std:sid="listener-40b9f88c" name="click" handler="onButtonClickKakao"/>
-        <cl:flowlayoutdata std:sid="f-data-0eeb5101" width="100px" height="100px" autosize="none"/>
+        <cl:flowlayoutdata std:sid="f-data-0eeb5101" width="80px" height="80px" autosize="none"/>
       </cl:button>
       <cl:flowlayout std:sid="f-layout-54dcc579" hspacing="50" vspacing="0" halign="center" valign="middle"/>
     </cl:group>
+    <cl:output std:sid="output-43680ddb" value="">
+      <cl:verticaldata std:sid="v-data-d1029e20" width="600px" height="10px" autosize="none"/>
+    </cl:output>
     <cl:group std:sid="group-f4694a52">
-      <cl:responsivexylayoutdata std:sid="rxyl-data-25e6eae0">
-        <cl:xylayoutdata std:sid="sxyl-data-b8943e57" top="624px" right="0px" left="0px" height="75px" horizontalAnchor="BOTH" verticalAnchor="TOP" screenid="default"/>
-      </cl:responsivexylayoutdata>
+      <cl:verticaldata std:sid="v-data-81a4ba27" width="600px" height="60px" autosize="height"/>
       <cl:button std:sid="button-547729d2" style="font-weight:bold; font-size:16px;" value="비밀번호 찾기">
         <cl:listener std:sid="listener-ea5efe85" name="click" handler="onButtonClick2"/>
-        <cl:flowlayoutdata std:sid="f-data-cb53da87" width="235px" height="75px"/>
+        <cl:formdata std:sid="f-data-2487c3ec" row="0" col="0"/>
       </cl:button>
       <cl:button std:sid="button-da75bc25" style="font-weight:bold; font-size:16px;" value="회원가입">
         <cl:listener std:sid="listener-010cf319" name="click" handler="onButtonClick3"/>
-        <cl:flowlayoutdata std:sid="f-data-316eb583" width="236px" height="75px"/>
+        <cl:formdata std:sid="f-data-015595a2" row="0" col="2"/>
       </cl:button>
-      <cl:flowlayout std:sid="f-layout-e36eb22c" hspacing="20" vspacing="0" halign="center" valign="middle"/>
+      <cl:formlayout std:sid="f-layout-22e9b657" scrollable="false" hspace="0px" vspace="0px" top-margin="0px" right-margin="0px" bottom-margin="0px" left-margin="0px">
+        <cl:rows length="60" unit="PIXEL"/>
+        <cl:columns length="1" unit="FRACTION"/>
+        <cl:columns length="20" unit="PIXEL"/>
+        <cl:columns length="1" unit="FRACTION"/>
+      </cl:formlayout>
     </cl:group>
-    <cl:responsivexylayout std:sid="r-xylayout-3e5555da"/>
+    <cl:verticallayout std:sid="v-layout-b7c53b31" spacing="10"/>
   </body>
   <std:studiosetting>
     <std:hruler/>

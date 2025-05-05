@@ -29,9 +29,7 @@
     <cl:listener std:sid="listener-28fa47ef" name="init" handler="onBodyInit"/>
     <cl:listener std:sid="listener-99dca517" name="load" handler="onBodyLoad"/>
     <cl:group std:sid="group-149729e3" id="bannerGroup">
-      <cl:responsivexylayoutdata std:sid="rxyl-data-0f0b3a7b">
-        <cl:xylayoutdata std:sid="sxyl-data-12313a15" top="0px" right="0px" left="0px" height="300px" horizontalAnchor="BOTH" verticalAnchor="TOP" screenid="default"/>
-      </cl:responsivexylayoutdata>
+      <cl:verticaldata std:sid="v-data-ffb5fbbd" width="600px" height="300px"/>
       <cl:img std:sid="image-824af93e" src="../../theme/images/banner_service_intro.svg">
         <cl:flowlayoutdata std:sid="f-data-e4c5bf7b" width="100%" height="100%" autosize="none"/>
         <cl:itemstyle style="fill:true;"/>
@@ -43,33 +41,68 @@
       <cl:flowlayout std:sid="f-layout-8f2ae446"/>
     </cl:group>
     <cl:group std:sid="group-bc0cdddc" id="popularSearchBoard" style="background-color:#FBDBCF; border-radius:5px;">
-      <cl:responsivexylayoutdata std:sid="rxyl-data-3c2adba0">
-        <cl:xylayoutdata std:sid="sxyl-data-7d2217b1" top="340px" right="0px" left="0px" height="300px" horizontalAnchor="BOTH" verticalAnchor="TOP" screenid="default"/>
-      </cl:responsivexylayoutdata>
-      <cl:output std:sid="output-86ab009d" style="color:#856C66; font-weight:bold; font-size:20px; text-align:center;" value="실시간 레시피 인기 검색어">
+      <cl:verticaldata std:sid="v-data-1fb0ce63" width="600px" height="300px" autosize="height"/>
+      <cl:output std:sid="output-86ab009d" style="color:#856C66; font-weight:bold; font-size:16px; text-align:center;" value="실시간 인기 검색 레시피">
         <cl:verticaldata std:sid="v-data-9492a6cc" width="100px" height="30px"/>
       </cl:output>
-      <cl:output std:sid="output-3a55cb8f" id="out1" style="font-weight:bold; font-size:16px;" value="Output">
-        <cl:verticaldata std:sid="v-data-61cd3ca7" width="487px" height="25px"/>
-      </cl:output>
-      <cl:output std:sid="output-8db2f4ee" id="out2" style="font-weight:bold; font-size:16px;" value="Output">
-        <cl:verticaldata std:sid="v-data-3a4f014d" width="560px" height="25px" autosize="none"/>
-      </cl:output>
-      <cl:output std:sid="output-1d775977" id="out3" style="font-weight:bold; font-size:16px;" value="Output">
-        <cl:verticaldata std:sid="v-data-e829800c" width="560px" height="25px" autosize="none"/>
-      </cl:output>
-      <cl:output std:sid="output-5d3dd694" id="out4" style="font-weight:bold; font-size:16px;" value="Output">
-        <cl:verticaldata std:sid="v-data-a3431fed" width="560px" height="25px" autosize="none"/>
-      </cl:output>
-      <cl:output std:sid="output-40b9da58" id="out5" style="font-weight:bold; font-size:16px;" value="Output">
-        <cl:verticaldata std:sid="v-data-cd9e55a7" width="560px" height="25px" autosize="none"/>
-      </cl:output>
+      <cl:group std:sid="group-a2d3f164">
+        <cl:verticaldata std:sid="v-data-a0407ca0" width="400px" height="220px" autosize="none"/>
+        <cl:group std:sid="group-e892bb7e" id="searchTermGroup1" style="background-color:#FFFFFF; border-radius:5px; cursor:pointer; box-shadow:0 2px 6px rgba(0, 0, 0, 0.1);">
+          <cl:verticaldata std:sid="v-data-b121618d" width="400px" height="30px" autosize="height"/>
+          <cl:output std:sid="output-06c80fc9" style="color:#856C66; text-align:center;" value="1">
+            <cl:flowlayoutdata std:sid="f-data-1a2f9d3b" width="30px" height="30px"/>
+          </cl:output>
+          <cl:output std:sid="output-3a55cb8f" id="out1" style="color:#856C66; text-align:center;" value="Loading...">
+            <cl:flowlayoutdata std:sid="f-data-a7ee147c" width="410px" height="30px" autosize="none"/>
+          </cl:output>
+          <cl:flowlayout std:sid="f-layout-2a1ae3b9"/>
+        </cl:group>
+        <cl:group std:sid="group-9c517cd2" id="searchTermGroup2" style="background-color:#FFFFFF; border-radius:5px; cursor:pointer; box-shadow:0 2px 6px rgba(0, 0, 0, 0.1);">
+          <cl:verticaldata std:sid="v-data-73e28fce" width="560px" height="30px" autosize="height"/>
+          <cl:output std:sid="output-3fdbc3ad" style="color:#856C66; text-align:center;" value="2">
+            <cl:flowlayoutdata std:sid="f-data-4af7f579" width="30px" height="30px"/>
+          </cl:output>
+          <cl:output std:sid="output-8db2f4ee" id="out2" style="color:#856C66; text-align:center;" value="Loading...">
+            <cl:flowlayoutdata std:sid="f-data-56718e3a" width="410px" height="30px" autosize="none"/>
+          </cl:output>
+          <cl:flowlayout std:sid="f-layout-ca005e15"/>
+        </cl:group>
+        <cl:group std:sid="group-5ff73dec" id="searchTermGroup3" style="background-color:#FFFFFF; border-radius:5px; cursor:pointer; box-shadow:0 2px 6px rgba(0, 0, 0, 0.1);">
+          <cl:verticaldata std:sid="v-data-628e0fe2" width="560px" height="30px" autosize="height"/>
+          <cl:output std:sid="output-0261d762" style="color:#856C66; text-align:center;" value="3">
+            <cl:flowlayoutdata std:sid="f-data-8a2c1ca4" width="30px" height="30px"/>
+          </cl:output>
+          <cl:output std:sid="output-1d775977" id="out3" style="color:#856C66; text-align:center;" value="Loading...">
+            <cl:flowlayoutdata std:sid="f-data-3513de8a" width="410px" height="30px" autosize="none"/>
+          </cl:output>
+          <cl:flowlayout std:sid="f-layout-cfcd2a46"/>
+        </cl:group>
+        <cl:group std:sid="group-f30c4cc5" id="searchTermGroup4" style="background-color:#FFFFFF; border-radius:5px; cursor:pointer; box-shadow:0 2px 6px rgba(0, 0, 0, 0.1);">
+          <cl:verticaldata std:sid="v-data-2d6a0f99" width="560px" height="30px" autosize="height"/>
+          <cl:output std:sid="output-8d92b327" style="color:#856C66; text-align:center;" value="4">
+            <cl:flowlayoutdata std:sid="f-data-0ab8b12b" width="30px" height="30px"/>
+          </cl:output>
+          <cl:output std:sid="output-5d3dd694" id="out4" style="color:#856C66; text-align:center;" value="Loading...">
+            <cl:flowlayoutdata std:sid="f-data-4b6dfc61" width="410px" height="30px" autosize="none"/>
+          </cl:output>
+          <cl:flowlayout std:sid="f-layout-37d2d8f7"/>
+        </cl:group>
+        <cl:group std:sid="group-c25b08a5" id="searchTermGroup5" style="background-color:#FFFFFF; border-radius:5px; cursor:pointer; box-shadow:0 2px 6px rgba(0, 0, 0, 0.1);">
+          <cl:verticaldata std:sid="v-data-3eda07c4" width="560px" height="30px" autosize="height"/>
+          <cl:output std:sid="output-2bf320cd" style="color:#856C66; text-align:center;" value="5">
+            <cl:flowlayoutdata std:sid="f-data-33f48ef7" width="30px" height="30px"/>
+          </cl:output>
+          <cl:output std:sid="output-40b9da58" id="out5" style="color:#856C66; text-align:center;" value="Loading...">
+            <cl:flowlayoutdata std:sid="f-data-0562d659" width="410px" height="30px" autosize="none"/>
+          </cl:output>
+          <cl:flowlayout std:sid="f-layout-ab1a83e7"/>
+        </cl:group>
+        <cl:verticallayout std:sid="v-layout-02765e5d" spacing="10"/>
+      </cl:group>
       <cl:verticallayout std:sid="v-layout-c877bbf0" spacing="20" leftmargin="20" rightmargin="20" topmargin="20" bottommargin="20"/>
     </cl:group>
     <cl:group std:sid="group-ee34f8b7">
-      <cl:responsivexylayoutdata std:sid="rxyl-data-667b3997">
-        <cl:xylayoutdata std:sid="sxyl-data-ed98b2a0" top="670px" right="0px" left="0px" height="500px" horizontalAnchor="BOTH" verticalAnchor="TOP" screenid="default"/>
-      </cl:responsivexylayoutdata>
+      <cl:verticaldata std:sid="v-data-02950671" width="600px" height="500px"/>
       <cl:group std:sid="group-936fc3f4">
         <cl:verticaldata std:sid="v-data-2ed23d1f" width="400px" height="30px" autosize="height"/>
         <cl:udc std:sid="ud-control-da23ddd6" type="udc.recipe.recipe_title">
@@ -88,7 +121,7 @@
       </cl:group>
       <cl:verticallayout std:sid="v-layout-46b193e3" scrollable="false" spacing="20"/>
     </cl:group>
-    <cl:responsivexylayout std:sid="r-xylayout-3e5555da"/>
+    <cl:verticallayout std:sid="v-layout-f18843b8" spacing="40"/>
   </body>
   <std:studiosetting>
     <std:hruler/>

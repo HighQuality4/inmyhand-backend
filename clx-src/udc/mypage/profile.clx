@@ -43,10 +43,9 @@
           <cl:xylayoutdata std:sid="sxyl-data-d17374eb" top="69px" left="279px" width="120px" height="40px" horizontalAnchor="LEFT" verticalAnchor="TOP" screenid="default"/>
         </cl:responsivexylayoutdata>
       </cl:output>
-      <cl:img std:sid="image-beeb3805" style="border-right-style:solid; border-top-width:5px; border-bottom-color:#eaf1f3; border-right-width:5px; border-left-color:#eaf1f3; border-right-color:#eaf1f3; border-left-width:5px; border-top-style:solid; border-radius:100%; border-left-style:solid; border-bottom-width:5px; border-top-color:#eaf1f3; border-bottom-style:solid;" src="../../theme/images/빗살문희토기.jpg">
-        <cl:listener std:sid="listener-8d9ab446" name="click" handler="onImageClick"/>
-        <cl:responsivexylayoutdata std:sid="rxyl-data-246d2b81">
-          <cl:xylayoutdata std:sid="sxyl-data-58828f2f" top="12px" left="20px" width="100px" height="100px" horizontalAnchor="LEFT" verticalAnchor="TOP" screenid="default"/>
+      <cl:img std:sid="image-3eaaafed" src="../../theme/images/user.svg">
+        <cl:responsivexylayoutdata std:sid="rxyl-data-dbb0f674">
+          <cl:xylayoutdata std:sid="sxyl-data-68491c76" top="20px" left="20px" width="100px" height="88px" horizontalAnchor="LEFT" verticalAnchor="TOP" screenid="default"/>
         </cl:responsivexylayoutdata>
       </cl:img>
       <cl:responsivexylayout std:sid="r-xylayout-dd430fcd"/>
