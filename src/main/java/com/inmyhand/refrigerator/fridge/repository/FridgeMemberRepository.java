@@ -79,4 +79,16 @@ public interface FridgeMemberRepository extends JpaRepository<FridgeMemberEntity
 
     // 즐겨찾기 냉장고 중 가장 먼저 가입한 냉장고 (메인)
     Optional<FridgeMemberEntity> findFirstByMemberEntity_IdAndFavoriteStateTrueOrderByJoinDateAsc(Long memberId);
+
+
+    /**
+     * 특정 냉장고·회원에 대해 state = false 인 대기(invite) 레코드를 Optional 로 조회
+     */
+    Optional<FridgeMemberEntity> findByFridgeEntity_IdAndMemberEntity_IdAndStateFalse(Long fridgeId, Long memberId);
+
+    /**
+     * 특정 냉장고·회원에 대해 state = false 인 대기(invite) 레코드를 삭제
+     */
+    void deleteByFridgeEntity_IdAndMemberEntity_IdAndStateFalse(Long fridgeId, Long memberId);
+
 }

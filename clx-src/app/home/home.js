@@ -37,7 +37,7 @@ function onBodyLoad(e){
  */
 function onButtonClick(e){
 	var button = e.control;
-	window.location.href = "/recipe";
+	history.pushState({}, '', "/recipe");
 }
 
 /*
@@ -71,27 +71,30 @@ function setDataToOutputs() {
     
     // 출력할 컨트롤들이 있는 배열 또는 컨트롤 ID 패턴 정의
     var outputPrefix = "out";
+    const searchTermGroupPrefix = "searchTermGroup";
     
     // 데이터셋의 각 행을 순회하며 해당 컨트롤에 값 할당
-    for(var i = 0; i < rowCount; i++) {
+    for(let i = 0; i < rowCount; i++) {
         // 키워드와 recipeId 값 가져오기 (id 대신 recipeId 사용)
         var keyword = ds.getValue(i, "keyword");
         var recipeId = ds.getValue(i, "recipeId");  // 컬럼명 수정
         
         // 해당 값을 i번째 아웃풋 컨트롤에 설정
         var outputId = outputPrefix + (i + 1);
+        const searchTermGroupId = searchTermGroupPrefix  + (i + 1);
         let outputControl = app.lookup(outputId);
+        let searchTermGroupCtr = app.lookup(searchTermGroupId); 
         
         if (outputControl) {
-            // 값 설정 (순위 표시 추가)
-            outputControl.value = (i + 1) + ". " + keyword;
+            // 값 설정
+			outputControl.value = keyword;
             
             // 사용자 데이터에 recipeId 저장
-            outputControl.userData("recipeId", recipeId);
+            searchTermGroupCtr.userData("recipeId", recipeId);
             
             // 클릭 이벤트 핸들러 추가
-            outputControl.removeEventListeners("click");
-            outputControl.addEventListener("click", function(e) {
+            searchTermGroupCtr.removeEventListeners("click");
+            searchTermGroupCtr.addEventListener("click", function(e) {
                 var control = e.control;
                 var recipeId = control.userData("recipeId");
                 
@@ -101,15 +104,7 @@ function setDataToOutputs() {
                     
                     // 필요한 경우 세션 스토리지에 레시피 ID 저장 (선택사항)
                     sessionStorage.setItem('currentRecipeId', recipeId);
-                    
-                    console.log("이동: /recipe/" + recipeId);
                 }
-            });
-            
-            // 클릭 가능함을 시각적으로 표시
-            outputControl.style.css({
-                "cursor": "pointer",
-                "text-decoration": "underline"
             });
         }
     }

@@ -17,9 +17,9 @@ const embeddedAppChange = () => {
 	// 모든 탭 텍스트 색상 초기화
 	const routeKeys = ["home", "recipe", "auth", "fridge"];
 	routeKeys.forEach((key) => {
-	  const output = app.lookup(`${key}Output`);
-	  if (output) {
-	     output.style.css({ color: "#856C66" }); // 기본 회색
+	  const category = app.lookup(key);
+	  if (category) {
+	     category.style.css({ backgroundColor: "transparent" });
 	  }
 	});
 	
@@ -34,9 +34,9 @@ const embeddedAppChange = () => {
 	
 	// 해당 routeKey가 있다면 색상 강조
   	if (match && match.routeKey) {
-	    const activeOutput = app.lookup(`${match.routeKey}Output`);
-    	if (activeOutput) {
-      		activeOutput.style.css({ color: "#F59760" }); // 강조 색상
+	    const activeCategory = app.lookup(match.routeKey);
+    	if (activeCategory) {
+      		activeCategory.style.css({ backgroundColor: "#fbf3eb" }); // 강조 색상
     	}
   	}
 	

@@ -5,6 +5,7 @@ import com.inmyhand.refrigerator.fridge.domain.dto.food.FridgeFoodDTO;
 import com.inmyhand.refrigerator.fridge.domain.dto.food.FridgeWithRolesDTO;
 import com.inmyhand.refrigerator.fridge.domain.dto.food.RoleCheckboxDTO;
 import com.inmyhand.refrigerator.fridge.domain.dto.group.*;
+import com.inmyhand.refrigerator.fridge.domain.dto.search.AcceptInviteRequestDTO;
 import com.inmyhand.refrigerator.fridge.domain.dto.search.SearchFridgeDTO;
 import com.inmyhand.refrigerator.fridge.service.FridgeGroupFacadeService;
 import com.inmyhand.refrigerator.fridge.service.FridgeGroupInvitationService;
@@ -53,7 +54,7 @@ public class FridgeGroupRestController {
         // 수정할 리스트
         List<FridgeGroupEditDTO> updateList = ConverterClassUtil.getClassList(dataRequest, "updateGroupList",FridgeGroupEditDTO.class);
         // 수정로직
-        fridgeGroupRoleService.updateAllMemberRoles(updateList);
+        fridgeGroupInvitationService.batchUpdateRoles(updateList);
 
         for (FridgeGroupEditDTO dto : updateList) {
             log.info(">> fridgeMemberId: {}, memberId: {}, getRoleStatus: {},  joinDate: {}, getPermissionName: {}",

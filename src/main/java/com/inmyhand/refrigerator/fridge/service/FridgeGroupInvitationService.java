@@ -1,24 +1,31 @@
 package com.inmyhand.refrigerator.fridge.service;
 
 import com.inmyhand.refrigerator.fridge.domain.dto.food.FridgeWithRoleDTO;
+import com.inmyhand.refrigerator.fridge.domain.dto.group.FridgeGroupEditDTO;
 import com.inmyhand.refrigerator.fridge.domain.dto.group.FridgeGroupMemberDTO;
 import com.inmyhand.refrigerator.fridge.domain.dto.group.FridgeGroupRequestDTO;
 import com.inmyhand.refrigerator.fridge.domain.dto.group.FridgeMemberPendingDTO;
+import com.inmyhand.refrigerator.fridge.domain.dto.search.AcceptInviteRequestDTO;
+import com.inmyhand.refrigerator.fridge.domain.dto.search.MemberFridgeFindDTO;
 import com.inmyhand.refrigerator.fridge.domain.entity.FridgeEntity;
 import com.inmyhand.refrigerator.fridge.domain.entity.FridgeMemberEntity;
 import com.inmyhand.refrigerator.fridge.domain.entity.GroupRoleEntity;
 import com.inmyhand.refrigerator.fridge.domain.entity.MemberGroupRoleEntity;
 import com.inmyhand.refrigerator.fridge.repository.FridgeMemberRepository;
 import com.inmyhand.refrigerator.fridge.repository.FridgeRepository;
+import com.inmyhand.refrigerator.fridge.repository.GroupRoleRepository;
 import com.inmyhand.refrigerator.fridge.repository.MemberGroupRoleRepository;
+import com.inmyhand.refrigerator.member.domain.dto.MemberDTO;
 import com.inmyhand.refrigerator.member.domain.entity.MemberEntity;
 import com.inmyhand.refrigerator.member.repository.MemberRepository;
+import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -33,6 +40,7 @@ public class FridgeGroupInvitationService {
     private final FridgeRepository fridgeRepository;
     private final MemberRepository memberRepository;
     private final MemberGroupRoleRepository memberGroupRoleRepository;
+    private final GroupRoleRepository groupRoleRepository;
 
     // 유저 추가하기 (냉장고 그룹에 유저 초대)
     @Transactional
@@ -128,27 +136,111 @@ public class FridgeGroupInvitationService {
                 .toList();
     }
 
+    @Transactional
+    public void batchUpdateRoles(List<FridgeGroupEditDTO> dtos) {
+        for (FridgeGroupEditDTO dto : dtos) {
+            Long fridgeMemberId = dto.getFridgeMemberId();
 
-//    @Transactional(readOnly = true)
-//    public FridgeGroupMemberDTO findMemberByName(Long fridgeId, String name) {
-//        FridgeMemberEntity fridgeMember = fridgeMemberRepository
-//                .findByFridgeEntity_IdAndMemberEntity_Nickname(fridgeId, name)
-//                .orElseThrow(() -> new RuntimeException("해당 이름의 유저가 존재하지 않습니다."));
-//
-//        String roleName = fridgeMember.getPermissionGroupRoleList().stream()
-//                .findFirst()
-//                .map(r -> r.getGroupRoleEntity().getRoleName())
-//                .orElse("member");
-//
-//        return new FridgeGroupMemberDTO(
-//                fridgeMember.getId(),
-//                fridgeMember.getMemberEntity().getId(),
-//                fridgeMember.getMemberEntity().getNickname(),
-//                fridgeMember.getMemberEntity().getEmail(),
-//                fridgeMember.getJoinDate(),
-//
-//        );
-//    }
+            // 1) 기존 역할 삭제
+            memberGroupRoleRepository.deleteByFridgeMemberEntity_Id(fridgeMemberId);
 
+            // 2) FridgeMemberEntity 조회
+            FridgeMemberEntity member = fridgeMemberRepository.findById(fridgeMemberId)
+                    .orElseThrow(() -> new IllegalArgumentException("FridgeMember not found: " + fridgeMemberId));
 
+            List<Long> roleIds = new ArrayList<>();
+            if (!roleIds.contains(5L)) {
+                roleIds.add(5L);
+            }
+
+            String[] parts = dto.getPermissionName().split(",");
+            for (String part : parts) {
+                String trimmed = part.trim();
+                if (!trimmed.isEmpty()) {
+                    try {
+                        roleIds.add(Long.parseLong(trimmed));
+                    } catch (NumberFormatException e) {
+                        throw new IllegalArgumentException("Invalid role ID: " + trimmed, e);
+                    }
+                }
+            }
+
+            // 4) 새 MemberGroupRoleEntity 생성 & 저장
+            List<MemberGroupRoleEntity> newRoles = new ArrayList<>();
+            for (Long roleId : roleIds) {
+                GroupRoleEntity role = groupRoleRepository.findById(roleId)
+                        .orElseThrow(() -> new IllegalArgumentException("GroupRole not found: " + roleId));
+                MemberGroupRoleEntity m = MemberGroupRoleEntity.builder()
+                        .fridgeMemberEntity(member)
+                        .groupRoleEntity(role)
+                        .startDate(new Date())
+                        .build();
+                newRoles.add(m);
+            }
+            memberGroupRoleRepository.saveAll(newRoles);
+        }
+    }
+
+    @Transactional
+    public void inviteMemberToFridge(Long fridgeId, MemberFridgeFindDTO dto) {
+        // 1) FridgeEntity 조회
+        FridgeEntity fridge = fridgeRepository.findById(fridgeId)
+                .orElseThrow(() -> new EntityNotFoundException("Fridge not found: " + fridgeId));
+
+        // 2) MemberEntity 조회 (불필요한 ')' 제거)
+        MemberEntity member = memberRepository.findById(dto.getMemberId())
+                .orElseThrow(() -> new EntityNotFoundException("Member not found: " + dto.getMemberId()));
+
+        // 3) FridgeMemberEntity 생성 (state=false 로 초대 상태)
+        FridgeMemberEntity invitation = FridgeMemberEntity.builder()
+                .state(false)               // 초대 대기 상태
+                .fridgeEntity(fridge)
+                .memberEntity(member)
+                .joinDate(new Date())       // 초대 시각
+                .favoriteState(false)       // 기본 not favorite
+                .build();
+
+        // 4) 저장
+        fridgeMemberRepository.save(invitation);
+    }
+
+    // 수락시
+    @Transactional
+    public void acceptInvites(List<AcceptInviteRequestDTO> dtos) {
+        List<FridgeMemberEntity> toSave = new ArrayList<>();
+
+        for (AcceptInviteRequestDTO dto : dtos) {
+            FridgeMemberEntity fm = fridgeMemberRepository
+                    .findByFridgeEntity_IdAndMemberEntity_IdAndStateFalse(
+                            dto.getFridgeId(), dto.getMemberId()
+                    )
+                    .orElseThrow(() -> new IllegalArgumentException(
+                            "No pending invite for member " + dto.getMemberId()
+                                    + " in fridge " + dto.getFridgeId()
+                    ));
+
+            fm.setState(true);
+            toSave.add(fm);
+        }
+
+        fridgeMemberRepository.saveAll(toSave);
+    }
+
+    @Transactional
+    public void revokeInvites(List<AcceptInviteRequestDTO> dtos) {
+        for (AcceptInviteRequestDTO dto : dtos) {
+            Long fridgeId = dto.getFridgeId();
+            Long memberId = dto.getMemberId();
+            // (선택) 존재 여부 확인
+            fridgeMemberRepository.findByFridgeEntity_IdAndMemberEntity_IdAndStateFalse(fridgeId, memberId)
+                    .orElseThrow(() -> new IllegalArgumentException(
+                            "No pending invite to revoke for member " + memberId
+                                    + " in fridge " + fridgeId
+                    ));
+            // 삭제
+            fridgeMemberRepository.deleteByFridgeEntity_IdAndMemberEntity_IdAndStateFalse(
+                    fridgeId, memberId
+            );
+        }
+    }
 }

@@ -28,8 +28,6 @@
 				var fridgeId = initValue.fridgeIdParam; 
 				var memberId = initValue.memberIdParam; 
 				
-				console.log("가져온값" + initValue +  " " + memberId + " " + fridgeId);
-				
 				
 				app.lookup("dmFridgeParam").setAttr("fridgeId", fridgeId);
 				app.lookup("dmFridgeParam").setAttr("memberId", memberId);
@@ -53,28 +51,29 @@
 				const resultJson = JSON.parse(result);
 				
 				
-				
 				// 데이터 가공
-				const processedData = resultJson.searchGroupList.map(item => {
+				const processedData = resultJson.searchGroupList.map((item, index) => {
 				    const roleNames = item.roleName || [];
 				
 				    const roleStatus = roleNames.find(role => role === "leader" || role === "member") || "";
 				    const permissionList = roleNames.filter(role => role !== "leader" && role !== "member");
 				    const permissionName = permissionList.join(", ");
 				
-				    return {
+				    const rowData = {
 				        memberName: item.nickname,
 				        joinDate: item.joinDate,
 				        roleStatus: roleStatus.toUpperCase(),
 				        permissionName: permissionName,
-				        fridgeMemberId : item.fridgeMemberId,
-				        memberId : item.memberId 
+				        fridgeMemberId: item.fridgeMemberId,
+				        memberId: item.memberId
 				    };
-				    
-				});
 				
-				// 데이터셋 세팅
-				// 참여중인 그룹 리스트 데이터셋 저장하기
+				    return rowData;
+				});
+			//	
+			//	// 데이터셋 세팅
+			//	// 참여중인 그룹 리스트 데이터셋 저장하기
+
 				const ds = app.lookup("searchGroupList");
 				ds.clearData();
 				ds.build(processedData);
@@ -83,26 +82,50 @@
 				// 그리드 새로고침
 				const grd = app.lookup("JoinGroupMemeberGrid")
 				grd.redraw();
-				
+			//	
 
 			}
 			/*
 			 * 서브미션에서 submit-success 이벤트 발생 시 호출.
 			 * 통신이 성공하면 발생합니다.
 			 */
-			function onGetRoleListSubmitSuccess(e){
-				var getRoleList = e.control;
-				
-				// 문제가 있었음
-				// 데이터는 받아오는데 check가 안됨
-				// 1. 제발 필히 그리드에 연결되어 있는 dataset 변경 시켜줘야한다.
-				// 2. 그리고 그 그리드를 다시 그려야한다. 
+			function onGetRoleListSubmitSuccess(e) {
+				const ds = app.lookup("searchGroupList");
+				const roleList = app.lookup("roleList");
+				const rowCount = ds.getRowCount();
 
-				
-				const grd = app.lookup("JoinGroupMemeberGrid")
-				grd.redraw();
-				
-				
+				for (let i = 0; i < rowCount; i++) {
+
+					const permissionStr = ds.getValue(i, "permissionName");
+
+
+					if (permissionStr) {
+						const permissionArray = permissionStr.split(",").map(item => item.trim());
+
+
+						const roleIds = permissionArray.map(roleName => {
+							const roleRow = roleList.findFirstRow("roleName == '" + roleName + "'");
+							if (roleRow) {
+								return roleRow.getValue("roleId");
+							}
+							return null;
+						}).filter(Boolean);
+
+
+						const newPermissionValue = roleIds.join(",");
+
+						ds.setValue(i, "permissionName", newPermissionValue);
+					} else {
+						console.log("permissionName이 없음 (스킵)");
+					}
+				}
+
+				for (let i = 0; i < ds.getRowCount(); i++) {
+			        ds.setRowState(i, cpr.data.tabledata.RowState.UNCHANGED);
+			    }
+
+			    
+				app.lookup("JoinGroupMemeberGrid").redraw();
 			}
 
 			function getChangedRowsByState(state) {
@@ -164,9 +187,12 @@
 				console.log("전송전 데이터셋 확인 =======")
 				console.log(updateDataSet.getRowDataRanged());
 				
+				
+				ds.clearData();
+				
 				editGroupSubmission.send();
 				
-				const grd = app.lookup("JoinGroupMemeberGrid").redraw();
+				
 			}
 
 
@@ -183,6 +209,25 @@
 				
 			}
 
+
+			function getChangedRowsByStateOfInvite(state) {
+			    var ds = app.lookup("inviteList");
+			    var rows = [];
+
+			    for (var i = 0; i < ds.getRowCount(); i++) {
+			        if (ds.getRowState(i) === state) {
+			            var rowData = {};
+			            var cols = ds.getColumnNames();
+			            cols.forEach(function(col) {
+			                rowData[col] = ds.getValue(i, col);
+			            });
+
+			            rows.push(rowData);
+			        }
+			    }
+			    return rows;
+			}
+
 			/*
 			 * "저장" 버튼에서 click 이벤트 발생 시 호출.
 			 * 사용자가 컨트롤을 클릭할 때 발생하는 이벤트.
@@ -193,7 +238,191 @@
 				// 초대 수락/거절 저장버튼 클릭 시
 				 
 				app.lookup("inviteMemberGrid")
+				var updated = getChangedRowsByStateOfInvite(cpr.data.tabledata.RowState.UPDATED);
+
 				
+				console.log("\n수정됨: " + JSON.stringify(updated) );
+				      
+				var inviteSubmission = app.lookup("inviteSubMission");
+				
+				const updateDataSet = app.lookup("resultInviteList");
+				
+				updateDataSet.clearData();
+				
+				updated.forEach(function(rowData) {
+					updateDataSet.addRowData(rowData);
+				});
+				
+				
+				
+				console.log("전송전 데이터셋 확인 =======")
+				console.log(updateDataSet.getRowDataRanged());
+				
+			}
+
+			/*
+			 * "검색" 버튼에서 click 이벤트 발생 시 호출.
+			 * 사용자가 컨트롤을 클릭할 때 발생하는 이벤트.
+			 */
+			function onButtonClick2(e){
+				var button = e.control;
+				
+				const searchSms = app.lookup("sendSearchMemberName");
+				
+				const name = app.lookup("searchNameInput").value;  // 예: 사용자가 입력한 검색어
+					// 1) 이전 파라미터 초기화
+				  searchSms.removeAllParameters();
+				
+				  // 2) name 을 form-data 로 추가
+				  searchSms.addParameter("name", name);
+				
+				  // 3) 요청 전송 (POST /api/fridges/search?name=…)
+				  searchSms.send();
+				
+			}
+
+			/*
+			 * 서브미션에서 submit-success 이벤트 발생 시 호출.
+			 * 통신이 성공하면 발생합니다.
+			 */
+			function onSendSearchMemberNameSubmitSuccess(e){
+				var sendSearchMemberName = e.control;
+				const sms  = e.control;
+			  	const raw  = sms.xhr.responseText;    // 문자열 형태의 JSON
+			  	const list = JSON.parse(raw);         // JS 객체(배열)로 변환
+
+			  	const paredDown = list.map(item => ({
+				    memberId:   item.memberId,
+				    email:      item.email,
+				    memberName: item.memberName,
+				    nickname:   item.nickname
+				}));
+				    // 2) DataSet lookup → 초기화 → 빌드
+				const ds = app.lookup("searchMemberList");
+				ds.clearData();
+				ds.build(paredDown);
+			  
+			   	const grid = app.lookup("searchMemberGrid");
+			   	
+			   	
+				grid.redraw();
+					  
+			  // 3) 혹은 console.log 해서 확인만
+			  console.log("검색 결과:", list);
+
+			}
+
+
+			/*
+			 * 그리드에서 cell-click 이벤트 발생 시 호출.
+			 * Grid의 Cell 클릭시 발생하는 이벤트.
+			 */
+			function onSearchMemberGridCellClick2(e){
+				var searchMemberGrid = e.control;
+				const btn      = e.control;              
+				const rowIdx = e.rowIndex;       
+			  	const columnName = e.columnName;       
+			  
+				const grid = app.lookup("searchMemberGrid");
+			  	const cellIndx   = grid.getCellIndex(columnName);
+			  	// 버튼클릭시
+			  	if(cellIndx == 3){
+			  		console.log("버튼 클릭 >>");
+			  		// 3) 클릭된 행 전체의 바인딩 데이터 객체
+					 console.log("로우 >> " );
+					  
+					const grid = app.lookup("searchMemberGrid");
+				  	const memberName   = grid.getCellValue(rowIdx, "memberName")
+				  	const memberId   = grid.getCellValue(rowIdx, "memberId")
+			  		
+			  		console.log("cellValue",memberName)
+			  		console.log("cellValue2",memberId)
+			  		
+			  		
+			  		const param = app.lookup("addGroupMemberParam");
+			  		param.setValue("memberId", memberId);
+			  		param.setValue("memberName", memberName);
+			  		
+			  		const submission = app.lookup("addGroup");
+			  		
+			  		submission.send();
+			  		app.lookup("searchNameInput").value = "";
+			  		const ds = app.lookup("searchMemberList")
+			  		ds.clearData();
+			  		
+			  		grid.redraw();
+			  		
+			  		
+			  	}
+
+			}
+
+			/*
+			 * 서브미션에서 submit-success 이벤트 발생 시 호출.
+			 * 통신이 성공하면 발생합니다.
+			 */
+			function onAddGroupSubmitSuccess(e){
+				var addGroup = e.control;
+				alert("냉장고에 초대를 했습니다.")
+			}
+
+			/*
+			 * 서브미션에서 submit-success 이벤트 발생 시 호출.
+			 * 통신이 성공하면 발생합니다.
+			 */
+			function onSendEditGroupListSubmitSuccess(e){
+				var sendEditGroupList = e.control;
+				
+				const ds = app.lookup("getJoinGroupList");
+				ds.send();
+				
+				const grd = app.lookup("JoinGroupMemeberGrid").redraw();
+				
+			  
+			}
+
+			/*
+			 * 그리드에서 cell-click 이벤트 발생 시 호출.
+			 * Grid의 Cell 클릭시 발생하는 이벤트.
+			 */
+			function onInviteMemberGridCellClick(e){
+				var inviteMemberGrid = e.control;
+				
+				const btn      = e.control;              
+				const rowIdx = e.rowIndex;       
+			  	const columnName = e.columnName;       
+			  
+
+				const grid = app.lookup("inviteMemberGrid");
+				
+			  	const cellIndx   = grid.getCellIndex(columnName);
+			  	  alert("rowIdx" + rowIdx + "cellIndx"+cellIndx  )
+			  	// 버튼클릭시
+			  	if(cellIndx == 0){
+					  
+					const grid = app.lookup("inviteMemberGrid");
+				  	const fridgeId   = grid.getCellValue(rowIdx, "fridgeId")
+				  	const fridgeName   = grid.getCellValue(rowIdx, "fridgeName")
+			  		
+			  		console.log("cellValue",fridgeId)
+			  		console.log("cellValue2",fridgeName)
+			  		
+			  		
+			  		const param = app.lookup("addInviteParam");
+			  		param.setValue("fridgeId", fridgeId);
+			  		param.setValue("fridgeName", fridgeName);
+			  		
+			  		const submission = app.lookup("inviteSubMission");
+			  		
+			  		submission.send();
+			  		const ds = app.lookup("inviteList")
+			  		ds.clearData();
+			  		
+			  		app.lookup("getPendIngGroupList").send();
+			  		grid.redraw();
+			  		
+			  		
+			  	}
 			};
 			// End - User Script
 			
@@ -217,13 +446,21 @@
 			var dataSet_2 = new cpr.data.DataSet("searchMemberList");
 			dataSet_2.parseData({
 				"columns": [
-					{"name": "name"},
+					{"name": "memberName"},
 					{"name": "nickname"},
-					{"name": "email"}
+					{"name": "email"},
+					{
+						"name": "memberId",
+						"dataType": "number"
+					},
+					{
+						"name": "fridgeId",
+						"dataType": "number"
+					}
 				],
 				"rows": [
-					{"name": "name1", "nickname": "nickname1", "email": "email1"},
-					{"name": "name2", "nickname": "nickname2", "email": "email2"}
+					{"nickname": "name1", "memberName": "nickname1", "email": "email1"},
+					{"nickname": "name2", "memberName": "nickname2", "email": "email2"}
 				]
 			});
 			app.register(dataSet_2);
@@ -306,6 +543,22 @@
 				]
 			});
 			app.register(dataSet_7);
+			
+			var dataSet_8 = new cpr.data.DataSet("resultInviteList");
+			dataSet_8.parseData({
+				"columns" : [
+					{
+						"name": "fridgeId",
+						"dataType": "number"
+					},
+					{"name": "fridgeName"},
+					{"name": "joinDate"},
+					{"name": "state"},
+					{"name": "favoriteState"},
+					{"name": "AcceptBool"}
+				]
+			});
+			app.register(dataSet_8);
 			var dataMap_1 = new cpr.data.DataMap("dmFridgeParam");
 			dataMap_1.parseData({
 				"columns" : [
@@ -320,6 +573,30 @@
 				]
 			});
 			app.register(dataMap_1);
+			
+			var dataMap_2 = new cpr.data.DataMap("addGroupMemberParam");
+			dataMap_2.parseData({
+				"columns" : [
+					{
+						"name": "memberId",
+						"dataType": "number"
+					},
+					{"name": "memberName"}
+				]
+			});
+			app.register(dataMap_2);
+			
+			var dataMap_3 = new cpr.data.DataMap("addInviteParam");
+			dataMap_3.parseData({
+				"columns" : [
+					{
+						"name": "memberId",
+						"dataType": "number"
+					},
+					{"name": "memberName"}
+				]
+			});
+			app.register(dataMap_3);
 			var submission_1 = new cpr.protocols.Submission("getJoinGroupList");
 			submission_1.action = "/api/fridge/members";
 			submission_1.addRequestData(dataMap_1);
@@ -350,7 +627,30 @@
 			submission_4.action = "/api/fridge/role/group/edit";
 			submission_4.addRequestData(dataSet_7);
 			submission_4.addRequestData(dataSet_6);
+			if(typeof onSendEditGroupListSubmitSuccess == "function") {
+				submission_4.addEventListener("submit-success", onSendEditGroupListSubmitSuccess);
+			}
 			app.register(submission_4);
+			
+			var submission_5 = new cpr.protocols.Submission("sendSearchMemberName");
+			submission_5.action = "/api/ocr/search";
+			if(typeof onSendSearchMemberNameSubmitSuccess == "function") {
+				submission_5.addEventListener("submit-success", onSendSearchMemberNameSubmitSuccess);
+			}
+			app.register(submission_5);
+			
+			var submission_6 = new cpr.protocols.Submission("addGroup");
+			submission_6.action = "/api/ocr/invite";
+			submission_6.addRequestData(dataMap_2);
+			if(typeof onAddGroupSubmitSuccess == "function") {
+				submission_6.addEventListener("submit-success", onAddGroupSubmitSuccess);
+			}
+			app.register(submission_6);
+			
+			var submission_7 = new cpr.protocols.Submission("inviteSubMission");
+			submission_7.action = "/api/ocr/accept";
+			submission_7.addRequestData(dataMap_3);
+			app.register(submission_7);
 			app.supportMedia("all and (min-width: 1024px)", "default");
 			app.supportMedia("all and (min-width: 500px) and (max-width: 1023.984px)", "tablet");
 			app.supportMedia("all and (max-width: 499.984px)", "mobile");
@@ -538,7 +838,7 @@
 										(function(checkBoxGroup_1){
 											checkBoxGroup_1.setItemSet(app.lookup("roleList"), {
 												"label": "roleName",
-												"value": "roleName"
+												"value": "roleId"
 											})
 										})(checkBoxGroup_1);
 										checkBoxGroup_1.bind("value").toDataColumn("permissionName");
@@ -649,23 +949,19 @@
 						},
 						{"width": "33px"},
 						{
-							"width": "100px",
+							"width": "62px",
 							"visible": false
 						},
 						{"width": "75px"},
-						{"width": "100px"},
-						{"width": "148px"}
+						{"width": "83px"},
+						{
+							"width": "92px",
+							"visible": true
+						}
 					],
 					"header": {
 						"rows": [{"height": "24px"}],
 						"cells": [
-							{
-								"constraint": {"rowIndex": 0, "colIndex": 0},
-								"configurator": function(cell){
-									cell.filterable = false;
-									cell.sortable = false;
-								}
-							},
 							{
 								"constraint": {"rowIndex": 0, "colIndex": 1},
 								"configurator": function(cell){
@@ -704,9 +1000,15 @@
 								"constraint": {"rowIndex": 0, "colIndex": 5},
 								"configurator": function(cell){
 									cell.filterable = false;
+									cell.sortColumnName = "inviteImportantBtn";
 									cell.sortable = false;
 									cell.targetColumnName = "state";
 									cell.text = "상태";
+								}
+							},
+							{
+								"constraint": {"rowIndex": 0, "colIndex": 0},
+								"configurator": function(cell){
 								}
 							}
 						]
@@ -714,12 +1016,6 @@
 					"detail": {
 						"rows": [{"height": "24px"}],
 						"cells": [
-							{
-								"constraint": {"rowIndex": 0, "colIndex": 0},
-								"configurator": function(cell){
-									cell.columnType = "radio";
-								}
-							},
 							{
 								"constraint": {"rowIndex": 0, "colIndex": 1},
 								"configurator": function(cell){
@@ -747,23 +1043,28 @@
 							{
 								"constraint": {"rowIndex": 0, "colIndex": 5},
 								"configurator": function(cell){
-									cell.columnName = "state";
 									cell.control = (function(){
-										var radioButton_1 = new cpr.controls.RadioButton("rdb1");
-										(function(radioButton_1){
-											radioButton_1.setItemSet(app.lookup("comboList"), {
-												"label": "statusName",
-												"value": "statusId"
-											})
-										})(radioButton_1);
-										radioButton_1.bind("value").toDataColumn("state");
-										return radioButton_1;
+										var button_1 = new cpr.controls.Button("inviteSelectBtn");
+										button_1.value = "수락";
+										return button_1;
+									})();
+								}
+							},
+							{
+								"constraint": {"rowIndex": 0, "colIndex": 0},
+								"configurator": function(cell){
+									cell.control = (function(){
+										var checkBox_1 = new cpr.controls.CheckBox("cbx1");
+										return checkBox_1;
 									})();
 								}
 							}
 						]
 					}
 				});
+				if(typeof onInviteMemberGridCellClick == "function") {
+					grid_2.addEventListener("cell-click", onInviteMemberGridCellClick);
+				}
 				container.addChild(grid_2, {
 					"colIndex": 0,
 					"rowIndex": 2
@@ -772,18 +1073,6 @@
 				var flowLayout_2 = new cpr.controls.layouts.FlowLayout();
 				flowLayout_2.horizontalAlign = "right";
 				group_5.setLayout(flowLayout_2);
-				(function(container){
-					var button_1 = new cpr.controls.Button();
-					button_1.value = "저장";
-					button_1.style.setClasses(["custom-button"]);
-					if(typeof onButtonClick == "function") {
-						button_1.addEventListener("click", onButtonClick);
-					}
-					container.addChild(button_1, {
-						"width": "71px",
-						"height": "25px"
-					});
-				})(group_5);
 				container.addChild(group_5, {
 					"colIndex": 0,
 					"rowIndex": 1
@@ -846,13 +1135,16 @@
 				flowLayout_3.horizontalAlign = "right";
 				group_8.setLayout(flowLayout_3);
 				(function(container){
-					var inputBox_1 = new cpr.controls.InputBox("ipb1");
+					var inputBox_1 = new cpr.controls.InputBox("searchNameInput");
 					container.addChild(inputBox_1, {
 						"width": "134px",
 						"height": "24px"
 					});
 					var button_2 = new cpr.controls.Button();
 					button_2.value = "검색";
+					if(typeof onButtonClick2 == "function") {
+						button_2.addEventListener("click", onButtonClick2);
+					}
 					container.addChild(button_2, {
 						"width": "55px",
 						"height": "24px"
@@ -866,10 +1158,18 @@
 				grid_3.init({
 					"dataSet": app.lookup("searchMemberList"),
 					"columns": [
-						{"width": "20px"},
-						{"width": "48px"},
-						{"width": "65px"},
-						{"width": "70px"}
+						{"width": "67px"},
+						{"width": "69px"},
+						{"width": "79px"},
+						{"width": "100px"},
+						{
+							"width": "129px",
+							"visible": false
+						},
+						{
+							"width": "100px",
+							"visible": false
+						}
 					],
 					"header": {
 						"rows": [{"height": "24px"}],
@@ -879,6 +1179,8 @@
 								"configurator": function(cell){
 									cell.filterable = false;
 									cell.sortable = false;
+									cell.targetColumnName = "memberName";
+									cell.text = "이름";
 								}
 							},
 							{
@@ -886,8 +1188,8 @@
 								"configurator": function(cell){
 									cell.filterable = false;
 									cell.sortable = false;
-									cell.targetColumnName = "name";
-									cell.text = "이름";
+									cell.targetColumnName = "nickname";
+									cell.text = "닉네임";
 								}
 							},
 							{
@@ -896,13 +1198,31 @@
 									cell.filterable = false;
 									cell.sortable = false;
 									cell.targetColumnName = "email";
-									cell.text = "이메일";
+									cell.text = "email";
 								}
 							},
 							{
 								"constraint": {"rowIndex": 0, "colIndex": 3},
 								"configurator": function(cell){
-									cell.text = "초대";
+									cell.text = "추가";
+								}
+							},
+							{
+								"constraint": {"rowIndex": 0, "colIndex": 4},
+								"configurator": function(cell){
+									cell.filterable = false;
+									cell.sortable = false;
+									cell.targetColumnName = "memberId";
+									cell.text = "memberId";
+								}
+							},
+							{
+								"constraint": {"rowIndex": 0, "colIndex": 5},
+								"configurator": function(cell){
+									cell.filterable = false;
+									cell.sortable = false;
+									cell.targetColumnName = "fridgeId";
+									cell.text = "fridgeId";
 								}
 							}
 						]
@@ -913,13 +1233,13 @@
 							{
 								"constraint": {"rowIndex": 0, "colIndex": 0},
 								"configurator": function(cell){
-									cell.columnType = "rowindex";
+									cell.columnName = "memberName";
 								}
 							},
 							{
 								"constraint": {"rowIndex": 0, "colIndex": 1},
 								"configurator": function(cell){
-									cell.columnName = "name";
+									cell.columnName = "nickname";
 								}
 							},
 							{
@@ -933,14 +1253,29 @@
 								"configurator": function(cell){
 									cell.control = (function(){
 										var button_3 = new cpr.controls.Button();
-										button_3.value = "초대하기";
+										button_3.value = "추가하기";
 										return button_3;
 									})();
+								}
+							},
+							{
+								"constraint": {"rowIndex": 0, "colIndex": 4},
+								"configurator": function(cell){
+									cell.columnName = "memberId";
+								}
+							},
+							{
+								"constraint": {"rowIndex": 0, "colIndex": 5},
+								"configurator": function(cell){
+									cell.columnName = "fridgeId";
 								}
 							}
 						]
 					}
 				});
+				if(typeof onSearchMemberGridCellClick2 == "function") {
+					grid_3.addEventListener("cell-click", onSearchMemberGridCellClick2);
+				}
 				container.addChild(grid_3, {
 					"width": "253px",
 					"height": "98px"
@@ -948,7 +1283,7 @@
 			})(group_7);
 			container.addChild(group_7, {
 				"width": "400px",
-				"height": "187px"
+				"height": "209px"
 			});
 			if(typeof onBodyLoad == "function"){
 				app.addEventListener("load", onBodyLoad);
