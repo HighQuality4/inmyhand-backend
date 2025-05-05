@@ -1434,104 +1434,6 @@
 				};
 	
 				/*
-				 * 인풋 박스에서 keydown 이벤트 발생 시 호출.
-				 * 사용자가 키를 누를 때 발생하는 이벤트. 키코드 관련 상수는 {@link cpr.events.KeyCode}에서 참조할 수 있습니다.
-				 */
-				//function onIpbFirstKeydown(e){
-				//   var ipb = e.control;
-				//
-				//    if (e.keyCode == 13) {
-				//        var value = ipb.value.trim();
-				//
-				//        if (value) {
-				//            var parent = ipb.getParent();
-				//            var idx = parent.getChildren().indexOf(ipb);
-				//            
-				//              // 현재 Output 개수 세기 (제거 전에 세야 정확함)
-				//            var outputCountBefore = parent.getChildren().filter(function(child) {
-				//                return child instanceof cpr.controls.Output;
-				//            }).length;
-				//
-				//            if (outputCountBefore >= 3) {
-				//                alert("키워드는 3개까지만 입력 가능합니다!");
-				//                // 입력 막기
-				//                var parent = ipb.getParent(); // InputBox의 부모 가져오기
-				//    			parent.removeChild(ipb);      // InputBox 제거
-				//
-				//    			return;
-				//            }
-				//
-				//            // 기존 InputBox 제거
-				//            parent.removeChild(ipb);
-				//
-				//            // Output(태그) 생성
-				//            var output = new cpr.controls.Output();
-				//            output.value = "#" + value;
-				//            output.style.css("background-color", "#ffe4e1");
-				//            output.style.css("border-radius", "12px");
-				//            output.style.css("padding", "6px");
-				//            output.style.css("margin", "4px");
-				//            output.style.css("font-size", "14px");
-				//            output.style.css("vertical-align", "middle");
-				//
-				//			// Output 클릭하면 삭제 + Input 복구
-				//            output.addEventListener("click", function(e2) {
-				//                var outputComp = e2.control;
-				//                var parent = outputComp.getParent();
-				//                var idx = parent.getChildren().indexOf(outputComp);
-				//
-				//                parent.removeChild(outputComp);
-				//
-				//                // 삭제 후 현재 Output 개수 확인
-				//                var outputCountAfterDelete = parent.getChildren().filter(function(child) {
-				//                    return child instanceof cpr.controls.Output;
-				//                }).length;
-				//
-				//                // Output이 3개 미만이면 새 InputBox 추가
-				//                var hasInput = parent.getChildren().some(function(child) {
-				//                    return child instanceof cpr.controls.InputBox;
-				//                });
-				//
-				//                if (outputCountAfterDelete <= 3 && !hasInput) {
-				//                    var newInput = new cpr.controls.InputBox();
-				//                    newInput.style.css("padding", "6px");
-				//                    newInput.style.css("margin", "4px");
-				//                    newInput.style.css("width", "150px");
-				//                    newInput.style.css("vertical-align", "middle");
-				//                    //newInput.style.css("transform", "translateY(3px)");
-				//                    newInput.addEventListener("keydown", onIpbFirstKeydown);
-				//
-				//                    parent.insertChild(idx, newInput, {autoSize: "both"});
-				//                    newInput.focus();
-				//                }
-				//            });
-				//			
-				//
-				//            // Output 추가
-				//            parent.insertChild(idx, output, {autoSize: "both"});
-				//
-				//            // ✅ 여기서! Output 개수 다시 세기
-				//            var outputCount = parent.getChildren().filter(function(child) {
-				//                return child instanceof cpr.controls.Output;
-				//            }).length;
-				//
-				//            if (outputCount <= 3) {
-				//                // 아직 3개 미만이면 새 InputBox 추가
-				//                var newInput = new cpr.controls.InputBox();
-				//                newInput.style.css("padding", "6px");
-				//                newInput.style.css("margin", "4px");
-				//                newInput.style.css("width", "150px");
-				//                newInput.style.css("vertical-align", "middle");
-				//                newInput.addEventListener("keydown", onIpbFirstKeydown);
-				//
-				//                parent.insertChild(idx + 1, newInput, {autoSize: "both"});
-				//                newInput.focus();
-				//            }
-				//        }
-				//    }
-				//}
-	
-				/*
 				 * 루트 컨테이너에서 load 이벤트 발생 시 호출.
 				 * 앱이 최초 구성된후 최초 랜더링 직후에 발생하는 이벤트 입니다.
 				 */
@@ -1795,105 +1697,6 @@
 					// TODO: 그리드의 뷰 모드에서 표시할 텍스트를 반환하는 하는 코드를 작성해야 합니다.
 					return "";
 				};
-	
-	
-				/*
-				 * 인풋 박스에서 keydown 이벤트 발생 시 호출.
-				 * 사용자가 키를 누를 때 발생하는 이벤트. 키코드 관련 상수는 {@link cpr.events.KeyCode}에서 참조할 수 있습니다.
-				 */
-				//function onIpbFirstKeydown(e){
-				//   var ipb = e.control;
-				//
-				//    if (e.keyCode == 13) {
-				//        var value = ipb.value.trim();
-				//
-				//        if (value) {
-				//            var parent = ipb.getParent();
-				//            var idx = parent.getChildren().indexOf(ipb);
-				//            
-				//              // 현재 Output 개수 세기 (제거 전에 세야 정확함)
-				//            var outputCountBefore = parent.getChildren().filter(function(child) {
-				//                return child instanceof cpr.controls.Output;
-				//            }).length;
-				//
-				//            if (outputCountBefore >= 3) {
-				//                alert("키워드는 3개까지만 입력 가능합니다!");
-				//                // 입력 막기
-				//                var parent = ipb.getParent(); // InputBox의 부모 가져오기
-				//    			parent.removeChild(ipb);      // InputBox 제거
-				//
-				//    			return;
-				//            }
-				//
-				//            // 기존 InputBox 제거
-				//            parent.removeChild(ipb);
-				//
-				//            // Output(태그) 생성
-				//            var output = new cpr.controls.Output();
-				//            output.value = "#" + value;
-				//            output.style.css("background-color", "#ffe4e1");
-				//            output.style.css("border-radius", "12px");
-				//            output.style.css("padding", "6px");
-				//            output.style.css("margin", "4px");
-				//            output.style.css("font-size", "14px");
-				//            output.style.css("vertical-align", "middle");
-				//
-				//			// Output 클릭하면 삭제 + Input 복구
-				//            output.addEventListener("click", function(e2) {
-				//                var outputComp = e2.control;
-				//                var parent = outputComp.getParent();
-				//                var idx = parent.getChildren().indexOf(outputComp);
-				//
-				//                parent.removeChild(outputComp);
-				//
-				//                // 삭제 후 현재 Output 개수 확인
-				//                var outputCountAfterDelete = parent.getChildren().filter(function(child) {
-				//                    return child instanceof cpr.controls.Output;
-				//                }).length;
-				//
-				//                // Output이 3개 미만이면 새 InputBox 추가
-				//                var hasInput = parent.getChildren().some(function(child) {
-				//                    return child instanceof cpr.controls.InputBox;
-				//                });
-				//
-				//                if (outputCountAfterDelete <= 3 && !hasInput) {
-				//                    var newInput = new cpr.controls.InputBox();
-				//                    newInput.style.css("padding", "6px");
-				//                    newInput.style.css("margin", "4px");
-				//                    newInput.style.css("width", "150px");
-				//                    newInput.style.css("vertical-align", "middle");
-				//                    //newInput.style.css("transform", "translateY(3px)");
-				//                    newInput.addEventListener("keydown", onIpbFirstKeydown);
-				//
-				//                    parent.insertChild(idx, newInput, {autoSize: "both"});
-				//                    newInput.focus();
-				//                }
-				//            });
-				//			
-				//
-				//            // Output 추가
-				//            parent.insertChild(idx, output, {autoSize: "both"});
-				//
-				//            // ✅ 여기서! Output 개수 다시 세기
-				//            var outputCount = parent.getChildren().filter(function(child) {
-				//                return child instanceof cpr.controls.Output;
-				//            }).length;
-				//
-				//            if (outputCount <= 3) {
-				//                // 아직 3개 미만이면 새 InputBox 추가
-				//                var newInput = new cpr.controls.InputBox();
-				//                newInput.style.css("padding", "6px");
-				//                newInput.style.css("margin", "4px");
-				//                newInput.style.css("width", "150px");
-				//                newInput.style.css("vertical-align", "middle");
-				//                newInput.addEventListener("keydown", onIpbFirstKeydown);
-				//
-				//                parent.insertChild(idx + 1, newInput, {autoSize: "both"});
-				//                newInput.focus();
-				//            }
-				//        }
-				//    }
-				//}
 	
 				/*
 				 * 루트 컨테이너에서 load 이벤트 발생 시 호출.
@@ -2161,105 +1964,6 @@
 					// TODO: 그리드의 뷰 모드에서 표시할 텍스트를 반환하는 하는 코드를 작성해야 합니다.
 					return "";
 				};
-	
-	
-				/*
-				 * 인풋 박스에서 keydown 이벤트 발생 시 호출.
-				 * 사용자가 키를 누를 때 발생하는 이벤트. 키코드 관련 상수는 {@link cpr.events.KeyCode}에서 참조할 수 있습니다.
-				 */
-				//function onIpbFirstKeydown(e){
-				//   var ipb = e.control;
-				//
-				//    if (e.keyCode == 13) {
-				//        var value = ipb.value.trim();
-				//
-				//        if (value) {
-				//            var parent = ipb.getParent();
-				//            var idx = parent.getChildren().indexOf(ipb);
-				//            
-				//              // 현재 Output 개수 세기 (제거 전에 세야 정확함)
-				//            var outputCountBefore = parent.getChildren().filter(function(child) {
-				//                return child instanceof cpr.controls.Output;
-				//            }).length;
-				//
-				//            if (outputCountBefore >= 3) {
-				//                alert("키워드는 3개까지만 입력 가능합니다!");
-				//                // 입력 막기
-				//                var parent = ipb.getParent(); // InputBox의 부모 가져오기
-				//    			parent.removeChild(ipb);      // InputBox 제거
-				//
-				//    			return;
-				//            }
-				//
-				//            // 기존 InputBox 제거
-				//            parent.removeChild(ipb);
-				//
-				//            // Output(태그) 생성
-				//            var output = new cpr.controls.Output();
-				//            output.value = "#" + value;
-				//            output.style.css("background-color", "#ffe4e1");
-				//            output.style.css("border-radius", "12px");
-				//            output.style.css("padding", "6px");
-				//            output.style.css("margin", "4px");
-				//            output.style.css("font-size", "14px");
-				//            output.style.css("vertical-align", "middle");
-				//
-				//			// Output 클릭하면 삭제 + Input 복구
-				//            output.addEventListener("click", function(e2) {
-				//                var outputComp = e2.control;
-				//                var parent = outputComp.getParent();
-				//                var idx = parent.getChildren().indexOf(outputComp);
-				//
-				//                parent.removeChild(outputComp);
-				//
-				//                // 삭제 후 현재 Output 개수 확인
-				//                var outputCountAfterDelete = parent.getChildren().filter(function(child) {
-				//                    return child instanceof cpr.controls.Output;
-				//                }).length;
-				//
-				//                // Output이 3개 미만이면 새 InputBox 추가
-				//                var hasInput = parent.getChildren().some(function(child) {
-				//                    return child instanceof cpr.controls.InputBox;
-				//                });
-				//
-				//                if (outputCountAfterDelete <= 3 && !hasInput) {
-				//                    var newInput = new cpr.controls.InputBox();
-				//                    newInput.style.css("padding", "6px");
-				//                    newInput.style.css("margin", "4px");
-				//                    newInput.style.css("width", "150px");
-				//                    newInput.style.css("vertical-align", "middle");
-				//                    //newInput.style.css("transform", "translateY(3px)");
-				//                    newInput.addEventListener("keydown", onIpbFirstKeydown);
-				//
-				//                    parent.insertChild(idx, newInput, {autoSize: "both"});
-				//                    newInput.focus();
-				//                }
-				//            });
-				//			
-				//
-				//            // Output 추가
-				//            parent.insertChild(idx, output, {autoSize: "both"});
-				//
-				//            // ✅ 여기서! Output 개수 다시 세기
-				//            var outputCount = parent.getChildren().filter(function(child) {
-				//                return child instanceof cpr.controls.Output;
-				//            }).length;
-				//
-				//            if (outputCount <= 3) {
-				//                // 아직 3개 미만이면 새 InputBox 추가
-				//                var newInput = new cpr.controls.InputBox();
-				//                newInput.style.css("padding", "6px");
-				//                newInput.style.css("margin", "4px");
-				//                newInput.style.css("width", "150px");
-				//                newInput.style.css("vertical-align", "middle");
-				//                newInput.addEventListener("keydown", onIpbFirstKeydown);
-				//
-				//                parent.insertChild(idx + 1, newInput, {autoSize: "both"});
-				//                newInput.focus();
-				//            }
-				//        }
-				//    }
-				//}
 	
 				/*
 				 * 루트 컨테이너에서 load 이벤트 발생 시 호출.
@@ -2687,7 +2391,8 @@
 					var button_1 = new cpr.controls.Button();
 					button_1.value = "내 냉장고 보러가기";
 					button_1.style.css({
-						"border-radius" : "5px"
+						"border-radius" : "5px",
+						"background-color" : "#6DC4DD"
 					});
 					if(typeof onButtonClick == "function") {
 						button_1.addEventListener("click", onButtonClick);
@@ -2754,6 +2459,7 @@
 				 *
 				 * @author seongkwan
 				 ************************************************/
+				const showToastModule = cpr.core.Module.require("module/common/showToast");
 	
 				/**
 				 * UDC 컨트롤이 그리드의 뷰 모드에서 표시할 텍스트를 반환합니다.
@@ -2786,6 +2492,7 @@
 					smshealthInfo.addEventListenerOnce("submit-success", function(e) {
 					    console.log("✅ 저장 완료 → 최신 정보 다시 불러옴");
 					    alert("저장 완료되었습니다!")
+					    showToastModule.showToast("저장 완료되었습니다!", 2000);
 					    app.lookup("smsHealthInfo").send();  // GET 요청으로 다시 가져오기
 				  	});
 					
@@ -4410,7 +4117,6 @@
 				app.declareAppProperty("author", "-");
 				app.declareAppProperty("likesCount", "-");
 				app.declareAppProperty("recipeImg", "../../theme/images/recipe.svg");
-				app.declareAppProperty("authorImg", "../../theme/images/user.svg");
 				app.declareAppProperty("calories", "-");
 				app.declareAppProperty("recipeId", null);
 				app.supportMedia("all and (min-width: 1024px)", "default");
@@ -4428,8 +4134,9 @@
 				container.bind("fieldLabel").toAppProperty("recipeId");
 				
 				// Layout
-				var responsiveXYLayout_1 = new cpr.controls.layouts.ResponsiveXYLayout();
-				container.setLayout(responsiveXYLayout_1);
+				var verticalLayout_1 = new cpr.controls.layouts.VerticalLayout();
+				verticalLayout_1.spacing = 0;
+				container.setLayout(verticalLayout_1);
 				
 				// UI Configuration
 				var image_1 = new cpr.controls.Image();
@@ -4439,29 +4146,8 @@
 				});
 				image_1.bind("src").toAppProperty("recipeImg");
 				container.addChild(image_1, {
-					positions: [
-						{
-							"media": "all and (min-width: 1024px)",
-							"top": "0px",
-							"bottom": "150px",
-							"width": "250px",
-							"left": "calc(50% - 125px)"
-						}, 
-						{
-							"media": "all and (min-width: 500px) and (max-width: 1023.984px)",
-							"top": "0px",
-							"bottom": "150px",
-							"width": "122px",
-							"left": "calc(50% - 61px)"
-						}, 
-						{
-							"media": "all and (max-width: 499.984px)",
-							"top": "0px",
-							"bottom": "150px",
-							"width": "85px",
-							"left": "calc(50% - 42px)"
-						}
-					]
+					"width": "250px",
+					"height": "250px"
 				});
 				
 				var group_1 = new cpr.controls.Container();
@@ -4474,8 +4160,8 @@
 				group_1.setLayout(xYLayout_1);
 				(function(container){
 					var group_2 = new cpr.controls.Container();
-					var verticalLayout_1 = new cpr.controls.layouts.VerticalLayout();
-					group_2.setLayout(verticalLayout_1);
+					var verticalLayout_2 = new cpr.controls.layouts.VerticalLayout();
+					group_2.setLayout(verticalLayout_2);
 					(function(container){
 						var output_1 = new cpr.controls.Output("recipeTitle");
 						output_1.style.css({
@@ -4717,10 +4403,10 @@
 							group_9.setLayout(flowLayout_7);
 							(function(container){
 								var image_5 = new cpr.controls.Image();
+								image_5.src = "theme/images/user.svg";
 								image_5.style.css({
 									"border-radius" : "100%"
 								});
-								image_5.bind("src").toAppProperty("authorImg");
 								container.addChild(image_5, {
 									"width": "20px",
 									"height": "20px"
@@ -4781,29 +4467,8 @@
 					});
 				})(group_1);
 				container.addChild(group_1, {
-					positions: [
-						{
-							"media": "all and (min-width: 1024px)",
-							"top": "250px",
-							"bottom": "0px",
-							"width": "250px",
-							"left": "calc(50% - 125px)"
-						}, 
-						{
-							"media": "all and (min-width: 500px) and (max-width: 1023.984px)",
-							"top": "250px",
-							"bottom": "0px",
-							"width": "122px",
-							"left": "calc(50% - 61px)"
-						}, 
-						{
-							"media": "all and (max-width: 499.984px)",
-							"top": "250px",
-							"bottom": "0px",
-							"width": "85px",
-							"left": "calc(50% - 42px)"
-						}
-					]
+					"width": "250px",
+					"height": "150px"
 				});
 				if(typeof onBodyClick == "function"){
 					app.getContainer().addEventListener("click", onBodyClick);
@@ -4897,14 +4562,6 @@
 		},
 		set: function(newValue){
 			return this.getEmbeddedAppInstance().setAppProperty("recipeImg", newValue, true);
-		}
-	});
-	Object.defineProperty(udc.recipe.recipe_card.prototype, "authorImg", {
-		get: function(){
-			return this.getEmbeddedAppInstance().getAppProperty("authorImg");
-		},
-		set: function(newValue){
-			return this.getEmbeddedAppInstance().setAppProperty("authorImg", newValue, true);
 		}
 	});
 	Object.defineProperty(udc.recipe.recipe_card.prototype, "calories", {
