@@ -143,10 +143,23 @@
 			});
 			
 			// Layout
-			var responsiveXYLayout_1 = new cpr.controls.layouts.ResponsiveXYLayout();
-			container.setLayout(responsiveXYLayout_1);
+			var verticalLayout_1 = new cpr.controls.layouts.VerticalLayout();
+			verticalLayout_1.spacing = 10;
+			container.setLayout(verticalLayout_1);
 			
 			// UI Configuration
+			var output_1 = new cpr.controls.Output();
+			output_1.value = "로그인";
+			output_1.style.css({
+				"color" : "#000000",
+				"font-weight" : "bold",
+				"font-size" : "20px"
+			});
+			container.addChild(output_1, {
+				"width": "600px",
+				"height": "50px"
+			});
+			
 			var group_1 = new cpr.controls.Container("loginForm");
 			group_1.style.setClasses(["login_input"]);
 			var formLayout_1 = new cpr.controls.layouts.FormLayout();
@@ -158,16 +171,14 @@
 			formLayout_1.bottomMargin = "5px";
 			formLayout_1.leftMargin = "5px";
 			formLayout_1.setColumns(["1fr"]);
-			formLayout_1.setRows(["74px", "74px"]);
+			formLayout_1.setRows(["60px", "60px"]);
 			group_1.setLayout(formLayout_1);
 			(function(container){
 				var inputBox_1 = new cpr.controls.InputBox("email");
 				inputBox_1.value = "";
 				inputBox_1.placeholder = "아이디";
 				inputBox_1.style.css({
-					"border-radius" : "5px",
-					"background-color" : "#FFFBF7",
-					"font-size" : "24px"
+					"font-size" : "16px"
 				});
 				container.addChild(inputBox_1, {
 					"colIndex": 0,
@@ -178,9 +189,7 @@
 				inputBox_2.secret = true;
 				inputBox_2.placeholder = "비밀번호";
 				inputBox_2.style.css({
-					"border-radius" : "5px",
-					"color" : "#000000",
-					"font-size" : "24px"
+					"font-size" : "16px"
 				});
 				container.addChild(inputBox_2, {
 					"colIndex": 0,
@@ -188,135 +197,42 @@
 				});
 			})(group_1);
 			container.addChild(group_1, {
-				positions: [
-					{
-						"media": "all and (min-width: 1024px)",
-						"top": "132px",
-						"right": "0px",
-						"left": "0px",
-						"height": "170px"
-					}, 
-					{
-						"media": "all and (min-width: 500px) and (max-width: 1023.984px)",
-						"top": "132px",
-						"right": "0px",
-						"left": "0px",
-						"height": "170px"
-					}, 
-					{
-						"media": "all and (max-width: 499.984px)",
-						"top": "132px",
-						"right": "0px",
-						"left": "0px",
-						"height": "170px"
-					}
-				]
+				"autoSize": "height",
+				"width": "600px",
+				"height": "142px"
 			});
 			
 			var button_1 = new cpr.controls.Button();
 			button_1.value = "로그인";
 			button_1.style.css({
-				"background-color" : "#856C66",
-				"color" : "#856C66",
 				"font-weight" : "bold",
-				"font-size" : "16px",
-				"font-family" : "@Kim jung chul Myungjo Bold"
+				"font-size" : "16px"
 			});
 			if(typeof onButtonClick == "function") {
 				button_1.addEventListener("click", onButtonClick);
 			}
 			container.addChild(button_1, {
-				positions: [
-					{
-						"media": "all and (min-width: 1024px)",
-						"top": "336px",
-						"right": "0px",
-						"left": "0px",
-						"height": "74px"
-					}, 
-					{
-						"media": "all and (min-width: 500px) and (max-width: 1023.984px)",
-						"top": "336px",
-						"right": "0px",
-						"left": "0px",
-						"height": "74px"
-					}, 
-					{
-						"media": "all and (max-width: 499.984px)",
-						"top": "336px",
-						"right": "0px",
-						"left": "0px",
-						"height": "74px"
-					}
-				]
-			});
-			
-			var output_1 = new cpr.controls.Output();
-			output_1.value = "로그인";
-			output_1.style.css({
-				"color" : "#000000",
-				"font-weight" : "bold",
-				"font-size" : "24px",
-				"font-family" : "Kim jung chul Myungjo Regular"
-			});
-			container.addChild(output_1, {
-				positions: [
-					{
-						"media": "all and (min-width: 1024px)",
-						"top": "49px",
-						"right": "0px",
-						"left": "0px",
-						"height": "74px"
-					}, 
-					{
-						"media": "all and (min-width: 500px) and (max-width: 1023.984px)",
-						"top": "49px",
-						"right": "0px",
-						"left": "0px",
-						"height": "74px"
-					}, 
-					{
-						"media": "all and (max-width: 499.984px)",
-						"top": "49px",
-						"right": "0px",
-						"left": "0px",
-						"height": "74px"
-					}
-				]
+				"width": "600px",
+				"height": "60px"
 			});
 			
 			var output_2 = new cpr.controls.Output();
-			output_2.value = "소셜 로그인";
-			output_2.style.css({
+			output_2.value = "";
+			container.addChild(output_2, {
+				"width": "100px",
+				"height": "30px"
+			});
+			
+			var output_3 = new cpr.controls.Output();
+			output_3.value = "소셜 로그인";
+			output_3.style.css({
 				"color" : "#000000",
 				"font-weight" : "bold",
-				"font-size" : "24px",
-				"font-family" : "Kim jung chul Myungjo Regular"
+				"font-size" : "20px"
 			});
-			container.addChild(output_2, {
-				positions: [
-					{
-						"media": "all and (min-width: 1024px)",
-						"top": "433px",
-						"right": "0px",
-						"left": "0px",
-						"height": "74px"
-					}, 
-					{
-						"media": "all and (min-width: 500px) and (max-width: 1023.984px)",
-						"top": "433px",
-						"right": "0px",
-						"left": "0px",
-						"height": "74px"
-					}, 
-					{
-						"media": "all and (max-width: 499.984px)",
-						"top": "433px",
-						"right": "0px",
-						"left": "0px",
-						"height": "74px"
-					}
-				]
+			container.addChild(output_3, {
+				"width": "600px",
+				"height": "50px"
 			});
 			
 			var group_2 = new cpr.controls.Container();
@@ -330,6 +246,7 @@
 				var button_2 = new cpr.controls.Button("네이버");
 				button_2.style.css({
 					"border-radius" : "100%",
+					"background-color" : "transparent",
 					"background-repeat" : "no-repeat",
 					"background-size" : "contain",
 					"border-top-width" : "0px",
@@ -343,12 +260,13 @@
 				}
 				container.addChild(button_2, {
 					"autoSize": "none",
-					"width": "100px",
-					"height": "100px"
+					"width": "80px",
+					"height": "80px"
 				});
 				var button_3 = new cpr.controls.Button("구글");
 				button_3.style.css({
 					"border-radius" : "100%",
+					"background-color" : "transparent",
 					"background-repeat" : "no-repeat",
 					"background-size" : "contain",
 					"border-top-width" : "0px",
@@ -362,12 +280,13 @@
 				}
 				container.addChild(button_3, {
 					"autoSize": "none",
-					"width": "95px",
-					"height": "97px"
+					"width": "80px",
+					"height": "80px"
 				});
 				var button_4 = new cpr.controls.Button("카카오");
 				button_4.style.css({
 					"border-radius" : "100%",
+					"background-color" : "transparent",
 					"background-repeat" : "no-repeat",
 					"background-size" : "contain",
 					"border-top-width" : "0px",
@@ -381,43 +300,36 @@
 				}
 				container.addChild(button_4, {
 					"autoSize": "none",
-					"width": "100px",
-					"height": "100px"
+					"width": "80px",
+					"height": "80px"
 				});
 			})(group_2);
 			container.addChild(group_2, {
-				positions: [
-					{
-						"media": "all and (min-width: 1024px)",
-						"top": "517px",
-						"right": "0px",
-						"left": "0px",
-						"height": "100px"
-					}, 
-					{
-						"media": "all and (min-width: 500px) and (max-width: 1023.984px)",
-						"top": "517px",
-						"right": "0px",
-						"left": "0px",
-						"height": "100px"
-					}, 
-					{
-						"media": "all and (max-width: 499.984px)",
-						"top": "517px",
-						"right": "0px",
-						"left": "0px",
-						"height": "100px"
-					}
-				]
+				"autoSize": "height",
+				"width": "600px",
+				"height": "80px"
+			});
+			
+			var output_4 = new cpr.controls.Output();
+			output_4.value = "";
+			container.addChild(output_4, {
+				"autoSize": "none",
+				"width": "600px",
+				"height": "10px"
 			});
 			
 			var group_3 = new cpr.controls.Container();
-			var flowLayout_2 = new cpr.controls.layouts.FlowLayout();
-			flowLayout_2.horizontalSpacing = 20;
-			flowLayout_2.verticalSpacing = 0;
-			flowLayout_2.horizontalAlign = "center";
-			flowLayout_2.verticalAlign = "middle";
-			group_3.setLayout(flowLayout_2);
+			var formLayout_2 = new cpr.controls.layouts.FormLayout();
+			formLayout_2.scrollable = false;
+			formLayout_2.horizontalSpacing = "0px";
+			formLayout_2.verticalSpacing = "0px";
+			formLayout_2.topMargin = "0px";
+			formLayout_2.rightMargin = "0px";
+			formLayout_2.bottomMargin = "0px";
+			formLayout_2.leftMargin = "0px";
+			formLayout_2.setColumns(["1fr", "20px", "1fr"]);
+			formLayout_2.setRows(["60px"]);
+			group_3.setLayout(formLayout_2);
 			(function(container){
 				var button_5 = new cpr.controls.Button();
 				button_5.value = "비밀번호 찾기";
@@ -429,8 +341,8 @@
 					button_5.addEventListener("click", onButtonClick2);
 				}
 				container.addChild(button_5, {
-					"width": "235px",
-					"height": "75px"
+					"colIndex": 0,
+					"rowIndex": 0
 				});
 				var button_6 = new cpr.controls.Button();
 				button_6.value = "회원가입";
@@ -442,34 +354,14 @@
 					button_6.addEventListener("click", onButtonClick3);
 				}
 				container.addChild(button_6, {
-					"width": "236px",
-					"height": "75px"
+					"colIndex": 2,
+					"rowIndex": 0
 				});
 			})(group_3);
 			container.addChild(group_3, {
-				positions: [
-					{
-						"media": "all and (min-width: 1024px)",
-						"top": "624px",
-						"right": "0px",
-						"left": "0px",
-						"height": "75px"
-					}, 
-					{
-						"media": "all and (min-width: 500px) and (max-width: 1023.984px)",
-						"top": "624px",
-						"right": "0px",
-						"left": "0px",
-						"height": "75px"
-					}, 
-					{
-						"media": "all and (max-width: 499.984px)",
-						"top": "624px",
-						"right": "0px",
-						"left": "0px",
-						"height": "75px"
-					}
-				]
+				"autoSize": "height",
+				"width": "600px",
+				"height": "60px"
 			});
 		}
 	});
