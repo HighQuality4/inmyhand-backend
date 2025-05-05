@@ -42,7 +42,7 @@
     </cl:group>
     <cl:group std:sid="group-bc0cdddc" id="popularSearchBoard" style="background-color:#FBDBCF; border-radius:5px;">
       <cl:verticaldata std:sid="v-data-1fb0ce63" width="600px" height="300px" autosize="height"/>
-      <cl:output std:sid="output-86ab009d" style="color:#856C66; font-weight:bold; font-size:16px; text-align:center;" value="실시간 레시피 인기 검색어">
+      <cl:output std:sid="output-86ab009d" style="color:#856C66; font-weight:bold; font-size:16px; text-align:center;" value="실시간 인기 검색 레시피">
         <cl:verticaldata std:sid="v-data-9492a6cc" width="100px" height="30px"/>
       </cl:output>
       <cl:group std:sid="group-a2d3f164">
@@ -52,7 +52,7 @@
           <cl:output std:sid="output-06c80fc9" style="color:#856C66; text-align:center;" value="1">
             <cl:flowlayoutdata std:sid="f-data-1a2f9d3b" width="30px" height="30px"/>
           </cl:output>
-          <cl:output std:sid="output-3a55cb8f" id="out1" style="color:#856C66; text-align:center;" value="Output">
+          <cl:output std:sid="output-3a55cb8f" id="out1" style="color:#856C66; text-align:center;" value="Loading...">
             <cl:flowlayoutdata std:sid="f-data-a7ee147c" width="410px" height="30px" autosize="none"/>
           </cl:output>
           <cl:flowlayout std:sid="f-layout-2a1ae3b9"/>
@@ -62,7 +62,7 @@
           <cl:output std:sid="output-3fdbc3ad" style="color:#856C66; text-align:center;" value="2">
             <cl:flowlayoutdata std:sid="f-data-4af7f579" width="30px" height="30px"/>
           </cl:output>
-          <cl:output std:sid="output-8db2f4ee" id="out2" style="color:#856C66; text-align:center;" value="Output">
+          <cl:output std:sid="output-8db2f4ee" id="out2" style="color:#856C66; text-align:center;" value="Loading...">
             <cl:flowlayoutdata std:sid="f-data-56718e3a" width="410px" height="30px" autosize="none"/>
           </cl:output>
           <cl:flowlayout std:sid="f-layout-ca005e15"/>
@@ -72,7 +72,7 @@
           <cl:output std:sid="output-0261d762" style="color:#856C66; text-align:center;" value="3">
             <cl:flowlayoutdata std:sid="f-data-8a2c1ca4" width="30px" height="30px"/>
           </cl:output>
-          <cl:output std:sid="output-1d775977" id="out3" style="color:#856C66; text-align:center;" value="Output">
+          <cl:output std:sid="output-1d775977" id="out3" style="color:#856C66; text-align:center;" value="Loading...">
             <cl:flowlayoutdata std:sid="f-data-3513de8a" width="410px" height="30px" autosize="none"/>
           </cl:output>
           <cl:flowlayout std:sid="f-layout-cfcd2a46"/>
@@ -82,7 +82,7 @@
           <cl:output std:sid="output-8d92b327" style="color:#856C66; text-align:center;" value="4">
             <cl:flowlayoutdata std:sid="f-data-0ab8b12b" width="30px" height="30px"/>
           </cl:output>
-          <cl:output std:sid="output-5d3dd694" id="out4" style="color:#856C66; text-align:center;" value="Output">
+          <cl:output std:sid="output-5d3dd694" id="out4" style="color:#856C66; text-align:center;" value="Loading...">
             <cl:flowlayoutdata std:sid="f-data-4b6dfc61" width="410px" height="30px" autosize="none"/>
           </cl:output>
           <cl:flowlayout std:sid="f-layout-37d2d8f7"/>
@@ -92,7 +92,7 @@
           <cl:output std:sid="output-2bf320cd" style="color:#856C66; text-align:center;" value="5">
             <cl:flowlayoutdata std:sid="f-data-33f48ef7" width="30px" height="30px"/>
           </cl:output>
-          <cl:output std:sid="output-40b9da58" id="out5" style="color:#856C66; text-align:center;" value="Output">
+          <cl:output std:sid="output-40b9da58" id="out5" style="color:#856C66; text-align:center;" value="Loading...">
             <cl:flowlayoutdata std:sid="f-data-0562d659" width="410px" height="30px" autosize="none"/>
           </cl:output>
           <cl:flowlayout std:sid="f-layout-ab1a83e7"/>

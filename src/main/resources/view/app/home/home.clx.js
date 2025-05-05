@@ -226,7 +226,7 @@
 			group_2.setLayout(verticalLayout_2);
 			(function(container){
 				var output_1 = new cpr.controls.Output();
-				output_1.value = "실시간 레시피 인기 검색어";
+				output_1.value = "실시간 인기 검색 레시피";
 				output_1.style.css({
 					"color" : "#856C66",
 					"font-weight" : "bold",
@@ -263,7 +263,7 @@
 							"height": "30px"
 						});
 						var output_3 = new cpr.controls.Output("out1");
-						output_3.value = "Output";
+						output_3.value = "Loading...";
 						output_3.style.css({
 							"color" : "#856C66",
 							"text-align" : "center"
@@ -300,7 +300,7 @@
 							"height": "30px"
 						});
 						var output_5 = new cpr.controls.Output("out2");
-						output_5.value = "Output";
+						output_5.value = "Loading...";
 						output_5.style.css({
 							"color" : "#856C66",
 							"text-align" : "center"
@@ -337,7 +337,7 @@
 							"height": "30px"
 						});
 						var output_7 = new cpr.controls.Output("out3");
-						output_7.value = "Output";
+						output_7.value = "Loading...";
 						output_7.style.css({
 							"color" : "#856C66",
 							"text-align" : "center"
@@ -374,7 +374,7 @@
 							"height": "30px"
 						});
 						var output_9 = new cpr.controls.Output("out4");
-						output_9.value = "Output";
+						output_9.value = "Loading...";
 						output_9.style.css({
 							"color" : "#856C66",
 							"text-align" : "center"
@@ -411,7 +411,7 @@
 							"height": "30px"
 						});
 						var output_11 = new cpr.controls.Output("out5");
-						output_11.value = "Output";
+						output_11.value = "Loading...";
 						output_11.style.css({
 							"color" : "#856C66",
 							"text-align" : "center"
