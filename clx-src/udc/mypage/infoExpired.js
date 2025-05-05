@@ -59,7 +59,7 @@ function onBodyLoad(e){
 		    //const group = udc.lookup("foodinfogroup");
 		    refUdc.setNum(i+1);
 		    refUdc.setFoodName(foodName);
-		    const expText = Number(expdate) < 0 ? "버리셈" : expdate + "일";
+		    const expText = Number(expdate) < 0 ? "유통기한이 지났어요!" : expdate + "일";
 			refUdc.setExpdate(expText);
 //		    group.lookup("num").value = (i + 1) + ".";
 //		    group.lookup("foodname").value = foodName;

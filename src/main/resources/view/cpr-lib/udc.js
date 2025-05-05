@@ -1602,8 +1602,8 @@
 				})(group_1);
 				container.addChild(group_1, {
 					"top": "0px",
+					"right": "0px",
 					"left": "0px",
-					"width": "460px",
 					"height": "80px"
 				});
 				if(typeof onBodyLoad == "function"){
@@ -1862,15 +1862,15 @@
 					})(group_2);
 					container.addChild(group_2, {
 						"top": "0px",
+						"right": "0px",
 						"left": "99px",
-						"width": "360px",
 						"height": "80px"
 					});
 				})(group_1);
 				container.addChild(group_1, {
 					"top": "0px",
+					"right": "0px",
 					"left": "0px",
-					"width": "460px",
 					"height": "80px"
 				});
 				if(typeof onBodyLoad == "function"){
@@ -2129,15 +2129,15 @@
 					})(group_2);
 					container.addChild(group_2, {
 						"top": "0px",
+						"right": "0px",
 						"left": "99px",
-						"width": "360px",
 						"height": "80px"
 					});
 				})(group_1);
 				container.addChild(group_1, {
 					"top": "0px",
+					"right": "0px",
 					"left": "0px",
-					"width": "460px",
 					"height": "80px"
 				});
 				if(typeof onBodyLoad == "function"){
@@ -2244,7 +2244,7 @@
 						    //const group = udc.lookup("foodinfogroup");
 						    refUdc.setNum(i+1);
 						    refUdc.setFoodName(foodName);
-						    const expText = Number(expdate) < 0 ? "버리셈" : expdate + "일";
+						    const expText = Number(expdate) < 0 ? "유통기한이 지났어요!" : expdate + "일";
 							refUdc.setExpdate(expText);
 				//		    group.lookup("num").value = (i + 1) + ".";
 				//		    group.lookup("foodname").value = foodName;
@@ -2316,8 +2316,8 @@
 				});
 				
 				// Layout
-				var xYLayout_1 = new cpr.controls.layouts.XYLayout();
-				container.setLayout(xYLayout_1);
+				var verticalLayout_1 = new cpr.controls.layouts.VerticalLayout();
+				container.setLayout(verticalLayout_1);
 				
 				// UI Configuration
 				var group_1 = new cpr.controls.Container();
@@ -2325,54 +2325,66 @@
 					"border-radius" : "5px",
 					"background-color" : "#EAF1F3"
 				});
-				var xYLayout_2 = new cpr.controls.layouts.XYLayout();
-				group_1.setLayout(xYLayout_2);
+				var verticalLayout_2 = new cpr.controls.layouts.VerticalLayout();
+				verticalLayout_2.spacing = 20;
+				verticalLayout_2.leftMargin = 10;
+				verticalLayout_2.rightMargin = 10;
+				verticalLayout_2.topMargin = 20;
+				verticalLayout_2.bottomMargin = 20;
+				group_1.setLayout(verticalLayout_2);
 				(function(container){
 					var output_1 = new cpr.controls.Output("title");
 					output_1.value = "내 식재료 유통기한";
 					output_1.style.css({
 						"color" : "#856C66",
 						"font-weight" : "bold",
-						"font-size" : "20px",
+						"font-size" : "16px",
 						"text-align" : "center"
 					});
 					if(typeof onTitleValueChange == "function") {
 						output_1.addEventListener("value-change", onTitleValueChange);
 					}
 					container.addChild(output_1, {
-						"top": "20px",
 						"width": "215px",
-						"height": "26px",
-						"left": "calc(50% - 107px)"
+						"height": "26px"
 					});
 					var group_2 = new cpr.controls.Container("refInfoGroup");
-					var verticalLayout_1 = new cpr.controls.layouts.VerticalLayout();
-					group_2.setLayout(verticalLayout_1);
+					var verticalLayout_3 = new cpr.controls.layouts.VerticalLayout();
+					verticalLayout_3.spacing = 10;
+					group_2.setLayout(verticalLayout_3);
 					container.addChild(group_2, {
-						"top": "72px",
+						"autoSize": "height",
 						"width": "480px",
-						"height": "275px",
-						"left": "calc(50% - 240px)"
+						"height": "275px"
 					});
 					var button_1 = new cpr.controls.Button();
 					button_1.value = "내 냉장고 보러가기";
 					button_1.style.css({
+						"border-right-style" : "solid",
+						"border-top-width" : "1px",
+						"border-bottom-color" : "#6dc4dd",
+						"border-right-width" : "1px",
+						"border-left-color" : "#6dc4dd",
+						"border-right-color" : "#6dc4dd",
+						"border-left-width" : "1px",
+						"border-top-style" : "solid",
 						"border-radius" : "5px",
-						"background-color" : "#6DC4DD"
+						"background-color" : "#6DC4DD",
+						"border-left-style" : "solid",
+						"border-bottom-width" : "1px",
+						"border-top-color" : "#6dc4dd",
+						"border-bottom-style" : "solid"
 					});
 					if(typeof onButtonClick == "function") {
 						button_1.addEventListener("click", onButtonClick);
 					}
 					container.addChild(button_1, {
-						"top": "385px",
 						"width": "460px",
-						"height": "40px",
-						"left": "calc(50% - 230px)"
+						"height": "40px"
 					});
 				})(group_1);
 				container.addChild(group_1, {
-					"top": "0px",
-					"left": "0px",
+					"autoSize": "height",
 					"width": "520px",
 					"height": "440px"
 				});
@@ -2499,8 +2511,8 @@
 				});
 				
 				// Layout
-				var xYLayout_1 = new cpr.controls.layouts.XYLayout();
-				container.setLayout(xYLayout_1);
+				var verticalLayout_1 = new cpr.controls.layouts.VerticalLayout();
+				container.setLayout(verticalLayout_1);
 				
 				// UI Configuration
 				var group_1 = new cpr.controls.Container("health_info");
@@ -2509,20 +2521,20 @@
 					"background-color" : "#E5E6C7",
 					"vertical-align" : "middle"
 				});
-				var xYLayout_2 = new cpr.controls.layouts.XYLayout();
-				xYLayout_2.scrollable = false;
-				group_1.setLayout(xYLayout_2);
+				var xYLayout_1 = new cpr.controls.layouts.XYLayout();
+				xYLayout_1.scrollable = false;
+				group_1.setLayout(xYLayout_1);
 				(function(container){
 					var output_1 = new cpr.controls.Output("title");
 					output_1.value = "나의 건강 정보";
 					output_1.style.css({
 						"color" : "#856C66",
 						"font-weight" : "bold",
-						"font-size" : "20px",
+						"font-size" : "16px",
 						"text-align" : "center"
 					});
 					container.addChild(output_1, {
-						"top": "34px",
+						"top": "20px",
 						"width": "161px",
 						"height": "26px",
 						"left": "calc(50% - 80px)"
@@ -2530,23 +2542,35 @@
 					var button_1 = new cpr.controls.Button("healthInfo_submit");
 					button_1.value = "내 건강 정보 수정하기";
 					button_1.style.css({
+						"border-right-style" : "solid",
+						"border-top-width" : "1px",
+						"border-bottom-color" : "#d9dc7d",
+						"border-right-width" : "1px",
+						"border-left-color" : "#d9dc7d",
+						"border-right-color" : "#d9dc7d",
+						"border-left-width" : "1px",
+						"border-top-style" : "solid",
 						"border-radius" : "5px",
-						"background-color" : "#D9DC7D"
+						"background-color" : "#D9DC7D",
+						"border-left-style" : "solid",
+						"border-bottom-width" : "1px",
+						"border-top-color" : "#d9dc7d",
+						"border-bottom-style" : "solid"
 					});
 					if(typeof onHealthInfo_submitClick == "function") {
 						button_1.addEventListener("click", onHealthInfo_submitClick);
 					}
 					container.addChild(button_1, {
-						"top": "373px",
-						"width": "460px",
-						"height": "40px",
-						"left": "calc(50% - 230px)"
+						"right": "10px",
+						"bottom": "20px",
+						"left": "10px",
+						"height": "40px"
 					});
 					var userDefinedControl_1 = new udc.mypage.info_tag("healthinterset");
 					container.addChild(userDefinedControl_1, {
-						"top": "277px",
-						"left": "30px",
-						"width": "460px",
+						"top": "280px",
+						"right": "10px",
+						"left": "10px",
 						"height": "85px"
 					});
 					var output_2 = new cpr.controls.Output();
@@ -2557,16 +2581,16 @@
 						"text-align" : "center"
 					});
 					container.addChild(output_2, {
-						"top": "277px",
-						"left": "30px",
+						"top": "280px",
+						"left": "10px",
 						"width": "100px",
-						"height": "74px"
+						"height": "84px"
 					});
 					var userDefinedControl_2 = new udc.mypage.info_tag2("hatefood");
 					container.addChild(userDefinedControl_2, {
-						"top": "183px",
-						"left": "31px",
-						"width": "460px",
+						"top": "175px",
+						"right": "10px",
+						"left": "10px",
 						"height": "85px"
 					});
 					var output_3 = new cpr.controls.Output();
@@ -2577,16 +2601,16 @@
 						"text-align" : "center"
 					});
 					container.addChild(output_3, {
-						"top": "184px",
-						"left": "30px",
+						"top": "175px",
+						"left": "10px",
 						"width": "100px",
-						"height": "74px"
+						"height": "84px"
 					});
 					var userDefinedControl_3 = new udc.mypage.info_tag3("allergy");
 					container.addChild(userDefinedControl_3, {
-						"top": "88px",
-						"left": "31px",
-						"width": "460px",
+						"top": "70px",
+						"left": "10px",
+						"width": "500px",
 						"height": "85px"
 					});
 					var output_4 = new cpr.controls.Output();
@@ -2597,15 +2621,13 @@
 						"text-align" : "center"
 					});
 					container.addChild(output_4, {
-						"top": "88px",
-						"left": "30px",
+						"top": "70px",
+						"left": "10px",
 						"width": "100px",
-						"height": "74px"
+						"height": "84px"
 					});
 				})(group_1);
 				container.addChild(group_1, {
-					"top": "0px",
-					"left": "0px",
 					"width": "520px",
 					"height": "440px"
 				});
@@ -2713,7 +2735,7 @@
 					container.addChild(output_1, {
 						"top": "10px",
 						"left": "68px",
-						"width": "244px",
+						"width": "200px",
 						"height": "22px"
 					});
 					var output_2 = new cpr.controls.Output("num");
@@ -2728,8 +2750,8 @@
 					output_3.value = "Output";
 					container.addChild(output_3, {
 						"top": "10px",
-						"left": "340px",
-						"width": "100px",
+						"left": "296px",
+						"width": "144px",
 						"height": "22px"
 					});
 				})(group_1);
@@ -3063,7 +3085,7 @@
 				group_1.setLayout(responsiveXYLayout_1);
 				(function(container){
 					var output_1 = new cpr.controls.Output();
-					output_1.value = "닉네임:";
+					output_1.value = "닉네임";
 					output_1.style.css({
 						"font-weight" : "bold",
 						"font-size" : "16px",
@@ -3076,26 +3098,26 @@
 								"top": "20px",
 								"left": "144px",
 								"width": "100px",
-								"height": "27px"
+								"height": "40px"
 							}, 
 							{
 								"media": "all and (min-width: 500px) and (max-width: 1023.984px)",
 								"top": "20px",
 								"left": "70px",
 								"width": "49px",
-								"height": "27px"
+								"height": "40px"
 							}, 
 							{
 								"media": "all and (max-width: 499.984px)",
 								"top": "20px",
 								"left": "49px",
 								"width": "34px",
-								"height": "27px"
+								"height": "40px"
 							}
 						]
 					});
 					var output_2 = new cpr.controls.Output();
-					output_2.value = "가입일:";
+					output_2.value = "가입일";
 					output_2.style.css({
 						"font-weight" : "bold",
 						"font-size" : "16px"
@@ -3104,24 +3126,24 @@
 						positions: [
 							{
 								"media": "all and (min-width: 1024px)",
-								"top": "79px",
+								"top": "69px",
 								"left": "144px",
 								"width": "100px",
-								"height": "30px"
+								"height": "40px"
 							}, 
 							{
 								"media": "all and (min-width: 500px) and (max-width: 1023.984px)",
-								"top": "79px",
+								"top": "69px",
 								"left": "70px",
 								"width": "49px",
-								"height": "30px"
+								"height": "40px"
 							}, 
 							{
 								"media": "all and (max-width: 499.984px)",
-								"top": "79px",
+								"top": "69px",
 								"left": "49px",
 								"width": "34px",
-								"height": "30px"
+								"height": "40px"
 							}
 						]
 					});
@@ -3137,22 +3159,22 @@
 							{
 								"media": "all and (min-width: 1024px)",
 								"top": "20px",
-								"left": "279px",
-								"width": "120px",
+								"right": "20px",
+								"left": "250px",
 								"height": "40px"
 							}, 
 							{
 								"media": "all and (min-width: 500px) and (max-width: 1023.984px)",
 								"top": "20px",
-								"left": "136px",
-								"width": "59px",
+								"right": "10px",
+								"left": "122px",
 								"height": "40px"
 							}, 
 							{
 								"media": "all and (max-width: 499.984px)",
 								"top": "20px",
-								"left": "95px",
-								"width": "41px",
+								"right": "7px",
+								"left": "85px",
 								"height": "40px"
 							}
 						]
@@ -3169,22 +3191,22 @@
 							{
 								"media": "all and (min-width: 1024px)",
 								"top": "69px",
-								"left": "279px",
-								"width": "120px",
+								"right": "20px",
+								"left": "250px",
 								"height": "40px"
 							}, 
 							{
 								"media": "all and (min-width: 500px) and (max-width: 1023.984px)",
 								"top": "69px",
-								"left": "136px",
-								"width": "59px",
+								"right": "10px",
+								"left": "122px",
 								"height": "40px"
 							}, 
 							{
 								"media": "all and (max-width: 499.984px)",
 								"top": "69px",
-								"left": "95px",
-								"width": "41px",
+								"right": "7px",
+								"left": "85px",
 								"height": "40px"
 							}
 						]

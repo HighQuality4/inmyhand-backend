@@ -21,35 +21,35 @@
   <body std:sid="body-fda733f2" style="top:0px; left:0px; width:520px; height:440px;">
     <cl:listener std:sid="listener-3bafd771" name="load" handler="onBodyLoad2"/>
     <cl:group std:sid="group-a10f19c1" id="health_info" style="border-radius:5px; background-color:#E5E6C7; vertical-align:middle;">
-      <cl:xylayoutdata std:sid="xyl-data-a70aa815" top="0px" left="0px" width="520px" height="440px" horizontalAnchor="LEFT" verticalAnchor="TOP"/>
-      <cl:output std:sid="output-45aab41d" id="title" style="color:#856C66; font-weight:bold; font-size:20px; text-align:center;" value="나의 건강 정보">
-        <cl:xylayoutdata std:sid="xyl-data-a5940708" top="34px" width="161px" height="26px" horizontalAnchor="CENTER" verticalAnchor="TOP"/>
+      <cl:verticaldata std:sid="v-data-95376390" width="520px" height="440px"/>
+      <cl:output std:sid="output-45aab41d" id="title" style="color:#856C66; font-weight:bold; font-size:16px; text-align:center;" value="나의 건강 정보">
+        <cl:xylayoutdata std:sid="xyl-data-a5940708" top="20px" width="161px" height="26px" horizontalAnchor="CENTER" verticalAnchor="TOP"/>
       </cl:output>
-      <cl:button std:sid="button-2582ed98" id="healthInfo_submit" style="border-radius:5px; background-color:#D9DC7D;" value="내 건강 정보 수정하기">
+      <cl:button std:sid="button-2582ed98" id="healthInfo_submit" style="border-right-style:solid; border-top-width:1px; border-bottom-color:#d9dc7d; border-right-width:1px; border-left-color:#d9dc7d; border-right-color:#d9dc7d; border-left-width:1px; border-top-style:solid; border-radius:5px; background-color:#D9DC7D; border-left-style:solid; border-bottom-width:1px; border-top-color:#d9dc7d; border-bottom-style:solid;" value="내 건강 정보 수정하기">
         <cl:listener std:sid="listener-df02986a" name="click" handler="onHealthInfo_submitClick"/>
-        <cl:xylayoutdata std:sid="xyl-data-410bf7e4" top="373px" width="460px" height="40px" horizontalAnchor="CENTER" verticalAnchor="TOP"/>
+        <cl:xylayoutdata std:sid="xyl-data-410bf7e4" right="10px" bottom="20px" left="10px" height="40px" horizontalAnchor="BOTH" verticalAnchor="BOTTOM"/>
       </cl:button>
       <cl:udc std:sid="ud-control-f8c80fa8" id="healthinterset" type="udc.mypage.info_tag">
-        <cl:xylayoutdata std:sid="xyl-data-ac6000ff" top="277px" left="30px" width="460px" height="85px" horizontalAnchor="LEFT" verticalAnchor="TOP"/>
+        <cl:xylayoutdata std:sid="xyl-data-ac6000ff" top="280px" right="10px" left="10px" height="85px" horizontalAnchor="BOTH" verticalAnchor="TOP"/>
       </cl:udc>
       <cl:output std:sid="output-2cbe11f9" style="border-radius:5px; color:#856C66; text-align:center;" value="관심 있는&#xD;&#xA;건강 정보">
-        <cl:xylayoutdata std:sid="xyl-data-c0b86cfe" top="277px" left="30px" width="100px" height="74px" horizontalAnchor="LEFT" verticalAnchor="TOP"/>
+        <cl:xylayoutdata std:sid="xyl-data-c0b86cfe" top="280px" left="10px" width="100px" height="84px" horizontalAnchor="LEFT" verticalAnchor="TOP"/>
       </cl:output>
       <cl:udc std:sid="ud-control-87fa9955" id="hatefood" type="udc.mypage.info_tag2">
-        <cl:xylayoutdata std:sid="xyl-data-a626194a" top="183px" left="31px" width="460px" height="85px" horizontalAnchor="LEFT" verticalAnchor="TOP"/>
+        <cl:xylayoutdata std:sid="xyl-data-a626194a" top="175px" right="10px" left="10px" height="85px" horizontalAnchor="BOTH" verticalAnchor="TOP"/>
       </cl:udc>
       <cl:output std:sid="output-fdcedfee" style="border-radius:5px; color:#856C66; text-align:center;" value="싫어하는&#xD;&#xA;음식 정보">
-        <cl:xylayoutdata std:sid="xyl-data-d19a38e6" top="184px" left="30px" width="100px" height="74px" horizontalAnchor="LEFT" verticalAnchor="TOP"/>
+        <cl:xylayoutdata std:sid="xyl-data-d19a38e6" top="175px" left="10px" width="100px" height="84px" horizontalAnchor="LEFT" verticalAnchor="TOP"/>
       </cl:output>
       <cl:udc std:sid="ud-control-f1c880ee" id="allergy" type="udc.mypage.info_tag3">
-        <cl:xylayoutdata std:sid="xyl-data-323f7aa9" top="88px" left="31px" width="460px" height="85px" horizontalAnchor="LEFT" verticalAnchor="TOP"/>
+        <cl:xylayoutdata std:sid="xyl-data-323f7aa9" top="70px" left="10px" width="500px" height="85px" horizontalAnchor="LEFT" verticalAnchor="TOP"/>
       </cl:udc>
       <cl:output std:sid="output-d445095d" style="border-radius:5px; color:#856C66; text-align:center;" value="알러지&#xD;&#xA;정보">
-        <cl:xylayoutdata std:sid="xyl-data-6fe18ed6" top="88px" left="30px" width="100px" height="74px" horizontalAnchor="LEFT" verticalAnchor="TOP"/>
+        <cl:xylayoutdata std:sid="xyl-data-6fe18ed6" top="70px" left="10px" width="100px" height="84px" horizontalAnchor="LEFT" verticalAnchor="TOP"/>
       </cl:output>
       <cl:xylayout std:sid="xylayout-1287fba4" scrollable="false"/>
     </cl:group>
-    <cl:xylayout std:sid="xylayout-da93cec0"/>
+    <cl:verticallayout std:sid="v-layout-9e3fd83f"/>
   </body>
   <std:studiosetting>
     <std:hruler/>

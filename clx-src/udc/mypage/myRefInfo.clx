@@ -18,13 +18,13 @@
     <cl:group std:sid="group-535258a4" id="foodinfogroup">
       <cl:xylayoutdata std:sid="xyl-data-cf7f46ab" top="0px" width="460px" height="42px" horizontalAnchor="CENTER" verticalAnchor="TOP"/>
       <cl:output std:sid="output-350fef9e" id="foodname" value="Output">
-        <cl:xylayoutdata std:sid="xyl-data-5ac8729e" top="10px" left="68px" width="244px" height="22px" horizontalAnchor="LEFT" verticalAnchor="TOP"/>
+        <cl:xylayoutdata std:sid="xyl-data-5ac8729e" top="10px" left="68px" width="200px" height="22px" horizontalAnchor="LEFT" verticalAnchor="TOP"/>
       </cl:output>
       <cl:output std:sid="output-2b5a5dcd" id="num" value="Output">
         <cl:xylayoutdata std:sid="xyl-data-dc62e995" top="10px" left="22px" width="22px" height="22px" horizontalAnchor="LEFT" verticalAnchor="TOP"/>
       </cl:output>
       <cl:output std:sid="output-5973ee9a" id="expdate" value="Output">
-        <cl:xylayoutdata std:sid="xyl-data-fc0bea20" top="10px" left="340px" width="100px" height="22px" horizontalAnchor="LEFT" verticalAnchor="TOP"/>
+        <cl:xylayoutdata std:sid="xyl-data-fc0bea20" top="10px" left="296px" width="144px" height="22px" horizontalAnchor="LEFT" verticalAnchor="TOP"/>
       </cl:output>
       <cl:xylayout std:sid="xylayout-2e67b30c"/>
     </cl:group>
