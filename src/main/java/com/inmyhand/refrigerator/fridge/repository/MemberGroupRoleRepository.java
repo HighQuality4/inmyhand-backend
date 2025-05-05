@@ -51,4 +51,7 @@ public interface MemberGroupRoleRepository extends JpaRepository<MemberGroupRole
             @Param("fridgeId") Long fridgeId,
             @Param("memberId") Long memberId
     );
+
+
+    void deleteByFridgeMemberEntity_Id(Long fridgeMemberId);
 }

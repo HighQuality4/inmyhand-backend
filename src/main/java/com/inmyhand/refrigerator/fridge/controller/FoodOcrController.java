@@ -5,21 +5,24 @@ import java.util.Date;
 import java.util.List;
 
 import com.inmyhand.refrigerator.fridge.domain.dto.ReceiptDTO;
+import com.inmyhand.refrigerator.fridge.domain.dto.food.FridgeDTO;
 import com.inmyhand.refrigerator.fridge.domain.dto.food.FridgeFoodDTO;
-import com.inmyhand.refrigerator.fridge.service.FridgeFoodService;
-import com.inmyhand.refrigerator.fridge.service.FridgeGroupRoleService;
+import com.inmyhand.refrigerator.fridge.domain.dto.search.AcceptInviteRequestDTO;
+import com.inmyhand.refrigerator.fridge.domain.dto.search.MemberFridgeFindDTO;
+import com.inmyhand.refrigerator.fridge.service.*;
+import com.inmyhand.refrigerator.member.domain.dto.MemberDTO;
+import com.inmyhand.refrigerator.member.domain.entity.MemberEntity;
+import com.inmyhand.refrigerator.member.service.MemberService;
 import com.inmyhand.refrigerator.security.CustomUserDetails;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.cleopatra.protocol.data.DataRequest;
+import com.cleopatra.protocol.data.ParameterGroup;
 import com.inmyhand.refrigerator.fridge.domain.dto.food.OcrFoodDTO;
-import com.inmyhand.refrigerator.fridge.service.FridgeAutoService;
 import com.inmyhand.refrigerator.util.ConverterClassUtil;
 
 
@@ -72,5 +75,100 @@ public class FoodOcrController {
         return ResponseEntity.ok("ok");
     }
 
+    private final FridgeGroupFacadeService fridgeGroupFacadeService;
+
+    private final FridgeGroupInvitationService invitationService;
+//    @GetMapping("/search")
+//    public ResponseEntity<List<MemberFridgeFindDTO>> searchByName(@RequestParam("name") String namePart) {
+//
+//        List<MemberFridgeFindDTO> results = fridgeGroupFacadeService.searchByName(namePart);
+//        if (results.isEmpty()) {
+//            return ResponseEntity.noContent().build();
+//        }
+//        return ResponseEntity.ok(results);
+//    }
+
+    @PostMapping("/search")
+    public ResponseEntity<List<MemberFridgeFindDTO>> searchByName(
+    		 @RequestParam("name") String namePart) {
+
+        List<MemberFridgeFindDTO> results = fridgeGroupFacadeService.searchByName(namePart);
+        if (results.isEmpty()) {
+            return ResponseEntity.noContent().build();  // 204
+        }
+        return ResponseEntity.ok(results);             // 200 + JSON body
+    }
+
+    // 초대
+    @PostMapping("/invite")
+    public ResponseEntity<Void> invite(DataRequest dataRequest) {
+
+
+//        List<MemberFridgeFindDTO> classList = ConverterClassUtil.getClassList(dataRequest, "addGroupMemberParam", MemberFridgeFindDTO.class);
+
+    	MemberFridgeFindDTO singleClass = ConverterClassUtil.getSingleClass(dataRequest, "addGroupMemberParam", MemberFridgeFindDTO.class);
+    	System.out.println("getMemberName" + singleClass.getMemberName());
+    	System.out.println("getMemberId" + singleClass.getMemberId());
+//        
+//        MemberFridgeFindDTO dto = new MemberFridgeFindDTO(
+//                5L,                    // memberId
+//                "user5@user.com",      // email
+//                "user5",               // memberName
+//                "user5"                // nickname
+//        );
+        Long fridgeId = 3L;
+
+        invitationService.inviteMemberToFridge(fridgeId, singleClass);
+        return ResponseEntity.ok().build();
+    }
+
+    // 수락
+//    @PostMapping("/accept")
+//    public ResponseEntity<Void> acceptList(
+////            @RequestBody List<AcceptInviteRequestDTO> dtos
+//    ) {
+//
+//        List<AcceptInviteRequestDTO> dtos2 = List.of(
+//                new AcceptInviteRequestDTO(5L, 3L)
+//        );
+//
+//        invitationService.acceptInvites(dtos2);
+//        return ResponseEntity.ok().build();
+//    }
+
+    @PostMapping("/accept")
+    public ResponseEntity<Void> acceptList(DataRequest dataRequest,@AuthenticationPrincipal CustomUserDetails userDetails) {
+
+    	Long userId = userDetails.getUserId();
+
+    	FridgeDTO singleClass = ConverterClassUtil.getSingleClass(dataRequest, "addInviteParam", FridgeDTO.class);
+    	Long memberId = userId;
+    	Long fridgeId = singleClass.getFridgeId();
+
+    	// 2. DTO 리스트 생성
+    	List<AcceptInviteRequestDTO> dtos2 = List.of(
+    	    new AcceptInviteRequestDTO(memberId, fridgeId)
+    	);
+    	
+    	// 3. 콘솔에 찍어보기 (toString() 이 DTO에 구현되어 있어야 편하게 찍힙니다)
+    	System.out.println("▶▶▶ AcceptInviteRequestDTO 리스트: " + dtos2);
+
+
+    	// 4. 서비스 호출
+    	invitationService.acceptInvites(dtos2);
+    	
+        return ResponseEntity.ok().build();
+    }
+
     
+    // 거절 - 삭제
+    @PostMapping("/delete")
+    public ResponseEntity<Void> revokeList(
+    ) {
+        List<AcceptInviteRequestDTO> dtos2 = List.of(
+                new AcceptInviteRequestDTO(5L, 3L)
+        );
+        invitationService.revokeInvites(dtos2);
+        return ResponseEntity.noContent().build();
+    }
 }
