@@ -1390,7 +1390,7 @@
 				 * @author seongkwan
 				 ************************************************/
 	
-	
+				cpr.core.Module.require("module/quicksearch/quickSearch");
 				/**
 				 * UDC 컨트롤이 그리드의 뷰 모드에서 표시할 텍스트를 반환합니다.
 				 */
@@ -1411,7 +1411,6 @@
 	
 				function onBodyLoad(e){
 					
-					cpr.core.Module.require("module/quicksearch/quickSearch");
 					var sms = app.lookup("smsHealthInfoTags");
 					sms.send();
 					
@@ -1655,7 +1654,7 @@
 				 *
 				 * @author seongkwan
 				 ************************************************/
-	
+				cpr.core.Module.require("module/quicksearch/quickSearch");
 				/**
 				 * UDC 컨트롤이 그리드의 뷰 모드에서 표시할 텍스트를 반환합니다.
 				 */
@@ -1677,7 +1676,6 @@
 	
 				function onBodyLoad(e){
 					
-					cpr.core.Module.require("module/quicksearch/quickSearch");
 					var sms = app.lookup("smsHateFoodTags");
 					sms.send();
 					
@@ -1922,7 +1920,7 @@
 				 *
 				 * @author seongkwan
 				 ************************************************/
-	
+				cpr.core.Module.require("module/quicksearch/quickSearch");
 				/**
 				 * UDC 컨트롤이 그리드의 뷰 모드에서 표시할 텍스트를 반환합니다.
 				 */
@@ -1943,8 +1941,6 @@
 	
 	
 				function onBodyLoad(e){
-					
-					cpr.core.Module.require("module/quicksearch/quickSearch");
 					
 					var sms = app.lookup("smsAllergyTags");
 					sms.send();
