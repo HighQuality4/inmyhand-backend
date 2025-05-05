@@ -83,8 +83,9 @@ function setDataToOutputs() {
         let outputControl = app.lookup(outputId);
         
         if (outputControl) {
-            // 값 설정 (순위 표시 추가)
-            outputControl.value = (i + 1) + ". " + keyword;
+            // 값 설정
+//            outputControl.value = (i + 1) + ". " + keyword;
+			outputControl.value = keyword;
             
             // 사용자 데이터에 recipeId 저장
             outputControl.userData("recipeId", recipeId);
@@ -107,10 +108,10 @@ function setDataToOutputs() {
             });
             
             // 클릭 가능함을 시각적으로 표시
-            outputControl.style.css({
-                "cursor": "pointer",
-                "text-decoration": "underline"
-            });
+//            outputControl.style.css({
+//                "cursor": "pointer",
+//                "text-decoration": "underline"
+//            });
         }
     }
 }
