@@ -21,19 +21,19 @@
       <cl:event name="test" type="cpr.events.CUIEvent"/>
     </cl:appspec>
   </head>
-  <body std:sid="body-cf8cee30" style="background-color:#FFFFFF; top:0px; left:0px; width:100px; height:100px;">
+  <body std:sid="body-cf8cee30" style="background-color:#FFFFFF; border-radius:5px; top:0px; left:0px; width:100px; height:100px;">
     <cl:listener std:sid="listener-07a80c21" name="load" handler="onBodyLoad2"/>
-    <cl:img std:sid="image-0d05a052" id="sampleImg" style="border-right-style:solid; border-bottom-color:#856c66; border-top-width:1px; border-left-style:solid; border-right-width:1px; border-left-color:#856c66; border-bottom-width:1px; border-top-color:#856c66; border-bottom-style:solid; border-right-color:#856c66; border-left-width:1px; border-top-style:solid;" src="../../theme/images/heart_empty.svg">
+    <cl:img std:sid="image-0d05a052" id="sampleImg" style="border-right-style:solid; border-bottom-color:#856c66; border-top-width:1px; border-right-width:1px; border-left-color:#856c66; border-right-color:#856c66; border-left-width:1px; border-top-style:solid; border-radius:5px; border-left-style:solid; border-bottom-width:1px; border-top-color:#856c66; border-bottom-style:solid;" src="../../theme/images/heart_empty.svg">
       <cl:listener std:sid="listener-ecaf60e3" name="click" handler="onSampleImgClick2"/>
       <cl:formdata std:sid="f-data-c234e631" row="0" col="0"/>
     </cl:img>
     <cl:group std:sid="group-1b5f6d58">
       <cl:formdata std:sid="f-data-1cfc3960" row="1" col="0"/>
-      <cl:fileinput std:sid="f-input-e687d605" id="selectFileInput" style="border-right-style:solid; border-bottom-color:#856c66; border-left-style:solid; border-left-color:#856c66; border-top-color:#856c66; border-bottom-style:solid; border-right-color:#856c66; border-top-style:solid;">
+      <cl:fileinput std:sid="f-input-e687d605" id="selectFileInput">
         <cl:listener std:sid="listener-af3cb427" name="value-change" handler="onSelectFileInputValueChange2"/>
         <cl:formdata std:sid="f-data-4f09563f" row="0" col="0"/>
       </cl:fileinput>
-      <cl:button std:sid="button-8df26c4d" id="deleteBtn" style="border-right-style:solid; color:#856C66; border-bottom-color:#856c66; border-top-width:2px; border-right-width:2px; border-left-color:#856c66; border-right-color:#856c66; border-left-width:2px; border-top-style:solid; border-radius:2px; background-color:white; border-left-style:solid; border-bottom-width:2px; border-top-color:#856c66; border-bottom-style:solid; background-image:none;" value="x">
+      <cl:button std:sid="button-8df26c4d" id="deleteBtn" value="X">
         <cl:listener std:sid="listener-d7ec7b00" name="click" handler="onDeleteBtnClick"/>
         <cl:formdata std:sid="f-data-226c8f46" row="0" col="1"/>
       </cl:button>

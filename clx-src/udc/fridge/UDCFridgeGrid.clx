@@ -4,7 +4,7 @@
     <std:metadata>
       <std:property key="template-file" value="templates/contents_container.clx"/>
     </std:metadata>
-    <screen std:sid="screen-10a6c6f5" id="default" name="default" width="1024px" height="768px" customHeight="600" customWidth="800" active="true"/>
+    <screen std:sid="screen-10a6c6f5" id="default" name="default" width="1024px" height="768px" useCustomWidth="true" customHeight="600" customWidth="904" active="true"/>
     <screen std:sid="screen-7f99e46a" id="tablet" name="tablet" width="500px" height="667px"/>
     <screen std:sid="screen-0de36c2c" id="mobile" name="mobile" width="350px" height="525px"/>
     <cl:model std:sid="model-c6febedf">
@@ -29,7 +29,7 @@
     <cl:listener std:sid="listener-821d6980" name="load" handler="onBodyLoad"/>
     <cl:listener std:sid="listener-d9d19750" name="property-change" handler="onBodyPropertyChange"/>
     <cl:group std:sid="group-cc06b685">
-      <cl:formdata std:sid="f-data-abc0a90b" row="0" col="1"/>
+      <cl:formdata std:sid="f-data-abc0a90b" row="0" col="0"/>
       <cl:grid std:sid="grid-bb02773b" id="grd1" datasetid="insertFoodList">
         <cl:formdata std:sid="f-data-5c7b5ee2" row="0" col="0"/>
         <cl:gridcolumn std:sid="g-column-838c0557" width="24px"/>
@@ -69,16 +69,14 @@
           </cl:gridcell>
         </cl:griddetail>
       </cl:grid>
-      <cl:formlayout std:sid="f-layout-b2f6f3d9" scrollable="false" hspace="1px" vspace="1px" top-margin="5px" right-margin="5px" bottom-margin="5px" left-margin="5px">
+      <cl:formlayout std:sid="f-layout-b2f6f3d9" scrollable="false" hspace="1px" vspace="1px">
         <cl:rows length="1" unit="FRACTION"/>
         <cl:columns length="1" unit="FRACTION"/>
       </cl:formlayout>
     </cl:group>
-    <cl:formlayout std:sid="f-layout-74697367" scrollable="false" hspace="1px" vspace="1px" top-margin="5px" right-margin="5px" bottom-margin="5px" left-margin="5px">
+    <cl:formlayout std:sid="f-layout-74697367" scrollable="false" hspace="1px" vspace="1px">
       <cl:rows length="1" unit="FRACTION"/>
-      <cl:columns length="1" unit="FRACTION"/>
-      <cl:columns length="490" unit="PIXEL" shadetype="NONE" shadecolor="transparent"/>
-      <cl:columns length="1" unit="FRACTION" shadetype="NONE" shadecolor="transparent"/>
+      <cl:columns length="1" unit="FRACTION" autoSizing="false" shadetype="NONE" shadecolor="transparent"/>
     </cl:formlayout>
   </body>
   <std:studiosetting>

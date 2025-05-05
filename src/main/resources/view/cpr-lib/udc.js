@@ -570,11 +570,7 @@
 				formLayout_1.scrollable = false;
 				formLayout_1.horizontalSpacing = "1px";
 				formLayout_1.verticalSpacing = "1px";
-				formLayout_1.topMargin = "5px";
-				formLayout_1.rightMargin = "5px";
-				formLayout_1.bottomMargin = "5px";
-				formLayout_1.leftMargin = "5px";
-				formLayout_1.setColumns(["1fr", "490px", "1fr"]);
+				formLayout_1.setColumns(["1fr"]);
 				formLayout_1.setRows(["1fr"]);
 				container.setLayout(formLayout_1);
 				
@@ -584,10 +580,6 @@
 				formLayout_2.scrollable = false;
 				formLayout_2.horizontalSpacing = "1px";
 				formLayout_2.verticalSpacing = "1px";
-				formLayout_2.topMargin = "5px";
-				formLayout_2.rightMargin = "5px";
-				formLayout_2.bottomMargin = "5px";
-				formLayout_2.leftMargin = "5px";
 				formLayout_2.setColumns(["1fr"]);
 				formLayout_2.setRows(["1fr"]);
 				group_1.setLayout(formLayout_2);
@@ -723,7 +715,7 @@
 					});
 				})(group_1);
 				container.addChild(group_1, {
-					"colIndex": 1,
+					"colIndex": 0,
 					"rowIndex": 0
 				});
 				if(typeof onBodyLoad == "function"){
@@ -1032,6 +1024,7 @@
 					"width" : "100%",
 					"top" : "0px",
 					"height" : "100%",
+					"border-radius" : "5px",
 					"left" : "0px"
 				});
 				
@@ -1055,15 +1048,16 @@
 					"border-right-style" : "solid",
 					"border-bottom-color" : "#856c66",
 					"border-top-width" : "1px",
-					"border-left-style" : "solid",
 					"border-right-width" : "1px",
 					"border-left-color" : "#856c66",
-					"border-bottom-width" : "1px",
-					"border-top-color" : "#856c66",
-					"border-bottom-style" : "solid",
 					"border-right-color" : "#856c66",
 					"border-left-width" : "1px",
-					"border-top-style" : "solid"
+					"border-top-style" : "solid",
+					"border-radius" : "5px",
+					"border-left-style" : "solid",
+					"border-bottom-width" : "1px",
+					"border-top-color" : "#856c66",
+					"border-bottom-style" : "solid"
 				});
 				if(typeof onSampleImgClick2 == "function") {
 					image_1.addEventListener("click", onSampleImgClick2);
@@ -1087,16 +1081,6 @@
 				group_1.setLayout(formLayout_2);
 				(function(container){
 					var fileInput_1 = new cpr.controls.FileInput("selectFileInput");
-					fileInput_1.style.css({
-						"border-right-style" : "solid",
-						"border-bottom-color" : "#856c66",
-						"border-left-style" : "solid",
-						"border-left-color" : "#856c66",
-						"border-top-color" : "#856c66",
-						"border-bottom-style" : "solid",
-						"border-right-color" : "#856c66",
-						"border-top-style" : "solid"
-					});
 					if(typeof onSelectFileInputValueChange2 == "function") {
 						fileInput_1.addEventListener("value-change", onSelectFileInputValueChange2);
 					}
@@ -1105,25 +1089,7 @@
 						"rowIndex": 0
 					});
 					var button_1 = new cpr.controls.Button("deleteBtn");
-					button_1.value = "x";
-					button_1.style.css({
-						"border-right-style" : "solid",
-						"color" : "#856C66",
-						"border-bottom-color" : "#856c66",
-						"border-top-width" : "2px",
-						"border-right-width" : "2px",
-						"border-left-color" : "#856c66",
-						"border-right-color" : "#856c66",
-						"border-left-width" : "2px",
-						"border-top-style" : "solid",
-						"border-radius" : "2px",
-						"background-color" : "white",
-						"border-left-style" : "solid",
-						"border-bottom-width" : "2px",
-						"border-top-color" : "#856c66",
-						"border-bottom-style" : "solid",
-						"background-image" : "none"
-					});
+					button_1.value = "X";
 					if(typeof onDeleteBtnClick == "function") {
 						button_1.addEventListener("click", onDeleteBtnClick);
 					}

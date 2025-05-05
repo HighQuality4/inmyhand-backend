@@ -44,104 +44,79 @@
     <cl:appspec/>
   </head>
   <body std:sid="body-c43e6d9f" style="background-color:#FFFFFF; text-align:center;" class="contents-container">
-    <cl:group std:sid="group-f16fd5d6">
-      <cl:responsivexylayoutdata std:sid="rxyl-data-16ac2a1e">
-        <cl:xylayoutdata std:sid="sxyl-data-9512f4ce" top="8px" width="565px" height="50px" horizontalAnchor="CENTER" verticalAnchor="TOP" screenid="default"/>
-      </cl:responsivexylayoutdata>
-      <cl:output std:sid="output-420a435a" style="background-color:#F59760; border-radius:7px; color:#FFFFFF; font-weight:bold; font-size:20px; font-family:Kim jung chul Myungjo Regular; text-align:center;" value="영수증 자동 등록">
-        <cl:formdata std:sid="f-data-b9cd25d0" row="1" col="1" rowspan="1" colspan="1"/>
-      </cl:output>
-      <cl:formlayout std:sid="f-layout-5300e276" scrollable="false" hspace="1px" vspace="1px" top-margin="5px" right-margin="5px" bottom-margin="5px" left-margin="5px">
-        <cl:rows length="1" unit="FRACTION"/>
-        <cl:rows length="40" unit="PIXEL"/>
-        <cl:rows length="1" unit="FRACTION"/>
-        <cl:columns length="1" unit="FRACTION"/>
-        <cl:columns length="490" unit="PIXEL" shadecolor="#000000"/>
-        <cl:columns length="1" unit="FRACTION"/>
-      </cl:formlayout>
-    </cl:group>
+    <cl:output std:sid="output-0480b386" id="pageTitle" style="font-weight:bold; font-size:20px;" value="영수증 자동 등록">
+      <cl:verticaldata std:sid="v-data-beeca65a" width="600px" height="30px" autosize="none"/>
+    </cl:output>
     <cl:group std:sid="group-14382c43" id="이미지 업로드 영역">
-      <cl:responsivexylayoutdata std:sid="rxyl-data-35d97c20">
-        <cl:xylayoutdata std:sid="sxyl-data-832952e7" top="68px" width="565px" height="143px" horizontalAnchor="CENTER" verticalAnchor="TOP" screenid="default"/>
-      </cl:responsivexylayoutdata>
-      <cl:group std:sid="group-594acb67" style="background-color:#E5E6C7;">
-        <cl:formdata std:sid="f-data-009bf79d" row="0" col="1" rowspan="1" colspan="1"/>
+      <cl:verticaldata std:sid="v-data-e1f0e24e" width="100%" height="120px" autosize="height"/>
+      <cl:group std:sid="group-594acb67" style="background-color:#E5E6C7; border-radius:5px;">
+        <cl:formdata std:sid="f-data-009bf79d" halign="FILL" row="0" col="0" rowspan="1" colspan="1"/>
         <cl:group std:sid="group-9f6b23df">
           <cl:formdata std:sid="f-data-67ea990c" row="0" col="0"/>
           <cl:group std:sid="group-000062e5" id="addImageArea">
-            <cl:formdata std:sid="f-data-cfaed132" row="0" col="1"/>
+            <cl:formdata std:sid="f-data-cfaed132" row="0" col="2"/>
             <cl:fileinput std:sid="f-input-454111a7" id="fi1" visible="false">
               <cl:flowlayoutdata std:sid="f-data-c5c36c10" width="1px" height="20px" autosize="width"/>
             </cl:fileinput>
-            <cl:flowlayout std:sid="f-layout-9e837da0"/>
+            <cl:flowlayout std:sid="f-layout-9e837da0" hspacing="10" vspacing="0"/>
           </cl:group>
           <cl:button std:sid="button-b5632ffc" style="font-size:16px;" value="사진&#xD;&#xA;업로드">
             <cl:listener std:sid="listener-6703c4d6" name="click" handler="onButtonClick"/>
             <cl:formdata std:sid="f-data-23a996e3" row="0" col="0"/>
           </cl:button>
-          <cl:formlayout std:sid="f-layout-fcb90206" scrollable="false" hspace="1px" vspace="1px" top-margin="5px" right-margin="5px" bottom-margin="5px" left-margin="5px">
-            <cl:rows length="1" unit="FRACTION" shadetype="NONE" shadecolor="transparent"/>
+          <cl:formlayout std:sid="f-layout-fcb90206" scrollable="false" hspace="1px" vspace="1px">
+            <cl:rows length="100" unit="PIXEL" shadetype="NONE" shadecolor="transparent"/>
             <cl:columns length="100" unit="PIXEL"/>
+            <cl:columns length="10" unit="PIXEL"/>
             <cl:columns length="1" unit="FRACTION"/>
           </cl:formlayout>
         </cl:group>
-        <cl:formlayout std:sid="f-layout-5fd533f5" scrollable="false" hspace="1px" vspace="1px" top-margin="5px" right-margin="5px" bottom-margin="5px" left-margin="5px">
-          <cl:rows length="1" unit="FRACTION"/>
+        <cl:formlayout std:sid="f-layout-5fd533f5" scrollable="false" hspace="1px" vspace="1px" top-margin="10px" right-margin="10px" bottom-margin="10px" left-margin="10px">
+          <cl:rows length="100" unit="PIXEL"/>
           <cl:columns length="1" unit="FRACTION"/>
         </cl:formlayout>
       </cl:group>
-      <cl:formlayout std:sid="f-layout-f174ea2e" scrollable="false" hspace="1px" vspace="1px" top-margin="5px" right-margin="5px" bottom-margin="5px" left-margin="5px">
+      <cl:formlayout std:sid="f-layout-f174ea2e" scrollable="false">
         <cl:rows length="1" unit="FRACTION"/>
-        <cl:columns length="1" unit="FRACTION"/>
-        <cl:columns length="490" unit="PIXEL" shadetype="NONE" shadecolor="transparent"/>
-        <cl:columns length="1" unit="FRACTION"/>
+        <cl:columns length="1" unit="FRACTION" shadetype="NONE" shadecolor="transparent"/>
       </cl:formlayout>
     </cl:group>
     <cl:group std:sid="group-f0bee50b">
-      <cl:responsivexylayoutdata std:sid="rxyl-data-f0e1528a">
-        <cl:xylayoutdata std:sid="sxyl-data-c8dca0d7" top="215px" width="565px" height="50px" horizontalAnchor="CENTER" verticalAnchor="TOP" screenid="default"/>
-      </cl:responsivexylayoutdata>
-      <cl:output std:sid="output-6d52e093" style="border-right-style:solid; color:#F59760; border-top-width:2px; border-bottom-color:#f59760; font-weight:bold; border-right-width:2px; border-left-color:#f59760; font-size:20px; border-right-color:#f59760; border-left-width:2px; border-top-style:solid; border-radius:7px; border-left-style:solid; border-bottom-width:2px; border-top-color:#f59760; font-family:Kim jung chul Myungjo Regular; border-bottom-style:solid; text-align:center;" value="영수증 입력 결과">
-        <cl:formdata std:sid="f-data-49749bed" row="1" col="1" rowspan="1" colspan="1"/>
+      <cl:verticaldata std:sid="v-data-8d27ec5c" width="500px" height="50px"/>
+      <cl:output std:sid="output-6d52e093" style="border-right-style:solid; color:#F59760; border-top-width:2px; border-bottom-color:#f59760; font-weight:bold; border-right-width:2px; border-left-color:#f59760; font-size:16px; border-right-color:#f59760; border-left-width:2px; border-top-style:solid; border-radius:7px; border-left-style:solid; border-bottom-width:2px; border-top-color:#f59760; font-family:Kim jung chul Myungjo Regular; border-bottom-style:solid; text-align:center;" value="영수증 입력 결과">
+        <cl:formdata std:sid="f-data-49749bed" row="1" col="0" rowspan="1" colspan="1"/>
       </cl:output>
-      <cl:formlayout std:sid="f-layout-f79daf9d" scrollable="false" hspace="1px" vspace="1px" top-margin="5px" right-margin="5px" bottom-margin="5px" left-margin="5px">
+      <cl:formlayout std:sid="f-layout-f79daf9d" scrollable="false" hspace="1px" vspace="1px">
         <cl:rows length="1" unit="FRACTION"/>
         <cl:rows length="40" unit="PIXEL"/>
         <cl:rows length="1" unit="FRACTION"/>
-        <cl:columns length="1" unit="FRACTION"/>
-        <cl:columns length="490" unit="PIXEL" shadecolor="#000000"/>
-        <cl:columns length="1" unit="FRACTION"/>
+        <cl:columns length="1" unit="FRACTION" shadecolor="#000000"/>
       </cl:formlayout>
     </cl:group>
     <cl:group std:sid="group-c20b26b7" id="resultImageArea">
-      <cl:responsivexylayoutdata std:sid="rxyl-data-16bea456">
-        <cl:xylayoutdata std:sid="sxyl-data-4e0b4140" top="274px" width="565px" height="357px" horizontalAnchor="CENTER" verticalAnchor="TOP" screenid="default"/>
-      </cl:responsivexylayoutdata>
-      <cl:verticallayout std:sid="v-layout-839cb78c"/>
+      <cl:verticaldata std:sid="v-data-8782e0eb" width="100%" height="357px" autosize="height"/>
+      <cl:verticallayout std:sid="v-layout-839cb78c" spacing="10"/>
     </cl:group>
     <cl:group std:sid="group-dd9d9236">
-      <cl:responsivexylayoutdata std:sid="rxyl-data-7adb4cf5">
-        <cl:xylayoutdata std:sid="sxyl-data-5e2b6694" top="630px" width="565px" height="50px" horizontalAnchor="CENTER" verticalAnchor="TOP" screenid="default"/>
-      </cl:responsivexylayoutdata>
-      <cl:button std:sid="button-cbf47e3c" value="저장">
+      <cl:verticaldata std:sid="v-data-395fc4a1" width="500px" height="50px"/>
+      <cl:button std:sid="button-cbf47e3c" style="font-size:16px;" value="저장">
         <cl:listener std:sid="listener-72350561" name="click" handler="onButtonClick3"/>
-        <cl:formdata std:sid="f-data-d7eb28e4" row="1" col="1"/>
+        <cl:formdata std:sid="f-data-d7eb28e4" row="1" col="0"/>
       </cl:button>
-      <cl:formlayout std:sid="f-layout-3940cc54" scrollable="false" hspace="1px" vspace="1px" top-margin="5px" right-margin="5px" bottom-margin="5px" left-margin="5px">
+      <cl:formlayout std:sid="f-layout-3940cc54" scrollable="false" hspace="1px" vspace="1px" top-margin="0px" right-margin="0px" bottom-margin="0px" left-margin="0px">
         <cl:rows length="1" unit="FRACTION"/>
         <cl:rows length="38" unit="PIXEL"/>
         <cl:rows length="1" unit="FRACTION"/>
-        <cl:columns length="1" unit="FRACTION"/>
-        <cl:columns length="490" unit="PIXEL" shadecolor="#000000"/>
-        <cl:columns length="1" unit="FRACTION"/>
+        <cl:columns length="1" unit="FRACTION" shadecolor="#000000"/>
       </cl:formlayout>
     </cl:group>
-    <cl:responsivexylayout std:sid="r-xylayout-3e5555da"/>
+    <cl:verticallayout std:sid="v-layout-aa69d8a5" spacing="20"/>
   </body>
   <std:studiosetting>
     <std:hruler/>
     <std:vruler>
       <std:guide position="49"/>
+      <std:guide position="103"/>
     </std:vruler>
   </std:studiosetting>
 </html>
