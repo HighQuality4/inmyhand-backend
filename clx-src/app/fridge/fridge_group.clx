@@ -4,11 +4,11 @@
     <std:metadata>
       <std:property key="template-file" value="templates/contents_container.clx"/>
     </std:metadata>
-    <screen std:sid="screen-557e7b64" id="default" name="default" width="1024px" height="768px" useCustomWidth="true" useCustomHeight="true" customHeight="600" customWidth="300" active="true"/>
-    <screen std:sid="screen-606a4eed" id="tablet" name="tablet" width="500px" height="667px"/>
-    <screen std:sid="screen-c23a6c28" id="mobile" name="mobile" width="350px" height="525px"/>
+    <screen std:sid="screen-d8b9a99d" id="default" name="default" width="1024px" height="768px" useCustomWidth="true" useCustomHeight="true" customHeight="600" customWidth="400" active="true"/>
+    <screen std:sid="screen-f8c9f685" id="tablet" name="tablet" width="500px" height="667px"/>
+    <screen std:sid="screen-b51fb81e" id="mobile" name="mobile" width="350px" height="525px"/>
     <cl:model std:sid="model-c2e79a6e">
-      <cl:dataset std:sid="d-set-926f4fbf" id="searchGroupList">
+      <cl:dataset std:sid="d-set-926f4fbf" id="searchGroupList" sortcondition="joinDate ASC">
         <cl:datacolumnlist>
           <cl:datacolumn std:sid="d-column-05b0ba91" name="memberName"/>
           <cl:datacolumn std:sid="d-column-82945be7" name="joinDate"/>
@@ -28,14 +28,10 @@
         </cl:datacolumnlist>
         <cl:datarowlist>
           <cl:datarow>
-            <cl:datavalue columnname="nickname">name1</cl:datavalue>
-            <cl:datavalue columnname="memberName">nickname1</cl:datavalue>
-            <cl:datavalue columnname="email">email1</cl:datavalue>
-          </cl:datarow>
-          <cl:datarow>
-            <cl:datavalue columnname="nickname">name2</cl:datavalue>
-            <cl:datavalue columnname="memberName">nickname2</cl:datavalue>
-            <cl:datavalue columnname="email">email2</cl:datavalue>
+            <cl:datavalue columnname="nickname"><![CDATA[닉네임]]></cl:datavalue>
+            <cl:datavalue columnname="memberName"><![CDATA[이름]]></cl:datavalue>
+            <cl:datavalue columnname="email"><![CDATA[이메일]]></cl:datavalue>
+            <cl:datavalue columnname="memberId"><![CDATA[]]></cl:datavalue>
           </cl:datarow>
         </cl:datarowlist>
       </cl:dataset>
@@ -115,8 +111,8 @@
       </cl:datamap>
       <cl:datamap std:sid="d-map-406b22c4" id="addInviteParam">
         <cl:datacolumnlist>
-          <cl:datacolumn std:sid="d-column-190fb44c" name="memberId" datatype="number"/>
-          <cl:datacolumn std:sid="d-column-3eb60f4b" name="memberName"/>
+          <cl:datacolumn std:sid="d-column-190fb44c" name="fridgeId" datatype="number"/>
+          <cl:datacolumn std:sid="d-column-3eb60f4b" name="fridgeName"/>
         </cl:datacolumnlist>
       </cl:datamap>
       <cl:submission std:sid="submission-9b3240de" id="getJoinGroupList" action="/api/fridge/members">
@@ -168,14 +164,14 @@
         </cl:udc>
         <cl:flowlayout std:sid="f-layout-5d4705b4" halign="right"/>
       </cl:group>
-      <cl:grid std:sid="grid-16d2cca4" id="JoinGroupMemeberGrid" datasetid="searchGroupList">
+      <cl:grid std:sid="grid-16d2cca4" id="JoinGroupMemeberGrid" datasetid="searchGroupList" vscroll="hidden" hscroll="hidden" overscrollbehavior="none">
         <cl:verticaldata std:sid="v-data-7dd02a52" width="360px" height="176px" autosize="none"/>
-        <cl:gridcolumn std:sid="g-column-8a80e98d" width="50px"/>
-        <cl:gridcolumn std:sid="g-column-1640da90"/>
-        <cl:gridcolumn std:sid="g-column-33262346"/>
-        <cl:gridcolumn std:sid="g-column-bbbe447b"/>
-        <cl:gridcolumn std:sid="g-column-d7955b99" width="259px" visible="true"/>
-        <cl:gridcolumn std:sid="g-column-33b6026c" width="61px" visible="false"/>
+        <cl:gridcolumn std:sid="g-column-8a80e98d" width="28px" visible="false"/>
+        <cl:gridcolumn std:sid="g-column-1640da90" width="48px"/>
+        <cl:gridcolumn std:sid="g-column-33262346" width="57px"/>
+        <cl:gridcolumn std:sid="g-column-bbbe447b" width="59px"/>
+        <cl:gridcolumn std:sid="g-column-d7955b99" width="253px" visible="true"/>
+        <cl:gridcolumn std:sid="g-column-33b6026c" width="84px" visible="false"/>
         <cl:gridcolumn std:sid="g-column-96286d82" visible="false"/>
         <cl:gridheader std:sid="gh-band-29368352">
           <cl:gridrow std:sid="g-row-bbda2a94" height="24px"/>
@@ -213,13 +209,13 @@
       <cl:verticaldata std:sid="v-data-941a3bd8" width="400px" height="40px" autosize="none"/>
     </cl:output>
     <cl:group std:sid="group-dd53f87b">
-      <cl:verticaldata std:sid="v-data-901d2cf4" width="155px" height="200px" autosize="none"/>
+      <cl:verticaldata std:sid="v-data-901d2cf4" width="155px" height="172px" autosize="none"/>
       <cl:output std:sid="output-a28545ee" style="border-right-style:solid; color:#F59760; border-bottom-color:#f59760; border-top-width:2px; font-weight:bold; border-right-width:2px; border-left-color:#f59760; font-size:15px; border-right-color:#f59760; border-left-width:2px; border-top-style:solid; background-color:#ffffff; border-radius:7px; border-left-style:solid; border-bottom-width:2px; border-top-color:#f59760; font-family:Kim jung chul Myungjo Regular; border-bottom-style:solid; background-image:none; text-align:center;" value="초대 받은 목록">
         <cl:formdata std:sid="f-data-7b6058b9" row="0" col="0"/>
       </cl:output>
       <cl:grid std:sid="grid-8fbfa231" id="inviteMemberGrid" datasetid="inviteList">
         <cl:listener std:sid="listener-b5b76299" name="cell-click" handler="onInviteMemberGridCellClick"/>
-        <cl:formdata std:sid="f-data-b1db0973" row="2" col="0"/>
+        <cl:formdata std:sid="f-data-d9790d97" row="2" col="0" rowspan="1" colspan="1"/>
         <cl:gridcolumn std:sid="g-column-69081ed1" width="25px" visible="false"/>
         <cl:gridcolumn std:sid="g-column-ab060acd" width="33px"/>
         <cl:gridcolumn std:sid="g-column-5d374a58" width="62px" visible="false"/>
@@ -254,12 +250,12 @@
         </cl:griddetail>
       </cl:grid>
       <cl:group std:sid="group-8c6e3f61">
-        <cl:formdata std:sid="f-data-11c14db1" row="1" col="0"/>
+        <cl:formdata std:sid="f-data-3b67f6ee" row="1" col="0" rowspan="1" colspan="1"/>
         <cl:flowlayout std:sid="f-layout-e9b8335c" halign="right"/>
       </cl:group>
       <cl:formlayout std:sid="f-layout-02301e55" scrollable="false" hspace="1px" vspace="1px" top-margin="10px" right-margin="10px" bottom-margin="10px" left-margin="10px">
         <cl:rows length="30" unit="PIXEL"/>
-        <cl:rows length="30" unit="PIXEL"/>
+        <cl:rows length="10" unit="PIXEL"/>
         <cl:rows length="1" unit="FRACTION"/>
         <cl:columns length="1" unit="FRACTION"/>
       </cl:formlayout>
@@ -318,7 +314,7 @@
       </cl:grid>
       <cl:verticallayout std:sid="v-layout-9863e693" leftmargin="10" rightmargin="10" topmargin="10" bottommargin="0"/>
     </cl:group>
-    <cl:verticallayout std:sid="v-layout-27a4a001" leftmargin="20" rightmargin="20" topmargin="20" bottommargin="20"/>
+    <cl:verticallayout std:sid="v-layout-27a4a001" leftmargin="0" rightmargin="0" topmargin="0" bottommargin="0"/>
   </body>
   <std:studiosetting>
     <std:hruler/>

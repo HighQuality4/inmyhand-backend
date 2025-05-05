@@ -429,7 +429,8 @@
 			// Header
 			var dataSet_1 = new cpr.data.DataSet("searchGroupList");
 			dataSet_1.parseData({
-				"columns" : [
+				"sortCondition": "joinDate ASC",
+				"columns": [
 					{"name": "memberName"},
 					{"name": "joinDate"},
 					{
@@ -458,10 +459,7 @@
 						"dataType": "number"
 					}
 				],
-				"rows": [
-					{"nickname": "name1", "memberName": "nickname1", "email": "email1"},
-					{"nickname": "name2", "memberName": "nickname2", "email": "email2"}
-				]
+				"rows": [{"nickname": "닉네임", "memberName": "이름", "email": "이메일", "memberId": ""}]
 			});
 			app.register(dataSet_2);
 			
@@ -590,10 +588,10 @@
 			dataMap_3.parseData({
 				"columns" : [
 					{
-						"name": "memberId",
+						"name": "fridgeId",
 						"dataType": "number"
 					},
-					{"name": "memberName"}
+					{"name": "fridgeName"}
 				]
 			});
 			app.register(dataMap_3);
@@ -666,10 +664,10 @@
 			
 			// Layout
 			var verticalLayout_1 = new cpr.controls.layouts.VerticalLayout();
-			verticalLayout_1.leftMargin = 20;
-			verticalLayout_1.rightMargin = 20;
-			verticalLayout_1.topMargin = 20;
-			verticalLayout_1.bottomMargin = 20;
+			verticalLayout_1.leftMargin = 0;
+			verticalLayout_1.rightMargin = 0;
+			verticalLayout_1.topMargin = 0;
+			verticalLayout_1.bottomMargin = 0;
 			container.setLayout(verticalLayout_1);
 			
 			// UI Configuration
@@ -716,19 +714,25 @@
 					"height": "45px"
 				});
 				var grid_1 = linker.grid_1 = new cpr.controls.Grid("JoinGroupMemeberGrid");
+				grid_1.overscrollBehavior = "none";
 				grid_1.init({
 					"dataSet": app.lookup("searchGroupList"),
+					"hScroll": "hidden",
+					"vScroll": "hidden",
 					"columns": [
-						{"width": "50px"},
-						{"width": "100px"},
-						{"width": "100px"},
-						{"width": "100px"},
 						{
-							"width": "259px",
+							"width": "28px",
+							"visible": false
+						},
+						{"width": "48px"},
+						{"width": "57px"},
+						{"width": "59px"},
+						{
+							"width": "253px",
 							"visible": true
 						},
 						{
-							"width": "61px",
+							"width": "84px",
 							"visible": false
 						},
 						{
@@ -908,7 +912,7 @@
 			formLayout_1.bottomMargin = "10px";
 			formLayout_1.leftMargin = "10px";
 			formLayout_1.setColumns(["1fr"]);
-			formLayout_1.setRows(["30px", "30px", "1fr"]);
+			formLayout_1.setRows(["30px", "10px", "1fr"]);
 			group_4.setLayout(formLayout_1);
 			(function(container){
 				var output_3 = new cpr.controls.Output();
@@ -1067,7 +1071,9 @@
 				}
 				container.addChild(grid_2, {
 					"colIndex": 0,
-					"rowIndex": 2
+					"rowIndex": 2,
+					"colSpan": 1,
+					"rowSpan": 1
 				});
 				var group_5 = new cpr.controls.Container();
 				var flowLayout_2 = new cpr.controls.layouts.FlowLayout();
@@ -1075,13 +1081,15 @@
 				group_5.setLayout(flowLayout_2);
 				container.addChild(group_5, {
 					"colIndex": 0,
-					"rowIndex": 1
+					"rowIndex": 1,
+					"colSpan": 1,
+					"rowSpan": 1
 				});
 			})(group_4);
 			container.addChild(group_4, {
 				"autoSize": "none",
 				"width": "155px",
-				"height": "200px"
+				"height": "172px"
 			});
 			
 			var group_6 = new cpr.controls.Container();
