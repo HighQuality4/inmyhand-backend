@@ -304,112 +304,61 @@
 			});
 			
 			// Layout
-			var responsiveXYLayout_1 = new cpr.controls.layouts.ResponsiveXYLayout();
-			container.setLayout(responsiveXYLayout_1);
+			var verticalLayout_1 = new cpr.controls.layouts.VerticalLayout();
+			verticalLayout_1.spacing = 20;
+			container.setLayout(verticalLayout_1);
 			
 			// UI Configuration
-			var group_1 = new cpr.controls.Container();
-			var formLayout_1 = new cpr.controls.layouts.FormLayout();
-			formLayout_1.scrollable = false;
-			formLayout_1.horizontalSpacing = "1px";
-			formLayout_1.verticalSpacing = "1px";
-			formLayout_1.topMargin = "5px";
-			formLayout_1.rightMargin = "5px";
-			formLayout_1.bottomMargin = "5px";
-			formLayout_1.leftMargin = "5px";
-			formLayout_1.setColumns(["1fr", "490px", "1fr"]);
-			formLayout_1.setRows(["1fr", "40px", "1fr"]);
-			group_1.setLayout(formLayout_1);
-			(function(container){
-				var output_1 = new cpr.controls.Output();
-				output_1.value = "영수증 자동 등록";
-				output_1.style.css({
-					"background-color" : "#F59760",
-					"border-radius" : "7px",
-					"color" : "#FFFFFF",
-					"font-weight" : "bold",
-					"font-size" : "20px",
-					"font-family" : "Kim jung chul Myungjo Regular",
-					"text-align" : "center"
-				});
-				container.addChild(output_1, {
-					"colIndex": 1,
-					"rowIndex": 1,
-					"colSpan": 1,
-					"rowSpan": 1
-				});
-			})(group_1);
-			container.addChild(group_1, {
-				positions: [
-					{
-						"media": "all and (min-width: 1024px)",
-						"top": "8px",
-						"width": "565px",
-						"height": "50px",
-						"left": "calc(50% - 282px)"
-					}, 
-					{
-						"media": "all and (min-width: 500px) and (max-width: 1023.984px)",
-						"top": "8px",
-						"width": "276px",
-						"height": "50px",
-						"left": "calc(50% - 138px)"
-					}, 
-					{
-						"media": "all and (max-width: 499.984px)",
-						"top": "8px",
-						"width": "193px",
-						"height": "50px",
-						"left": "calc(50% - 96px)"
-					}
-				]
+			var output_1 = new cpr.controls.Output("pageTitle");
+			output_1.value = "영수증 자동 등록";
+			output_1.style.css({
+				"font-weight" : "bold",
+				"font-size" : "20px"
+			});
+			container.addChild(output_1, {
+				"autoSize": "none",
+				"width": "600px",
+				"height": "30px"
 			});
 			
-			var group_2 = new cpr.controls.Container("이미지 업로드 영역");
-			var formLayout_2 = new cpr.controls.layouts.FormLayout();
-			formLayout_2.scrollable = false;
-			formLayout_2.horizontalSpacing = "1px";
-			formLayout_2.verticalSpacing = "1px";
-			formLayout_2.topMargin = "5px";
-			formLayout_2.rightMargin = "5px";
-			formLayout_2.bottomMargin = "5px";
-			formLayout_2.leftMargin = "5px";
-			formLayout_2.setColumns(["1fr", "490px", "1fr"]);
-			formLayout_2.setRows(["1fr"]);
-			group_2.setLayout(formLayout_2);
+			var group_1 = new cpr.controls.Container("이미지 업로드 영역");
+			var formLayout_1 = new cpr.controls.layouts.FormLayout();
+			formLayout_1.scrollable = false;
+			formLayout_1.setColumns(["1fr"]);
+			formLayout_1.setRows(["1fr"]);
+			group_1.setLayout(formLayout_1);
 			(function(container){
-				var group_3 = new cpr.controls.Container();
-				group_3.style.css({
-					"background-color" : "#E5E6C7"
+				var group_2 = new cpr.controls.Container();
+				group_2.style.css({
+					"background-color" : "#E5E6C7",
+					"border-radius" : "5px"
 				});
-				var formLayout_3 = new cpr.controls.layouts.FormLayout();
-				formLayout_3.scrollable = false;
-				formLayout_3.horizontalSpacing = "1px";
-				formLayout_3.verticalSpacing = "1px";
-				formLayout_3.topMargin = "5px";
-				formLayout_3.rightMargin = "5px";
-				formLayout_3.bottomMargin = "5px";
-				formLayout_3.leftMargin = "5px";
-				formLayout_3.setColumns(["1fr"]);
-				formLayout_3.setRows(["1fr"]);
-				group_3.setLayout(formLayout_3);
+				var formLayout_2 = new cpr.controls.layouts.FormLayout();
+				formLayout_2.scrollable = false;
+				formLayout_2.horizontalSpacing = "1px";
+				formLayout_2.verticalSpacing = "1px";
+				formLayout_2.topMargin = "10px";
+				formLayout_2.rightMargin = "10px";
+				formLayout_2.bottomMargin = "10px";
+				formLayout_2.leftMargin = "10px";
+				formLayout_2.setColumns(["1fr"]);
+				formLayout_2.setRows(["100px"]);
+				group_2.setLayout(formLayout_2);
 				(function(container){
-					var group_4 = new cpr.controls.Container();
-					var formLayout_4 = new cpr.controls.layouts.FormLayout();
-					formLayout_4.scrollable = false;
-					formLayout_4.horizontalSpacing = "1px";
-					formLayout_4.verticalSpacing = "1px";
-					formLayout_4.topMargin = "5px";
-					formLayout_4.rightMargin = "5px";
-					formLayout_4.bottomMargin = "5px";
-					formLayout_4.leftMargin = "5px";
-					formLayout_4.setColumns(["100px", "1fr"]);
-					formLayout_4.setRows(["1fr"]);
-					group_4.setLayout(formLayout_4);
+					var group_3 = new cpr.controls.Container();
+					var formLayout_3 = new cpr.controls.layouts.FormLayout();
+					formLayout_3.scrollable = false;
+					formLayout_3.horizontalSpacing = "1px";
+					formLayout_3.verticalSpacing = "1px";
+					formLayout_3.setColumns(["100px", "10px", "1fr"]);
+					formLayout_3.setRows(["100px"]);
+					group_3.setLayout(formLayout_3);
 					(function(container){
-						var group_5 = new cpr.controls.Container("addImageArea");
+						var group_4 = new cpr.controls.Container("addImageArea");
 						var flowLayout_1 = new cpr.controls.layouts.FlowLayout();
-						group_5.setLayout(flowLayout_1);
+						flowLayout_1.horizontalSpacing = 10;
+						flowLayout_1.verticalSpacing = 0;
+						group_4.setLayout(flowLayout_1);
 						(function(container){
 							var fileInput_1 = new cpr.controls.FileInput("fi1");
 							fileInput_1.visible = false;
@@ -418,9 +367,9 @@
 								"width": "1px",
 								"height": "20px"
 							});
-						})(group_5);
-						container.addChild(group_5, {
-							"colIndex": 1,
+						})(group_4);
+						container.addChild(group_4, {
+							"colIndex": 2,
 							"rowIndex": 0
 						});
 						var button_1 = new cpr.controls.Button();
@@ -435,57 +384,34 @@
 							"colIndex": 0,
 							"rowIndex": 0
 						});
-					})(group_4);
-					container.addChild(group_4, {
+					})(group_3);
+					container.addChild(group_3, {
 						"colIndex": 0,
 						"rowIndex": 0
 					});
-				})(group_3);
-				container.addChild(group_3, {
-					"colIndex": 1,
+				})(group_2);
+				container.addChild(group_2, {
+					"colIndex": 0,
 					"rowIndex": 0,
 					"colSpan": 1,
-					"rowSpan": 1
+					"rowSpan": 1,
+					"horizontalAlign": "fill"
 				});
-			})(group_2);
-			container.addChild(group_2, {
-				positions: [
-					{
-						"media": "all and (min-width: 1024px)",
-						"top": "68px",
-						"width": "565px",
-						"height": "143px",
-						"left": "calc(50% - 282px)"
-					}, 
-					{
-						"media": "all and (min-width: 500px) and (max-width: 1023.984px)",
-						"top": "68px",
-						"width": "276px",
-						"height": "143px",
-						"left": "calc(50% - 138px)"
-					}, 
-					{
-						"media": "all and (max-width: 499.984px)",
-						"top": "68px",
-						"width": "193px",
-						"height": "143px",
-						"left": "calc(50% - 96px)"
-					}
-				]
+			})(group_1);
+			container.addChild(group_1, {
+				"autoSize": "height",
+				"width": "100%",
+				"height": "120px"
 			});
 			
-			var group_6 = new cpr.controls.Container();
-			var formLayout_5 = new cpr.controls.layouts.FormLayout();
-			formLayout_5.scrollable = false;
-			formLayout_5.horizontalSpacing = "1px";
-			formLayout_5.verticalSpacing = "1px";
-			formLayout_5.topMargin = "5px";
-			formLayout_5.rightMargin = "5px";
-			formLayout_5.bottomMargin = "5px";
-			formLayout_5.leftMargin = "5px";
-			formLayout_5.setColumns(["1fr", "490px", "1fr"]);
-			formLayout_5.setRows(["1fr", "40px", "1fr"]);
-			group_6.setLayout(formLayout_5);
+			var group_5 = new cpr.controls.Container();
+			var formLayout_4 = new cpr.controls.layouts.FormLayout();
+			formLayout_4.scrollable = false;
+			formLayout_4.horizontalSpacing = "1px";
+			formLayout_4.verticalSpacing = "1px";
+			formLayout_4.setColumns(["1fr"]);
+			formLayout_4.setRows(["1fr", "40px", "1fr"]);
+			group_5.setLayout(formLayout_4);
 			(function(container){
 				var output_2 = new cpr.controls.Output();
 				output_2.value = "영수증 입력 결과";
@@ -497,7 +423,7 @@
 					"font-weight" : "bold",
 					"border-right-width" : "2px",
 					"border-left-color" : "#f59760",
-					"font-size" : "20px",
+					"font-size" : "16px",
 					"border-right-color" : "#f59760",
 					"border-left-width" : "2px",
 					"border-top-style" : "solid",
@@ -510,114 +436,56 @@
 					"text-align" : "center"
 				});
 				container.addChild(output_2, {
-					"colIndex": 1,
+					"colIndex": 0,
 					"rowIndex": 1,
 					"colSpan": 1,
 					"rowSpan": 1
 				});
-			})(group_6);
+			})(group_5);
+			container.addChild(group_5, {
+				"width": "500px",
+				"height": "50px"
+			});
+			
+			var group_6 = new cpr.controls.Container("resultImageArea");
+			var verticalLayout_2 = new cpr.controls.layouts.VerticalLayout();
+			verticalLayout_2.spacing = 10;
+			group_6.setLayout(verticalLayout_2);
 			container.addChild(group_6, {
-				positions: [
-					{
-						"media": "all and (min-width: 1024px)",
-						"top": "215px",
-						"width": "565px",
-						"height": "50px",
-						"left": "calc(50% - 282px)"
-					}, 
-					{
-						"media": "all and (min-width: 500px) and (max-width: 1023.984px)",
-						"top": "215px",
-						"width": "276px",
-						"height": "50px",
-						"left": "calc(50% - 138px)"
-					}, 
-					{
-						"media": "all and (max-width: 499.984px)",
-						"top": "215px",
-						"width": "193px",
-						"height": "50px",
-						"left": "calc(50% - 96px)"
-					}
-				]
+				"autoSize": "height",
+				"width": "100%",
+				"height": "357px"
 			});
 			
-			var group_7 = new cpr.controls.Container("resultImageArea");
-			var verticalLayout_1 = new cpr.controls.layouts.VerticalLayout();
-			group_7.setLayout(verticalLayout_1);
-			container.addChild(group_7, {
-				positions: [
-					{
-						"media": "all and (min-width: 1024px)",
-						"top": "274px",
-						"width": "565px",
-						"height": "357px",
-						"left": "calc(50% - 282px)"
-					}, 
-					{
-						"media": "all and (min-width: 500px) and (max-width: 1023.984px)",
-						"top": "274px",
-						"width": "276px",
-						"height": "357px",
-						"left": "calc(50% - 138px)"
-					}, 
-					{
-						"media": "all and (max-width: 499.984px)",
-						"top": "274px",
-						"width": "193px",
-						"height": "357px",
-						"left": "calc(50% - 96px)"
-					}
-				]
-			});
-			
-			var group_8 = new cpr.controls.Container();
-			var formLayout_6 = new cpr.controls.layouts.FormLayout();
-			formLayout_6.scrollable = false;
-			formLayout_6.horizontalSpacing = "1px";
-			formLayout_6.verticalSpacing = "1px";
-			formLayout_6.topMargin = "5px";
-			formLayout_6.rightMargin = "5px";
-			formLayout_6.bottomMargin = "5px";
-			formLayout_6.leftMargin = "5px";
-			formLayout_6.setColumns(["1fr", "490px", "1fr"]);
-			formLayout_6.setRows(["1fr", "38px", "1fr"]);
-			group_8.setLayout(formLayout_6);
+			var group_7 = new cpr.controls.Container();
+			var formLayout_5 = new cpr.controls.layouts.FormLayout();
+			formLayout_5.scrollable = false;
+			formLayout_5.horizontalSpacing = "1px";
+			formLayout_5.verticalSpacing = "1px";
+			formLayout_5.topMargin = "0px";
+			formLayout_5.rightMargin = "0px";
+			formLayout_5.bottomMargin = "0px";
+			formLayout_5.leftMargin = "0px";
+			formLayout_5.setColumns(["1fr"]);
+			formLayout_5.setRows(["1fr", "38px", "1fr"]);
+			group_7.setLayout(formLayout_5);
 			(function(container){
 				var button_2 = new cpr.controls.Button();
 				button_2.value = "저장";
+				button_2.style.css({
+					"font-size" : "16px"
+				});
 				if(typeof onButtonClick3 == "function") {
 					button_2.addEventListener("click", onButtonClick3);
 				}
 				container.addChild(button_2, {
-					"colIndex": 1,
+					"colIndex": 0,
 					"rowIndex": 1
 				});
-			})(group_8);
-			container.addChild(group_8, {
-				positions: [
-					{
-						"media": "all and (min-width: 1024px)",
-						"top": "630px",
-						"width": "565px",
-						"height": "50px",
-						"left": "calc(50% - 282px)"
-					}, 
-					{
-						"media": "all and (min-width: 500px) and (max-width: 1023.984px)",
-						"top": "630px",
-						"width": "276px",
-						"height": "50px",
-						"left": "calc(50% - 138px)"
-					}, 
-					{
-						"media": "all and (max-width: 499.984px)",
-						"top": "630px",
-						"width": "193px",
-						"height": "50px",
-						"left": "calc(50% - 96px)"
-					}
-				]
+			})(group_7);
+			container.addChild(group_7, {
+				"width": "500px",
+				"height": "50px"
 			});
 		}
 	});

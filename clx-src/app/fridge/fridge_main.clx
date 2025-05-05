@@ -129,10 +129,15 @@
   </head>
   <body std:sid="body-c43e6d9f" style="border-right-style:none; background-color:white; color:white; border-left-style:none; border-bottom-style:none; border-top-style:none;" class="contents-container">
     <cl:listener std:sid="listener-3d039976" name="load" handler="onBodyLoad2"/>
-    <cl:group std:sid="group-104db0df" style="background-color:#faf8f5; color:#EFE0DD; background-image:none;" class="contents-container">
-      <cl:responsivexylayoutdata std:sid="rxyl-data-125a8b74">
-        <cl:xylayoutdata std:sid="sxyl-data-0d77daed" top="73px" width="600px" height="620px" horizontalAnchor="CENTER" verticalAnchor="TOP" screenid="default"/>
-      </cl:responsivexylayoutdata>
+    <cl:navigationbar std:sid="n-bar-0c0c4b1f" id="fridgNavbar" class="test">
+      <cl:listener std:sid="listener-2e7defa2" name="selection-change" handler="onFridgNavbarSelectionChange"/>
+      <cl:listener std:sid="listener-4f7e3944" name="before-context-value-change" handler="onFridgNavbarBeforeContextValueChange"/>
+      <cl:listener std:sid="listener-20bc7fda" name="item-click" handler="onFridgNavbarItemClick"/>
+      <cl:verticaldata std:sid="v-data-ba49586b" width="600px" height="50px"/>
+      <cl:menuitemset datasetid="fridgeList" label="fridgeName" value="fridgeId"/>
+    </cl:navigationbar>
+    <cl:group std:sid="group-104db0df" style="color:#EFE0DD;">
+      <cl:verticaldata std:sid="v-data-9837c837" width="600px" height="620px" autosize="height"/>
       <cl:group std:sid="group-b26aff13">
         <cl:verticaldata std:sid="v-data-e5c3c3f4" width="502px" height="50px" autosize="none"/>
         <cl:group std:sid="group-2e33ee68">
@@ -326,18 +331,9 @@
         </cl:grid>
         <cl:verticallayout std:sid="v-layout-3719e2e3"/>
       </cl:group>
-      <cl:verticallayout std:sid="v-layout-3440a60f" leftmargin="40" rightmargin="40" topmargin="20" bottommargin="10"/>
+      <cl:verticallayout std:sid="v-layout-3440a60f"/>
     </cl:group>
-    <cl:navigationbar std:sid="n-bar-0c0c4b1f" id="fridgNavbar" class="test">
-      <cl:listener std:sid="listener-2e7defa2" name="selection-change" handler="onFridgNavbarSelectionChange"/>
-      <cl:listener std:sid="listener-4f7e3944" name="before-context-value-change" handler="onFridgNavbarBeforeContextValueChange"/>
-      <cl:listener std:sid="listener-20bc7fda" name="item-click" handler="onFridgNavbarItemClick"/>
-      <cl:responsivexylayoutdata std:sid="rxyl-data-29e7cf98">
-        <cl:xylayoutdata std:sid="sxyl-data-68bf688e" top="2px" width="600px" height="72px" horizontalAnchor="CENTER" verticalAnchor="TOP" screenid="default"/>
-      </cl:responsivexylayoutdata>
-      <cl:menuitemset datasetid="fridgeList" label="fridgeName" value="fridgeId"/>
-    </cl:navigationbar>
-    <cl:responsivexylayout std:sid="r-xylayout-3e5555da"/>
+    <cl:verticallayout std:sid="v-layout-34495603" spacing="20"/>
   </body>
   <std:studiosetting>
     <std:hruler/>

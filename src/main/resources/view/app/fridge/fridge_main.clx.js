@@ -680,23 +680,39 @@
 			});
 			
 			// Layout
-			var responsiveXYLayout_1 = new cpr.controls.layouts.ResponsiveXYLayout();
-			container.setLayout(responsiveXYLayout_1);
+			var verticalLayout_1 = new cpr.controls.layouts.VerticalLayout();
+			verticalLayout_1.spacing = 20;
+			container.setLayout(verticalLayout_1);
 			
 			// UI Configuration
-			var group_1 = new cpr.controls.Container();
-			group_1.style.setClasses(["contents-container"]);
-			group_1.style.css({
-				"background-color" : "#faf8f5",
-				"color" : "#EFE0DD",
-				"background-image" : "none"
+			var navigationBar_1 = new cpr.controls.NavigationBar("fridgNavbar");
+			navigationBar_1.style.setClasses(["test"]);
+			(function(navigationBar_1){
+				navigationBar_1.setItemSet(app.lookup("fridgeList"), {
+					"label": "fridgeName",
+					"value": "fridgeId"
+				});
+			})(navigationBar_1);
+			if(typeof onFridgNavbarSelectionChange == "function") {
+				navigationBar_1.addEventListener("selection-change", onFridgNavbarSelectionChange);
+			}
+			if(typeof onFridgNavbarBeforeContextValueChange == "function") {
+				navigationBar_1.addEventListener("before-context-value-change", onFridgNavbarBeforeContextValueChange);
+			}
+			if(typeof onFridgNavbarItemClick == "function") {
+				navigationBar_1.addEventListener("item-click", onFridgNavbarItemClick);
+			}
+			container.addChild(navigationBar_1, {
+				"width": "600px",
+				"height": "50px"
 			});
-			var verticalLayout_1 = new cpr.controls.layouts.VerticalLayout();
-			verticalLayout_1.leftMargin = 40;
-			verticalLayout_1.rightMargin = 40;
-			verticalLayout_1.topMargin = 20;
-			verticalLayout_1.bottomMargin = 10;
-			group_1.setLayout(verticalLayout_1);
+			
+			var group_1 = new cpr.controls.Container();
+			group_1.style.css({
+				"color" : "#EFE0DD"
+			});
+			var verticalLayout_2 = new cpr.controls.layouts.VerticalLayout();
+			group_1.setLayout(verticalLayout_2);
 			(function(container){
 				var group_2 = new cpr.controls.Container();
 				var formLayout_1 = new cpr.controls.layouts.FormLayout();
@@ -1188,8 +1204,8 @@
 					"height": "35px"
 				});
 				var group_7 = new cpr.controls.Container("insertGroupArea");
-				var verticalLayout_2 = new cpr.controls.layouts.VerticalLayout();
-				group_7.setLayout(verticalLayout_2);
+				var verticalLayout_3 = new cpr.controls.layouts.VerticalLayout();
+				group_7.setLayout(verticalLayout_3);
 				(function(container){
 					var group_8 = new cpr.controls.Container("insertGroup");
 					var flowLayout_2 = new cpr.controls.layouts.FlowLayout();
@@ -1391,72 +1407,9 @@
 				});
 			})(group_1);
 			container.addChild(group_1, {
-				positions: [
-					{
-						"media": "all and (min-width: 1024px)",
-						"top": "73px",
-						"width": "600px",
-						"height": "620px",
-						"left": "calc(50% - 300px)"
-					}, 
-					{
-						"media": "all and (min-width: 500px) and (max-width: 1023.984px)",
-						"top": "73px",
-						"width": "293px",
-						"height": "620px",
-						"left": "calc(50% - 146px)"
-					}, 
-					{
-						"media": "all and (max-width: 499.984px)",
-						"top": "73px",
-						"width": "205px",
-						"height": "620px",
-						"left": "calc(50% - 102px)"
-					}
-				]
-			});
-			
-			var navigationBar_1 = new cpr.controls.NavigationBar("fridgNavbar");
-			navigationBar_1.style.setClasses(["test"]);
-			(function(navigationBar_1){
-				navigationBar_1.setItemSet(app.lookup("fridgeList"), {
-					"label": "fridgeName",
-					"value": "fridgeId"
-				});
-			})(navigationBar_1);
-			if(typeof onFridgNavbarSelectionChange == "function") {
-				navigationBar_1.addEventListener("selection-change", onFridgNavbarSelectionChange);
-			}
-			if(typeof onFridgNavbarBeforeContextValueChange == "function") {
-				navigationBar_1.addEventListener("before-context-value-change", onFridgNavbarBeforeContextValueChange);
-			}
-			if(typeof onFridgNavbarItemClick == "function") {
-				navigationBar_1.addEventListener("item-click", onFridgNavbarItemClick);
-			}
-			container.addChild(navigationBar_1, {
-				positions: [
-					{
-						"media": "all and (min-width: 1024px)",
-						"top": "2px",
-						"width": "600px",
-						"height": "72px",
-						"left": "calc(50% - 300px)"
-					}, 
-					{
-						"media": "all and (min-width: 500px) and (max-width: 1023.984px)",
-						"top": "2px",
-						"width": "293px",
-						"height": "72px",
-						"left": "calc(50% - 146px)"
-					}, 
-					{
-						"media": "all and (max-width: 499.984px)",
-						"top": "2px",
-						"width": "205px",
-						"height": "72px",
-						"left": "calc(50% - 102px)"
-					}
-				]
+				"autoSize": "height",
+				"width": "600px",
+				"height": "620px"
 			});
 			if(typeof onBodyLoad2 == "function"){
 				app.addEventListener("load", onBodyLoad2);
