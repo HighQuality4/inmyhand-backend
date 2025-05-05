@@ -208,7 +208,7 @@
 				for (let i = 0; i < resultJson.steps.length; i++) {
 					const step = resultJson.steps[i];
 					const cookingProcess = new udc.recipe.cooking_process();
-					cookingProcess.sequence = step.stepNumber;
+					cookingProcess.sequence = `${step.stepNumber}.`;
 					cookingProcess.explanation = step.stepDescription;
 					cookingProcess.img = step.fileUrl; 
 							
@@ -625,7 +625,7 @@
 				}];
 				
 				nutrientGraph.userData("jsonData", jsonData);
-				nutrientGraph.redraw();    
+				nutrientGraph.redraw();
 			};
 			// End - User Script
 			
@@ -1466,7 +1466,7 @@
 						"height": "120px"
 					});
 					var output_23 = new cpr.controls.Output();
-					output_23.value = "이 레시피를 좋아하신다면...";
+					output_23.value = "이 레시피는 어때요?";
 					output_23.style.css({
 						"color" : "#856C66",
 						"font-weight" : "bold",

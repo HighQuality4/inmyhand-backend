@@ -195,7 +195,7 @@ function onRecipeDetailSmsSubmitSuccess(e){
 	for (let i = 0; i < resultJson.steps.length; i++) {
 		const step = resultJson.steps[i];
 		const cookingProcess = new udc.recipe.cooking_process();
-		cookingProcess.sequence = step.stepNumber;
+		cookingProcess.sequence = `${step.stepNumber}.`;
 		cookingProcess.explanation = step.stepDescription;
 		cookingProcess.img = step.fileUrl; 
 				
@@ -612,5 +612,5 @@ function onRecipeNutrientSmsSubmitSuccess(e){
 	}];
 	
 	nutrientGraph.userData("jsonData", jsonData);
-	nutrientGraph.redraw();    
+	nutrientGraph.redraw();
 }

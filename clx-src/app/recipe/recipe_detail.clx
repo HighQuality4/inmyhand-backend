@@ -278,7 +278,7 @@
         <cl:output std:sid="output-11ed59ee" id="out3" style="border-radius:5px; font-weight:bold; font-size:16px; text-align:center;" value="Output">
           <cl:xylayoutdata std:sid="xyl-data-e024c866" top="60px" right="20px" width="120px" height="120px" horizontalAnchor="RIGHT" verticalAnchor="TOP"/>
         </cl:output>
-        <cl:output std:sid="output-aee315db" style="color:#856C66; font-weight:bold; font-size:20px;" value="이 레시피를 좋아하신다면...">
+        <cl:output std:sid="output-aee315db" style="color:#856C66; font-weight:bold; font-size:20px;" value="이 레시피는 어때요?">
           <cl:xylayoutdata std:sid="xyl-data-5c0698ae" top="20px" right="20px" left="20px" height="30px" horizontalAnchor="BOTH" verticalAnchor="TOP"/>
         </cl:output>
         <cl:output std:sid="output-35e77d7c" id="outext1" style="text-align:center;" value="Output">

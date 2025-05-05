@@ -15,15 +15,15 @@
     </cl:appspec>
   </head>
   <body std:sid="body-cbd7cc89" style="top:0px; left:0px; width:500px; height:100px;">
-    <cl:img std:sid="image-2f061bac">
+    <cl:img std:sid="image-2f061bac" style="border-radius:5px;">
       <cl:apppropbind property="src" category="PROPERTY" app-property="img"/>
-      <cl:formdata std:sid="f-data-27cb11aa" row="0" col="2"/>
+      <cl:formdata std:sid="f-data-27cb11aa" row="0" col="3"/>
     </cl:img>
-    <cl:output std:sid="output-8f8207e2">
+    <cl:output std:sid="output-8f8207e2" style="vertical-align:top;">
       <cl:apppropbind property="value" category="PROPERTY" app-property="explanation"/>
       <cl:formdata std:sid="f-data-d08b0501" row="0" col="1"/>
     </cl:output>
-    <cl:output std:sid="output-117fce2c">
+    <cl:output std:sid="output-117fce2c" style="color:#856C66; font-weight:bold; vertical-align:top; font-size:16px;">
       <cl:apppropbind property="value" category="PROPERTY" app-property="sequence"/>
       <cl:formdata std:sid="f-data-b73c37be" row="0" col="0"/>
     </cl:output>
@@ -31,6 +31,7 @@
       <cl:rows length="1" unit="FRACTION"/>
       <cl:columns length="20" unit="PIXEL" shadetype="NONE" shadecolor="transparent"/>
       <cl:columns length="1" unit="FRACTION" shadetype="NONE" shadecolor="transparent"/>
+      <cl:columns length="10" unit="PIXEL"/>
       <cl:columns length="100" unit="PIXEL"/>
     </cl:formlayout>
   </body>

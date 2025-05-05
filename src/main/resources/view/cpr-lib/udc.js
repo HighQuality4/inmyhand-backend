@@ -3224,47 +3224,29 @@
 						]
 					});
 					var image_1 = new cpr.controls.Image();
-					image_1.src = "theme/images/빗살문희토기.jpg";
-					image_1.style.css({
-						"border-right-style" : "solid",
-						"border-top-width" : "5px",
-						"border-bottom-color" : "#eaf1f3",
-						"border-right-width" : "5px",
-						"border-left-color" : "#eaf1f3",
-						"border-right-color" : "#eaf1f3",
-						"border-left-width" : "5px",
-						"border-top-style" : "solid",
-						"border-radius" : "100%",
-						"border-left-style" : "solid",
-						"border-bottom-width" : "5px",
-						"border-top-color" : "#eaf1f3",
-						"border-bottom-style" : "solid"
-					});
-					if(typeof onImageClick == "function") {
-						image_1.addEventListener("click", onImageClick);
-					}
+					image_1.src = "theme/images/user.svg";
 					container.addChild(image_1, {
 						positions: [
 							{
 								"media": "all and (min-width: 1024px)",
-								"top": "12px",
+								"top": "20px",
 								"left": "20px",
 								"width": "100px",
-								"height": "100px"
+								"height": "88px"
 							}, 
 							{
 								"media": "all and (min-width: 500px) and (max-width: 1023.984px)",
-								"top": "12px",
+								"top": "20px",
 								"left": "10px",
 								"width": "49px",
-								"height": "100px"
+								"height": "88px"
 							}, 
 							{
 								"media": "all and (max-width: 499.984px)",
-								"top": "12px",
+								"top": "20px",
 								"left": "7px",
 								"width": "34px",
-								"height": "100px"
+								"height": "88px"
 							}
 						]
 					});
@@ -3358,19 +3340,25 @@
 				formLayout_1.rightMargin = "0px";
 				formLayout_1.bottomMargin = "0px";
 				formLayout_1.leftMargin = "0px";
-				formLayout_1.setColumns(["20px", "1fr", "100px"]);
+				formLayout_1.setColumns(["20px", "1fr", "10px", "100px"]);
 				formLayout_1.setRows(["1fr"]);
 				container.setLayout(formLayout_1);
 				
 				// UI Configuration
 				var image_1 = new cpr.controls.Image();
+				image_1.style.css({
+					"border-radius" : "5px"
+				});
 				image_1.bind("src").toAppProperty("img");
 				container.addChild(image_1, {
-					"colIndex": 2,
+					"colIndex": 3,
 					"rowIndex": 0
 				});
 				
 				var output_1 = new cpr.controls.Output();
+				output_1.style.css({
+					"vertical-align" : "top"
+				});
 				output_1.bind("value").toAppProperty("explanation");
 				container.addChild(output_1, {
 					"colIndex": 1,
@@ -3378,6 +3366,12 @@
 				});
 				
 				var output_2 = new cpr.controls.Output();
+				output_2.style.css({
+					"color" : "#856C66",
+					"font-weight" : "bold",
+					"vertical-align" : "top",
+					"font-size" : "16px"
+				});
 				output_2.bind("value").toAppProperty("sequence");
 				container.addChild(output_2, {
 					"colIndex": 0,
