@@ -47,7 +47,7 @@
       </cl:output>
       <cl:group std:sid="group-a2d3f164">
         <cl:verticaldata std:sid="v-data-a0407ca0" width="400px" height="220px" autosize="none"/>
-        <cl:group std:sid="group-e892bb7e" style="background-color:#FFFFFF; border-radius:5px; cursor:pointer; box-shadow:0 2px 6px rgba(0, 0, 0, 0.1);">
+        <cl:group std:sid="group-e892bb7e" id="searchTermGroup1" style="background-color:#FFFFFF; border-radius:5px; cursor:pointer; box-shadow:0 2px 6px rgba(0, 0, 0, 0.1);">
           <cl:verticaldata std:sid="v-data-b121618d" width="400px" height="30px" autosize="height"/>
           <cl:output std:sid="output-06c80fc9" style="color:#856C66; text-align:center;" value="1">
             <cl:flowlayoutdata std:sid="f-data-1a2f9d3b" width="30px" height="30px"/>
@@ -57,7 +57,7 @@
           </cl:output>
           <cl:flowlayout std:sid="f-layout-2a1ae3b9"/>
         </cl:group>
-        <cl:group std:sid="group-9c517cd2" style="background-color:#FFFFFF; border-radius:5px; cursor:pointer; box-shadow:0 2px 6px rgba(0, 0, 0, 0.1);">
+        <cl:group std:sid="group-9c517cd2" id="searchTermGroup2" style="background-color:#FFFFFF; border-radius:5px; cursor:pointer; box-shadow:0 2px 6px rgba(0, 0, 0, 0.1);">
           <cl:verticaldata std:sid="v-data-73e28fce" width="560px" height="30px" autosize="height"/>
           <cl:output std:sid="output-3fdbc3ad" style="color:#856C66; text-align:center;" value="2">
             <cl:flowlayoutdata std:sid="f-data-4af7f579" width="30px" height="30px"/>
@@ -67,7 +67,7 @@
           </cl:output>
           <cl:flowlayout std:sid="f-layout-ca005e15"/>
         </cl:group>
-        <cl:group std:sid="group-5ff73dec" style="background-color:#FFFFFF; border-radius:5px; cursor:pointer; box-shadow:0 2px 6px rgba(0, 0, 0, 0.1);">
+        <cl:group std:sid="group-5ff73dec" id="searchTermGroup3" style="background-color:#FFFFFF; border-radius:5px; cursor:pointer; box-shadow:0 2px 6px rgba(0, 0, 0, 0.1);">
           <cl:verticaldata std:sid="v-data-628e0fe2" width="560px" height="30px" autosize="height"/>
           <cl:output std:sid="output-0261d762" style="color:#856C66; text-align:center;" value="3">
             <cl:flowlayoutdata std:sid="f-data-8a2c1ca4" width="30px" height="30px"/>
@@ -77,7 +77,7 @@
           </cl:output>
           <cl:flowlayout std:sid="f-layout-cfcd2a46"/>
         </cl:group>
-        <cl:group std:sid="group-f30c4cc5" style="background-color:#FFFFFF; border-radius:5px; cursor:pointer; box-shadow:0 2px 6px rgba(0, 0, 0, 0.1);">
+        <cl:group std:sid="group-f30c4cc5" id="searchTermGroup4" style="background-color:#FFFFFF; border-radius:5px; cursor:pointer; box-shadow:0 2px 6px rgba(0, 0, 0, 0.1);">
           <cl:verticaldata std:sid="v-data-2d6a0f99" width="560px" height="30px" autosize="height"/>
           <cl:output std:sid="output-8d92b327" style="color:#856C66; text-align:center;" value="4">
             <cl:flowlayoutdata std:sid="f-data-0ab8b12b" width="30px" height="30px"/>
@@ -87,7 +87,7 @@
           </cl:output>
           <cl:flowlayout std:sid="f-layout-37d2d8f7"/>
         </cl:group>
-        <cl:group std:sid="group-c25b08a5" style="background-color:#FFFFFF; border-radius:5px; cursor:pointer; box-shadow:0 2px 6px rgba(0, 0, 0, 0.1);">
+        <cl:group std:sid="group-c25b08a5" id="searchTermGroup5" style="background-color:#FFFFFF; border-radius:5px; cursor:pointer; box-shadow:0 2px 6px rgba(0, 0, 0, 0.1);">
           <cl:verticaldata std:sid="v-data-3eda07c4" width="560px" height="30px" autosize="height"/>
           <cl:output std:sid="output-2bf320cd" style="color:#856C66; text-align:center;" value="5">
             <cl:flowlayoutdata std:sid="f-data-33f48ef7" width="30px" height="30px"/>

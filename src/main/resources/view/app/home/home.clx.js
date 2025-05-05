@@ -84,28 +84,30 @@
 			    
 			    // 출력할 컨트롤들이 있는 배열 또는 컨트롤 ID 패턴 정의
 			    var outputPrefix = "out";
+			    const searchTermGroupPrefix = "searchTermGroup";
 			    
 			    // 데이터셋의 각 행을 순회하며 해당 컨트롤에 값 할당
-			    for(var i = 0; i < rowCount; i++) {
+			    for(let i = 0; i < rowCount; i++) {
 			        // 키워드와 recipeId 값 가져오기 (id 대신 recipeId 사용)
 			        var keyword = ds.getValue(i, "keyword");
 			        var recipeId = ds.getValue(i, "recipeId");  // 컬럼명 수정
 			        
 			        // 해당 값을 i번째 아웃풋 컨트롤에 설정
 			        var outputId = outputPrefix + (i + 1);
+			        const searchTermGroupId = searchTermGroupPrefix  + (i + 1);
 			        let outputControl = app.lookup(outputId);
+			        let searchTermGroupCtr = app.lookup(searchTermGroupId); 
 			        
 			        if (outputControl) {
 			            // 값 설정
-			//            outputControl.value = (i + 1) + ". " + keyword;
 						outputControl.value = keyword;
 			            
 			            // 사용자 데이터에 recipeId 저장
-			            outputControl.userData("recipeId", recipeId);
+			            searchTermGroupCtr.userData("recipeId", recipeId);
 			            
 			            // 클릭 이벤트 핸들러 추가
-			            outputControl.removeEventListeners("click");
-			            outputControl.addEventListener("click", function(e) {
+			            searchTermGroupCtr.removeEventListeners("click");
+			            searchTermGroupCtr.addEventListener("click", function(e) {
 			                var control = e.control;
 			                var recipeId = control.userData("recipeId");
 			                
@@ -115,16 +117,8 @@
 			                    
 			                    // 필요한 경우 세션 스토리지에 레시피 ID 저장 (선택사항)
 			                    sessionStorage.setItem('currentRecipeId', recipeId);
-			                    
-			                    console.log("이동: /recipe/" + recipeId);
 			                }
 			            });
-			            
-			            // 클릭 가능함을 시각적으로 표시
-			//            outputControl.style.css({
-			//                "cursor": "pointer",
-			//                "text-decoration": "underline"
-			//            });
 			        }
 			    }
 			}
@@ -248,7 +242,7 @@
 				verticalLayout_3.spacing = 10;
 				group_3.setLayout(verticalLayout_3);
 				(function(container){
-					var group_4 = new cpr.controls.Container();
+					var group_4 = new cpr.controls.Container("searchTermGroup1");
 					group_4.style.css({
 						"background-color" : "#FFFFFF",
 						"border-radius" : "5px",
@@ -285,7 +279,7 @@
 						"width": "400px",
 						"height": "30px"
 					});
-					var group_5 = new cpr.controls.Container();
+					var group_5 = new cpr.controls.Container("searchTermGroup2");
 					group_5.style.css({
 						"background-color" : "#FFFFFF",
 						"border-radius" : "5px",
@@ -322,7 +316,7 @@
 						"width": "560px",
 						"height": "30px"
 					});
-					var group_6 = new cpr.controls.Container();
+					var group_6 = new cpr.controls.Container("searchTermGroup3");
 					group_6.style.css({
 						"background-color" : "#FFFFFF",
 						"border-radius" : "5px",
@@ -359,7 +353,7 @@
 						"width": "560px",
 						"height": "30px"
 					});
-					var group_7 = new cpr.controls.Container();
+					var group_7 = new cpr.controls.Container("searchTermGroup4");
 					group_7.style.css({
 						"background-color" : "#FFFFFF",
 						"border-radius" : "5px",
@@ -396,7 +390,7 @@
 						"width": "560px",
 						"height": "30px"
 					});
-					var group_8 = new cpr.controls.Container();
+					var group_8 = new cpr.controls.Container("searchTermGroup5");
 					group_8.style.css({
 						"background-color" : "#FFFFFF",
 						"border-radius" : "5px",
