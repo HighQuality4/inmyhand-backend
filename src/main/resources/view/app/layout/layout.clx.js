@@ -607,6 +607,6 @@
 			}
 		}
 	});
-	app.title = "layout";
+	app.title = "내손안의 냉장고";
 	cpr.core.Platform.INSTANCE.register(app);
 })();
