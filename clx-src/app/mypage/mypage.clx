@@ -23,7 +23,7 @@
         <cl:listener std:sid="listener-55b37218" name="submit-success" handler="onSmsLogoutSubmitSuccess"/>
         <cl:requestdata dataid="dmLogout"/>
       </cl:submission>
-      <cl:submission std:sid="submission-a1d1c5b3" id="smsName" action="/api/mypage/nickname">
+      <cl:submission std:sid="submission-a1d1c5b3" id="smsName" withCredentials="true" action="/api/mypage/nickname">
         <cl:responsedata dataid="name"/>
       </cl:submission>
     </cl:model>

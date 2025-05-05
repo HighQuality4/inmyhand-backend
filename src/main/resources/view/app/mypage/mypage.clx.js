@@ -129,6 +129,7 @@
 			app.register(submission_1);
 			
 			var submission_2 = new cpr.protocols.Submission("smsName");
+			submission_2.withCredentials = true;
 			submission_2.action = "/api/mypage/nickname";
 			submission_2.addResponseData(dataMap_3, false);
 			app.register(submission_2);
