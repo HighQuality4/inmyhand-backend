@@ -30,7 +30,7 @@
         <cl:listener std:sid="listener-f727e369" name="submit-success" handler="onIsLoggedInSmsSubmitSuccess"/>
       </cl:submission>
     </cl:model>
-    <cl:appspec/>
+    <cl:appspec title="내손안의 냉장고"/>
   </head>
   <body std:sid="body-27e41fb4" style="background-color:#F3F1F0;">
     <cl:listener std:sid="listener-2c355fe8" name="load" handler="onBodyLoad"/>
