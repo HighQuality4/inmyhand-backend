@@ -1022,7 +1022,7 @@
 		 * 자연어 검색을 위한 delay 시간 (단위 : ms)
 		 * @type {Number}
 		 */
-		var mnWait = 500;
+		var mnWait = 200;
 
 		/**
 		 * 사용자 속성 (모듈 적용 컨트롤)
@@ -1185,7 +1185,7 @@
 						_removeListBox();
 					} else {
 						getItemData();
-						_floatList(_app, control, e);
+						//_floatList(_app, control, e);
 					} 
 					return;
 				}
@@ -1212,6 +1212,11 @@
 						}
 					}
 					return;
+				}
+				
+				if (vsText.trim() !== "" && msBeforeValue !== vsText) {
+				    getItemData();
+				    _floatList(_app, control, e);
 				}
 				
 				// END **********************************************************************************************************************
