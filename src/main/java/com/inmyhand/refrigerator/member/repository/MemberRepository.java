@@ -35,4 +35,8 @@ public interface MemberRepository extends JpaRepository<MemberEntity, Long>, Cus
     List<Object[]> findMyRefreInfo(@Param("memberId") Long memberId);
 
     MemberEntity findByEmail(String email);
+
+
+    List<MemberEntity> findByMemberNameContainingIgnoreCase(String namePart);
+
 }
