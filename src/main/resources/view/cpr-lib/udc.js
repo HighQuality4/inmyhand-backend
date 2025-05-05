@@ -3081,71 +3081,30 @@
 					"border-radius" : "5px",
 					"background-color" : "#FBDBCF"
 				});
-				var responsiveXYLayout_1 = new cpr.controls.layouts.ResponsiveXYLayout();
-				group_1.setLayout(responsiveXYLayout_1);
+				var xYLayout_1 = new cpr.controls.layouts.XYLayout();
+				group_1.setLayout(xYLayout_1);
 				(function(container){
 					var output_1 = new cpr.controls.Output();
 					output_1.value = "닉네임";
 					output_1.style.css({
-						"font-weight" : "bold",
-						"font-size" : "16px",
-						"font-family" : "@Kim jung chul Myungjo Bold"
+						"font-weight" : "bold"
 					});
 					container.addChild(output_1, {
-						positions: [
-							{
-								"media": "all and (min-width: 1024px)",
-								"top": "20px",
-								"left": "144px",
-								"width": "100px",
-								"height": "40px"
-							}, 
-							{
-								"media": "all and (min-width: 500px) and (max-width: 1023.984px)",
-								"top": "20px",
-								"left": "70px",
-								"width": "49px",
-								"height": "40px"
-							}, 
-							{
-								"media": "all and (max-width: 499.984px)",
-								"top": "20px",
-								"left": "49px",
-								"width": "34px",
-								"height": "40px"
-							}
-						]
+						"top": "20px",
+						"left": "10px",
+						"width": "50px",
+						"height": "40px"
 					});
 					var output_2 = new cpr.controls.Output();
 					output_2.value = "가입일";
 					output_2.style.css({
-						"font-weight" : "bold",
-						"font-size" : "16px"
+						"font-weight" : "bold"
 					});
 					container.addChild(output_2, {
-						positions: [
-							{
-								"media": "all and (min-width: 1024px)",
-								"top": "69px",
-								"left": "144px",
-								"width": "100px",
-								"height": "40px"
-							}, 
-							{
-								"media": "all and (min-width: 500px) and (max-width: 1023.984px)",
-								"top": "69px",
-								"left": "70px",
-								"width": "49px",
-								"height": "40px"
-							}, 
-							{
-								"media": "all and (max-width: 499.984px)",
-								"top": "69px",
-								"left": "49px",
-								"width": "34px",
-								"height": "40px"
-							}
-						]
+						"top": "69px",
+						"left": "10px",
+						"width": "50px",
+						"height": "40px"
 					});
 					var output_3 = new cpr.controls.Output("nickname");
 					output_3.style.css({
@@ -3155,29 +3114,10 @@
 					});
 					output_3.bind("value").toDataMap(app.lookup("dmProfile"), "nickname");
 					container.addChild(output_3, {
-						positions: [
-							{
-								"media": "all and (min-width: 1024px)",
-								"top": "20px",
-								"right": "20px",
-								"left": "250px",
-								"height": "40px"
-							}, 
-							{
-								"media": "all and (min-width: 500px) and (max-width: 1023.984px)",
-								"top": "20px",
-								"right": "10px",
-								"left": "122px",
-								"height": "40px"
-							}, 
-							{
-								"media": "all and (max-width: 499.984px)",
-								"top": "20px",
-								"right": "7px",
-								"left": "85px",
-								"height": "40px"
-							}
-						]
+						"top": "20px",
+						"right": "10px",
+						"left": "60px",
+						"height": "40px"
 					});
 					var output_4 = new cpr.controls.Output("createdAt");
 					output_4.style.css({
@@ -3187,56 +3127,10 @@
 					});
 					output_4.bind("value").toDataMap(app.lookup("dmProfile"), "createdAt");
 					container.addChild(output_4, {
-						positions: [
-							{
-								"media": "all and (min-width: 1024px)",
-								"top": "69px",
-								"right": "20px",
-								"left": "250px",
-								"height": "40px"
-							}, 
-							{
-								"media": "all and (min-width: 500px) and (max-width: 1023.984px)",
-								"top": "69px",
-								"right": "10px",
-								"left": "122px",
-								"height": "40px"
-							}, 
-							{
-								"media": "all and (max-width: 499.984px)",
-								"top": "69px",
-								"right": "7px",
-								"left": "85px",
-								"height": "40px"
-							}
-						]
-					});
-					var image_1 = new cpr.controls.Image();
-					image_1.src = "theme/images/user.svg";
-					container.addChild(image_1, {
-						positions: [
-							{
-								"media": "all and (min-width: 1024px)",
-								"top": "20px",
-								"left": "20px",
-								"width": "100px",
-								"height": "88px"
-							}, 
-							{
-								"media": "all and (min-width: 500px) and (max-width: 1023.984px)",
-								"top": "20px",
-								"left": "10px",
-								"width": "49px",
-								"height": "88px"
-							}, 
-							{
-								"media": "all and (max-width: 499.984px)",
-								"top": "20px",
-								"left": "7px",
-								"width": "34px",
-								"height": "88px"
-							}
-						]
+						"top": "69px",
+						"right": "10px",
+						"left": "60px",
+						"height": "40px"
 					});
 				})(group_1);
 				container.addChild(group_1, {
