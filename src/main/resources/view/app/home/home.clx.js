@@ -50,7 +50,7 @@
 			 */
 			function onButtonClick(e){
 				var button = e.control;
-				window.location.href = "/recipe";
+				history.pushState({}, '', "/recipe");
 			}
 
 			/*
