@@ -130,9 +130,7 @@
   <body std:sid="body-c43e6d9f" style="border-right-style:none; background-color:white; color:white; border-left-style:none; border-bottom-style:none; border-top-style:none;" class="contents-container">
     <cl:listener std:sid="listener-3d039976" name="load" handler="onBodyLoad2"/>
     <cl:group std:sid="group-404b1bd1">
-      <cl:responsivexylayoutdata std:sid="rxyl-data-9fc2ba57">
-        <cl:xylayoutdata std:sid="sxyl-data-082869f7" top="2px" width="600px" height="1071px" horizontalAnchor="CENTER" verticalAnchor="TOP" screenid="default"/>
-      </cl:responsivexylayoutdata>
+      <cl:verticaldata std:sid="v-data-72e8744f" width="600px" height="1071px"/>
       <cl:navigationbar std:sid="n-bar-0c0c4b1f" id="fridgNavbar" class="test">
         <cl:listener std:sid="listener-2e7defa2" name="selection-change" handler="onFridgNavbarSelectionChange"/>
         <cl:listener std:sid="listener-4f7e3944" name="before-context-value-change" handler="onFridgNavbarBeforeContextValueChange"/>
@@ -340,9 +338,9 @@
         </cl:group>
         <cl:verticallayout std:sid="v-layout-3440a60f" leftmargin="40" rightmargin="40" topmargin="20" bottommargin="10"/>
       </cl:group>
-      <cl:verticallayout std:sid="v-layout-6a5b479a" leftmargin="40" rightmargin="40" topmargin="0" bottommargin="10"/>
+      <cl:verticallayout std:sid="v-layout-6a5b479a"/>
     </cl:group>
-    <cl:responsivexylayout std:sid="r-xylayout-3e5555da"/>
+    <cl:verticallayout std:sid="v-layout-7467a09f"/>
   </body>
   <std:studiosetting>
     <std:hruler/>
