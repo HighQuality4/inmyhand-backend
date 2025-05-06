@@ -26,9 +26,9 @@ public interface MemberRepository extends JpaRepository<MemberEntity, Long>, Cus
 
     @Query(value = """
         SELECT fd.food_name AS foodName, TO_CHAR(fd.end_date, 'YYYY-MM-DD') AS expdate
-        FROM fridge_member fm
-        JOIN fridge_food fd ON fm.fridge_id = fd.fridge_id
-        WHERE fm.fridge_member_id = :memberId
+        FROM fridge_food fd
+        JOIN fridge_member fm ON fm.fridge_id = fd.fridge_id
+        WHERE fm.member_id = :memberId
         ORDER BY fd.end_date ASC
         LIMIT 5
     """, nativeQuery = true)
