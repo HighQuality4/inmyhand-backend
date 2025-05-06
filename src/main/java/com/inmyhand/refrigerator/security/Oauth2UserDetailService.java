@@ -6,6 +6,7 @@ import com.inmyhand.refrigerator.member.domain.entity.MemberEntity;
 import com.inmyhand.refrigerator.member.domain.entity.MemberRoleEntity;
 import com.inmyhand.refrigerator.member.domain.entity.RefreshTokenEntity;
 import com.inmyhand.refrigerator.member.domain.enums.MemberRole;
+import com.inmyhand.refrigerator.member.domain.enums.MemberStatus;
 import com.inmyhand.refrigerator.member.repository.LoginRepository;
 import com.inmyhand.refrigerator.member.repository.MemberRepository;
 import com.inmyhand.refrigerator.member.repository.MemberRoleRepository;
@@ -87,6 +88,7 @@ public class Oauth2UserDetailService implements OAuth2UserService<OAuth2UserRequ
                     .nickname(nickname)
                     .providerId(provider)
                     .regdate(new Date())
+                    .status(MemberStatus.active)
                     .build();
 
             MemberEntity memberNew = memberRepository.saveAndFlush(member); //멤버 저장
