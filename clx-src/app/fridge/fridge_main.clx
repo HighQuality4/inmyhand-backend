@@ -337,7 +337,7 @@
         </cl:group>
         <cl:verticallayout std:sid="v-layout-3440a60f" leftmargin="40" rightmargin="40" topmargin="20" bottommargin="10"/>
       </cl:group>
-      <cl:verticallayout std:sid="v-layout-6a5b479a" leftmargin="20" rightmargin="20" topmargin="0" bottommargin="10"/>
+      <cl:verticallayout std:sid="v-layout-6a5b479a" leftmargin="40" rightmargin="40" topmargin="0" bottommargin="10"/>
     </cl:group>
     <cl:responsivexylayout std:sid="r-xylayout-3e5555da"/>
   </body>
