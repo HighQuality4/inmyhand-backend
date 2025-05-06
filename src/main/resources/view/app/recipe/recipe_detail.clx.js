@@ -921,7 +921,7 @@
 					"rowIndex": 0,
 					"horizontalAlign": "left",
 					"verticalAlign": "center",
-					"width": 450,
+					"width": 400,
 					"height": 30
 				});
 				var group_5 = new cpr.controls.Container("recipeAuthor");

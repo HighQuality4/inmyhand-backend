@@ -73,7 +73,7 @@
     <cl:group std:sid="group-994c9a8c">
       <cl:verticaldata std:sid="v-data-bd0b01f9" width="600px" height="30px" syncminheight="false" autosize="height"/>
       <cl:group std:sid="group-af9907cc" id="recipeInfo">
-        <cl:formdata std:sid="f-data-99663872" halign="LEFT" valign="CENTER" width="450" height="30" row="0" col="0"/>
+        <cl:formdata std:sid="f-data-99663872" halign="LEFT" valign="CENTER" width="400" height="30" row="0" col="0"/>
         <cl:img std:sid="image-0b837d75" id="difficultyImg" src="../../theme/images/difficullty.svg">
           <cl:flowlayoutdata std:sid="f-data-8712415a" width="15px" height="30px"/>
         </cl:img>
