@@ -92,22 +92,6 @@ function addHashtag(tagText) {
 }
 
 /*
- * 인풋 박스에서 keydown 이벤트 발생 시 호출.
- * 사용자가 키를 누를 때 발생하는 이벤트. 키코드 관련 상수는 {@link cpr.events.KeyCode}에서 참조할 수 있습니다.
- */
-function onIpbFirstKeydown2(e){
-	var ipbFirst = e.control;
-	if (e.keyCode == 13) {
-		var ipbFirst = e.control;
-		var selectedValue = ipbFirst.value;
-		
-		addHashtag(selectedValue);
-		
-		ipbFirst.value = "";
-	}
-}
-
-/*
  * 서브미션에서 receive 이벤트 발생 시 호출.
  * 서버로 부터 데이터를 모두 전송받았을 때 발생합니다.
  */
@@ -119,4 +103,20 @@ function onSmsHealthInfoTagsReceive(e){
 	response.forEach(function(tagText) {
 		addHashtag(tagText);
 	})
+}
+
+/*
+ * "태그 입력" 버튼(taginsertBtn)에서 click 이벤트 발생 시 호출.
+ * 사용자가 컨트롤을 클릭할 때 발생하는 이벤트.
+ */
+function onTaginsertBtnClick(e){
+	var taginsertBtn = e.control;
+	var ipbFirst = app.lookup("ipbFirst");
+	var ipbFirst = app.lookup("ipbFirst");
+	var tagValue = ipbFirst.value && ipbFirst.value.trim();
+
+	if (tagValue) {
+		addHashtag(tagValue);
+		ipbFirst.value = "";
+	}
 }

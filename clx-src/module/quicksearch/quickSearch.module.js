@@ -385,7 +385,6 @@ function _removeListBox () {
 function _floatList(poApp, pcControl, e) { 
 	
 	_.debounce(function(){
-  
 		var voConstraint = poApp.getContainer().getConstraint(pcControl);
 		var voActualRect = pcControl.getActualRect();
 		var voOffsetRect = pcControl.getOffsetRect();
