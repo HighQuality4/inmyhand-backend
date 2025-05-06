@@ -6,6 +6,7 @@
  ************************************************/
 
 const createRecipeCardModule = cpr.core.Module.require("module/recipe/createRecipeCard");
+const showToastModule = cpr.core.Module.require("module/common/showToast");
 const createRecipeCard = createRecipeCardModule.createRecipeCard;
 
 const slidify = cpr.core.Module.require("module/common/Slidifiy").slidify;
@@ -29,6 +30,13 @@ function onBodyLoad(e){
 	const popularRecipeListSms = app.lookup("popularRecipeListSms");
 	popularRecipeListSms.send();
 	app.lookup("popularSearchSms").send();
+	
+	const urlParams = new URLSearchParams(window.location.search);
+	if (urlParams.get("login") === "success") {
+	  showToastModule.showToast("로그인 되었습니다!", 2000);
+	  // 주소에서 파라미터 제거 (선택)
+	  history.replaceState(null, "", location.pathname);
+}
 }
 
 /*
