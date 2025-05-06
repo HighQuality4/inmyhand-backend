@@ -1,6 +1,8 @@
 package com.inmyhand.refrigerator.recipe.mapper;
 
+import com.inmyhand.refrigerator.member.domain.entity.MemberEntity;
 import com.inmyhand.refrigerator.recipe.domain.dto.RecipeNutrientAnalysisEntityDto;
+import com.inmyhand.refrigerator.recipe.domain.entity.RecipeInfoEntity;
 import com.inmyhand.refrigerator.recipe.domain.entity.RecipeNutrientAnalysisEntity;
 import org.springframework.stereotype.Component;
 
@@ -21,7 +23,7 @@ public class RecipeNutrientAnalysisMapper {
         if (dto == null) {
             return null;
         }
-        
+
         RecipeNutrientAnalysisEntity entity = new RecipeNutrientAnalysisEntity();
         entity.setId(dto.getId());
         entity.setAnalysisResult(dto.getAnalysisResult());
@@ -31,10 +33,24 @@ public class RecipeNutrientAnalysisMapper {
         entity.setFat(dto.getFat());
         entity.setMineral(dto.getMineral());
         entity.setVitamin(dto.getVitamin());
-        
+
         return entity;
     }
-    
+
+    public RecipeNutrientAnalysisEntity toEntity(
+            RecipeNutrientAnalysisEntityDto dto,
+            RecipeInfoEntity recipe,
+            MemberEntity member
+    ) {
+        if (dto == null || recipe == null || member == null) {
+            return null;
+        }
+
+        RecipeNutrientAnalysisEntity entity = toEntity(dto);
+        entity.setRecipeInfoEntity(recipe);
+        entity.setMemberEntity(member);
+        return entity;
+    }
 
     /**
      * RecipeNutrientAnalysisEntity -> DTO

@@ -11,10 +11,7 @@ import com.inmyhand.refrigerator.healthinfo.domain.entity.HealthInterestEntity;
 import com.inmyhand.refrigerator.healthinfo.domain.entity.MemberAllergyEntity;
 import com.inmyhand.refrigerator.member.domain.enums.MemberStatus;
 import com.inmyhand.refrigerator.payment.domain.entity.PaymentEntity;
-import com.inmyhand.refrigerator.recipe.domain.entity.RecipeCommentEntity;
-import com.inmyhand.refrigerator.recipe.domain.entity.RecipeInfoEntity;
-import com.inmyhand.refrigerator.recipe.domain.entity.RecipeLikesEntity;
-import com.inmyhand.refrigerator.recipe.domain.entity.RecipeViewsEntity;
+import com.inmyhand.refrigerator.recipe.domain.entity.*;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.BatchSize;
@@ -139,6 +136,12 @@ public class MemberEntity {
     @OneToOne(mappedBy = "memberEntity", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonIgnoreProperties("memberEntity")
     private FilesEntity filesEntity;
+
+    @OneToMany(mappedBy = "memberEntity", cascade = CascadeType.ALL, orphanRemoval = true)
+    @BatchSize(size = 10)
+    @JsonIgnoreProperties("memberEntity")
+    private List<RecipeNutrientAnalysisEntity> recipeNutrientAnalysisList = new ArrayList<>();
+
 
 
     /**

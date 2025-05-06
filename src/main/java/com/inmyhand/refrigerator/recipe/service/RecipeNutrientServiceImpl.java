@@ -7,7 +7,10 @@ import com.inmyhand.refrigerator.member.domain.entity.MemberEntity;
 import com.inmyhand.refrigerator.member.repository.MemberRepository;
 import com.inmyhand.refrigerator.recipe.domain.dto.RecipeNutrientAnalysisEntityDto;
 import com.inmyhand.refrigerator.recipe.domain.entity.RecipeInfoEntity;
+import com.inmyhand.refrigerator.recipe.domain.entity.RecipeNutrientAnalysisEntity;
+import com.inmyhand.refrigerator.recipe.mapper.RecipeNutrientAnalysisMapper;
 import com.inmyhand.refrigerator.recipe.repository.RecipeInfoRepository;
+import com.inmyhand.refrigerator.recipe.repository.RecipeNutrientAnalysisRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.ai.chat.messages.UserMessage;
 import org.springframework.ai.chat.model.ChatResponse;
@@ -15,6 +18,7 @@ import org.springframework.ai.chat.prompt.Prompt;
 import org.springframework.ai.vertexai.gemini.VertexAiGeminiChatModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -38,16 +42,43 @@ public class RecipeNutrientServiceImpl implements RecipeNutrientService {
 
     @Value("${gemini.nutrition.promptTemplate}")
     private String promptTemplate;
+    @Autowired
+    private RedisTemplate<String, Object> redisTemplate;
+    @Autowired
+    private RecipeNutrientAnalysisRepository recipeNutrientAnalysisRepository;
+    @Autowired
+    private RecipeNutrientAnalysisMapper recipeNutrientAnalysisMapper;
 
     public RecipeNutrientAnalysisEntityDto getNutritionAnalysis(Long recipeId, Long memberId) {
-        // 1. 레시피, 멤버 조회
+        String cacheKey = "nutrient:" + memberId + ":" + recipeId;
+
+        String cachedJson = (String) redisTemplate.opsForValue().get(cacheKey);
+        if (cachedJson != null) {
+            try {
+                return objectMapper.readValue(cachedJson, RecipeNutrientAnalysisEntityDto.class);
+            } catch (Exception e) {
+                redisTemplate.delete(cacheKey);
+            }
+        }
+
+        RecipeNutrientAnalysisEntityDto dbResult = recipeNutrientAnalysisRepository
+                .findByRecipeInfoEntity_IdAndMemberEntity_Id(recipeId, memberId)
+                .map(entity -> objectMapper.convertValue(entity, RecipeNutrientAnalysisEntityDto.class))
+                .orElse(null);
+
+        if (dbResult != null) {
+            try {
+                redisTemplate.opsForValue().set(cacheKey, objectMapper.writeValueAsString(dbResult));
+            } catch (Exception ignored) {}
+            return dbResult;
+        }
+
         MemberEntity member = memberRepository.findById(memberId)
                 .orElseThrow(() -> new IllegalArgumentException("회원을 찾을 수 없습니다. ID: " + memberId));
 
         RecipeInfoEntity recipe = recipeInfoRepository.findById(recipeId)
                 .orElseThrow(() -> new IllegalArgumentException("레시피를 찾을 수 없습니다. ID: " + recipeId));
 
-        // 2. 프롬프트 구성
         String ingredients = recipe.getRecipeIngredientList().stream()
                 .map(i -> i.getIngredientName() + " " + i.getIngredientQuantity()+i.getIngredientUnit()) // ex: 가지 1개
                 .collect(Collectors.joining(", "));
@@ -60,17 +91,21 @@ public class RecipeNutrientServiceImpl implements RecipeNutrientService {
                 .replace("{{recipeName}}", recipe.getRecipeName())
                 .replace("{{interest}}", interests);
 
-        // 3. Gemini 호출
         UserMessage userMessage = new UserMessage(finalPrompt);
         ChatResponse response = chatModel.call(new Prompt(List.of(userMessage)));
         String rawOutput = response.getResult().getOutput().getText();
 
-        // 4. JSON 파싱
         String json = extractJson(rawOutput);
-        System.out.println(json);
 
         try {
-            return objectMapper.readValue(json, RecipeNutrientAnalysisEntityDto.class);
+            RecipeNutrientAnalysisEntityDto analysisDto = objectMapper.readValue(json, RecipeNutrientAnalysisEntityDto.class);
+
+            RecipeNutrientAnalysisEntity analysisEntity = recipeNutrientAnalysisMapper.toEntity(analysisDto);
+            recipeNutrientAnalysisRepository.save(analysisEntity);
+
+            redisTemplate.opsForValue().set(cacheKey, json);
+
+            return analysisDto;
         } catch (Exception e) {
             throw new RuntimeException("영양 분석 결과 파싱 실패");
         }
