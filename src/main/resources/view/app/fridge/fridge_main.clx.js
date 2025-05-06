@@ -686,8 +686,8 @@
 			// UI Configuration
 			var group_1 = new cpr.controls.Container();
 			var verticalLayout_1 = new cpr.controls.layouts.VerticalLayout();
-			verticalLayout_1.leftMargin = 20;
-			verticalLayout_1.rightMargin = 20;
+			verticalLayout_1.leftMargin = 40;
+			verticalLayout_1.rightMargin = 40;
 			verticalLayout_1.topMargin = 0;
 			verticalLayout_1.bottomMargin = 10;
 			group_1.setLayout(verticalLayout_1);
