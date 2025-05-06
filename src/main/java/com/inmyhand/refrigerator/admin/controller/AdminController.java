@@ -47,7 +47,7 @@ public class AdminController {
             DataRequest dataRequest) {
 
         List<MemberEntityDto> classList = ConverterClassUtil
-                .getClassList(dataRequest, "getusers", MemberEntityDto.class);
+                .getClassList(dataRequest, "content", MemberEntityDto.class);
         adminService.updateMember(classList);
 
         return ResponseEntity
