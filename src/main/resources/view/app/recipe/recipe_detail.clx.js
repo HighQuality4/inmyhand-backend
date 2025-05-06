@@ -899,7 +899,7 @@
 					output_7.value = "Output";
 					container.addChild(output_7, {
 						"autoSize": "width",
-						"width": "100px",
+						"width": "120px",
 						"height": "30px"
 					});
 					var image_4 = new cpr.controls.Image("caloriesImg");
@@ -912,7 +912,7 @@
 					output_8.value = "Output";
 					container.addChild(output_8, {
 						"autoSize": "width",
-						"width": "100px",
+						"width": "120px",
 						"height": "30px"
 					});
 				})(group_4);
@@ -921,7 +921,7 @@
 					"rowIndex": 0,
 					"horizontalAlign": "left",
 					"verticalAlign": "center",
-					"width": 400,
+					"width": 450,
 					"height": 30
 				});
 				var group_5 = new cpr.controls.Container("recipeAuthor");
@@ -1109,6 +1109,7 @@
 			(function(container){
 				var group_11 = new cpr.controls.Container();
 				var verticalLayout_6 = new cpr.controls.layouts.VerticalLayout();
+				verticalLayout_6.spacing = 10;
 				group_11.setLayout(verticalLayout_6);
 				(function(container){
 					var userDefinedControl_1 = new udc.recipe.group_subtitle();
@@ -1152,6 +1153,7 @@
 			(function(container){
 				var group_14 = new cpr.controls.Container();
 				var verticalLayout_9 = new cpr.controls.layouts.VerticalLayout();
+				verticalLayout_9.spacing = 10;
 				group_14.setLayout(verticalLayout_9);
 				(function(container){
 					var userDefinedControl_2 = new udc.recipe.group_subtitle();
