@@ -71,7 +71,7 @@
       <cl:verticaldata std:sid="v-data-78b6be4a" width="600px" height="20px" autosize="none"/>
     </cl:output>
     <cl:group std:sid="group-994c9a8c">
-      <cl:verticaldata std:sid="v-data-bd0b01f9" width="600px" height="30px" syncminheight="false" autosize="height"/>
+      <cl:verticaldata std:sid="v-data-bd0b01f9" width="600px" height="30px" syncminheight="false" autosize="both"/>
       <cl:group std:sid="group-af9907cc" id="recipeInfo">
         <cl:formdata std:sid="f-data-99663872" halign="LEFT" valign="CENTER" width="400" height="30" row="0" col="0"/>
         <cl:img std:sid="image-0b837d75" id="difficultyImg" src="../../theme/images/difficullty.svg">
@@ -100,14 +100,14 @@
           <cl:flowlayoutdata std:sid="f-data-839bae01" width="30px" height="30px" autosize="none"/>
         </cl:img>
         <cl:output std:sid="output-3e19da02" id="recipeAuthorName" value="Output">
-          <cl:flowlayoutdata std:sid="f-data-5c498900" width="70px" height="30px" autosize="width"/>
+          <cl:flowlayoutdata std:sid="f-data-5c498900" width="50px" height="30px" autosize="width"/>
         </cl:output>
         <cl:flowlayout std:sid="f-layout-8fb02fdf" scrollable="false" vspacing="0" halign="right" linewrap="false"/>
       </cl:group>
       <cl:formlayout std:sid="f-layout-da2f279f" scrollable="false" hspace="0px" vspace="0px" top-margin="0px" right-margin="0px" bottom-margin="0px" left-margin="0px">
         <cl:rows length="30" unit="PIXEL" shadetype="NONE" shadecolor="transparent"/>
         <cl:columns length="1" unit="FRACTION" shadetype="NONE" shadecolor="transparent" minlength="350"/>
-        <cl:columns length="105" unit="PIXEL"/>
+        <cl:columns length="80" unit="PIXEL" shadetype="NONE" shadecolor="transparent"/>
       </cl:formlayout>
     </cl:group>
     <cl:group std:sid="group-e6d2b973" id="InteractionBtnGroup">

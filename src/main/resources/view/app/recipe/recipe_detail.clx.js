@@ -864,7 +864,7 @@
 			formLayout_2.rightMargin = "0px";
 			formLayout_2.bottomMargin = "0px";
 			formLayout_2.leftMargin = "0px";
-			formLayout_2.setColumns(["1fr", "105px"]);
+			formLayout_2.setColumns(["1fr", "80px"]);
 			formLayout_2.setColumnMinWidth(0, 350);
 			formLayout_2.setRows(["30px"]);
 			group_3.setLayout(formLayout_2);
@@ -942,7 +942,7 @@
 					output_9.value = "Output";
 					container.addChild(output_9, {
 						"autoSize": "width",
-						"width": "70px",
+						"width": "50px",
 						"height": "30px"
 					});
 				})(group_5);
@@ -956,7 +956,7 @@
 				});
 			})(group_3);
 			container.addChild(group_3, {
-				"autoSize": "height",
+				"autoSize": "both",
 				"width": "600px",
 				"height": "30px"
 			});
