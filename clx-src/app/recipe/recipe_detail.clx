@@ -73,7 +73,7 @@
     <cl:group std:sid="group-994c9a8c">
       <cl:verticaldata std:sid="v-data-bd0b01f9" width="600px" height="30px" syncminheight="false" autosize="height"/>
       <cl:group std:sid="group-af9907cc" id="recipeInfo">
-        <cl:formdata std:sid="f-data-99663872" halign="LEFT" valign="CENTER" width="400" height="30" row="0" col="0"/>
+        <cl:formdata std:sid="f-data-99663872" halign="LEFT" valign="CENTER" width="450" height="30" row="0" col="0"/>
         <cl:img std:sid="image-0b837d75" id="difficultyImg" src="../../theme/images/difficullty.svg">
           <cl:flowlayoutdata std:sid="f-data-8712415a" width="15px" height="30px"/>
         </cl:img>
@@ -84,13 +84,13 @@
           <cl:flowlayoutdata std:sid="f-data-952ab7fc" width="20px" height="30px"/>
         </cl:img>
         <cl:output std:sid="output-6f15edc1" id="cookingTimeValue" value="Output">
-          <cl:flowlayoutdata std:sid="f-data-3d27513e" width="100px" height="30px" autosize="width"/>
+          <cl:flowlayoutdata std:sid="f-data-3d27513e" width="120px" height="30px" syncminwidth="false" autosize="width"/>
         </cl:output>
         <cl:img std:sid="image-b6e4808f" id="caloriesImg" src="../../theme/images/calories.svg">
           <cl:flowlayoutdata std:sid="f-data-6b5126d2" width="30px" height="30px"/>
         </cl:img>
         <cl:output std:sid="output-51151abe" id="caloriesValue" value="Output">
-          <cl:flowlayoutdata std:sid="f-data-2125c1a1" width="100px" height="30px" autosize="width"/>
+          <cl:flowlayoutdata std:sid="f-data-2125c1a1" width="120px" height="30px" syncminwidth="false" autosize="width"/>
         </cl:output>
         <cl:flowlayout std:sid="f-layout-d5cde0d4" scrollable="false" vspacing="0" linewrap="false"/>
       </cl:group>
@@ -163,7 +163,7 @@
           <cl:verticaldata std:sid="v-data-7a539fd9" width="100%" height="200px" autosize="height"/>
           <cl:verticallayout std:sid="v-layout-5e294b8b"/>
         </cl:group>
-        <cl:verticallayout std:sid="v-layout-c2608929"/>
+        <cl:verticallayout std:sid="v-layout-c2608929" spacing="10"/>
       </cl:group>
       <cl:verticallayout std:sid="v-layout-83b06237" leftmargin="10" rightmargin="10" topmargin="20" bottommargin="20"/>
     </cl:group>
@@ -179,7 +179,7 @@
           <cl:verticaldata std:sid="v-data-33597ea0" width="100%" height="100px" autosize="height"/>
           <cl:verticallayout std:sid="v-layout-9b02a8f1"/>
         </cl:group>
-        <cl:verticallayout std:sid="v-layout-28778a6e"/>
+        <cl:verticallayout std:sid="v-layout-28778a6e" spacing="10"/>
       </cl:group>
       <cl:verticallayout std:sid="v-layout-ae7d1eb6" leftmargin="10" rightmargin="10" topmargin="20" bottommargin="20"/>
     </cl:group>
