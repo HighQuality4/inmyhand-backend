@@ -1179,6 +1179,17 @@
 						"width": "425px",
 						"height": "305px"
 					});
+					var output_4 = new cpr.controls.Output();
+					output_4.value = "\u203b 제공된 유통기한은 참고용입니다. 실제 유통기한은 제품 라벨의 정보를 우선 확인해주세요.";
+					output_4.style.css({
+						"color" : "#856C66",
+						"font-size" : "10px"
+					});
+					container.addChild(output_4, {
+						"autoSize": "none",
+						"width": "440px",
+						"height": "20px"
+					});
 					var group_7 = new cpr.controls.Container();
 					var xYLayout_1 = new cpr.controls.layouts.XYLayout();
 					group_7.setLayout(xYLayout_1);
@@ -1186,9 +1197,9 @@
 						"width": "400px",
 						"height": "12px"
 					});
-					var output_4 = new cpr.controls.Output("addFoodBtn");
-					output_4.value = "식재료 추가하기";
-					output_4.style.css({
+					var output_5 = new cpr.controls.Output("addFoodBtn");
+					output_5.value = "식재료 추가하기";
+					output_5.style.css({
 						"border-right-style" : "solid",
 						"color" : "#9f7e6a",
 						"border-top-width" : "2px",
@@ -1210,9 +1221,9 @@
 						"text-align" : "center"
 					});
 					if(typeof onOutputClick == "function") {
-						output_4.addEventListener("click", onOutputClick);
+						output_5.addEventListener("click", onOutputClick);
 					}
-					container.addChild(output_4, {
+					container.addChild(output_5, {
 						"width": "543px",
 						"height": "35px"
 					});

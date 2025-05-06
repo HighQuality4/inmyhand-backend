@@ -259,6 +259,9 @@
             </cl:gridrowgroup>
           </cl:gridrowgrouplist>
         </cl:grid>
+        <cl:output std:sid="output-019add06" style="color:#856C66; font-size:10px;" value="※ 제공된 유통기한은 참고용입니다. 실제 유통기한은 제품 라벨의 정보를 우선 확인해주세요.">
+          <cl:verticaldata std:sid="v-data-950b1267" width="440px" height="20px" autosize="none"/>
+        </cl:output>
         <cl:group std:sid="group-6d751f2b">
           <cl:verticaldata std:sid="v-data-be5dfeca" width="400px" height="12px"/>
           <cl:xylayout std:sid="xylayout-270ef0af"/>
