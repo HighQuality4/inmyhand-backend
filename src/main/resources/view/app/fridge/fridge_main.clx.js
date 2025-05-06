@@ -680,17 +680,13 @@
 			});
 			
 			// Layout
-			var responsiveXYLayout_1 = new cpr.controls.layouts.ResponsiveXYLayout();
-			container.setLayout(responsiveXYLayout_1);
+			var verticalLayout_1 = new cpr.controls.layouts.VerticalLayout();
+			container.setLayout(verticalLayout_1);
 			
 			// UI Configuration
 			var group_1 = new cpr.controls.Container();
-			var verticalLayout_1 = new cpr.controls.layouts.VerticalLayout();
-			verticalLayout_1.leftMargin = 40;
-			verticalLayout_1.rightMargin = 40;
-			verticalLayout_1.topMargin = 0;
-			verticalLayout_1.bottomMargin = 10;
-			group_1.setLayout(verticalLayout_1);
+			var verticalLayout_2 = new cpr.controls.layouts.VerticalLayout();
+			group_1.setLayout(verticalLayout_2);
 			(function(container){
 				var navigationBar_1 = new cpr.controls.NavigationBar("fridgNavbar");
 				navigationBar_1.style.setClasses(["test"]);
@@ -720,12 +716,12 @@
 					"color" : "#EFE0DD",
 					"background-image" : "none"
 				});
-				var verticalLayout_2 = new cpr.controls.layouts.VerticalLayout();
-				verticalLayout_2.leftMargin = 40;
-				verticalLayout_2.rightMargin = 40;
-				verticalLayout_2.topMargin = 20;
-				verticalLayout_2.bottomMargin = 10;
-				group_2.setLayout(verticalLayout_2);
+				var verticalLayout_3 = new cpr.controls.layouts.VerticalLayout();
+				verticalLayout_3.leftMargin = 40;
+				verticalLayout_3.rightMargin = 40;
+				verticalLayout_3.topMargin = 20;
+				verticalLayout_3.bottomMargin = 10;
+				group_2.setLayout(verticalLayout_3);
 				(function(container){
 					var group_3 = new cpr.controls.Container();
 					var formLayout_1 = new cpr.controls.layouts.FormLayout();
@@ -1228,8 +1224,8 @@
 						"height": "35px"
 					});
 					var group_8 = new cpr.controls.Container("insertGroupArea");
-					var verticalLayout_3 = new cpr.controls.layouts.VerticalLayout();
-					group_8.setLayout(verticalLayout_3);
+					var verticalLayout_4 = new cpr.controls.layouts.VerticalLayout();
+					group_8.setLayout(verticalLayout_4);
 					(function(container){
 						var group_9 = new cpr.controls.Container("insertGroup");
 						var flowLayout_2 = new cpr.controls.layouts.FlowLayout();
@@ -1436,29 +1432,8 @@
 				});
 			})(group_1);
 			container.addChild(group_1, {
-				positions: [
-					{
-						"media": "all and (min-width: 1024px)",
-						"top": "2px",
-						"width": "600px",
-						"height": "1071px",
-						"left": "calc(50% - 300px)"
-					}, 
-					{
-						"media": "all and (min-width: 500px) and (max-width: 1023.984px)",
-						"top": "2px",
-						"width": "293px",
-						"height": "1071px",
-						"left": "calc(50% - 146px)"
-					}, 
-					{
-						"media": "all and (max-width: 499.984px)",
-						"top": "2px",
-						"width": "205px",
-						"height": "1071px",
-						"left": "calc(50% - 102px)"
-					}
-				]
+				"width": "600px",
+				"height": "1071px"
 			});
 			if(typeof onBodyLoad2 == "function"){
 				app.addEventListener("load", onBodyLoad2);
