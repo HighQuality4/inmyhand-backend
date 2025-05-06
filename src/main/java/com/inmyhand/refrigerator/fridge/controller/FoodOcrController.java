@@ -42,7 +42,7 @@ public class FoodOcrController {
     @PostMapping("/create")
     public ResponseEntity<?> getChangeFridgeFoods(DataRequest dataRequest,@AuthenticationPrincipal CustomUserDetails userDetails) {
     	log.info("요청에 포함된 : {}", dataRequest.getResponse());
-        List<OcrFoodDTO> classList = ConverterClassUtil.getClassList(dataRequest, "ocrAllList", OcrFoodDTO.class,"yyyyMMdd");
+        List<OcrFoodDTO> classList = ConverterClassUtil.getClassList(dataRequest, "ocrAllList", OcrFoodDTO.class);
 
         //---------------------------------------------------------------------
 
@@ -68,6 +68,8 @@ public class FoodOcrController {
                     .build();
 
             fridgeFoodList.add(food);
+            System.out.println("가져온값 찍기 ===============");
+            System.out.println(food.getEndDate()+" "+ food.getChargeDate());
         }
         // 냉장고에 저장하기
         fridgeFoodService.svcCreateFridgeFood(fridgeId, fridgeFoodList);
