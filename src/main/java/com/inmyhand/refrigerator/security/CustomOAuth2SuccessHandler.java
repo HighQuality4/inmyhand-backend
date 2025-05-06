@@ -63,6 +63,6 @@ public class CustomOAuth2SuccessHandler implements AuthenticationSuccessHandler 
         }
 
         // 프론트엔드 페이지로 리다이렉트
-        response.sendRedirect(allowedOrigins + "/"); // 실제 프론트 페이지 주소
+        response.sendRedirect(allowedOrigins + "/?login=success"); // 실제 프론트 페이지 주소 + 성공여부 전송
     }
 }
