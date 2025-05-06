@@ -121,3 +121,22 @@ function onSmsAllergyTagsReceive(e){
 	})
 }
 
+/*
+ * "태그 입력" 버튼(taginsertBtn)에서 click 이벤트 발생 시 호출.
+ * 사용자가 컨트롤을 클릭할 때 발생하는 이벤트.
+ */
+/*
+ * "태그 입력" 버튼(taginsertBtn)에서 click 이벤트 발생 시 호출.
+ * 사용자가 컨트롤을 클릭할 때 발생하는 이벤트.
+ */
+function onTaginsertBtnClick(e){
+	var taginsertBtn = e.control;
+	var ipbFirst = app.lookup("ipbFirst");
+	var ipbFirst = app.lookup("ipbFirst");
+	var tagValue = ipbFirst.value && ipbFirst.value.trim();
+
+	if (tagValue) {
+		addHashtag(tagValue);
+		ipbFirst.value = "";
+	}
+}

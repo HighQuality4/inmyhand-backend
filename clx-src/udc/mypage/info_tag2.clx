@@ -24,6 +24,10 @@
           <cl:attribute name="showAssist" value="Y"/>
           <cl:flowlayoutdata std:sid="f-data-3ff1d775" width="203px" height="20px" autosize="none"/>
         </cl:inputbox>
+        <cl:button std:sid="button-dc45ebd1" id="taginsertBtn" style="border-radius:5px; background-color:#D9DC7D;" value="태그 입력">
+          <cl:listener std:sid="listener-84171d5c" name="click" handler="onTaginsertBtnClick"/>
+          <cl:flowlayoutdata std:sid="f-data-1f2fcca7" width="100px" height="20px" autosize="none"/>
+        </cl:button>
         <cl:group std:sid="group-1d3b34ce" id="tagArea" style="color:#FFFFFF; vertical-align:middle; text-align:center;">
           <cl:flowlayoutdata std:sid="f-data-eb7fb368" width="100%" height="auto"/>
           <cl:flowlayout std:sid="f-layout-1dfa2800"/>
