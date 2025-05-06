@@ -6,7 +6,7 @@
  ************************************************/
 
 
-
+const showToastModule = cpr.core.Module.require("module/common/showToast");
 
 /*
  * "사진
@@ -205,8 +205,8 @@ function onButtonClick3(e){
 function onSendOcrResultInfoSubmitSuccess(e){
 	var sendOcrResultInfo = e.control;
 	
-		alert("저장에 성공했습니다.")
-	window.location.href = "/fridge/auto";
+	history.pushState({}, '', "/fridge");
+	showToastModule.showToast("저장에 성공했습니다!");
 }
 
 /*
