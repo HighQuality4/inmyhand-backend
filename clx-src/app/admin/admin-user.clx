@@ -77,14 +77,13 @@
       <cl:submission std:sid="submission-b70704b3" id="admin_sms1" method="get" action="/api/admin/users">
         <cl:responsedata dataid="content" isadd="true"/>
       </cl:submission>
-      <cl:submission std:sid="submission-95c7363e" id="admin_update" withCredentials="true" method="put" action="/api/admin/user/update">
-        <cl:listener std:sid="listener-a87a8825" name="submit-success" handler="onAdmin_updateSubmitSuccess"/>
-        <cl:requestdata dataid="content" payload="modified"/>
-        <cl:responsedata dataid="content" isadd="false"/>
-      </cl:submission>
       <cl:submission std:sid="submission-a55e4229" id="admin_search" action="/api/admin/user/search">
         <cl:listener std:sid="listener-b24d3d4c" name="submit-success" handler="onAdmin_searchSubmitSuccess2"/>
         <cl:requestdata/>
+        <cl:responsedata dataid="content"/>
+      </cl:submission>
+      <cl:submission std:sid="submission-d169d5b9" id="admin_updates" withCredentials="false" action="/api/admin/user/update">
+        <cl:requestdata dataid="content"/>
         <cl:responsedata dataid="content"/>
       </cl:submission>
     </cl:model>
@@ -214,7 +213,7 @@
         <cl:xylayout std:sid="xylayout-87daad18"/>
       </cl:group>
       <cl:button std:sid="button-29f262a5" id="btn2" value="저장">
-        <cl:listener std:sid="listener-72b8d44a" name="click" handler="onBtn2Click2"/>
+        <cl:listener std:sid="listener-4e86b259" name="click" handler="onBtn2Click"/>
         <cl:xylayoutdata std:sid="xyl-data-4fe76118" top="5px" right="31px" width="48px" height="30px" horizontalAnchor="RIGHT" verticalAnchor="TOP"/>
       </cl:button>
       <cl:button std:sid="button-96099fb3" id="btn3" value="초기화">
