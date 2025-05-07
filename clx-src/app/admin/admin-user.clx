@@ -214,7 +214,7 @@
         <cl:xylayout std:sid="xylayout-87daad18"/>
       </cl:group>
       <cl:button std:sid="button-29f262a5" id="btn2" value="저장">
-        <cl:listener std:sid="listener-a012479e" name="click" handler="onBtn2Click"/>
+        <cl:listener std:sid="listener-72b8d44a" name="click" handler="onBtn2Click2"/>
         <cl:xylayoutdata std:sid="xyl-data-4fe76118" top="5px" right="31px" width="48px" height="30px" horizontalAnchor="RIGHT" verticalAnchor="TOP"/>
       </cl:button>
       <cl:button std:sid="button-96099fb3" id="btn3" value="초기화">
