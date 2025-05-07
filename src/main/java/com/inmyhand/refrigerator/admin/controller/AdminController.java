@@ -42,7 +42,7 @@ public class AdminController {
      *
      * @return
      */
-    @PutMapping("/user/update")
+    @PostMapping("/user/update")
     public ResponseEntity<Map<String, List<MemberEntityDto>>> adminUserView2(
             DataRequest dataRequest) {
 
