@@ -150,9 +150,9 @@
 			 * "저장" 버튼(btn2)에서 click 이벤트 발생 시 호출.
 			 * 사용자가 컨트롤을 클릭할 때 발생하는 이벤트.
 			 */
-			function onBtn2Click2(e){
+			function onBtn2Click(e){
 				var btn2 = e.control;
-				app.lookup("admin_update").send();
+				app.lookup("admin_updates").send();
 			};
 			// End - User Script
 			
@@ -221,23 +221,19 @@
 			submission_1.addResponseData(dataSet_1, true);
 			app.register(submission_1);
 			
-			var submission_2 = new cpr.protocols.Submission("admin_update");
-			submission_2.withCredentials = true;
-			submission_2.method = "put";
-			submission_2.action = "/api/admin/user/update";
-			submission_2.addRequestData(dataSet_1, cpr.protocols.PayloadType.modified);
+			var submission_2 = new cpr.protocols.Submission("admin_search");
+			submission_2.action = "/api/admin/user/search";
 			submission_2.addResponseData(dataSet_1, false);
-			if(typeof onAdmin_updateSubmitSuccess == "function") {
-				submission_2.addEventListener("submit-success", onAdmin_updateSubmitSuccess);
+			if(typeof onAdmin_searchSubmitSuccess2 == "function") {
+				submission_2.addEventListener("submit-success", onAdmin_searchSubmitSuccess2);
 			}
 			app.register(submission_2);
 			
-			var submission_3 = new cpr.protocols.Submission("admin_search");
-			submission_3.action = "/api/admin/user/search";
+			var submission_3 = new cpr.protocols.Submission("admin_updates");
+			submission_3.withCredentials = false;
+			submission_3.action = "/api/admin/user/update";
+			submission_3.addRequestData(dataSet_1);
 			submission_3.addResponseData(dataSet_1, false);
-			if(typeof onAdmin_searchSubmitSuccess2 == "function") {
-				submission_3.addEventListener("submit-success", onAdmin_searchSubmitSuccess2);
-			}
 			app.register(submission_3);
 			app.supportMedia("all and (min-width: 1024px)", "default");
 			app.supportMedia("all and (min-width: 500px) and (max-width: 1023.984px)", "tablet");
@@ -590,8 +586,8 @@
 				});
 				var button_2 = new cpr.controls.Button("btn2");
 				button_2.value = "저장";
-				if(typeof onBtn2Click2 == "function") {
-					button_2.addEventListener("click", onBtn2Click2);
+				if(typeof onBtn2Click == "function") {
+					button_2.addEventListener("click", onBtn2Click);
 				}
 				container.addChild(button_2, {
 					"top": "5px",
