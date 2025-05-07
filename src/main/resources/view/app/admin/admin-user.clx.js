@@ -223,6 +223,7 @@
 			app.register(submission_1);
 			
 			var submission_2 = new cpr.protocols.Submission("admin_update");
+			submission_2.withCredentials = true;
 			submission_2.method = "put";
 			submission_2.action = "/api/admin/user-update";
 			submission_2.mediaType = "application/json";
