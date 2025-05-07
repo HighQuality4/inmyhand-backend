@@ -225,7 +225,7 @@
 			var submission_2 = new cpr.protocols.Submission("admin_update");
 			submission_2.withCredentials = true;
 			submission_2.method = "put";
-			submission_2.action = "/api/admin/user-update";
+			submission_2.action = "/api/admin/user/update";
 			submission_2.mediaType = "application/json";
 			submission_2.addRequestData(dataSet_1, cpr.protocols.PayloadType.modified);
 			submission_2.addResponseData(dataSet_1, false);
