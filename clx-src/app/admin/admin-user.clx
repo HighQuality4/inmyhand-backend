@@ -77,7 +77,7 @@
       <cl:submission std:sid="submission-b70704b3" id="admin_sms1" method="get" action="/api/admin/users">
         <cl:responsedata dataid="content" isadd="true"/>
       </cl:submission>
-      <cl:submission std:sid="submission-95c7363e" id="admin_update" withCredentials="true" method="put" action="/api/admin/user/update" mediatype="application/json">
+      <cl:submission std:sid="submission-95c7363e" id="admin_update" withCredentials="true" method="put" action="/api/admin/user/update">
         <cl:listener std:sid="listener-a87a8825" name="submit-success" handler="onAdmin_updateSubmitSuccess"/>
         <cl:requestdata dataid="content" payload="modified"/>
         <cl:responsedata dataid="content" isadd="false"/>
