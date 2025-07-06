@@ -1,11 +1,7 @@
-
+# 🍳 InMyHand Project
 <p align="center">
-<br>
-  <img src="https://github.com/user-attachments/assets/dc861e51-ba08-4a8d-ad85-1c8129c8a21d" width="150" alt="InMyHand Logo">
-  <br>
+ <img src="https://github.com/user-attachments/assets/b648625e-094b-4c68-9937-fd141b4ee17d" alt="preview" style="height: 300px; width: auto;"/>
 </p>
-
-<h1 align="center">🍳 InMyHand Project</h1>
 
 <p align="center">
   <strong>내 손 안의 똑똑한 레시피 비서, InMyHand</strong>
@@ -15,7 +11,7 @@
 
 현재 이 저장소에는 **백엔드 코드만** 포함되어 있습니다.
 
-프론트엔드 코드는 여러 사정으로 인해 공개하기 어려운 점 양해해 주시기 바랍니다. 🙏
+프론트엔드 코드는 엑스빌더 사용으로 인해 공개하기 어려운 점 양해해 주시기 바랍니다. 🙏
 
  ---
   <br>
@@ -31,6 +27,9 @@
 
 InMyHand는 사용자의 냉장고 속 재료를 효율적으로 관리하고, AI를 활용하여 맞춤형 레시피를 추천해주는 지능형 웹 애플리케이션입니다. 단순히 레시피를 제공하는 것을 넘어, 식재료 낭비를 줄이고 즐거운 요리 경험을 선사하는 것을 목표로 합니다.
 
+### [프로젝트 발표 자료 보러가기](https://www.canva.com/design/DAGmALfzZhA/QCNFG9WTXKAjsYH6PKg5yA/view?utm_content=DAGmALfzZhA&utm_campaign=designshare&utm_medium=link2&utm_source=uniquelinks&utlId=h3e8ddf77a6)
+
+
 ---
 
 ## ✨ 주요 기능
@@ -41,6 +40,20 @@ InMyHand는 사용자의 냉장고 속 재료를 효율적으로 관리하고, A
 - **👤 사용자 맞춤형 기능**: 나만의 레시피를 등록하고, 마음에 드는 레시피를 스크랩하며, 댓글로 소통할 수 있는 마이페이지를 제공합니다.
 - **🛠️ 관리자 페이지**: 사용자 및 레시피 데이터를 관리할 수 있는 관리자 기능을 제공합니다.
 
+---
+
+## 👥 팀원 소개
+| **이효경** | **조정하** | **최성관** | **최영범** |
+| --- | --- | --- | --- |
+| <img src="https://github.com/user-attachments/assets/9d35f2a3-7005-4e07-aa58-5bb6fb21b54b" width="150" height="150" class="jop-noMdConv"> | <img src="https://github.com/user-attachments/assets/5bec9175-ed74-415a-9714-8d73e0ecd8b2" width="150" height="150" class="jop-noMdConv"> | <img src="https://github.com/user-attachments/assets/61a67500-59a4-46df-9250-def6158b75fa" width="150" height="150" class="jop-noMdConv"> | <img src="https://github.com/user-attachments/assets/d194ac35-53a0-4613-ae3e-e671982e737d" width="150" height="150" class="jop-noMdConv"> |
+| [이효경 GitHub](https://github.com/HyoKyoungLee) | [조정하 GitHub](https://github.com/JungHaCho) | [최성관 GitHub](https://github.com/sk-choi) | [최영범 GitHub](https://github.com/YeongBee) |
+| `담당 기능` : 레시피 CRUD, AI 영양소 분석<br/>`기여도 높은 분야` : UI 디자인 기획 및 설계, 퍼블리싱, 프론트엔드 구조 설계| `담당 기능` : 냉장고 식재료/그룹원 CRUD, 이미지 업로드, OCR 자동입력 <br/>`기여도 높은 분야` : ERD 설계   | `담당 기능` : 로그인, 회원가입, 마이페이지<br />`기여도 높은 분야` : AI 카테고리 매칭|`담당 기능` : 어드민, 실시간 인기 검색, 유사 레시피 추천<br/>`기여도 높은 분야` : 인프라 구축, CI/CD 및 모니터링  |
+
+### 협업 방식
+- 모든 팀원이 프론트엔드와 백엔드를 구분하지 않고, 본인이 맡은 **기능 단위로 풀스택 개발**을 진행했습니다.
+- UI 설계와 ERD 설계도 각자의 기능에 맞게 개별적으로 수행했습니다.
+- 서비스 기획은 팀 전체가 논의하고 협업을 통해 결정했습니다.
+  
 ---
 
 ## 🛠️ 기술 스택
