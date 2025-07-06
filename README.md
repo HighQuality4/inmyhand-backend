@@ -97,7 +97,7 @@ inmyhand-main/
 
 1.  **프로젝트 클론**
     ```bash
-    git clone https://github.com/your-username/inmyhand-main.git
+    git clone https://github.com/HighQuality4/inmyhand-backend.git
     cd inmyhand-main
     ```
 
