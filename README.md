@@ -11,7 +11,7 @@
 
 현재 이 저장소에는 **백엔드 코드만** 포함되어 있습니다.
 
-프론트엔드 코드는 엑스빌더 사용으로 인해 공개하기 어려운 점 양해해 주시기 바랍니다. 🙏
+프론트엔드 코드는 엑스빌더6 사용으로 인해 공개하기 어려운 점 양해해 주시기 바랍니다. 🙏
 
  ---
   <br>
@@ -26,6 +26,9 @@
 ## 📝 프로젝트 개요
 
 InMyHand는 사용자의 냉장고 속 재료를 효율적으로 관리하고, AI를 활용하여 맞춤형 레시피를 추천해주는 지능형 웹 애플리케이션입니다. 단순히 레시피를 제공하는 것을 넘어, 식재료 낭비를 줄이고 즐거운 요리 경험을 선사하는 것을 목표로 합니다.
+
+### 개발기간
+- 2025.04.16 ~ 2025.05.07
 
 ### [프로젝트 발표 자료 보러가기](https://www.canva.com/design/DAGmALfzZhA/QCNFG9WTXKAjsYH6PKg5yA/view?utm_content=DAGmALfzZhA&utm_campaign=designshare&utm_medium=link2&utm_source=uniquelinks&utlId=h3e8ddf77a6)
 
